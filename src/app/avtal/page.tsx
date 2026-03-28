@@ -109,7 +109,7 @@ export default function AvtalOverview() {
 
           <AnimatedSection delay={0.3}>
             <p className="text-sm text-text-secondary mt-10 text-center">
-              Fler avtal kommer snart. Vi arbetar med att sammanfatta alla 617 kollektivavtal.
+              {agreements.length} av 617 avtal sammanfattade. Fler läggs till löpande.
             </p>
           </AnimatedSection>
         </div>
