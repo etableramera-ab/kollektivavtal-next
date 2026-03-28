@@ -203,7 +203,7 @@ export default function Home() {
               {quickLinks.map((label) => (
                 <Link
                   key={label}
-                  href={`/kollektivavtal/${label.toLowerCase().replace(/\s+/g, "-").replace(/ö/g, "o")}`}
+                  href={`/avtal/${label.toLowerCase().replace(/\s+/g, "-").replace(/ö/g, "o")}`}
                   className="shrink-0 rounded-[8px] bg-white/10 px-4 py-2.5 text-sm font-medium text-white hover:bg-white/20 transition-colors min-h-[44px] flex items-center"
                 >
                   {label}
@@ -248,7 +248,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {agreements.map((a, i) => (
               <AnimatedSection key={a.slug} delay={i * 0.05}>
-                <Link href={`/kollektivavtal/${a.slug}`} className="block h-full">
+                <Link href={`/avtal/${a.slug}`} className="block h-full">
                   <motion.div
                     whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                     transition={{ duration: 0.2 }}

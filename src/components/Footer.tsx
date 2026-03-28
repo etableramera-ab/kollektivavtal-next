@@ -32,22 +32,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
-                <Link href="/kollektivavtal/handelsavtalet" className="hover:text-white transition-colors inline-block py-2">
+                <Link href="/avtal/handelsavtalet" className="hover:text-white transition-colors inline-block py-2">
                   Handelsavtalet
                 </Link>
               </li>
               <li>
-                <Link href="/kollektivavtal/teknikavtalet" className="hover:text-white transition-colors inline-block py-2">
+                <Link href="/avtal/teknikavtalet" className="hover:text-white transition-colors inline-block py-2">
                   Teknikavtalet
                 </Link>
               </li>
               <li>
-                <Link href="/kollektivavtal/byggavtalet" className="hover:text-white transition-colors inline-block py-2">
+                <Link href="/avtal/byggavtalet" className="hover:text-white transition-colors inline-block py-2">
                   Byggavtalet
                 </Link>
               </li>
               <li>
-                <Link href="/kollektivavtal/hok-kommunal" className="hover:text-white transition-colors inline-block py-2">
+                <Link href="/avtal/hok-kommunal" className="hover:text-white transition-colors inline-block py-2">
                   HÖK Kommunal
                 </Link>
               </li>

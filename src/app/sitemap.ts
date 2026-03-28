@@ -1,7 +1,15 @@
 import type { MetadataRoute } from "next";
+import { agreements } from "@/data/agreements";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://kollektivavtal.ai";
+
+  const agreementPages = agreements.map((a) => ({
+    url: `${baseUrl}/avtal/${a.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
   return [
     {
@@ -11,11 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/kollektivavtal`,
+      url: `${baseUrl}/avtal`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.9,
     },
+    ...agreementPages,
     {
       url: `${baseUrl}/hitta-ditt-avtal`,
       lastModified: new Date(),
