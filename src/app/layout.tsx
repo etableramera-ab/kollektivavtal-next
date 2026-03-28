@@ -60,6 +60,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <head>
+        <meta name="theme-color" content="#0F2B46" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
