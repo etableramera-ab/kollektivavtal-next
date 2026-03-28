@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { agreements } from "@/data/agreements";
+import { courtCases } from "@/data/court-cases";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://kollektivavtal.ai";
@@ -9,6 +10,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
+  }));
+
+  const courtCasePages = courtCases.map((c) => ({
+    url: `${baseUrl}/rattsfall/${c.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
   }));
 
   return [
@@ -55,6 +63,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/rattsfall`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    ...courtCasePages,
     {
       url: `${baseUrl}/om-oss`,
       lastModified: new Date(),

@@ -27,6 +27,9 @@ import {
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import SalaryChart from "@/components/SalaryChart";
+import { courtCases as allCourtCases } from "@/data/court-cases";
+
+const latestCases = allCourtCases.slice(0, 3);
 
 const quickLinks = [
   "Handelsavtalet",
@@ -130,29 +133,6 @@ const comparisonRows = [
   },
 ];
 
-const courtCases = [
-  {
-    date: "2026-02-15",
-    title: "AD 2026 nr 12 — Uppsägning pga arbetsbrist ogiltigförklarad",
-    summary:
-      "Arbetsdomstolen fann att arbetsgivaren inte fullgjort sin omplaceringsskyldighet enligt MBL innan uppsägning verkställdes.",
-    area: "Teknikavtalet",
-  },
-  {
-    date: "2026-01-28",
-    title: "AD 2026 nr 8 — Brott mot övertidsregler i kollektivavtal",
-    summary:
-      "Arbetsgivare dömdes till skadestånd för systematiskt brott mot avtalade övertidsregler inom handeln.",
-    area: "Handelsavtalet",
-  },
-  {
-    date: "2026-01-10",
-    title: "AD 2026 nr 3 — Diskriminering vid lönesättning",
-    summary:
-      "En kvinnlig anställd fick rätt i tvist om könsdiskriminerande lönesättning inom kommunal verksamhet.",
-    area: "HÖK Kommunal",
-  },
-];
 
 const crossSelling = [
   {
@@ -438,16 +418,18 @@ export default function Home() {
             </h2>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {courtCases.map((c, i) => (
-              <AnimatedSection key={c.title} delay={i * 0.1}>
-                <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm h-full">
-                  <p className="text-xs text-text-secondary">{c.date}</p>
-                  <h3 className="font-semibold text-text-primary mt-1 leading-snug">{c.title}</h3>
-                  <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
-                  <span className="inline-block mt-3 text-xs font-medium bg-background text-text-secondary px-2 py-1 rounded-[6px]">
-                    {c.area}
-                  </span>
-                </div>
+            {latestCases.map((c, i) => (
+              <AnimatedSection key={c.id} delay={i * 0.1}>
+                <Link href={`/rattsfall/${c.id}`} className="block h-full">
+                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm h-full hover:shadow-md transition-shadow">
+                    <p className="text-xs text-text-secondary">{c.date}</p>
+                    <h3 className="font-semibold text-text-primary mt-1 leading-snug">{c.caseNumber} — {c.title}</h3>
+                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
+                    <span className="inline-block mt-3 text-xs font-medium bg-background text-text-secondary px-2 py-1 rounded-[6px]">
+                      {c.topic}
+                    </span>
+                  </div>
+                </Link>
               </AnimatedSection>
             ))}
           </div>

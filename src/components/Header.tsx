@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/hitta-avtal", label: "Hitta ditt avtal" },
   { href: "/lonekalkylator", label: "Lönekalkylator" },
   { href: "/statistik", label: "Statistik" },
+  { href: "/rattsfall", label: "Rättsfall" },
   { href: "/om-oss", label: "Om oss" },
 ];
 

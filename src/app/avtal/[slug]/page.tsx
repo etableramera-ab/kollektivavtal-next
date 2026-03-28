@@ -9,6 +9,7 @@ import {
   PiggyBank,
 } from "lucide-react";
 import { agreements, getAgreementBySlug } from "@/data/agreements";
+import { getCourtCasesByAgreement } from "@/data/court-cases";
 import AgreementPageClient from "./AgreementPageClient";
 
 interface PageProps {
@@ -91,6 +92,16 @@ export default function AgreementPage({ params }: PageProps) {
 
   const suggestedQuestions = agreement.faq.slice(0, 3).map((f) => f.question);
 
+  const relatedCases = getCourtCasesByAgreement(agreement.slug).map((c) => ({
+    id: c.id,
+    caseNumber: c.caseNumber,
+    date: c.date,
+    title: c.title,
+    summary: c.summary,
+    topic: c.topic,
+    outcome: c.outcome,
+  }));
+
   return (
     <>
       <script
@@ -117,6 +128,7 @@ export default function AgreementPage({ params }: PageProps) {
           sectorLabel: a!.sectorLabel,
         }))}
         suggestedQuestions={suggestedQuestions}
+        relatedCases={relatedCases}
       />
     </>
   );

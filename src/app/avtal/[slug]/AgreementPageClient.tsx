@@ -44,11 +44,22 @@ interface RelatedAgreement {
   sectorLabel: string;
 }
 
+interface RelatedCase {
+  id: string;
+  caseNumber: string;
+  date: string;
+  title: string;
+  summary: string;
+  topic: string;
+  outcome: string;
+}
+
 interface Props {
   agreement: Agreement;
   keyFactCards: KeyFactCard[];
   relatedAgreements: RelatedAgreement[];
   suggestedQuestions: string[];
+  relatedCases: RelatedCase[];
 }
 
 export default function AgreementPageClient({
@@ -56,6 +67,7 @@ export default function AgreementPageClient({
   keyFactCards,
   relatedAgreements,
   suggestedQuestions,
+  relatedCases,
 }: Props) {
   const obRows = [
     { tid: "Vardagskväll", tillagg: agreement.keyFacts.obWeekday },
@@ -321,6 +333,38 @@ export default function AgreementPageClient({
           </AnimatedSection>
         </div>
       </section>
+
+      {/* Relaterade rättsfall */}
+      {relatedCases.length > 0 && (
+        <section className="py-12 sm:py-16">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <AnimatedSection>
+              <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-6">
+                Rättsfall som rör {agreement.shortName}
+              </h2>
+            </AnimatedSection>
+            <div className="space-y-3">
+              {relatedCases.map((c, i) => (
+                <AnimatedSection key={c.id} delay={i * 0.05}>
+                  <Link href={`/rattsfall/${c.id}`} className="block">
+                    <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className="text-xs font-medium text-text-secondary">{c.caseNumber}</span>
+                        <span className="text-xs text-text-secondary">{c.date}</span>
+                      </div>
+                      <h3 className="font-semibold text-text-primary text-sm">{c.title}</h3>
+                      <p className="text-sm text-text-secondary mt-1 line-clamp-2">{c.summary}</p>
+                      <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2">
+                        Läs mer <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </Link>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Relaterade avtal */}
       <section className="py-12 sm:py-16 bg-white">
