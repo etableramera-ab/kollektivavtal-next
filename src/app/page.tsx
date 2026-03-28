@@ -21,6 +21,8 @@ import {
   Rocket,
   Check,
   X,
+  Calculator,
+  TrendingUp,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
@@ -237,6 +239,55 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Verktyg */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
+              Verktyg
+            </h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {[
+              {
+                title: "Hitta ditt avtal",
+                desc: "Svara på 3 frågor och hitta rätt avtal",
+                href: "/hitta-avtal",
+                icon: Search,
+              },
+              {
+                title: "Lönekalkylator",
+                desc: "Se vad du ska tjäna enligt ditt avtal",
+                href: "/lonekalkylator",
+                icon: Calculator,
+              },
+              {
+                title: "Avtalsrörelsen",
+                desc: "Följ avtalsrörelsen 2025–2027",
+                href: "/statistik/avtalsrorelsen",
+                icon: TrendingUp,
+              },
+            ].map((tool, i) => (
+              <AnimatedSection key={tool.title} delay={i * 0.1}>
+                <Link href={tool.href} className="block">
+                  <motion.div
+                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
+                    transition={{ duration: 0.2 }}
+                    className="group rounded-[12px] border border-border bg-white p-6 shadow-sm text-center"
+                  >
+                    <tool.icon size={32} className="mx-auto text-accent mb-3" />
+                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
+                      {tool.title}
+                    </h3>
+                    <p className="text-sm text-text-secondary mt-1">{tool.desc}</p>
+                  </motion.div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Populära avtalsområden */}
       <section className="py-16 sm:py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -285,7 +336,7 @@ export default function Home() {
             </div>
             <p className="text-xs text-text-secondary mt-3">Källa: SCB, egen bearbetning</p>
             <Link
-              href="/statistik"
+              href="/statistik/loner"
               className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2 hover:underline min-h-[44px]"
             >
               Se fullständig lönestatistik <ArrowRight size={14} />

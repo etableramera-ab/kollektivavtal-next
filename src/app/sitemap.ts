@@ -26,16 +26,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...agreementPages,
     {
-      url: `${baseUrl}/hitta-ditt-avtal`,
+      url: `${baseUrl}/hitta-avtal`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/lonekalkylator`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/statistik`,
@@ -44,10 +44,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/rattsfall`,
+      url: `${baseUrl}/statistik/loner`,
       lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.7,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/statistik/avtalsrorelsen`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/om-oss`,

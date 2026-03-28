@@ -60,7 +60,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
-                <Link href="/hitta-ditt-avtal" className="hover:text-white transition-colors inline-block py-2">
+                <Link href="/hitta-avtal" className="hover:text-white transition-colors inline-block py-2">
                   Hitta ditt avtal
                 </Link>
               </li>

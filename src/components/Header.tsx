@@ -6,11 +6,10 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { href: "/kollektivavtal", label: "Kollektivavtal" },
-  { href: "/hitta-ditt-avtal", label: "Hitta ditt avtal" },
+  { href: "/avtal", label: "Kollektivavtal" },
+  { href: "/hitta-avtal", label: "Hitta ditt avtal" },
   { href: "/lonekalkylator", label: "Lönekalkylator" },
   { href: "/statistik", label: "Statistik" },
-  { href: "/rattsfall", label: "Rättsfall" },
   { href: "/om-oss", label: "Om oss" },
 ];
 
