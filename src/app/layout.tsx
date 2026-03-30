@@ -61,6 +61,7 @@ export default function RootLayout({
     <html lang="sv">
       <head>
         <meta name="theme-color" content="#0F2B46" />
+        <meta name="google-site-verification" content="Bm7t4B2dfkjxPTdY8c6p6-m7cY-r_fFtXhKgI5SpUl8" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
