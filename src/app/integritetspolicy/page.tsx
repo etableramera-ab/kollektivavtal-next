@@ -23,7 +23,7 @@ export default function Integritetspolicy() {
           <div>
             <h2 className="text-lg font-bold mb-2">Personuppgiftsansvarig</h2>
             <p>
-              Etablera Mera AB (org.nr 559463-0565) ansvarar for behandlingen av personuppgifter
+              Etablera Mera AB (org.nr 559444-2526) ansvarar for behandlingen av personuppgifter
               på kollektivavtal.ai. Kontakta oss på{" "}
               <a href="mailto:kim@etableramera.se" className="text-accent hover:underline">
                 kim@etableramera.se
