@@ -44,7 +44,7 @@ const jsonLd = {
     "Sveriges största AI-drivna plattform för kollektivavtal. Drivs av Etablera Mera AB.",
   contactPoint: {
     "@type": "ContactPoint",
-    email: "kim@etableramera.se",
+    email: "info@kollektivavtal.ai",
     contactType: "customer service",
   },
   sameAs: [],

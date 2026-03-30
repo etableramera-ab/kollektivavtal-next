@@ -25,8 +25,8 @@ export default function Integritetspolicy() {
             <p>
               Etablera Mera AB (org.nr 559444-2526) ansvarar for behandlingen av personuppgifter
               på kollektivavtal.ai. Kontakta oss på{" "}
-              <a href="mailto:kim@etableramera.se" className="text-accent hover:underline">
-                kim@etableramera.se
+              <a href="mailto:info@kollektivavtal.ai" className="text-accent hover:underline">
+                info@kollektivavtal.ai
               </a>{" "}
               vid frågor.
             </p>
@@ -98,8 +98,8 @@ export default function Integritetspolicy() {
               Enligt GDPR har du rätt att begära tillgång till, rättelse av eller radering av
               dina personuppgifter. Du har också rätt att invända mot behandling och begära
               dataportabilitet. Kontakta{" "}
-              <a href="mailto:kim@etableramera.se" className="text-accent hover:underline">
-                kim@etableramera.se
+              <a href="mailto:info@kollektivavtal.ai" className="text-accent hover:underline">
+                info@kollektivavtal.ai
               </a>{" "}
               för att utöva dina rättigheter. Du kan också lämna klagomål till
               Integritetsskyddsmyndigheten (IMY).
@@ -111,10 +111,10 @@ export default function Integritetspolicy() {
             <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm inline-flex items-center gap-3">
               <Mail size={20} className="text-accent" />
               <a
-                href="mailto:kim@etableramera.se"
+                href="mailto:info@kollektivavtal.ai"
                 className="text-sm text-accent hover:underline"
               >
-                kim@etableramera.se
+                info@kollektivavtal.ai
               </a>
             </div>
           </div>

@@ -101,10 +101,10 @@ export default function Cookiepolicy() {
             <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm inline-flex items-center gap-3">
               <Mail size={20} className="text-accent" />
               <a
-                href="mailto:kim@etableramera.se"
+                href="mailto:info@kollektivavtal.ai"
                 className="text-sm text-accent hover:underline"
               >
-                kim@etableramera.se
+                info@kollektivavtal.ai
               </a>
             </div>
           </div>

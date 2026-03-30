@@ -33,10 +33,10 @@ export default function OmOss() {
             <Mail size={20} className="text-accent mb-2" />
             <p className="text-sm font-medium text-text-primary">Kontakt</p>
             <a
-              href="mailto:kim@etableramera.se"
+              href="mailto:info@kollektivavtal.ai"
               className="text-sm text-accent hover:underline"
             >
-              kim@etableramera.se
+              info@kollektivavtal.ai
             </a>
           </div>
 
