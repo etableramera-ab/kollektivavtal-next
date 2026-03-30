@@ -62,6 +62,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#0F2B46" />
         <meta name="google-site-verification" content="Bm7t4B2dfkjxPTdY8c6p6-m7cY-r_fFtXhKgI5SpUl8" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9148299323154794" crossOrigin="anonymous"></script>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
