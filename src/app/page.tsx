@@ -452,6 +452,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Jämför villkor */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
+              Jämför villkor
+            </h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            {[
+              { title: "OB-tillägg", href: "/jamfor/ob-tillagg" },
+              { title: "Minimilöner", href: "/jamfor/minimiioner" },
+              { title: "Semester", href: "/jamfor/semester" },
+              { title: "Pension", href: "/jamfor/pension" },
+            ].map((item, i) => (
+              <AnimatedSection key={item.href} delay={i * 0.05}>
+                <Link href={item.href} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center">
+                  <p className="font-semibold text-text-primary text-sm">{item.title}</p>
+                  <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
+                    Jämför alla avtal <ArrowRight size={12} />
+                  </span>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Senaste från Arbetsdomstolen */}
       <section className="py-16 sm:py-20 md:py-28 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
