@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { href: "/avtal", label: "Kollektivavtal" },
+  { href: "/yrke", label: "Yrken" },
   { href: "/hitta-avtal", label: "Hitta ditt avtal" },
   { href: "/lonekalkylator", label: "Lönekalkylator" },
   { href: "/statistik", label: "Statistik" },

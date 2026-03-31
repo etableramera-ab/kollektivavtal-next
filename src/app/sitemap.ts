@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { agreements } from "@/data/agreements";
 import { courtCases } from "@/data/court-cases";
+import { occupations } from "@/data/occupations";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://kollektivavtal.ai";
@@ -70,6 +71,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     ...courtCasePages,
+    {
+      url: `${baseUrl}/yrke`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    ...occupations.map((o) => ({
+      url: `${baseUrl}/yrke/${o.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${baseUrl}/om-oss`,
       lastModified: new Date(),

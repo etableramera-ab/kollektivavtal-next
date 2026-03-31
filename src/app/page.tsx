@@ -268,6 +268,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Populära yrken */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
+              Populära yrken
+            </h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            {[
+              { title: "Undersköterska", median: "31 000", slug: "underskoterska" },
+              { title: "Elektriker", median: "35 000", slug: "elektriker" },
+              { title: "Kock", median: "28 000", slug: "kock" },
+              { title: "Lärare", median: "37 000", slug: "larare-grundskola" },
+              { title: "Lastbilschaufför", median: "32 000", slug: "lastbilschauffor" },
+              { title: "Systemutvecklare", median: "48 000", slug: "systemutvecklare" },
+              { title: "Butikssäljare", median: "27 000", slug: "butikssaljare" },
+              { title: "Byggnadsarbetare", median: "33 000", slug: "byggnadsarbetare" },
+            ].map((occ, i) => (
+              <AnimatedSection key={occ.slug} delay={i * 0.05}>
+                <Link href={`/yrke/${occ.slug}`} className="block">
+                  <motion.div
+                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
+                    transition={{ duration: 0.2 }}
+                    className="group rounded-[12px] border border-border bg-white p-4 shadow-sm text-center"
+                  >
+                    <p className="font-semibold text-text-primary text-sm group-hover:text-accent transition-colors">{occ.title}</p>
+                    <p className="text-lg font-bold text-accent mt-1">{occ.median} kr</p>
+                    <p className="text-xs text-text-secondary">medianlön</p>
+                  </motion.div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection delay={0.4}>
+            <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
+              Se alla 50 yrken <ArrowRight size={14} />
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Populära avtalsområden */}
       <section className="py-16 sm:py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
