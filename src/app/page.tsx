@@ -27,6 +27,7 @@ import {
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import SalaryChart from "@/components/SalaryChart";
+import { blogPosts } from "@/data/blog-posts";
 import { courtCases as allCourtCases } from "@/data/court-cases";
 
 const latestCases = allCourtCases.slice(0, 3);
@@ -481,6 +482,38 @@ export default function Home() {
           >
             Se alla rättsfall <ArrowRight size={14} />
           </Link>
+        </div>
+      </section>
+
+      {/* Senaste från bloggen */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
+              Senaste från bloggen
+            </h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {blogPosts.slice(0, 3).map((post, i) => (
+              <AnimatedSection key={post.slug} delay={i * 0.1}>
+                <Link href={`/blogg/${post.slug}`} className="block h-full">
+                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow h-full">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="rounded-[4px] bg-accent/10 text-accent text-xs font-medium px-2 py-0.5">{post.category}</span>
+                      <span className="text-xs text-text-secondary">{post.publishDate}</span>
+                    </div>
+                    <h3 className="font-semibold text-text-primary text-sm leading-snug">{post.title}</h3>
+                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">{post.excerpt}</p>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection delay={0.3}>
+            <Link href="/blogg" className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
+              Alla artiklar <ArrowRight size={14} />
+            </Link>
+          </AnimatedSection>
         </div>
       </section>
 

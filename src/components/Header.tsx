@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/lonekalkylator", label: "Lönekalkylator" },
   { href: "/statistik", label: "Statistik" },
   { href: "/rattsfall", label: "Rättsfall" },
+  { href: "/blogg", label: "Blogg" },
   { href: "/om-oss", label: "Om oss" },
 ];
 
