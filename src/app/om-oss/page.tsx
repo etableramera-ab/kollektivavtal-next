@@ -49,7 +49,7 @@ export default function OmOss() {
           <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm">
             <FileText size={20} className="text-accent mb-2" />
             <p className="text-sm font-medium text-text-primary">Org.nr</p>
-            <p className="text-sm text-text-secondary">559463-0565</p>
+            <p className="text-sm text-text-secondary">559444-2526</p>
           </div>
         </div>
       </div>
