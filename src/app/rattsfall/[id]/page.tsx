@@ -8,20 +8,30 @@ interface PageProps {
   params: { id: string };
 }
 
+// Generate static pages for cases from 2020+ (faster builds)
 export function generateStaticParams() {
-  return courtCases.map((c) => ({ id: c.id }));
+  return courtCases
+    .filter((c) => c.year >= 2020)
+    .map((c) => ({ id: c.id }));
 }
+
+// Allow dynamic rendering for older cases
+export const dynamicParams = true;
 
 export function generateMetadata({ params }: PageProps): Metadata {
   const courtCase = getCourtCaseById(params.id);
   if (!courtCase) return {};
 
+  const desc = courtCase.summary
+    ? courtCase.summary.substring(0, 155) + (courtCase.summary.length > 155 ? "..." : "")
+    : `${courtCase.caseNumber} — dom från Arbetsdomstolen.`;
+
   return {
-    title: `${courtCase.caseNumber} — ${courtCase.title} | kollektivavtal.ai`,
-    description: courtCase.summary,
+    title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"} | kollektivavtal.ai`,
+    description: desc,
     openGraph: {
-      title: `${courtCase.caseNumber} — ${courtCase.title}`,
-      description: courtCase.summary,
+      title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"}`,
+      description: desc,
       url: `https://kollektivavtal.ai/rattsfall/${courtCase.id}`,
     },
   };

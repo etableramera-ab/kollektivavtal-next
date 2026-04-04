@@ -17,9 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const courtCasePages = courtCases.map((c) => ({
     url: `${baseUrl}/rattsfall/${c.id}`,
-    lastModified: new Date(),
+    lastModified: new Date(c.date || new Date()),
     changeFrequency: "monthly" as const,
-    priority: 0.6,
+    priority: c.year >= 2022 ? 0.6 : 0.4,
   }));
 
   return [
