@@ -22,6 +22,9 @@
 *.p12
 *.pfx
 
+# Agreement texts (copyright protected, downloaded at build time)
+src/data/agreement-texts/*.txt
+
 # debug
 npm-debug.log*
 yarn-debug.log*

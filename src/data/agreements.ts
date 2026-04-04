@@ -459,11 +459,11 @@ STRIKTA REGLER:
       employers: ["Byggföretagen"],
     },
     employeeCount: 100000,
-    validPeriod: "2025–2027",
+    validPeriod: "1 maj 2025 – 30 april 2027",
     summary:
       "Byggavtalet är ett timlöneavtal som gäller byggarbetare, anläggningsarbetare, betongarbetare och liknande yrken. Lönen anges i kronor per timme, inte i månadslön. Ackord (prestationsbaserad lön) är vanligt och innebär att den faktiska förtjänsten ofta är betydligt högre än lägsta timlönen. Avtalet har omfattande regler för traktamente vid arbete på annan ort och resekostnadsersättning. Byggbranschen har bland de högsta OB-tilläggen på den privata arbetsmarknaden.",
     keyFacts: {
-      minimumWage: "Timlön: ca 175 kr/tim utan yrkesbevis, ca 198 kr/tim med",
+      minimumWage: "Timlön: 196 kr/tim grundlön år 1, 203 kr/tim år 2",
       overtimeRate: "Första 2 tim: 150%, därefter 200%",
       obWeekday: "~45 kr/tim (kväll)",
       obNight: "~90 kr/tim",
@@ -477,35 +477,35 @@ STRIKTA REGLER:
     },
     wageTable: [
       {
-        role: "Byggnadsarbetare (utan yrkesbevis)",
-        minimum: "ca 175 kr/tim",
-        median: "ca 210 kr/tim",
-        comment: "Timlön. Ackord ger ofta mer.",
+        role: "Yrkesarbetare (grundlön år 1)",
+        minimum: "196 kr/tim",
+        median: "ca 230 kr/tim",
+        comment: "Tidlön. Kan kompletteras med ackord.",
       },
       {
-        role: "Byggnadsarbetare (med yrkesbevis)",
-        minimum: "ca 198 kr/tim",
-        median: "ca 235 kr/tim",
-        comment: "Timlön. Yrkesbevis ger högre lön.",
+        role: "Yrkesarbetare (grundlön år 2)",
+        minimum: "203 kr/tim",
+        median: "ca 238 kr/tim",
+        comment: "Tidlön. Kan kompletteras med ackord.",
       },
       {
-        role: "Maskinförare",
-        minimum: "ca 205 kr/tim",
-        median: "ca 245 kr/tim",
-        comment: "Timlön. Grävmaskin, hjullastare m.fl.",
+        role: "Maskinförare/kranförare",
+        minimum: "ca 235–253 kr/tim",
+        median: "ca 260 kr/tim",
+        comment: "Timlön varierar med maskintyp och ort.",
       },
       {
         role: "Betongarbetare",
-        minimum: "ca 185 kr/tim",
-        median: "ca 225 kr/tim",
-        comment: "Timlön. Specialiserad yrkesgrupp.",
+        minimum: "196 kr/tim",
+        median: "ca 230 kr/tim",
+        comment: "Samma grundlön, ackord vanligt.",
       },
     ],
     faq: [
       {
         question: "Vilken lön ska jag ha som byggnadsarbetare?",
         answer:
-          "Byggavtalet har timlön, inte månadslön. Lägsta timlön utan yrkesbevis är ca 175 kr/tim, med yrkesbevis ca 198 kr/tim. Vid heltid (40 tim/vecka) blir det ca 30 000-34 000 kr/mån före ackord. De flesta byggjobbare tjänar mer genom ackord — prestationsbaserad lön utöver grundtimlönen.",
+          "Byggavtalet har timlön, inte månadslön. Grundlönen är 196 kr/tim (år 1) och 203 kr/tim (år 2), vilket motsvarar ca 34 000-35 300 kr/mån vid heltid. De flesta byggjobbare tjänar mer genom ackord — prestationsbaserad lön utöver grundtimlönen.",
       },
       {
         question: "Vad innebär ackordslön i Byggavtalet?",
@@ -540,7 +540,7 @@ STRIKTA REGLER:
       {
         question: "Vad är ett yrkesbevis och varför spelar det roll för lönen?",
         answer:
-          "Ett yrkesbevis visar att du har godkänd yrkesutbildning inom bygg. Det ger dig rätt till en högre lägsta timlön — skillnaden är ca 23 kr/tim (175 vs 198 kr/tim), vilket motsvarar ca 4 000 kr/mån vid heltid. Yrkesbevis utfärdas av BYN (Byggbranschens Yrkesnämnd).",
+          "Ett yrkesbevis visar att du har godkänd yrkesutbildning inom bygg. Grundlönen är densamma (196 kr/tim år 1) men vid ackord och löneförhandling ger yrkesbevis en starkare position. Yrkesbevis utfärdas av BYN (Byggbranschens Yrkesnämnd).",
       },
     ],
     sources: [
@@ -562,9 +562,10 @@ STRIKTA REGLER:
     aiSystemPrompt: `Du är en AI-expert på Byggavtalet — kollektivavtalet mellan Byggnads och Byggföretagen som gäller cirka 100 000 anställda inom byggsektorn.
 
 Viktig information om avtalet:
-- Giltighet: 2025–2027
+- Giltighet: 1 maj 2025 – 30 april 2027
 - TIMLÖNEAVTAL: Löner anges i kr/tim, inte månadslön
-- Lägsta timlöner: utan yrkesbevis ~175 kr/tim, med yrkesbevis ~198 kr/tim, maskinförare ~205 kr/tim
+- Grundlön yrkesarbetare: 196 kr/tim (år 1), 203 kr/tim (år 2)
+- Maskinförare/kranförare: ca 235-253 kr/tim beroende på maskin och ort
 - Ackordslön (prestationsbaserad) är vanligt utöver grundtimlönen
 - OB-tillägg: kväll ~45 kr/tim, natt ~90 kr/tim, helg ~90 kr/tim, storhelg ~180 kr/tim
 - Övertid: 150% första 2 tim, 200% därefter
