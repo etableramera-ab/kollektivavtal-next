@@ -154,8 +154,8 @@ export default function AgreementPageClient({
         </div>
       </section>
 
-      {/* Fix 4: AI-chatt — moved up, dark styling */}
-      <section className="py-12 sm:py-16 bg-primary">
+      {/* AI-chatt */}
+      <section className="py-12 sm:py-16 bg-background">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <AgreementChat
