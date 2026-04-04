@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
@@ -69,6 +70,11 @@ export default function AgreementPageClient({
   suggestedQuestions,
   relatedCases,
 }: Props) {
+  // Fix 2: Scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const obRows = [
     { tid: "Vardagskväll", tillagg: agreement.keyFacts.obWeekday },
     { tid: "Natt", tillagg: agreement.keyFacts.obNight },
@@ -128,16 +134,16 @@ export default function AgreementPageClient({
         </div>
       </section>
 
-      {/* Nyckeltal */}
+      {/* Fix 3: Nyckeltal — equal height cards */}
       <section className="pb-12 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
             {keyFactCards.map((card, i) => {
               const Icon = iconMap[card.label] || Banknote;
               return (
                 <AnimatedSection key={card.label} delay={i * 0.05}>
-                  <div className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-sm">
-                    <Icon size={20} className="text-accent mb-2" />
+                  <div className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-sm h-full flex flex-col">
+                    <Icon size={20} className="text-accent mb-2 shrink-0" />
                     <p className="text-xs text-text-secondary">{card.label}</p>
                     <p className="text-sm font-semibold text-text-primary mt-0.5">{card.value}</p>
                   </div>
@@ -148,7 +154,20 @@ export default function AgreementPageClient({
         </div>
       </section>
 
-      {/* Sammanfattning */}
+      {/* Fix 4: AI-chatt — moved up, dark styling */}
+      <section className="py-12 sm:py-16 bg-primary">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <AgreementChat
+              agreementSlug={agreement.slug}
+              agreementName={agreement.shortName}
+              suggestedQuestions={suggestedQuestions}
+            />
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Fix 1: Sammanfattning — different text from AEO box */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -156,10 +175,16 @@ export default function AgreementPageClient({
               Om {agreement.shortName}
             </h2>
             <div className="text-text-primary leading-relaxed space-y-4">
-              <p>{agreement.summary}</p>
               <p>
                 Avtalsparterna är {agreement.parties.unions.join(", ")} på arbetstagarsidan och{" "}
                 {agreement.parties.employers.join(", ")} på arbetsgivarsidan.
+                Avtalet gäller {agreement.employeeCount.toLocaleString("sv-SE")} anställda
+                och löper under perioden {agreement.validPeriod}.
+              </p>
+              <p>
+                Lägsta lön: {agreement.keyFacts.minimumWage}.
+                Arbetstid: {agreement.keyFacts.workHoursPerWeek}.
+                Pension: {agreement.keyFacts.pension}.
               </p>
             </div>
             <div className="mt-4 flex flex-wrap gap-3">
@@ -189,7 +214,6 @@ export default function AgreementPageClient({
             </h2>
           </AnimatedSection>
 
-          {/* Desktop table */}
           <AnimatedSection delay={0.1}>
             <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
               <table className="w-full text-sm">
@@ -215,7 +239,6 @@ export default function AgreementPageClient({
             </div>
           </AnimatedSection>
 
-          {/* Mobile cards */}
           <div className="md:hidden space-y-3">
             {agreement.wageTable.map((row, i) => (
               <AnimatedSection key={row.role} delay={i * 0.05}>
@@ -321,19 +344,6 @@ export default function AgreementPageClient({
         </div>
       </section>
 
-      {/* AI-chatt */}
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <AgreementChat
-              agreementSlug={agreement.slug}
-              agreementName={agreement.shortName}
-              suggestedQuestions={suggestedQuestions}
-            />
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* Relaterade rättsfall */}
       {relatedCases.length > 0 && (
         <section className="py-12 sm:py-16">
@@ -401,17 +411,8 @@ export default function AgreementPageClient({
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <AnimatedSection>
-              <a
-                href="https://allaadvokater.se"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <motion.div
-                  whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                  transition={{ duration: 0.2 }}
-                  className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4"
-                >
+              <a href="https://allaadvokater.se" target="_blank" rel="noopener noreferrer" className="block">
+                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4">
                   <Scale size={28} className="text-accent shrink-0" />
                   <div>
                     <p className="font-semibold text-text-primary">Behöver du juridisk hjälp?</p>
@@ -421,17 +422,8 @@ export default function AgreementPageClient({
               </a>
             </AnimatedSection>
             <AnimatedSection delay={0.1}>
-              <a
-                href="https://allaforsakringar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <motion.div
-                  whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                  transition={{ duration: 0.2 }}
-                  className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4"
-                >
+              <a href="https://allaforsakringar.com" target="_blank" rel="noopener noreferrer" className="block">
+                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4">
                   <Shield size={28} className="text-accent shrink-0" />
                   <div>
                     <p className="font-semibold text-text-primary">Jämför inkomstförsäkringar</p>
@@ -451,12 +443,7 @@ export default function AgreementPageClient({
             Informationen är sammanfattad i egna ord och är vägledande. Kontakta{" "}
             {agreement.parties.unions[0]} för bindande besked.{" "}
             {agreement.sources[0] && (
-              <a
-                href={agreement.sources[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-              >
+              <a href={agreement.sources[0].url} target="_blank" rel="noopener noreferrer" className="underline">
                 Läs det officiella avtalet
               </a>
             )}
