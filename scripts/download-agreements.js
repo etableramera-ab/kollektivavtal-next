@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const http = require('http');
 const pdf = require('pdf-parse');
 
 const agreements = [
@@ -8,23 +9,30 @@ const agreements = [
     slug: 'byggavtalet',
     url: 'https://www.byggnads.se/49ec78/siteassets/kollektivavtal/byggavtalet-2025-digital-utgava-1.pdf',
   },
-  // Add more agreements here as they become available
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
 
-function download(url) {
+function download(url, redirects = 0) {
+  if (redirects > 5) return Promise.reject(new Error('Too many redirects'));
+  const client = url.startsWith('https') ? https : http;
+
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
+    const req = client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, timeout: 30000 }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return download(res.headers.location).then(resolve).catch(reject);
+        return download(res.headers.location, redirects + 1).then(resolve).catch(reject);
       }
-      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode}`));
+      if (res.statusCode !== 200) {
+        res.resume();
+        return reject(new Error(`HTTP ${res.statusCode}`));
+      }
       const chunks = [];
       res.on('data', (c) => chunks.push(c));
       res.on('end', () => resolve(Buffer.concat(chunks)));
       res.on('error', reject);
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
   });
 }
 
@@ -39,34 +47,43 @@ function cleanText(text) {
 }
 
 async function processAgreement(agreement) {
-  const cleanPath = path.join(TEXT_DIR, `${agreement.slug}-clean.txt`);
+  const outputPath = path.join(TEXT_DIR, `${agreement.slug}-clean.txt`);
 
-  if (fs.existsSync(cleanPath)) {
-    console.log(`[SKIP] ${agreement.slug} — already exists`);
-    return;
+  if (fs.existsSync(outputPath)) {
+    const stat = fs.statSync(outputPath);
+    if (stat.size > 1000) {
+      console.log(`[SKIP] ${agreement.slug} — already exists (${stat.size} bytes)`);
+      return;
+    }
   }
 
-  console.log(`[DOWNLOAD] ${agreement.slug} from ${agreement.url}`);
+  console.log(`[DOWNLOAD] ${agreement.slug}...`);
   const buffer = await download(agreement.url);
+  console.log(`[EXTRACT] ${agreement.slug} — ${buffer.length} bytes PDF`);
 
-  console.log(`[EXTRACT] ${agreement.slug} — ${buffer.length} bytes`);
   const data = await pdf(buffer);
-
   const cleaned = cleanText(data.text);
-  fs.writeFileSync(cleanPath, cleaned, 'utf-8');
-  console.log(`[DONE] ${agreement.slug} — ${data.numpages} pages, ${cleaned.length} chars`);
+
+  fs.writeFileSync(outputPath, cleaned, 'utf-8');
+  console.log(`[DONE] ${agreement.slug} — ${data.numpages} pages, ${cleaned.length} chars → ${outputPath}`);
 }
 
 async function main() {
-  if (!fs.existsSync(TEXT_DIR)) fs.mkdirSync(TEXT_DIR, { recursive: true });
+  if (!fs.existsSync(TEXT_DIR)) {
+    fs.mkdirSync(TEXT_DIR, { recursive: true });
+    console.log(`[MKDIR] ${TEXT_DIR}`);
+  }
 
   for (const agreement of agreements) {
     try {
       await processAgreement(agreement);
     } catch (err) {
-      console.error(`[ERROR] ${agreement.slug}: ${err.message}`);
+      console.warn(`[WARN] Failed to process ${agreement.slug}: ${err.message}`);
+      console.warn(`[WARN] AI chat for ${agreement.slug} will use summary fallback`);
     }
   }
+
+  console.log('[PREBUILD] Agreement text download complete');
 }
 
 main();
