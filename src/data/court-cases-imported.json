@@ -58,7 +58,7 @@
       "Löneuppgifter",
       "Lönerevision"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e4dc9236-87fb-4ee1-8b77-984d1c9b6c81",
     "isGuiding": true,
@@ -207,7 +207,7 @@
       "Säkerhetsprövning",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4e713e9c-525b-428a-8b63-19b1ee8f3ced",
     "isGuiding": true,
@@ -819,7 +819,7 @@
       "Rullstol",
       "Neonatal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/33cc25f7-8cb2-4fa0-9c48-bb64b9f6f0df",
     "isGuiding": true,
@@ -1886,7 +1886,7 @@
       "Sjukdom",
       "Diskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/6ce80eb5-3f37-4666-af97-eb4601f29d45",
     "isGuiding": true,
@@ -2744,7 +2744,7 @@
       "Upplysningsplikt",
       "Arbetsplatsbesök"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/71006ab5-7f3f-44a6-8453-926b8f5d33c8",
     "isGuiding": true,
@@ -3390,7 +3390,7 @@
     "keywords": [
       "Förhandlingsvägran"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f4c9c4de-bfe0-4c10-b295-e8bd362e05dc",
     "isGuiding": true,
@@ -3647,7 +3647,7 @@
       "Kollektivavtal",
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "almega-tjansteforetagen",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1f235201-bc28-4b7d-95bd-b2a150860231",
     "isGuiding": true,
@@ -3895,7 +3895,7 @@
       "Lönediskriminering",
       "Individuell och differentierad lönesättning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c01bccde-b631-492f-b337-9812bb43c9f4",
     "isGuiding": true,
@@ -4615,7 +4615,7 @@
       "Bisyssla",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5768bacd-b696-4a18-83bc-47a3121df240",
     "isGuiding": true,
@@ -6031,7 +6031,7 @@
       "Polis",
       "Sjukdom"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ace9c811-9dd9-4b4b-97cf-66bdd195c6ec",
     "isGuiding": true,
@@ -7028,7 +7028,7 @@
       "Brottslig gärning",
       "Brott utom tjänsten"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/acfaa98b-8304-40ad-a674-252094c3a0e3",
     "isGuiding": true,
@@ -8311,7 +8311,7 @@
       "Polis",
       "Saklig grund för uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/09d3761e-ec28-4d6f-b3ce-a4dced6493a4",
     "isGuiding": true,
@@ -9709,7 +9709,7 @@
       "Avskedande",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/95536a99-8f9b-4fd8-8143-3168c19b2a6f",
     "isGuiding": true,
@@ -9879,7 +9879,7 @@
       "Bisyssla",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/62b9d370-032c-46ce-82ea-3990e3d6c7d1",
     "isGuiding": true,
@@ -10247,7 +10247,7 @@
       "Säkerhetsskydd",
       "Säkerhetsklassad befattning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ed5f0298-1d7c-4890-9243-50d8bccd70b8",
     "isGuiding": true,
@@ -11277,7 +11277,7 @@
       "Polis",
       "Interimistiskt förordnande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3ea5bfd1-a244-4555-85c6-5aa849802e0f",
     "isGuiding": true,
@@ -11325,7 +11325,7 @@
       "Arbetsgivarventil",
       "Tillåten fastställelsetalan"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/57afc7a7-0c02-4c59-8d57-4682071fc0a2",
     "isGuiding": true,
@@ -11402,7 +11402,7 @@
       "Överlåtelse",
       "Rörelse"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/236c197c-db33-42d9-a026-51fc7092226c",
     "isGuiding": true,
@@ -11503,7 +11503,7 @@
       "Kollektivavtalstolkning",
       "Tidsbegränsad anställning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cb797b7c-24dd-4553-89bd-beaf49187190",
     "isGuiding": true,
@@ -11548,7 +11548,7 @@
       "Polis",
       "Interimistiska förordnande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3e6029e4-878f-4dbd-9185-1bfce9737c07",
     "isGuiding": true,
@@ -11592,7 +11592,7 @@
       "Polis",
       "Interimistiska förordnande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3397de64-0d56-4ba5-9168-bec5b81ea049",
     "isGuiding": true,
@@ -12040,7 +12040,7 @@
       "Advokatfiirma",
       "Biträdande jurist"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8fd5a6d8-9f81-4f3b-b519-752795b748be",
     "isGuiding": true,
@@ -12208,7 +12208,7 @@
       "Föreningsrättskränkning",
       "Förhandlingsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4c99aaaf-50f3-4aad-97f4-ef709a4f5147",
     "isGuiding": true,
@@ -12230,7 +12230,7 @@
       "Övergång av verksamhet",
       "Inhyrning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e9a9141a-ee87-49ee-b3dc-94d538f21bbc",
     "isGuiding": true,
@@ -12738,7 +12738,7 @@
       "Vapen",
       "Ammunition"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/40406c84-eb85-49eb-8437-bf2dfe9a7dae",
     "isGuiding": true,
@@ -12882,7 +12882,7 @@
       "Stridsåtgärd",
       "Giltigt hinder"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ba123d67-9ede-419f-bad9-f51b57b81b5f",
     "isGuiding": true,
@@ -13506,7 +13506,7 @@
       "Uppsägning av kollektivavtal",
       "Kollektivavtals efterverkan"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/6b3682e1-66fb-47ce-a91b-3e4b21b9a1b0",
     "isGuiding": true,
@@ -13528,7 +13528,7 @@
       "Förhandlingsskyldighet",
       "Medbestämmandelagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e028ed1f-3c3e-40aa-9e87-bfeb3a5e3d4e",
     "isGuiding": true,
@@ -13684,7 +13684,7 @@
       "Tolkning av kollektivavtal",
       "Årsarbetstid"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7c916163-582f-4b72-9ac5-827720ae9af7",
     "isGuiding": true,
@@ -14060,7 +14060,7 @@
       "Uppsägning",
       "Yrkesofficer"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ad876288-6247-4b88-b802-060ee52ea55d",
     "isGuiding": true,
@@ -14128,7 +14128,7 @@
       "Interimistiskt förordnande",
       "Tolkningsföreträde"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4c0fd04b-e970-4c39-9359-ed37981ba66f",
     "isGuiding": true,
@@ -14432,7 +14432,7 @@
       "Verksamhetsövergång",
       "Överenskommelse"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/35439b49-d75c-4697-b314-205a08c6f763",
     "isGuiding": true,
@@ -14548,7 +14548,7 @@
       "Obehörig lärare",
       "Avtalslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7d047f37-ef71-42ba-ba00-a7118f4016bd",
     "isGuiding": true,
@@ -15056,7 +15056,7 @@
       "Avskedande",
       "Förtroende"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/32ed6967-8b2e-44e7-9fd8-398d5ebbf3ee",
     "isGuiding": true,
@@ -15370,7 +15370,7 @@
       "Företrädesrätt till återanställning",
       "Tillräclöiga kvalifikationer"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7b4b9d3f-4e26-40ad-98ff-c9785ff109a4",
     "isGuiding": true,
@@ -15417,7 +15417,7 @@
       "Lönediskriminering",
       "Åldersdiskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d529fb87-e60b-470f-a289-dfc95e9a6f4a",
     "isGuiding": true,
@@ -15538,7 +15538,7 @@
       "Förhandlingsvägran",
       "Kvittning av rättegångskostnader"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7bc17c87-757d-4797-bb22-d7f1a28258b1",
     "isGuiding": true,
@@ -15657,7 +15657,7 @@
       "Tidsbegränsad anställning",
       "Vikariat"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cb2d454b-6d99-40af-9329-18defbebfefa",
     "isGuiding": true,
@@ -15685,7 +15685,7 @@
       "Rättvis rättegång",
       "Europakonventionen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cdc10d5c-0e87-4b85-a8a0-e296c2f5140e",
     "isGuiding": true,
@@ -16318,7 +16318,7 @@
       "Konkurrensklausul",
       "Partneravtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/93b3b38a-b59d-4828-aa7a-087e46aefe4d",
     "isGuiding": true,
@@ -16449,7 +16449,7 @@
       "Uppsägning",
       "Yrkesofficer"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/69c430bf-13a3-4d30-9f8e-1d002322db41",
     "isGuiding": true,
@@ -17136,7 +17136,7 @@
       "Omplaceringsskyldighet",
       "Saklig grund"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cac9d587-5b56-4bc7-ba4e-a1eef5b3fb72",
     "isGuiding": true,
@@ -17275,7 +17275,7 @@
     "keywords": [
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e94940ae-ce0f-44f4-abac-49acdf64fc4b",
     "isGuiding": true,
@@ -17389,7 +17389,7 @@
     "keywords": [
       "Kvittningslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/117e474c-15d4-48f0-b3ec-1a5c4304867d",
     "isGuiding": true,
@@ -17653,7 +17653,7 @@
       "Polis",
       "Blogg"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ed931ce8-f70e-4c65-bcf9-2907f546ad1d",
     "isGuiding": true,
@@ -17722,7 +17722,7 @@
       "Nationaldagen",
       "Ekonomiskt skadestånd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8cc23158-6156-4bf4-8653-c32c04774386",
     "isGuiding": true,
@@ -18160,7 +18160,7 @@
       "Avskedande",
       "Misshandel"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e0f45da2-7134-48da-9102-29eea8d8429d",
     "isGuiding": true,
@@ -18252,7 +18252,7 @@
       "Avtalsturlista",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/2f12058e-3dbf-4d57-8812-1df3ea8bd87e",
     "isGuiding": true,
@@ -18319,7 +18319,7 @@
     "keywords": [
       "AD 1987 nr 157"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1fe575d5-8ecc-47d9-8ca1-8224047d88bf",
     "isGuiding": true,
@@ -18411,7 +18411,7 @@
       "Avskedande",
       "Tidsredovisningssystem"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ea5091d9-6b73-4f3d-94e2-c56b11bcc90a",
     "isGuiding": true,
@@ -18665,7 +18665,7 @@
       "Tillräckliga kvalifikationer",
       "Videojournalist"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e4246325-0b93-4ad8-b40c-58b5f7c3e0c1",
     "isGuiding": true,
@@ -19483,7 +19483,7 @@
       "Kollektivavtalsbrott",
       "Lojalitetsplikt"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d55d8fdc-7ddc-402b-8c8f-d6508573673c",
     "isGuiding": true,
@@ -19939,7 +19939,7 @@
       "Skadestånd",
       "Omplaceringsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d81c259b-7987-4ed2-9271-4a9c5fe5aad6",
     "isGuiding": true,
@@ -20245,7 +20245,7 @@
       "Etnisk diskriminering",
       "Trakasserier"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a84f139f-3442-49fe-b7a5-8dd4d1a243c1",
     "isGuiding": true,
@@ -20632,7 +20632,7 @@
       "Saklig grund",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/60878146-11f7-49e1-87be-5a60994049e8",
     "isGuiding": true,
@@ -21263,7 +21263,7 @@
       "Förhandlingsrätt",
       "Löneuppgifter"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3c7daa2c-faf7-4742-bcd6-f2c7b49a70b9",
     "isGuiding": true,
@@ -21358,7 +21358,7 @@
       "Framtvingad uppsägning",
       "Provocerad uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/220effaf-5f96-4d66-8964-1bb4ac0888af",
     "isGuiding": true,
@@ -22034,7 +22034,7 @@
       "Dygnsvila",
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c034a24a-5642-4af8-b3c9-5ed9135282f6",
     "isGuiding": true,
@@ -22146,7 +22146,7 @@
       "Förflyttning",
       "Fastställelsetalan"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a24141ff-86b9-42d2-948c-ed6e31d8f8c0",
     "isGuiding": true,
@@ -22376,7 +22376,7 @@
       "Uppsägning",
       "Dråp"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b3bd4370-ae37-4d89-86cc-62ba4e645352",
     "isGuiding": true,
@@ -23411,7 +23411,7 @@
       "Avskedande",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/00890b74-45df-4c1d-af59-24de51851e20",
     "isGuiding": true,
@@ -23434,7 +23434,7 @@
       "Etnisk diskriminering",
       "Trakasserier"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e513b91a-4e04-416d-acc7-13fd3001e904",
     "isGuiding": true,
@@ -23503,7 +23503,7 @@
       "Löneökning",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/721d2ade-0ea2-4d47-8094-7a757fe135d3",
     "isGuiding": true,
@@ -24034,7 +24034,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/6288fc1a-3d5c-4f55-8c08-0164a699bd26",
     "isGuiding": true,
@@ -24167,7 +24167,7 @@
       "Brottslig gärning",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cde92e6a-3251-4656-8795-dff559f9bdd9",
     "isGuiding": true,
@@ -24328,7 +24328,7 @@
       "Omplacering",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ef58aaea-61bb-41a2-a7ea-c402c6f73df1",
     "isGuiding": true,
@@ -24916,7 +24916,7 @@
       "Omplaceringsskyldighet",
       "Saklig grund för uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/aaf4a169-8d9c-40c3-aaac-8172848d42f9",
     "isGuiding": true,
@@ -25071,7 +25071,7 @@
     "keywords": [
       "Etnisk diskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1ec7a6b2-5a67-48a2-b4a9-913806d08963",
     "isGuiding": true,
@@ -25347,7 +25347,7 @@
       "Etnisk diskriminering",
       "Språkkrav"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/2001da8b-e5a7-436e-84e9-a00d732a654e",
     "isGuiding": true,
@@ -25599,7 +25599,7 @@
       "Dröjsmålsränta",
       "Förhandlingskrav"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4ef53501-3be0-4b57-ba0f-b390b485c96b",
     "isGuiding": true,
@@ -25712,7 +25712,7 @@
       "Framtvingad uppsägning",
       "Sexuella trakasserier"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0f830705-cc85-4b11-a368-3cd65b18ec00",
     "isGuiding": true,
@@ -25804,7 +25804,7 @@
       "Bisyssla",
       "Näringsverksamhet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/84f89e1d-254c-4038-8ac3-5e5dd78f38b8",
     "isGuiding": true,
@@ -26311,7 +26311,7 @@
       "Avskedande",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/41418602-0f8c-40d3-9a8d-c6c254b1aa69",
     "isGuiding": true,
@@ -26492,7 +26492,7 @@
       "Näringsverksamhet",
       "Polis"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b7efb39a-42b3-4712-8a0c-6993519dbebd",
     "isGuiding": true,
@@ -28116,7 +28116,7 @@
       "Anställningsskydd",
       "Yttrandefrihet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/9d46c0b2-6f1a-455f-aed9-256ba0ac2780",
     "isGuiding": true,
@@ -28596,7 +28596,7 @@
       "Bevisbörda",
       "Arbetsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/83914863-705b-41ed-aa4d-373dd006739b",
     "isGuiding": true,
@@ -29222,7 +29222,7 @@
       "Tattoo",
       "Videoinspelning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5788205a-06bf-43a7-ba08-3bb4bbb6c986",
     "isGuiding": true,
@@ -29338,7 +29338,7 @@
       "Disciplinpåföljd",
       "Tjänsteförseelse"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/def6c4ee-b2f7-4c30-b42e-6c1261b12ba4",
     "isGuiding": true,
@@ -29637,7 +29637,7 @@
       "Likabehandlingsdirektivet",
       "Könsdiskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/115560f2-56db-434d-86b7-7d9b9a178507",
     "isGuiding": true,
@@ -29818,7 +29818,7 @@
       "Alkoholism",
       "Rattfylleri"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/dededa43-0114-46f4-964d-b4fceee43c71",
     "isGuiding": true,
@@ -30042,7 +30042,7 @@
       "Fri rörlighet",
       "Konkurrensklausul"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1c9570c5-c16e-4975-bb6b-ccda2b553a52",
     "isGuiding": true,
@@ -30066,7 +30066,7 @@
       "Stupstocksregel",
       "Sågverksavtalet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/04ae2536-3b8a-48c9-8f5c-c53b83bb65bd",
     "isGuiding": true,
@@ -30475,7 +30475,7 @@
       "Likvärdigt arbete",
       "Arbetsvärdering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7abde52a-e6f7-4a29-a8f5-6aea64ca162c",
     "isGuiding": true,
@@ -30520,7 +30520,7 @@
     "keywords": [
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f2a5f260-0987-442f-8b03-fe0bb3b5ecf3",
     "isGuiding": true,
@@ -30766,7 +30766,7 @@
       "Förskottssedlar",
       "Ackord"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3f4584f7-bb0c-467a-bde2-ba5c76d35d16",
     "isGuiding": true,
@@ -30923,7 +30923,7 @@
       "Hälsoundersökning",
       "Förhandlingsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f5c675ff-8a06-4e62-b410-fcf0dd26ef2d",
     "isGuiding": true,
@@ -30947,7 +30947,7 @@
       "Avskedande",
       "Vårdbiträde"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3770aaff-9f8b-4a78-b01f-26d9f580a9ed",
     "isGuiding": true,
@@ -31016,7 +31016,7 @@
       "Lönediskriminering",
       "Könsdiskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/223a37d1-a4ba-4b44-8673-31330c165a99",
     "isGuiding": true,
@@ -31198,7 +31198,7 @@
       "Behörighet",
       "Ideell förening"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-saco",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/15f31a62-ea1c-47e2-825e-ac7be97916f6",
     "isGuiding": true,
@@ -31220,7 +31220,7 @@
       "Avskedande",
       "Bisyssla"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d1fd3860-4025-4288-9bc1-79b4adb9ab8c",
     "isGuiding": true,
@@ -31469,7 +31469,7 @@
       "Hävning av anställningsavtal",
       "Upplysningsplikt"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/fd468916-0719-4bbd-9efe-37133e84c7b1",
     "isGuiding": true,
@@ -32045,7 +32045,7 @@
       "Polis",
       "Tystnadsplikt"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/45ff2da8-4b18-4569-a403-f52fae165dba",
     "isGuiding": true,
@@ -32363,7 +32363,7 @@
     "keywords": [
       "Provision"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0ee79194-2ea3-4040-8560-38adc5d4aaa0",
     "isGuiding": true,
@@ -32499,7 +32499,7 @@
       "Tjänsteförseelse",
       "Bisyssla"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/68c2a56b-90a3-4065-9873-1e85f4c4e8ba",
     "isGuiding": true,
@@ -32521,7 +32521,7 @@
       "Avskedande",
       "Arbetsvägran"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/422a22b7-df5f-46a2-b8a7-da04fb070e80",
     "isGuiding": true,
@@ -32681,7 +32681,7 @@
       "Kollektivavtal",
       "Arbetstid"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/76e71739-6389-4def-b533-7d5dc81d8f82",
     "isGuiding": true,
@@ -33074,7 +33074,7 @@
       "Redovisningsansvarig",
       "Avskedande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d1f4a354-97df-4256-bc59-417cfcb6b129",
     "isGuiding": true,
@@ -33723,7 +33723,7 @@
       "Tjänsteställningstillägg",
       "Journalistavtalet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "mediaavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3deb9256-988f-4e85-b3bc-9dfea5426828",
     "isGuiding": true,
@@ -33870,7 +33870,7 @@
     "keywords": [
       "Anställningsskyddslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/dfd85c75-e7f9-4eea-b1cc-57959740e3be",
     "isGuiding": true,
@@ -33939,7 +33939,7 @@
       "Varning",
       "Uppsägning, saklig grund"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4a2b9aec-b5c6-4525-8a61-2b7d23004a89",
     "isGuiding": true,
@@ -34227,7 +34227,7 @@
       "Kollektivavtal",
       "Avstängning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1ab060c9-e935-42e2-9c64-056f888bb773",
     "isGuiding": true,
@@ -34405,7 +34405,7 @@
       "Anställningsskydd",
       "Rehabilitering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/89b0ad06-1027-4719-9a9a-01175f990c48",
     "isGuiding": true,
@@ -34471,7 +34471,7 @@
     "keywords": [
       "Anställningsskyddslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0f58ea99-6d50-462c-b6b2-ede218dc9a2b",
     "isGuiding": true,
@@ -34959,7 +34959,7 @@
       "Omplaceringsskyldighet",
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b3b4b772-1f62-4dae-9f84-67ca9e36de00",
     "isGuiding": true,
@@ -35250,7 +35250,7 @@
       "Polis",
       "Psykisk störning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/14756a0f-37e0-43b1-a186-2f5ad5ca82a0",
     "isGuiding": true,
@@ -35336,7 +35336,7 @@
       "Anställningsskydd",
       "Goda seder"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/38e4b7c0-5da0-4efc-8827-0407b96bed16",
     "isGuiding": true,
@@ -35449,7 +35449,7 @@
       "Skiftarbete",
       "Skiftformstillägg"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4889d21a-2629-42eb-a242-b1c5da69826a",
     "isGuiding": true,
@@ -35685,7 +35685,7 @@
       "Tolkning",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/38efccad-731b-48f8-a5c6-d2271914c27d",
     "isGuiding": true,
@@ -35888,7 +35888,7 @@
       "Övergång av företag m.m.",
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8ba49aae-4bc4-41f7-9a45-8d3b5615847f",
     "isGuiding": true,
@@ -35954,7 +35954,7 @@
     "keywords": [
       "Etnisk diskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/6471e899-e603-4754-b310-282612d1e2ac",
     "isGuiding": true,
@@ -36126,7 +36126,7 @@
       "Skiftformstillägg",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b20bee1f-5482-4a48-8a71-50aefcbe5a84",
     "isGuiding": true,
@@ -36216,7 +36216,7 @@
     "keywords": [
       "Visstidsanställning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/92e53d94-f525-4726-8681-fd232e8a4a60",
     "isGuiding": true,
@@ -36593,7 +36593,7 @@
       "Förhandlingsskyldighet",
       "Förutsättningsläran"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d3373471-d927-48f6-b637-8f576657e826",
     "isGuiding": true,
@@ -36727,7 +36727,7 @@
       "Anställningsrätt",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d3028472-4c13-4a44-b83d-b1eec5a042e3",
     "isGuiding": true,
@@ -36751,7 +36751,7 @@
       "Turordningsbrott",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/2cfd4d8b-49e1-4381-b929-c8b1c6f91dd8",
     "isGuiding": true,
@@ -36773,7 +36773,7 @@
       "Diskriminering",
       "Anställningsskyddslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a0a0f03e-f3ac-422f-a9ce-10d040c24f4d",
     "isGuiding": true,
@@ -37493,7 +37493,7 @@
       "Jämställdhet",
       "Lönediskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5bf76a40-fcf6-4ec3-b68f-43edac283cfc",
     "isGuiding": true,
@@ -37695,7 +37695,7 @@
     "keywords": [
       "Arbetsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/770799b9-09fe-46de-bd20-774b6bb8481a",
     "isGuiding": true,
@@ -38000,7 +38000,7 @@
       "Jämställdhet",
       "Lönediskriminering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b63e2f67-12c1-48d8-9cb5-7e2b475b406c",
     "isGuiding": true,
@@ -38876,7 +38876,7 @@
       "Anställningsskydd, Uppsägning och avstängning",
       "Grundlagsskyddad fri- och rättighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d177f4ca-dd01-4535-84c7-3e371130c262",
     "isGuiding": true,
@@ -39167,7 +39167,7 @@
       "Anställningsskydd",
       "Förflyttning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8c4adccd-5d60-4986-87bd-378519890f12",
     "isGuiding": true,
@@ -39369,7 +39369,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hok-vision",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/004afa7f-7896-4032-8a7f-da286cc65065",
     "isGuiding": true,
@@ -39393,7 +39393,7 @@
       "Omplacering",
       "Omplacering, saklig grund"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d43f0efc-ddd3-4e14-a504-817b748decd9",
     "isGuiding": true,
@@ -39535,7 +39535,7 @@
       "Kollektivavtal",
       "Övertidskompensation"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "mediaavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/dfadb4e3-caa6-4477-a627-335f4bc88480",
     "isGuiding": true,
@@ -39557,7 +39557,7 @@
       "Arbetsdomstolens behörighet",
       "Förhandling"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/db6959bf-c701-42c1-9442-f75f8f3da168",
     "isGuiding": true,
@@ -39709,7 +39709,7 @@
       "Betalningsföreläggande",
       "Rättegången i arbetstvister"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e89c19d2-103a-47db-ba5f-753a6c713737",
     "isGuiding": true,
@@ -40055,7 +40055,7 @@
     "keywords": [
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/dfcda10c-7362-4c77-a170-7f187a0f8e85",
     "isGuiding": true,
@@ -40207,7 +40207,7 @@
       "Anställningsskydd, Avstängning",
       "Anställningsskydd, Turordningsbrott"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f1e5d4f8-6c1c-4030-b3c8-8d105e75bd35",
     "isGuiding": true,
@@ -40458,7 +40458,7 @@
       "Anställningsskyddslagen, Fråga om anställnings upphörande",
       "Omplacering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d6d4c24e-f564-4198-a6f2-ee7b4d6c0992",
     "isGuiding": true,
@@ -40482,7 +40482,7 @@
       "Skiftformstillägg",
       "Löneform"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/73ae0348-3768-43e9-aa93-39b151b63015",
     "isGuiding": true,
@@ -40505,7 +40505,7 @@
       "Omplacering",
       "Saklig grund"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ba9effb1-900e-4c93-883d-e46346596d35",
     "isGuiding": true,
@@ -40699,7 +40699,7 @@
       "Tolkning av kollektivavtal",
       "Turordning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-ofr",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/188eddcb-22e5-449b-ac41-46e9b9a7aefc",
     "isGuiding": true,
@@ -40810,7 +40810,7 @@
     "keywords": [
       "Arbetstagare"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "mediaavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/dbf290ed-6a78-4b50-9a56-63579f7f0a63",
     "isGuiding": true,
@@ -40921,7 +40921,7 @@
       "Tolkning av kollektivavtal",
       "Ordalydelse"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/198f4e8d-0faa-47e8-8726-f95df2eca605",
     "isGuiding": true,
@@ -41010,7 +41010,7 @@
       "Uppsägning från arbetsgivarens sida",
       "Lönebidrag"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/723e03f8-c770-4fe1-bf24-c471608a5592",
     "isGuiding": true,
@@ -41183,7 +41183,7 @@
       "Ändrade arbetsuppgifter",
       "Arbetsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/9eeaff9a-9887-4a4a-932b-c319fe4e6812",
     "isGuiding": true,
@@ -41427,7 +41427,7 @@
       "Förflyttning",
       "Omplacering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/127f9659-b261-49fc-8a9b-6fa9e779a024",
     "isGuiding": true,
@@ -41515,7 +41515,7 @@
       "Rättegången i arbetstvister",
       "Rättegångskostnad"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f6465af5-1905-4d69-be55-c2c183352ade",
     "isGuiding": true,
@@ -42260,7 +42260,7 @@
       "Aktieöverlåtelse",
       "Medbestämmande, Förhandlingsrätt (10-17 §§)"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/bc3d132a-5b94-4495-ae36-46a967a4b597",
     "isGuiding": true,
@@ -42325,7 +42325,7 @@
       "Anställningsskydd, Uppsägning från arbetsgivarens sida (7-10 §§)",
       "Se Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "forsakringsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0a843241-1ed7-4ac3-9e44-755da145571d",
     "isGuiding": true,
@@ -42477,7 +42477,7 @@
     "keywords": [
       "Anställningsskydd, Uppsägning från arbetsgivarens sida (7-10 §§)"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ae376ae7-0fd4-4abf-8996-020f2c906cd3",
     "isGuiding": true,
@@ -42920,7 +42920,7 @@
       "Avtalslagen, allmänna",
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d9570071-1dc6-428b-84ad-f7579ef28c91",
     "isGuiding": true,
@@ -42964,7 +42964,7 @@
       "Lönetillägg",
       "Stabiliseringsavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "villkorsavtal-saco",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/cb039153-2bcc-4e79-b495-d4a1c8a41a2c",
     "isGuiding": true,
@@ -43186,7 +43186,7 @@
       "Omplacering",
       "Varning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/59f068d8-33db-459b-8f2e-b8ab4efcf3fb",
     "isGuiding": true,
@@ -43676,7 +43676,7 @@
       "Kollektivavtal",
       "Ackord"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "skogsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ef623ac6-a9e0-49e2-816a-9e71568f6e2f",
     "isGuiding": true,
@@ -43827,7 +43827,7 @@
       "God sed",
       "Medbestämmande, Skadestånd och andra påföljder (54-62 §§)"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "ab-kommunalt",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/43a00a61-8863-4fb0-83af-c47707bfe0ff",
     "isGuiding": true,
@@ -44053,7 +44053,7 @@
       "Illojal konkurrens",
       "Konkurrerande verksamhet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "handelsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/376da572-796f-4927-8840-6d30dbef8031",
     "isGuiding": true,
