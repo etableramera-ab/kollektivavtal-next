@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useInView } from "framer-motion";
 
 interface CountUpProps {
   end: number;
@@ -12,11 +11,40 @@ interface CountUpProps {
 
 export function CountUp({ end, suffix = "", prefix = "", duration = 2 }: CountUpProps) {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  // Use a simple IntersectionObserver with rootMargin to detect even invisible parents
+  useEffect(() => {
+    if (hasStarted) return;
+    const el = ref.current;
+    if (!el) return;
+
+    // Fallback: start after a short delay if observer never fires
+    const fallback = setTimeout(() => {
+      setHasStarted(true);
+    }, 1500);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+          clearTimeout(fallback);
+        }
+      },
+      { threshold: 0, rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
+  }, [hasStarted]);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!hasStarted) return;
     let start = 0;
     const step = end / (duration * 60);
     const timer = setInterval(() => {
@@ -29,12 +57,13 @@ export function CountUp({ end, suffix = "", prefix = "", duration = 2 }: CountUp
       }
     }, 1000 / 60);
     return () => clearInterval(timer);
-  }, [isInView, end, duration]);
+  }, [hasStarted, end, duration]);
 
+  // Show the final value in noscript/SSR, animate on client
   return (
     <span ref={ref}>
       {prefix}
-      {count.toLocaleString("sv-SE")}
+      {hasStarted ? count.toLocaleString("sv-SE") : end.toLocaleString("sv-SE")}
       {suffix}
     </span>
   );
