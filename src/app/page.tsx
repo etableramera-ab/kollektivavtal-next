@@ -41,10 +41,10 @@ const quickLinks = [
 ];
 
 const keyStats = [
-  { number: 400, suffix: "", label: "avtal sammanfattade — fler på väg", icon: FileText },
+  { number: 425, suffix: "", label: "avtal sammanfattade — fler på väg", icon: FileText },
   { number: 3.4, suffix: "", label: "miljoner anställda täckta", icon: Users },
   { number: 92, suffix: "%", label: "avtalstäckning", icon: ShieldCheck },
-  { number: 400, suffix: "", label: "AI-experten svarar", icon: MessageSquare },
+  { number: 425, suffix: "", label: "AI-experten svarar", icon: MessageSquare },
 ];
 
 const agreements = [
