@@ -15,6 +15,7 @@ const agreements = [
   { slug: 'entreprenadmaskinavtalet', url: 'https://www.byggnads.se/4a4eef/siteassets/kollektivavtal/entreprenadmaskinavtalet-2025-2027.pdf' },
   { slug: 'plat-ventilationsavtalet', url: 'https://www.byggnads.se/4a76c4/siteassets/kollektivavtal/plat--och-ventilationsavtalet-2025---2027.pdf' },
   { slug: 'maleriavtalet', url: 'https://www.byggnads.se/4a4f6e/siteassets/kollektivavtal/kollektivavtal-for-maleriyrket-2025-2027.pdf' },
+  { slug: 'vvs-montorsavtalet', url: 'https://www.byggnads.se/4a7b02/siteassets/kollektivavtal/teknikinstallationsavtal-vvs-kyl-2025-2027.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');

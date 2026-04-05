@@ -454,7 +454,7 @@
       "Bisyssla",
       "Kollektivavtalsbrott"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "raddningstjanst-avtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://www.arbetsdomstolen.se/sv/meddelade-domar/2025/2025-04-30-ad-2025-nr-25/",
     "isGuiding": false,
@@ -617,7 +617,7 @@
       "Uppsägning",
       "Sakliga skäl"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/96386a1b-58ac-41ea-a73b-49b33eaf5900",
     "isGuiding": true,
@@ -1036,7 +1036,7 @@
       "Fartyg",
       "Arbetsdomstolens behörighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/81036043-0632-46d6-991e-13b489616dbf",
     "isGuiding": true,
@@ -3821,7 +3821,7 @@
       "Kollektivavtalstvist",
       "Konkurrerande kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/2378b4e7-06ea-408e-98f3-ccc7825efa77",
     "isGuiding": true,
@@ -4919,7 +4919,7 @@
       "Interimistiskt beslut",
       "Utländska rättsförhållanden"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c4e927c8-6128-4885-a29d-5eae1f084906",
     "isGuiding": true,
@@ -5032,7 +5032,7 @@
       "Företrädesrätt",
       "Sysselsättningsgrad"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "raddningstjanst-avtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1f6fbc10-18cc-4540-9d5f-2480084a4636",
     "isGuiding": true,
@@ -5261,7 +5261,7 @@
       "Arbetstidsschema",
       "Hamnarbetare"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/78f837d4-d8e6-4cb4-94e0-592926570e31",
     "isGuiding": true,
@@ -7561,7 +7561,7 @@
       "Skyddsombud",
       "Förtroendeman"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/aee5fc94-5c30-4109-be22-26ef31a47e21",
     "isGuiding": true,
@@ -11194,7 +11194,7 @@
       "Olovlig stridsåtgärd",
       "Förstadagsintyg"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "renhallningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ff9ce238-2b36-4298-8496-490c6f8c0648",
     "isGuiding": true,
@@ -13530,7 +13530,7 @@
       "Pension",
       "Samordning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a46c5477-85b6-4c29-a866-47e552c70ebe",
     "isGuiding": true,
@@ -13822,7 +13822,7 @@
       "Övertidsersättning",
       "Tjänstgöringsfri tid"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "raddningstjanst-avtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/bf7027f3-f459-4736-929e-c5b467482e98",
     "isGuiding": true,
@@ -20588,7 +20588,7 @@
       "Skydd mot kollektiv lönesänkning",
       "Arbetsbrist"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "renhallningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/bb2a31ca-8f10-45cb-9d5e-468b0d4b795e",
     "isGuiding": true,
@@ -27206,7 +27206,7 @@
       "Föravtal",
       "Krigsrisktillägg"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "sjofartsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/08433fdb-2d9d-4144-8d9c-833bfa552deb",
     "isGuiding": true,
@@ -28880,7 +28880,7 @@
       "Stridsåtgärd",
       "Regeringsformen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/44ca36c3-bd47-45b3-99e1-6fbd636c7ae8",
     "isGuiding": true,
@@ -30735,7 +30735,7 @@
       "Tidsbegränsad anställning",
       "Vikariat"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "renhallningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/35ef93de-1c3d-4fa5-bf90-f8121d30e65e",
     "isGuiding": true,
@@ -30984,7 +30984,7 @@
       "Stridsåtgärd",
       "Interimistiskt förordnande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0b49b11e-814e-403f-b087-5b578155f286",
     "isGuiding": true,
@@ -31664,7 +31664,7 @@
       "Uppsägning",
       "Varusmuggling"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "hamnavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c4200c3d-7a7d-4c11-b82f-44528fc360bc",
     "isGuiding": true,
@@ -36400,7 +36400,7 @@
       "Arbetsskyldighet",
       "Anspänningstid"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "raddningstjanst-avtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a04e5544-247d-44ca-a5dd-9023fa17be68",
     "isGuiding": true,
@@ -43121,7 +43121,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "sjofartsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/fb04205e-bfaa-484f-858b-c603331509d3",
     "isGuiding": true,
