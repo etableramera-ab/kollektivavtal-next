@@ -35,6 +35,10 @@ const agreements = [
   { slug: 'villkorsavtal-saco', url: 'https://www.av.se/globalassets/filer/arbetsmiljoarbete-och-inspektioner/avtal-utstationering/kollektivavtal-villkorsavtal-t-mellan-arbetsgivarverket-saco-s.pdf' },
   // Seko — Väg och ban
   { slug: 'vag-banavtalet-seko', url: 'https://www.seko.se/4a5cef/siteassets/kollektivavtal/branschavtal/vag-och-ban/vag-och-banavtalet-2025-2027-utgava-1.pdf' },
+  // IF Metall — nya
+  { slug: 'teknikavtalet-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/teknikavtalet-2025-2027.pdf' },
+  { slug: 'svemek-avtalet', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/svemek-2025-2027.pdf' },
+  { slug: 'kemiskt-avtal-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/kemiska-fabriker-2025-2027.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');

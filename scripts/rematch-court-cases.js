@@ -42,6 +42,13 @@ const MATCHERS = {
   'slakteriavtalet': ['slakteri.*avtal'],
   'sagverksavtalet': ['sågverk.*avtal', 'trä.*möbel.*industri'],
   'musikeravtalet': ['musikerförbundet', 'orkester'],
+  // Avtal 126-150
+  'teknikavtalet-ifmetall': ['teknikavtalet.*if metall', 'if metall.*teknik'],
+  'motoravtalet': ['motorbransch', 'bilreparatör.*avtal'],
+  'personlig-assistent-avtal': ['personlig assistent.*avtal', 'pan.*kommun'],
+  'foodora-avtal': ['foodora', 'cykelbud.*avtal', 'gig.*avtal'],
+  'sparvag-tunnelbana': ['tunnelbana.*avtal', 'spårvagn.*avtal'],
+  'postnavtalet-seko': ['postnord.*seko'],
   // Avtal 101-125
   'gruvindustriavtalet': ['gruvarbetare', 'gruv.*industri', 'svemin', 'lkab', 'boliden'],
   'verkstadsavtalet': ['verkstad.*avtal', 'verkstadsförening'],
