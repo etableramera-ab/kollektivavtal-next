@@ -434,7 +434,7 @@
       "Lön",
       "Övertid"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "taxiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://www.arbetsdomstolen.se/sv/meddelade-domar/2025/2025-05-14-ad-2025-nr-29/",
     "isGuiding": false,
@@ -2254,7 +2254,7 @@
       "Kollektivavtal",
       "Dygnsvila"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "flygsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/504b4799-6c2a-4033-826b-e33d8160b99f",
     "isGuiding": false,
@@ -4353,7 +4353,7 @@
       "Förhandlingsskyldighet",
       "Underentreprenör"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bemanningsavtalet-lo",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3f3961ae-6720-45ae-b1bd-151d392f2135",
     "isGuiding": true,
@@ -4866,7 +4866,7 @@
       "Tvåmånadersregeln",
       "Perdurerande förhållande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bevakningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d5800e6e-3db5-4b1d-bcce-22ae6b636a69",
     "isGuiding": true,
@@ -5283,7 +5283,7 @@
       "Avskedande",
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "samhallsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/eaf674fe-ab9f-4c13-986b-9f976a1cd1ce",
     "isGuiding": true,
@@ -6751,7 +6751,7 @@
     "keywords": [
       "Arbetstagarbegreppet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "teateravtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1913989c-0cd7-419c-b785-eda4fd8ca9b4",
     "isGuiding": true,
@@ -7537,7 +7537,7 @@
       "Behovsanställning",
       "Intermittent anställning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bevakningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/91c4388a-7ef5-42f6-83df-d63491376a61",
     "isGuiding": true,
@@ -7583,7 +7583,7 @@
       "Avskedande",
       "Skadegörelse"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bussavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b15a72c5-b1da-4e92-b161-141617d64477",
     "isGuiding": true,
@@ -8407,7 +8407,7 @@
       "Direkt diskriminering",
       "Bisyssla"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "lakare-kommun",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/40317a04-3420-4522-9f68-e27dcf7dd220",
     "isGuiding": true,
@@ -8711,7 +8711,7 @@
     "keywords": [
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "flygsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d8965807-31c9-4ab4-afaf-2aaa3da131cc",
     "isGuiding": true,
@@ -8735,7 +8735,7 @@
       "Attest",
       "Bevakningsföretag"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bevakningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5937fd60-0fac-45ed-9fa3-164a675be49e",
     "isGuiding": true,
@@ -9804,7 +9804,7 @@
       "Lön",
       "Rättegångskostnader"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "taxiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b9a374d8-e8af-4693-b0c4-464bf8191023",
     "isGuiding": true,
@@ -10440,7 +10440,7 @@
       "Integritet",
       "Patientsäkerhet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "tandvard-privat",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f2864827-ec0b-48e7-a24b-15021178e8a5",
     "isGuiding": true,
@@ -11504,7 +11504,7 @@
       "Patientnära vårdarbete",
       "Förhandsavgörande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "lakare-kommun",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/042f9147-0fd2-4caf-90db-0753f759b661",
     "isGuiding": true,
@@ -13507,7 +13507,7 @@
       "Bevakningsföretag",
       "Konsekvensskadestånd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bevakningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ae9627b8-a9c4-4ffd-ad77-e318419d2b98",
     "isGuiding": true,
@@ -13946,7 +13946,7 @@
       "Tolkning",
       "Arbetstidsförkortning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "kemiska-avtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5b3cf926-97c5-44f9-8f24-9e3e5aa4e053",
     "isGuiding": true,
@@ -14177,7 +14177,7 @@
       "Kundregister",
       "Lojalitetsplikt"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "frisorsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/859f70ac-3da8-4c18-9fc4-fed893107774",
     "isGuiding": true,
@@ -14438,7 +14438,7 @@
       "Saklig grund",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "frisorsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1cca567c-d7a5-40fe-ae5c-8417b4a0307c",
     "isGuiding": true,
@@ -16824,7 +16824,7 @@
       "Kontantersättning",
       "Taxichaufför"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "taxiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/a4f80056-e2fc-4636-a4de-41e8a82b29da",
     "isGuiding": true,
@@ -19198,7 +19198,7 @@
       "Föräldraledighet",
       "Missgynnandeförbudet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "gron-naringen",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1af2f034-12fe-4a5c-9cb3-7851adaed852",
     "isGuiding": true,
@@ -19743,7 +19743,7 @@
     "keywords": [
       "Provanställning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bussavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f62f8815-4890-466d-aa8f-c5e8b00c6750",
     "isGuiding": true,
@@ -21336,7 +21336,7 @@
       "Tolkningsföreträde",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "fordonsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/eca45086-2360-48fe-b1b0-2af122118e09",
     "isGuiding": true,
@@ -22343,7 +22343,7 @@
       "Allmänna avtalsrättsliga principer",
       "Skadeståndsskyldighet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "samhallsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/3e1d1f32-748e-456d-8909-af513a6b4d28",
     "isGuiding": true,
@@ -22860,7 +22860,7 @@
       "Rättegångshinder",
       "Skiljeklausul"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "taxiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/928a1c1e-25c6-4ef1-956a-fef11b211890",
     "isGuiding": true,
@@ -25695,7 +25695,7 @@
       "Kollektivavtal",
       "Omplacering"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "flygsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5120b63c-6dd4-4980-8797-9b384d5806b8",
     "isGuiding": true,
@@ -26615,7 +26615,7 @@
       "Skyddat arbete",
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "samhallsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/d6197073-d1b8-49f9-a66c-b345e966d747",
     "isGuiding": true,
@@ -26821,7 +26821,7 @@
       "Provocerad uppsägning",
       "Avskedande"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "grafiska-avtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8a614b1c-3efc-4d12-839d-b126326dad2a",
     "isGuiding": true,
@@ -28307,7 +28307,7 @@
       "Avskedande",
       "Förskingring"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "frisorsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/54be0a73-c45e-433f-98ac-0a17d6115ea6",
     "isGuiding": true,
@@ -28608,7 +28608,7 @@
       "Tolkning av kollektivavtal",
       "Kollektivavtal, tolkning av"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "flygsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/9acde700-b675-4c05-84b5-721976759270",
     "isGuiding": true,
@@ -30192,7 +30192,7 @@
       "Drogtest",
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "bussavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/75fd5851-f7bf-4e8d-8b95-262e605e81c2",
     "isGuiding": true,
@@ -31573,7 +31573,7 @@
       "Kollektivavtal",
       "Kollektivavtalstolkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "flygsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7b9fca7a-ed84-4453-82e9-06c61076134b",
     "isGuiding": true,
@@ -34429,7 +34429,7 @@
     "summary": "Fråga om vissa arbetstagares anställningar enligt 6 b § anställningsskyddslagen övergått till en ny arbetsgivare. Ansvaret för förvar av utlänningar övergick den 1 oktober 1997 från Rikspolisstyrelsen (RPS) till Statens Invandrarverk (SIV). Vid förvaret i Malmö anlitade RPS ett bevakningsföretag. Arbetstagare hos det företaget utförde arbete vid förvaret. När SIV övertog ansvaret för förvaret satte SIV in egen personal som sedan utförde de arbetsuppgifter som tidigare utförts av arbetstagarna hos bevakningsföretaget. Arbetsdomstolen fann att det avgörande för om de berörda arbetstagarna hos bevakningsföretaget kommit att få anställningar hos SIV är om det skett en övergång av verksamhet eller del av verksamhet i den mening som avses i 6 b § anställningsskyddslagen från bevakningsföretaget till SIV och att någon sådan övergång inte skett.",
     "topic": "Övrigt",
     "keywords": [],
-    "relatedAgreement": null,
+    "relatedAgreement": "bevakningsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/96a96495-f585-40f3-9ac2-4794ad02739f",
     "isGuiding": true,
@@ -35290,7 +35290,7 @@
       "Skadestånd",
       "Jämkning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "i-avtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/8f17c8f3-2032-4c2f-90fb-bab79e8ce833",
     "isGuiding": true,
@@ -35582,7 +35582,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "energiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f372285b-438d-4631-80dc-53afaf3c5cb2",
     "isGuiding": true,
@@ -35669,7 +35669,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "i-avtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/4da879fb-0f25-4038-83b4-b160417cbc11",
     "isGuiding": true,
@@ -38809,7 +38809,7 @@
     "keywords": [
       "Arbetsbrist, Saklig grund för uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "teateravtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f9c4c166-7a50-4d8c-9ae3-c4171afe0640",
     "isGuiding": true,
@@ -39841,7 +39841,7 @@
       "Elev",
       "Uppdragsutbildning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "frisorsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/7170e2fb-4d97-4a12-bee4-a0b2c7d9a48d",
     "isGuiding": true,
@@ -40722,7 +40722,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "energiavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ddb7b344-9121-4a07-8d65-7bfbf36c4513",
     "isGuiding": true,
@@ -40969,7 +40969,7 @@
       "Sjuklön",
       "Sjömanslagen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "lakare-kommun",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0bd0faca-cab6-48f3-86a8-d7e3e556507f",
     "isGuiding": true,
@@ -41917,7 +41917,7 @@
       "Företrädesrätt till återanställning",
       "Offentlig anställning, lagen om"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "gron-naringen",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/71ae6897-9a75-475f-9485-48d61db294d7",
     "isGuiding": true,

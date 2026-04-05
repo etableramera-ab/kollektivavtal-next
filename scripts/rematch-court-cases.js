@@ -4,6 +4,29 @@ const cases = require('../src/data/court-cases-imported.json');
 const OUTPUT = 'src/data/court-cases-imported.json';
 
 const MATCHERS = {
+  // NEW avtal 26-50
+  'i-avtalet': ['industriavtal', 'industriarbetsgivarna'],
+  'stal-och-metall': ['stål och metall', 'stålarbetsgivare', 'röda avtalet'],
+  'samhallsavtalet': ['samhall'],
+  'lager-ehandelsavtalet': ['centrallager', 'e-handelsavtal'],
+  'apoteksavtalet': ['apotek', 'farmaceut', 'apotekstekniker'],
+  'frisorsavtalet': ['frisör', 'frisöravtal'],
+  'bussavtalet': ['bussföretag', 'kollektivtrafik.*buss', 'busschaufför'],
+  'taxiavtalet': ['taxi', 'taxiförbundet'],
+  'flygsavtalet': ['kabinpersonal', 'flygbransch', 'markpersonal.*flyg'],
+  'energiavtalet': ['energiföretag', 'elproduktion', 'elnät', 'fjärrvärme'],
+  'kemiska-avtalet': ['ikem', 'kemiindustri', 'läkemedelsindustri', 'kemisk industri'],
+  'pappers-avtalet': ['pappersbruk', 'massaindustri', 'pappersindustri'],
+  'lakare-kommun': ['läkarförbundet', 'läkare.*region', 'läkare.*skr'],
+  'tandvard-privat': ['privattandläkarna', 'tandhygienist', 'tandsköterska'],
+  'bevakningsavtalet': ['väktare', 'bevakning', 'säkerhetsföretag', 'ordningsvakt'],
+  'gron-naringen': ['gröna arbetsgivare', 'jordbruk', 'lantbruk', 'djurskötsel'],
+  'teateravtalet': ['teaterförbundet', 'scenkonst', 'skådespelare'],
+  'teleavtalet': ['telekom.*seko', 'fälttekniker.*tele'],
+  'fordonsavtalet': ['fordon.*avtal', 'bilmekaniker', 'fordonsreparatör', 'motorbransch'],
+  'grafiska-avtalet': ['grafisk.*företag', 'tryckeri', 'bokbindare', 'förpackning.*industri'],
+  'bemanningsavtalet-lo': ['bemanningsavtalet.*lo', 'lo.*bemanning'],
+  // Original avtal 1-25
   'byggavtalet': [
     'byggnads', 'byggnadsarbetareförbundet', 'byggföretagen', 'byggavtal',
     'byggindustri', 'sveriges byggindustrier'
