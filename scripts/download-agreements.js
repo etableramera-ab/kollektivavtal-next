@@ -16,6 +16,16 @@ const agreements = [
   { slug: 'plat-ventilationsavtalet', url: 'https://www.byggnads.se/4a76c4/siteassets/kollektivavtal/plat--och-ventilationsavtalet-2025---2027.pdf' },
   { slug: 'maleriavtalet', url: 'https://www.byggnads.se/4a4f6e/siteassets/kollektivavtal/kollektivavtal-for-maleriyrket-2025-2027.pdf' },
   { slug: 'vvs-montorsavtalet', url: 'https://www.byggnads.se/4a7b02/siteassets/kollektivavtal/teknikinstallationsavtal-vvs-kyl-2025-2027.pdf' },
+  // SKR — kommun/region
+  { slug: 'ab-kommunalt', url: 'https://skr.se/download/18.4c5d386919996f3b21151e81/1759306535392/Allmanna-Bestammelser-AB-25-i-lydelse-2025-04-01.pdf' },
+  { slug: 'hok-kommunal', url: 'https://skr.se/download/18.4d2a888c19913a970f86ce83/1757406196642/Huvudoverenskommelse-(HOK)-25-med-Kommunal.pdf' },
+  { slug: 'laraavtalet', url: 'https://skr.se/download/18.4d2a888c19913a970f86d2cf/1757406957810/HOK-25-OFRs-Larare.pdf' },
+  { slug: 'hok-vision', url: 'https://skr.se/download/18.4d2a888c19913a970f86d11f/1757406625508/Huvudoverenskommelse-(HOK)-25-med-OFR-AKV.pdf' },
+  { slug: 'sjukskoterska-avtal', url: 'https://skr.se/download/18.4d2a888c19913a970f86d134/1757406796925/HOK-25-OFR-H%C3%A4lso-och-sjukvard..pdf' },
+  { slug: 'hok-akademiker', url: 'https://skr.se/download/18.4d2a888c19913a970f86cfd2/1757406413579/HOK-T-med-AkademikerAlliansen-i-lydelse%202025-04-01.pdf' },
+  { slug: 'lakare-kommun', url: 'https://skr.se/download/18.2eae6b4519a0f5b858e1b6e7/1761294674524/H%C3%96K%2025%20L%C3%A4karf%C3%B6rbundet.pdf' },
+  { slug: 'bilaga-m-larare', url: 'https://skr.se/download/18.4d2a888c19913a970f86c663/1757404111873/Bilaga%20M-25.pdf' },
+  { slug: 'bilaga-r-raddningstjanst', url: 'https://skr.se/download/18.4d2a888c19913a970f86c661/1757404111635/Bilaga-R-i-lydelse-2025-04-01.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');

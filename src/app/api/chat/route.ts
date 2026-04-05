@@ -3,6 +3,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAgreementBySlug } from "@/data/agreements";
 import { getTruncatedAgreementText } from "@/lib/agreement-text-loader";
 
+// Kommun/region agreements that should also include AB text
+const KOMMUN_AGREEMENTS_NEEDING_AB = [
+  "hok-kommunal", "hok-vision", "sjukskoterska-avtal", "laraavtalet",
+  "lakare-kommun", "hok-akademiker", "raddningstjanst-avtal",
+  "socialtjanst-avtal", "biblioteksavtalet", "kulturarbetaravtalet",
+  "parkavtalet", "renhallningsavtalet", "vattenavtalet",
+];
+
+// Extra texts to append for specific agreements
+const EXTRA_TEXTS: Record<string, string[]> = {
+  "laraavtalet": ["bilaga-m-larare"],
+  "raddningstjanst-avtal": ["bilaga-r-raddningstjanst"],
+};
+
 export async function POST(req: NextRequest) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -38,24 +52,48 @@ export async function POST(req: NextRequest) {
 
   messages.push({ role: "user", content: message });
 
-  // Build system prompt — use full agreement text if available
-  const fullText = getTruncatedAgreementText(agreementSlug, 80000);
+  // Build system prompt
+  const fullText = getTruncatedAgreementText(agreementSlug, 60000);
+
+  // For kommun/region: also load AB
+  let abText: string | null = null;
+  if (KOMMUN_AGREEMENTS_NEEDING_AB.includes(agreementSlug)) {
+    abText = getTruncatedAgreementText("ab-kommunalt", 30000);
+  }
+
+  // Load extra texts (bilaga M, bilaga R, etc)
+  const extras = EXTRA_TEXTS[agreementSlug] || [];
+  const extraTexts = extras
+    .map((slug) => getTruncatedAgreementText(slug, 15000))
+    .filter(Boolean);
 
   let systemPrompt: string;
 
-  if (fullText) {
+  if (fullText || abText) {
     const unions = agreement.parties.unions.join(" eller ");
-    systemPrompt = `Du är en AI-expert på ${agreement.name}. Du har tillgång till hela avtalstexten nedan.
+    const textSections: string[] = [];
+
+    if (abText) {
+      textSections.push(`AB (ALLMÄNNA BESTÄMMELSER) — reglerar arbetstid, semester, sjuklön, uppsägning:\n${abText}`);
+    }
+    if (fullText) {
+      textSections.push(`${agreement.name.toUpperCase()} — reglerar löner och specifika villkor:\n${fullText}`);
+    }
+    for (const extra of extraTexts) {
+      textSections.push(`BILAGA/TILLÄGG:\n${extra}`);
+    }
+
+    systemPrompt = `Du är en AI-expert på ${agreement.name}. Du har tillgång till avtalstexter nedan.
+${abText ? "\nOBS: Kommun/region har en dubbel struktur — AB (Allmänna Bestämmelser) reglerar grundvillkor (arbetstid, semester, sjuklön, uppsägning) och HÖK/löneavtalet reglerar löner. Använd BÅDA för att svara." : ""}
 
 STRIKTA REGLER:
-- Svara ENBART baserat på avtalstexten och informationen nedan.
+- Svara ENBART baserat på avtalstexterna och informationen nedan.
 - CITERA ALDRIG avtalstexten ordagrant — sammanfatta ALLTID i egna ord.
 - Om frågan inte kan besvaras utifrån texten, säg: "Jag hittar inte den informationen i avtalet. Kontakta ${unions} för exakt besked."
 - Svara på svenska, kort och tydligt. Håll under 200 ord.
-- Ange relevant paragraf eller kapitel om du kan identifiera det (t.ex. "Enligt § 4 i avtalet...").
+- Ange relevant paragraf om du kan (t.ex. "Enligt § 4 i AB...").
 - Avsluta ALLTID med: "Kontakta ${unions} för bindande besked."
 - Gissa ALDRIG — om du är osäker, säg det.
-- Svaren är vägledande, inte juridiskt bindande.
 
 AVTALSINFORMATION:
 Avtal: ${agreement.name}
@@ -69,10 +107,9 @@ ${Object.entries(agreement.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
 LÖNETABELL:
 ${agreement.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n")}
 
-FULLSTÄNDIG AVTALSTEXT:
-${fullText}`;
+AVTALSTEXTER:
+${textSections.join("\n\n---\n\n")}`;
   } else {
-    // Fallback: use the summary-based system prompt
     systemPrompt = agreement.aiSystemPrompt;
   }
 

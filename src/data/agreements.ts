@@ -2770,6 +2770,26 @@ STRIKTA REGLER:
     relatedAgreements: ["hok-kommunal", "gron-naringen"],
     aiSystemPrompt: `Du är en AI-expert på Parkavtalet — ~8 000 parkarbetare. Löner: min ~25 000 kr, median ~29 000 kr.\n\nSTRIKTA REGLER:\n- Svara BARA baserat på informationen ovan.\n- Svara på svenska, kort. Håll under 200 ord.\n- Avsluta ALLTID med: "Kontakta Kommunal för bindande besked."`,
   },
+  // HÖK T AkademikerAlliansen
+  {
+    slug: "hok-akademiker", name: "HÖK T AkademikerAlliansen", shortName: "HÖK Akademiker", sector: "kommun_region", sectorLabel: "Kommun/region",
+    parties: { unions: ["AkademikerAlliansen (Saco-förbund)"], employers: ["SKR", "Sobona"] }, employeeCount: 100000,
+    validPeriod: "1 april 2025, tillsvidare (uppsägningsbart med 5 mån)",
+    summary: "HÖK T AkademikerAlliansen gäller akademiker i kommun/region — ingenjörer, psykologer, dietister, fysioterapeuter och andra Saco-anslutna. Tillsvidareavtal med lokal lönebildning. Löneökningar enligt märket.",
+    keyFacts: { minimumWage: "Individuell lönesättning (lokal lönebildning)", overtimeRate: "Första 2 tim: 180%, därefter 200%", obWeekday: "Enligt AB", obNight: "Enligt AB", obWeekend: "Enligt AB", obHoliday: "Enligt AB", vacationDays: "25–32 dagar beroende på ålder", parentalPay: "Föräldralön via avtal", noticePeriod: "1–6 månader", pension: "KAP-KL/AKAP-KR", workHoursPerWeek: "40 timmar" },
+    wageTable: [
+      { role: "Ingenjör (kommun)", minimum: "Individuell", median: "42 000 kr", comment: "Lokal lönebildning" },
+      { role: "Psykolog", minimum: "Individuell", median: "48 000 kr", comment: "Specialist mer" },
+      { role: "Fysioterapeut", minimum: "Individuell", median: "36 000 kr", comment: "Lokal lönebildning" },
+    ],
+    faq: [
+      { question: "Vilken lön?", answer: "Individuell lönesättning genom lokal lönebildning. Varierar med yrke, erfarenhet och kommun." },
+      { question: "Vad är skillnaden mot HÖK Vision?", answer: "HÖK AkademikerAlliansen gäller Saco-anslutna (akademiker), HÖK Vision gäller Vision/OFR-anslutna." },
+    ],
+    sources: [{ label: "SKR — Kollektivavtal", url: "https://skr.se/arbetsgivarekollektivavtal" }],
+    relatedAgreements: ["ab-kommunalt", "hok-vision", "hok-kommunal"],
+    aiSystemPrompt: `Du är en AI-expert på HÖK T AkademikerAlliansen — avtal för ~100 000 akademiker i kommun/region. Individuell lönesättning. Pension: KAP-KL/AKAP-KR.\n\nSTRIKTA REGLER:\n- Svara BARA baserat på informationen ovan.\n- Svara på svenska, kort. Håll under 200 ord.\n- Avsluta ALLTID med: "Kontakta AkademikerAlliansen för bindande besked."`,
+  },
   // === AVTAL 101-125 ===
   {
     slug: "gjuteriavtalet", name: "Gjuteriavtalet", shortName: "Gjuteriavtalet", sector: "privat", sectorLabel: "Privat industri",
