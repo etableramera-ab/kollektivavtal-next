@@ -5176,7 +5176,7 @@
       "Övertid",
       "Gummiverkstadsavtalet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/f78cc89c-8bbd-48fd-8ec6-577767dddb3d",
     "isGuiding": true,
@@ -7837,7 +7837,7 @@
       "Premielön",
       "Individuell prestationsbaserad lön"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "kooperationsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/0e420c3e-7d02-437a-82dc-2011db71fe55",
     "isGuiding": true,
@@ -15544,7 +15544,7 @@
       "Universitetslektor",
       "Högskoleförordningen"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "universitetslararavtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/09044e4c-fd31-42dc-b8b9-5165ef0f9dfb",
     "isGuiding": true,
@@ -16637,7 +16637,7 @@
       "Tillräckliga kvalifikationer",
       "Uppsägning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "universitetslararavtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b88b439e-5db9-4f70-8547-00715869e912",
     "isGuiding": true,
@@ -17125,7 +17125,7 @@
       "Anvisning enligt socialtjänstlagen",
       "Praktik"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "socialtjanst-avtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/5216840c-6258-419f-ab91-d071c93381cc",
     "isGuiding": true,
@@ -26796,7 +26796,7 @@
       "Återförvisning",
       "Omplaceringstillägg"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/e52d2d3d-c4e7-4f20-9486-a8ae6dfa8fed",
     "isGuiding": true,
@@ -28499,7 +28499,7 @@
       "Indirekt diskriminering",
       "Verkstadsavtalet"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/110f3227-4443-496d-a145-2b1b01465b61",
     "isGuiding": true,
@@ -30033,7 +30033,7 @@
       "Fartygsgrupp",
       "Lön"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "farjeavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/50b34a2d-f674-4571-ace9-466b91d19240",
     "isGuiding": true,
@@ -32483,7 +32483,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1752e3b5-31fb-4c6d-aaf2-b36cf97057b2",
     "isGuiding": true,
@@ -33216,7 +33216,7 @@
     "keywords": [
       "Anställningsskydd"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "universitetslararavtal",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/ecd43e4e-b9b5-4f9b-928b-da416fedd0ef",
     "isGuiding": true,
@@ -34451,7 +34451,7 @@
       "Kollektivavtalsbrott",
       "Ackordsarbete"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/15d548f4-e6d4-4ff7-a53e-a092382063e6",
     "isGuiding": true,
@@ -35094,7 +35094,7 @@
     "keywords": [
       "Färdtidsersättning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/b399989e-5ce5-4d72-a46f-0ec586112680",
     "isGuiding": true,
@@ -35265,7 +35265,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c1277383-d9b9-4791-ad26-564f4eb18b11",
     "isGuiding": true,
@@ -38874,7 +38874,7 @@
     "keywords": [
       "Löneutbetalning"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/298471dd-cf30-47d2-ab7a-86a0a06664a2",
     "isGuiding": true,
@@ -39885,7 +39885,7 @@
       "Tolkning av kollektivavtal",
       "Sjuklön"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/c576d96c-8941-4519-aa1c-0eb7ca904cb1",
     "isGuiding": true,
@@ -40487,7 +40487,7 @@
     "keywords": [
       "Kollektivavtal"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/563fc0bc-eee3-496b-812a-300af66170dd",
     "isGuiding": true,
@@ -44541,7 +44541,7 @@
       "God sed",
       "Sexuella trakasserier"
     ],
-    "relatedAgreement": null,
+    "relatedAgreement": "verkstadsavtalet",
     "outcome": "Övrigt",
     "sourceUrl": "https://rattspraxis.etjanst.domstol.se/sok/publicering/1b5137f7-71ea-4b76-b263-704b66a74c1d",
     "isGuiding": true,
