@@ -26,6 +26,15 @@ const agreements = [
   { slug: 'lakare-kommun', url: 'https://skr.se/download/18.2eae6b4519a0f5b858e1b6e7/1761294674524/H%C3%96K%2025%20L%C3%A4karf%C3%B6rbundet.pdf' },
   { slug: 'bilaga-m-larare', url: 'https://skr.se/download/18.4d2a888c19913a970f86c663/1757404111873/Bilaga%20M-25.pdf' },
   { slug: 'bilaga-r-raddningstjanst', url: 'https://skr.se/download/18.4d2a888c19913a970f86c661/1757404111635/Bilaga-R-i-lydelse-2025-04-01.pdf' },
+  // HRF — Hotell & Restaurang
+  { slug: 'hotell-restaurang', url: 'https://www.hrf.net/app/uploads/2025/05/Grona-riksen-2025-2027-1.pdf' },
+  { slug: 'hotell-restaurang-hang', url: 'https://www.hrf.net/app/uploads/2025/05/Visita-Hangavtal-2025-2027.pdf' },
+  // Handelsavtalet (Detaljhandel)
+  { slug: 'handelsavtalet', url: 'https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/detaljhandelsavtalet-2025-2027-in.pdf' },
+  // Arbetsgivarverket — Villkorsavtal Saco
+  { slug: 'villkorsavtal-saco', url: 'https://www.av.se/globalassets/filer/arbetsmiljoarbete-och-inspektioner/avtal-utstationering/kollektivavtal-villkorsavtal-t-mellan-arbetsgivarverket-saco-s.pdf' },
+  // Seko — Väg och ban
+  { slug: 'vag-banavtalet-seko', url: 'https://www.seko.se/4a5cef/siteassets/kollektivavtal/branschavtal/vag-och-ban/vag-och-banavtalet-2025-2027-utgava-1.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');

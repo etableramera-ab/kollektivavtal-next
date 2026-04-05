@@ -330,7 +330,7 @@ STRIKTA REGLER:
     summary:
       "Handelsavtalet gäller butiksanställda, lagerarbetare och e-handelsmedarbetare i Sverige. OB-ersättning är en central del av avtalet — Svensk Handel försökte sänka den i förhandlingarna 2025, men Handels lyckades försvara nivåerna. Lönerna höjs med cirka 2 000 kr/mån under avtalsperioden. Avtalet reglerar även arbetstider, semester, föräldralön och pension.",
     keyFacts: {
-      minimumWage: "Från ca 24 600 kr/mån (butik, utan erfarenhet)",
+      minimumWage: "25 814 kr/mån (18 år, 0 branschvana, år 1). Med 3 års vana: 28 344 kr",
       overtimeRate: "Första 2 tim: 150%, därefter 200%",
       obWeekday: "~55 kr/tim (kväll)",
       obNight: "~80 kr/tim",
@@ -344,16 +344,22 @@ STRIKTA REGLER:
     },
     wageTable: [
       {
-        role: "Butiksanställd (utan erfarenhet)",
-        minimum: "24 600 kr",
+        role: "Butiksanställd (0 branschvana, 18 år)",
+        minimum: "25 814 kr",
         median: "27 500 kr",
-        comment: "Nyanställd i butik",
+        comment: "Minimilön enligt avtal år 1",
       },
       {
-        role: "Butiksanställd (6 års branschvana)",
-        minimum: "27 200 kr",
-        median: "30 000 kr",
-        comment: "Erfaren butiksmedarbetare",
+        role: "Butiksanställd (1 års branschvana)",
+        minimum: "26 718 kr",
+        median: "29 000 kr",
+        comment: "1 år = 12 branschvanemånader",
+      },
+      {
+        role: "Butiksanställd (3 års branschvana)",
+        minimum: "28 344 kr",
+        median: "31 000 kr",
+        comment: "3+ år branschvana",
       },
       {
         role: "Lagerarbetare",
@@ -893,7 +899,7 @@ STRIKTA REGLER:
     validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "Hotell- och restaurangavtalet gäller kockar, servitörer, bartenders, hotellreceptionister och övrig personal inom besöksnäringen. OB-tillägg är centralt i avtalet eftersom kvällar, nätter och helger är normala arbetstider i branschen. Branschen har bland de lägsta minimilönerna men OB-tilläggen kompenserar för de som jobbar obekväma tider.",
     keyFacts: {
-      minimumWage: "Från ca 24 400 kr/mån (utan erfarenhet)",
+      minimumWage: "25 856 kr/mån (utan erfarenhet, år 1). Med erfarenhet: 27 279 kr",
       overtimeRate: "Första 2 tim: 150%, därefter 200%",
       obWeekday: "~35 kr/tim (kväll)",
       obNight: "~50 kr/tim",
