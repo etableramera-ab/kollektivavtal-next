@@ -609,7 +609,7 @@ export const occupations: Occupation[] = [
     relatedOccupations: ["snickare", "malare", "rormokare"],
   },
   {
-    slug: "malare", title: "Målare", titleGenitive: "målare", agreement: "byggavtalet", sector: "Privat", category: "Bygg",
+    slug: "malare", title: "Målare", titleGenitive: "målare", agreement: "maleriavtalet", sector: "Privat", category: "Bygg",
     description: "Målare utför invändig och utvändig målning, tapetsering och ytbehandling. Målare har eget avtal (Målaravtalet) men Byggavtalet kan gälla på blandade arbetsplatser.",
     aeoAnswer: "En målare tjänar i median ca 33 000 kr/mån. Timlön ca 190 kr/tim. Ackordslön kan ge högre faktisk förtjänst.",
     salary: { minimum: 33000, median: 33000, p90: 39000 },

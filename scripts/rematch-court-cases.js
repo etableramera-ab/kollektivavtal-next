@@ -26,6 +26,22 @@ const MATCHERS = {
   'fordonsavtalet': ['fordon.*avtal', 'bilmekaniker', 'fordonsreparatör', 'motorbransch'],
   'grafiska-avtalet': ['grafisk.*företag', 'tryckeri', 'bokbindare', 'förpackning.*industri'],
   'bemanningsavtalet-lo': ['bemanningsavtalet.*lo', 'lo.*bemanning'],
+  // Avtal 51-75
+  'glasmasteriavtalet': ['glasmästeri', 'glasbransch'],
+  'entreprenadmaskinavtalet': ['maskinentreprenör', 'entreprenadmaskin'],
+  'plat-ventilationsavtalet': ['plåtslagare', 'ventilationsmontör', 'plåt.*vent'],
+  'maleriavtalet': ['måleri', 'målare.*avtal', 'måleriföretag'],
+  'laraavtalet': ['lärarförbundet', 'sveriges lärare', 'lärarnas riksförbund'],
+  'sjukskoterska-avtal': ['vårdförbundet', 'sjuksköterska.*skr', 'barnmorska.*skr'],
+  'postavtalet': ['postnord', 'brevbärare', 'postarbetare'],
+  'polisavtalet': ['polisförbundet.*avtal'],
+  'forsvarsmakten-avtal': ['försvarsmakten.*avtal', 'officer.*försvar'],
+  'serviceavtalet': ['serviceföretag.*städ', 'städbransch.*almega'],
+  'kyrkans-avtal': ['svenska kyrkan', 'kyrkans arbetsgivar'],
+  'mejeriavtalet': ['mejeri.*avtal', 'arla.*avtal'],
+  'slakteriavtalet': ['slakteri.*avtal'],
+  'sagverksavtalet': ['sågverk.*avtal', 'trä.*möbel.*industri'],
+  'musikeravtalet': ['musikerförbundet', 'orkester'],
   // Original avtal 1-25
   'byggavtalet': [
     'byggnads', 'byggnadsarbetareförbundet', 'byggföretagen', 'byggavtal',
