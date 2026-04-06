@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0F2B46;
-  --color-accent: #E8613C;
-  --color-background: #F8F6F3;
+  --color-primary: #0F766E;
+  --color-primary-light: #14B8A6;
+  --color-primary-dark: #0D5E58;
+  --color-accent: #D97706;
+  --color-accent-hover: #B45309;
+  --color-background: #F8F7F4;
+  --color-surface-dark: #F0EEED;
   --color-white: #FFFFFF;
-  --color-text-primary: #1A1A2E;
-  --color-text-secondary: #64748B;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B7280;
   --color-success: #16A34A;
-  --color-border: #E2E8F0;
+  --color-border: #E5E2DD;
+  --color-card: #FFFFFF;
 
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
 
   --radius-card: 12px;
   --radius-button: 8px;
@@ -20,6 +26,19 @@ body {
   color: var(--color-text-primary);
   background: var(--color-background);
   font-family: var(--font-sans);
+}
+
+h1, h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+h1 {
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  letter-spacing: -0.01em;
 }
 
 /* RTL support */

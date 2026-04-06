@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const socialLinks = [
   {
@@ -41,7 +42,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-primary-dark text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
@@ -155,11 +156,13 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-8 border-t border-white/20">
-          <p className="text-xs text-white/60 max-w-3xl">
-            Källa: Sammanfattningar baserade på officiella kollektivavtal. Informationen är
-            vägledande — kontakta ditt fackförbund för bindande besked.
+          <div className="flex flex-wrap items-center gap-6 mb-4">
+            <LanguageSwitcher />
+          </div>
+          <p className="text-xs text-white/50">
+            En tjänst från Etablera Mera AB (559444-2526)
           </p>
-          <p className="text-xs text-white/40 mt-2 pb-safe">
+          <p className="text-xs text-white/40 mt-1 pb-safe">
             &copy; {new Date().getFullYear()} Etablera Mera AB. Alla rättigheter förbehållna.
           </p>
         </div>

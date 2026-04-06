@@ -1,26 +1,41 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-const navLinks = [
+const mainLinks = [
+  { href: "/avtal", label: "Kollektivavtal" },
+  { href: "/yrke", label: "Yrken" },
+  { href: "/statistik", label: "Statistik" },
+  { href: "/rattsfall", label: "Rättsfall" },
+  { href: "/blogg", label: "Blogg" },
+];
+
+const toolLinks = [
+  { href: "/hitta-avtal", label: "Hitta ditt avtal" },
+  { href: "/lonekalkylator", label: "Lönekalkylator" },
+  { href: "/jamfor", label: "Jämför villkor" },
+  { href: "/statistik/avtalsrorelsen", label: "Avtalsrörelsen" },
+];
+
+const mobileLinks = [
   { href: "/avtal", label: "Kollektivavtal" },
   { href: "/yrke", label: "Yrken" },
   { href: "/hitta-avtal", label: "Hitta ditt avtal" },
   { href: "/lonekalkylator", label: "Lönekalkylator" },
+  { href: "/jamfor", label: "Jämför villkor" },
   { href: "/statistik", label: "Statistik" },
-  { href: "/jamfor", label: "Jämför" },
   { href: "/rattsfall", label: "Rättsfall" },
   { href: "/blogg", label: "Blogg" },
-  { href: "/om-oss", label: "Om oss" },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -28,37 +43,78 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setToolsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <motion.header
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`sticky top-0 z-50 bg-white/95 transition-all duration-200 ${
-        scrolled ? "backdrop-blur-md border-b border-border shadow-sm" : ""
+      className={`sticky top-0 z-50 bg-primary transition-all duration-200 ${
+        scrolled ? "shadow-md" : ""
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-primary">
+          <Link href="/" className="text-xl text-white" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
             kollektivavtal.ai
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
+          <nav className="hidden lg:flex items-center gap-5">
+            {mainLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-text-secondary hover:text-primary transition-colors"
+                className="text-sm font-medium text-white/80 hover:text-white transition-colors"
               >
                 {link.label}
               </Link>
             ))}
-            <LanguageSwitcher />
+
+            {/* Verktyg dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setToolsOpen(!toolsOpen)}
+                className="flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors"
+              >
+                Verktyg
+                <ChevronDown size={14} className={`transition-transform ${toolsOpen ? "rotate-180" : ""}`} />
+              </button>
+              {toolsOpen && (
+                <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-lg shadow-lg border border-border py-2 z-50">
+                  {toolLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setToolsOpen(false)}
+                      className="block px-4 py-2.5 text-sm text-text-primary hover:bg-background transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/hitta-avtal"
+              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white bg-accent hover:bg-accent-hover rounded-md transition-colors"
+            >
+              Hitta ditt avtal
+            </Link>
           </nav>
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-3 -mr-3 text-text-secondary hover:text-primary min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="lg:hidden p-3 -mr-3 text-white/80 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
             aria-label="Meny"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -73,13 +129,14 @@ export default function Header() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-white md:hidden"
+            className="fixed inset-0 z-50 bg-white lg:hidden"
           >
             <div className="flex h-16 items-center justify-between px-4">
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
-                className="text-xl font-bold text-primary"
+                className="text-xl text-primary"
+                style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}
               >
                 kollektivavtal.ai
               </Link>
@@ -93,19 +150,23 @@ export default function Header() {
             </div>
 
             <nav className="px-4 pt-4">
-              {navLinks.map((link) => (
+              {mobileLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-4 text-lg font-medium text-text-primary hover:text-accent border-b border-border last:border-0"
+                  className="block py-4 text-lg font-medium text-text-primary hover:text-primary border-b border-border last:border-0"
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-4">
-                <LanguageSwitcher />
-              </div>
+              <Link
+                href="/hitta-avtal"
+                onClick={() => setMobileOpen(false)}
+                className="block mt-6 text-center px-5 py-3 text-sm font-semibold uppercase tracking-widest text-white bg-accent rounded-lg"
+              >
+                Hitta ditt avtal
+              </Link>
             </nav>
           </motion.div>
         )}

@@ -1,31 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Search,
   FileText,
   Users,
   ShieldCheck,
-  MessageSquare,
-  Building2,
-  Cpu,
-  HardHat,
-  ShoppingCart,
-  Truck,
-  UtensilsCrossed,
-  Landmark,
   ArrowRight,
-  Scale,
-  Shield,
-  Rocket,
   Check,
   X,
   Calculator,
   TrendingUp,
+  BarChart3,
+  Building2,
+  Cpu,
+  HardHat,
+  ShoppingCart,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { CountUp } from "@/components/ui/CountUp";
 import SalaryChart from "@/components/SalaryChart";
 import { blogPosts } from "@/data/blog-posts";
 import { courtCases as allCourtCases } from "@/data/court-cases";
@@ -33,235 +26,164 @@ import { courtCases as allCourtCases } from "@/data/court-cases";
 const latestCases = allCourtCases.slice(0, 3);
 
 const quickLinks = [
-  "Handelsavtalet",
-  "Teknikavtalet",
-  "Byggavtalet",
-  "HÖK Kommunal",
-  "IT-avtalet",
+  { label: "Handelsavtalet", slug: "handelsavtalet" },
+  { label: "Teknikavtalet", slug: "teknikavtalet" },
+  { label: "Byggavtalet", slug: "byggavtalet" },
+  { label: "HÖK Kommunal", slug: "hok-kommunal" },
+  { label: "IT-avtalet", slug: "it-avtalet" },
 ];
 
-const keyStats = [
-  { number: 617, suffix: "", label: "alla kollektivavtal sammanfattade", icon: FileText },
-  { number: 3.4, suffix: "", label: "miljoner anställda täckta", icon: Users },
-  { number: 92, suffix: "%", label: "avtalstäckning", icon: ShieldCheck },
-  { number: 617, suffix: "", label: "AI-experten svarar", icon: MessageSquare },
+const tools = [
+  {
+    title: "Hitta ditt avtal",
+    desc: "Svara på 3 frågor",
+    href: "/hitta-avtal",
+    icon: Search,
+  },
+  {
+    title: "Lönekalkylator",
+    desc: "Se vad du ska tjäna",
+    href: "/lonekalkylator",
+    icon: Calculator,
+  },
+  {
+    title: "Jämför villkor",
+    desc: "OB, semester, pension",
+    href: "/jamfor",
+    icon: BarChart3,
+  },
+  {
+    title: "Avtalsrörelsen",
+    desc: "Följ 2025–2027",
+    href: "/statistik/avtalsrorelsen",
+    icon: TrendingUp,
+  },
 ];
 
-const agreements = [
-  {
-    name: "HÖK Kommunal",
-    desc: "Huvudöverenskommelse för kommunalt anställda inom vård, omsorg och skola",
-    employees: "~1 100 000",
-    icon: Building2,
-    slug: "hok-kommunal",
-  },
-  {
-    name: "Teknikavtalet",
-    desc: "Industrins största avtal för ingenjörer, tekniker och montörer",
-    employees: "~300 000",
-    icon: Cpu,
-    slug: "teknikavtalet",
-  },
-  {
-    name: "Handelsavtalet",
-    desc: "Avtal för anställda inom detaljhandel och partihandel",
-    employees: "~250 000",
-    icon: ShoppingCart,
-    slug: "handelsavtalet",
-  },
-  {
-    name: "Byggavtalet",
-    desc: "Avtal för byggnadsarbetare och anläggningspersonal",
-    employees: "~150 000",
-    icon: HardHat,
-    slug: "byggavtalet",
-  },
-  {
-    name: "IT-avtalet",
-    desc: "Avtal för anställda inom IT- och telekombranschen",
-    employees: "~100 000",
-    icon: Cpu,
-    slug: "it-avtalet",
-  },
-  {
-    name: "Transportavtalet",
-    desc: "Avtal för yrkesförare, lagerarbetare och logistikpersonal",
-    employees: "~120 000",
-    icon: Truck,
-    slug: "transportavtalet",
-  },
-  {
-    name: "Hotell & Restaurang",
-    desc: "Avtal för anställda inom hotell-, restaurang- och caféverksamhet",
-    employees: "~130 000",
-    icon: UtensilsCrossed,
-    slug: "hotell-restaurang",
-  },
-  {
-    name: "Statliga villkorsavtal",
-    desc: "Villkorsavtal för statligt anställda inom myndigheter och verk",
-    employees: "~270 000",
-    icon: Landmark,
-    slug: "statliga-villkorsavtal",
-  },
+const topAgreements = [
+  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal" },
+  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet" },
+  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet" },
+  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet" },
+];
+
+const topOccupations = [
+  { title: "Undersköterska", median: "31 000", slug: "underskoterska" },
+  { title: "Elektriker", median: "35 000", slug: "elektriker" },
+  { title: "Lärare", median: "37 000", slug: "larare-grundskola" },
+  { title: "Systemutvecklare", median: "48 000", slug: "systemutvecklare" },
 ];
 
 const comparisonRows = [
-  {
-    feature: "Tjänstepension",
-    med: "4,5% av lön",
-    utan: "0 kr (om arbetsgivaren inte erbjuder)",
-  },
-  {
-    feature: "Föräldralön",
-    med: "Upp till 90% löneutfyllnad",
-    utan: "Bara Försäkringskassans ersättning",
-  },
-  {
-    feature: "OB-tillägg",
-    med: "43–172 kr/tim",
-    utan: "Inget OB garanterat",
-  },
-  {
-    feature: "Inkomstförsäkring",
-    med: "Ingår via facket",
-    utan: "Måste tecknas privat",
-  },
-  {
-    feature: "Uppsägningstid",
-    med: "Upp till 6 mån",
-    utan: "1 mån enligt LAS",
-  },
-];
-
-
-const crossSelling = [
-  {
-    title: "Hitta en arbetsrättsjurist",
-    href: "https://allaadvokater.se",
-    icon: Scale,
-  },
-  {
-    title: "Jämför försäkringar",
-    href: "https://allaforsakringar.com",
-    icon: Shield,
-  },
-  {
-    title: "Starta eget?",
-    href: "https://startaenskildfirma.se",
-    icon: Rocket,
-  },
+  { feature: "Tjänstepension", med: "4,5% av lön", utan: "0 kr (om arbetsgivaren inte erbjuder)" },
+  { feature: "Föräldralön", med: "Upp till 90% löneutfyllnad", utan: "Bara Försäkringskassans ersättning" },
+  { feature: "OB-tillägg", med: "43–172 kr/tim", utan: "Inget OB garanterat" },
+  { feature: "Inkomstförsäkring", med: "Ingår via facket", utan: "Måste tecknas privat" },
+  { feature: "Uppsägningstid", med: "Upp till 6 mån", utan: "1 mån enligt LAS" },
 ];
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<"avtal" | "yrken">("avtal");
+
   return (
     <>
-      {/* Hero */}
-      <section className="bg-primary text-white py-16 sm:py-24 md:py-28">
-        <div className="mx-auto max-w-4xl px-4 text-center">
-          <AnimatedSection>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-              Förstå ditt kollektivavtal — på klarspråk
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              Sveriges största AI-drivna guide till alla 617 kollektivavtal. Sök, jämför och chatta
-              med en expert på just ditt avtal.
-            </p>
-          </AnimatedSection>
+      {/* ─── HERO: Split layout ─── */}
+      <section className="bg-primary text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+            {/* Left column */}
+            <AnimatedSection>
+              <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent mb-4">
+                Sveriges 617 kollektivavtal — på klarspråk
+              </p>
+              <h1 className="text-4xl sm:text-5xl leading-[1.15] text-white" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Förstå ditt kollektivavtal
+              </h1>
+              <p className="mt-5 text-base sm:text-lg text-white/75 max-w-[480px] leading-relaxed">
+                Sök bland alla 617 avtal. Jämför löner, OB-tillägg och villkor.
+                Chatta med en AI-expert som kan just ditt avtal.
+              </p>
+              <p className="mt-6 text-xs text-white/50">
+                3,4 miljoner anställda · 92% avtalstäckning · Källa: Medlingsinstitutet
+              </p>
+            </AnimatedSection>
 
-          <AnimatedSection delay={0.2}>
-            <div className="mt-8 sm:mt-10 relative max-w-xl mx-auto group/search">
-              <Search
-                size={20}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary"
-              />
-              <input
-                type="text"
-                placeholder="Sök på yrke, bransch eller företag..."
-                className="w-full rounded-[12px] bg-white text-text-primary py-4 pl-12 pr-4 text-base shadow-lg outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-accent transition-transform focus:scale-[1.02]"
-              />
-            </div>
-
-            <div className="mt-5 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center sm:overflow-visible sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-              {quickLinks.map((label) => (
-                <Link
-                  key={label}
-                  href={`/avtal/${label.toLowerCase().replace(/\s+/g, "-").replace(/ö/g, "o")}`}
-                  className="shrink-0 rounded-[8px] bg-white/10 px-4 py-2.5 text-sm font-medium text-white hover:bg-white/20 transition-colors min-h-[44px] flex items-center"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Nyckeltal */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
-            {keyStats.map((stat, i) => (
-              <AnimatedSection key={stat.label} delay={i * 0.1}>
-                <div className="rounded-[12px] border border-border bg-white p-4 sm:p-6 shadow-sm text-center">
-                  <stat.icon size={28} className="mx-auto text-accent mb-3" />
-                  <p className="text-xl sm:text-2xl font-bold text-text-primary">
-                    {i === 1 ? (
-                      <><CountUp end={3} duration={1.5} />,<CountUp end={4} duration={1.5} /></>
-                    ) : (
-                      <CountUp end={stat.number} suffix={stat.suffix} duration={1.5} />
-                    )}
-                  </p>
-                  <p className="text-xs sm:text-sm text-text-secondary mt-1">{stat.label}</p>
+            {/* Right column: search module */}
+            <AnimatedSection delay={0.15}>
+              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
+                <p className="font-semibold text-text-primary text-lg mb-4">Hitta ditt avtal</p>
+                <div className="relative mb-4">
+                  <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+                  <input
+                    type="text"
+                    placeholder="Sök på yrke, bransch eller företag..."
+                    className="w-full h-12 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                  />
                 </div>
-              </AnimatedSection>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {quickLinks.map((q) => (
+                    <Link
+                      key={q.slug}
+                      href={`/avtal/${q.slug}`}
+                      className="rounded-full border border-border px-4 py-1.5 text-xs text-primary hover:bg-primary hover:text-white transition-colors"
+                    >
+                      {q.label}
+                    </Link>
+                  ))}
+                </div>
+                <Link
+                  href="/hitta-avtal"
+                  className="block w-full h-12 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-semibold uppercase tracking-widest flex items-center justify-center transition-colors"
+                >
+                  Sök
+                </Link>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TRUST BAR ─── */}
+      <section className="bg-white border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+            {[
+              { icon: FileText, text: "617 avtal sammanfattade" },
+              { icon: Users, text: "3,4 miljoner anställda" },
+              { icon: ShieldCheck, text: "92% avtalstäckning" },
+            ].map((item) => (
+              <div key={item.text} className="flex items-center gap-2">
+                <item.icon size={18} strokeWidth={1.5} className="text-primary" />
+                <span className="text-sm font-semibold text-text-primary">{item.text}</span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Verktyg */}
-      <section className="py-16 sm:py-20">
+      {/* ─── VAD VILL DU GÖRA? (1177-inspired) ─── */}
+      <section className="py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Verktyg
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              {
-                title: "Hitta ditt avtal",
-                desc: "Svara på 3 frågor och hitta rätt avtal",
-                href: "/hitta-avtal",
-                icon: Search,
-              },
-              {
-                title: "Lönekalkylator",
-                desc: "Se vad du ska tjäna enligt ditt avtal",
-                href: "/lonekalkylator",
-                icon: Calculator,
-              },
-              {
-                title: "Avtalsrörelsen",
-                desc: "Följ avtalsrörelsen 2025–2027",
-                href: "/statistik/avtalsrorelsen",
-                icon: TrendingUp,
-              },
-            ].map((tool, i) => (
-              <AnimatedSection key={tool.title} delay={i * 0.1}>
-                <Link href={tool.href} className="block">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-6 shadow-sm text-center"
-                  >
-                    <tool.icon size={32} className="mx-auto text-accent mb-3" />
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                      {tool.title}
-                    </h3>
-                    <p className="text-sm text-text-secondary mt-1">{tool.desc}</p>
-                  </motion.div>
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Vad vill du göra?
+              </h2>
+            </AnimatedSection>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {tools.map((tool, i) => (
+              <AnimatedSection key={tool.href} delay={i * 0.05}>
+                <Link href={tool.href} className="block group">
+                  <div className="rounded-lg border border-border bg-white p-5 flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:shadow-[0_2px_8px_rgba(15,118,110,0.06)] transition-all">
+                    <div className="shrink-0 w-10 h-10 rounded-full bg-[#F0FDFA] flex items-center justify-center">
+                      <tool.icon size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-text-primary text-[15px]">{tool.title}</p>
+                      <p className="text-[13px] text-text-secondary mt-0.5">{tool.desc}</p>
+                    </div>
+                  </div>
                 </Link>
               </AnimatedSection>
             ))}
@@ -269,98 +191,119 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Populära yrken */}
-      <section className="py-16 sm:py-20 bg-white">
+      {/* ─── UTFORSKA AVTAL OCH YRKEN (tabbed) ─── */}
+      <section className="py-14 sm:py-16 bg-surface-dark">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Utforska avtal och yrken
+              </h2>
+            </AnimatedSection>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-6 mb-8 border-b border-border">
+            <button
+              onClick={() => setActiveTab("avtal")}
+              className={`pb-3 text-sm font-medium transition-colors ${
+                activeTab === "avtal"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
+              Populära avtal
+            </button>
+            <button
+              onClick={() => setActiveTab("yrken")}
+              className={`pb-3 text-sm font-medium transition-colors ${
+                activeTab === "yrken"
+                  ? "text-primary border-b-2 border-primary"
+                  : "text-text-secondary hover:text-text-primary"
+              }`}
+            >
               Populära yrken
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { title: "Undersköterska", median: "31 000", slug: "underskoterska" },
-              { title: "Elektriker", median: "35 000", slug: "elektriker" },
-              { title: "Kock", median: "28 000", slug: "kock" },
-              { title: "Lärare", median: "37 000", slug: "larare-grundskola" },
-              { title: "Lastbilschaufför", median: "32 000", slug: "lastbilschauffor" },
-              { title: "Systemutvecklare", median: "48 000", slug: "systemutvecklare" },
-              { title: "Butikssäljare", median: "27 000", slug: "butikssaljare" },
-              { title: "Byggnadsarbetare", median: "33 000", slug: "byggnadsarbetare" },
-            ].map((occ, i) => (
-              <AnimatedSection key={occ.slug} delay={i * 0.05}>
-                <Link href={`/yrke/${occ.slug}`} className="block">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-4 shadow-sm text-center"
-                  >
-                    <p className="font-semibold text-text-primary text-sm group-hover:text-accent transition-colors">{occ.title}</p>
-                    <p className="text-lg font-bold text-accent mt-1">{occ.median} kr</p>
-                    <p className="text-xs text-text-secondary">medianlön</p>
-                  </motion.div>
+            </button>
+          </div>
+
+          {activeTab === "avtal" && (
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {topAgreements.map((a, i) => (
+                  <AnimatedSection key={a.slug} delay={i * 0.05}>
+                    <Link href={`/avtal/${a.slug}`} className="block h-full group">
+                      <div className="rounded-lg border border-border bg-white p-5 h-full hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-shadow">
+                        <div className="w-10 h-10 rounded-full bg-[#F0FDFA] flex items-center justify-center mb-3">
+                          <a.icon size={20} className="text-primary" />
+                        </div>
+                        <h3 className="text-xl text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                          {a.name}
+                        </h3>
+                        <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
+                        <p className="text-xs text-text-secondary mt-2">{a.employees} anställda</p>
+                        <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-3">
+                          Läs mer <ArrowRight size={14} />
+                        </span>
+                      </div>
+                    </Link>
+                  </AnimatedSection>
+                ))}
+              </div>
+              <AnimatedSection delay={0.25}>
+                <Link href="/avtal" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:underline min-h-[44px]">
+                  Se alla 617 avtal <ArrowRight size={14} />
                 </Link>
               </AnimatedSection>
-            ))}
-          </div>
-          <AnimatedSection delay={0.4}>
-            <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
-              Se alla 50 yrken <ArrowRight size={14} />
-            </Link>
-          </AnimatedSection>
+            </div>
+          )}
+
+          {activeTab === "yrken" && (
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {topOccupations.map((occ, i) => (
+                  <AnimatedSection key={occ.slug} delay={i * 0.05}>
+                    <Link href={`/yrke/${occ.slug}`} className="block group">
+                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-shadow">
+                        <p className="text-xl text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                          {occ.title}
+                        </p>
+                        <p className="text-2xl font-normal text-accent mt-2" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                          {occ.median} kr
+                        </p>
+                        <p className="text-xs text-text-secondary mt-1">medianlön</p>
+                      </div>
+                    </Link>
+                  </AnimatedSection>
+                ))}
+              </div>
+              <AnimatedSection delay={0.25}>
+                <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:underline min-h-[44px]">
+                  Se alla 50 yrken <ArrowRight size={14} />
+                </Link>
+              </AnimatedSection>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Populära avtalsområden */}
-      <section className="py-16 sm:py-20 md:py-28">
+      {/* ─── LÖNESTATISTIK ─── */}
+      <section className="py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Populära avtalsområden
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {agreements.map((a, i) => (
-              <AnimatedSection key={a.slug} delay={i * 0.05}>
-                <Link href={`/avtal/${a.slug}`} className="block h-full">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-5 shadow-sm h-full"
-                  >
-                    <a.icon size={24} className="text-accent mb-3" />
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                      {a.name}
-                    </h3>
-                    <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
-                    <p className="text-xs text-text-secondary mt-2">{a.employees} anställda</p>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-3">
-                      Läs mer <ArrowRight size={14} />
-                    </span>
-                  </motion.div>
-                </Link>
-              </AnimatedSection>
-            ))}
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Lönestatistik per bransch
+              </h2>
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
-
-      {/* Lönestatistik */}
-      <section className="py-16 sm:py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Lönestatistik per bransch
-            </h2>
-          </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <div className="rounded-[12px] border border-border bg-white p-4 sm:p-6 shadow-sm">
+            <div className="rounded-lg border border-border bg-white p-4 sm:p-6">
               <SalaryChart />
             </div>
             <p className="text-xs text-text-secondary mt-3">Källa: SCB, egen bearbetning</p>
             <Link
               href="/statistik/loner"
-              className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2 hover:underline min-h-[44px]"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-2 hover:underline min-h-[44px]"
             >
               Se fullständig lönestatistik <ArrowRight size={14} />
             </Link>
@@ -368,27 +311,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Vad förlorar du utan kollektivavtal? */}
-      <section className="py-16 sm:py-20 md:py-28">
+      {/* ─── VAD FÖRLORAR DU? ─── */}
+      <section className="py-14 sm:py-16 bg-surface-dark">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">
-              Vad förlorar du utan kollektivavtal?
-            </h2>
-            <p className="text-text-secondary mb-8 sm:mb-10 max-w-2xl">
-              Utan kollektivavtal saknar du tjänstepension, föräldralön, OB-tillägg och mycket mer.
-            </p>
-          </AnimatedSection>
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Vad förlorar du utan kollektivavtal?
+              </h2>
+              <p className="text-text-secondary mt-2 max-w-2xl">
+                Utan kollektivavtal saknar du tjänstepension, föräldralön, OB-tillägg och mycket mer.
+              </p>
+            </AnimatedSection>
+          </div>
 
           {/* Desktop table */}
           <AnimatedSection delay={0.1}>
-            <div className="hidden md:block overflow-x-auto rounded-[12px] border border-border bg-white shadow-sm">
+            <div className="hidden md:block overflow-x-auto rounded-lg border border-border bg-white">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
                     <th className="text-left p-4 font-semibold text-text-primary">Förmån</th>
                     <th className="text-left p-4 font-semibold text-success">Med kollektivavtal</th>
-                    <th className="text-left p-4 font-semibold text-accent">Utan kollektivavtal</th>
+                    <th className="text-left p-4 font-semibold text-text-secondary">Utan kollektivavtal</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -403,7 +348,7 @@ export default function Home() {
                       </td>
                       <td className="p-4 text-text-secondary">
                         <span className="inline-flex items-center gap-1.5">
-                          <X size={14} className="text-accent shrink-0" />
+                          <X size={14} className="text-text-secondary shrink-0" />
                           {row.utan}
                         </span>
                       </td>
@@ -414,11 +359,11 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          {/* Mobile stacked cards */}
+          {/* Mobile cards */}
           <div className="md:hidden space-y-3">
             {comparisonRows.map((row, i) => (
               <AnimatedSection key={row.feature} delay={i * 0.05}>
-                <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+                <div className="rounded-lg border border-border bg-white p-4">
                   <p className="font-semibold text-text-primary text-sm mb-3">{row.feature}</p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">
@@ -429,9 +374,9 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
-                      <X size={14} className="text-accent shrink-0 mt-0.5" />
+                      <X size={14} className="text-text-secondary shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-xs font-medium text-accent">Utan kollektivavtal</p>
+                        <p className="text-xs font-medium text-text-secondary">Utan kollektivavtal</p>
                         <p className="text-sm text-text-secondary">{row.utan}</p>
                       </div>
                     </div>
@@ -440,63 +385,28 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </div>
-
-          <a
-            href="https://allaforsakringar.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
-          >
-            Jämför försäkringar som kompenserar <ArrowRight size={14} />
-          </a>
         </div>
       </section>
 
-      {/* Jämför villkor */}
-      <section className="py-16 sm:py-20">
+      {/* ─── SENASTE RÄTTSFALL ─── */}
+      <section className="py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Jämför villkor
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { title: "OB-tillägg", href: "/jamfor/ob-tillagg" },
-              { title: "Minimilöner", href: "/jamfor/minimiioner" },
-              { title: "Semester", href: "/jamfor/semester" },
-              { title: "Pension", href: "/jamfor/pension" },
-            ].map((item, i) => (
-              <AnimatedSection key={item.href} delay={i * 0.05}>
-                <Link href={item.href} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                  <p className="font-semibold text-text-primary text-sm">{item.title}</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
-                    Jämför alla avtal <ArrowRight size={12} />
-                  </span>
-                </Link>
-              </AnimatedSection>
-            ))}
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Senaste arbetsrättsdomar
+              </h2>
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
-
-      {/* Senaste från Arbetsdomstolen */}
-      <section className="py-16 sm:py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Senaste arbetsrättsdomar
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {latestCases.map((c, i) => (
               <AnimatedSection key={c.id} delay={i * 0.1}>
                 <Link href={`/rattsfall/${c.id}`} className="block h-full">
-                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm h-full hover:shadow-md transition-shadow">
+                  <div className="rounded-lg border border-border bg-white p-5 h-full hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-shadow">
                     <p className="text-xs text-text-secondary">{c.date}</p>
-                    <h3 className="font-semibold text-text-primary mt-1 leading-snug">{c.caseNumber} — {c.title}</h3>
+                    <h3 className="font-semibold text-text-primary mt-1 leading-snug text-sm">{c.caseNumber} — {c.title}</h3>
                     <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
-                    <span className="inline-block mt-3 text-xs font-medium bg-background text-text-secondary px-2 py-1 rounded-[6px]">
+                    <span className="inline-block mt-3 text-xs font-medium bg-[#F0FDFA] text-primary px-2 py-1 rounded-md border border-primary/20">
                       {c.topic}
                     </span>
                   </div>
@@ -506,28 +416,30 @@ export default function Home() {
           </div>
           <Link
             href="/rattsfall"
-            className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
+            className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:underline min-h-[44px]"
           >
             Se alla rättsfall <ArrowRight size={14} />
           </Link>
         </div>
       </section>
 
-      {/* Senaste från bloggen */}
-      <section className="py-16 sm:py-20">
+      {/* ─── SENASTE BLOGGEN ─── */}
+      <section className="py-14 sm:py-16 bg-surface-dark">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Senaste från bloggen
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="border-t border-border pt-8 mb-8">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-4xl text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                Senaste från bloggen
+              </h2>
+            </AnimatedSection>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {blogPosts.slice(0, 3).map((post, i) => (
               <AnimatedSection key={post.slug} delay={i * 0.1}>
                 <Link href={`/blogg/${post.slug}`} className="block h-full">
-                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow h-full">
+                  <div className="rounded-lg border border-border bg-white p-5 hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-shadow h-full">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="rounded-[4px] bg-accent/10 text-accent text-xs font-medium px-2 py-0.5">{post.category}</span>
+                      <span className="rounded-md bg-[#F0FDFA] text-primary text-xs font-medium px-2 py-0.5 border border-primary/20">{post.category}</span>
                       <span className="text-xs text-text-secondary">{post.publishDate}</span>
                     </div>
                     <h3 className="font-semibold text-text-primary text-sm leading-snug">{post.title}</h3>
@@ -538,44 +450,10 @@ export default function Home() {
             ))}
           </div>
           <AnimatedSection delay={0.3}>
-            <Link href="/blogg" className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
+            <Link href="/blogg" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:underline min-h-[44px]">
               Alla artiklar <ArrowRight size={14} />
             </Link>
           </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Cross-selling */}
-      <section className="py-16 sm:py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              Behöver du mer hjälp?
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {crossSelling.map((item, i) => (
-              <AnimatedSection key={item.title} delay={i * 0.1}>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-6 shadow-sm text-center"
-                  >
-                    <item.icon size={32} className="mx-auto text-accent mb-3" />
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                      {item.title}
-                    </h3>
-                  </motion.div>
-                </a>
-              </AnimatedSection>
-            ))}
-          </div>
         </div>
       </section>
     </>
