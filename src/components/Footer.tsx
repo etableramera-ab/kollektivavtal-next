@@ -44,6 +44,11 @@ export default function Footer() {
   return (
     <footer className="bg-primary-dark text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="mb-8">
+          <Link href="/">
+            <img src="/Images/Logo-vit.svg" alt="kollektivavtal.ai" style={{ height: '28px', width: 'auto' }} />
+          </Link>
+        </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white/70">
