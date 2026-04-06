@@ -25,6 +25,11 @@ export const metadata: Metadata = {
     locale: "sv_SE",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "kollektivavtal.ai",
+    description: "617 kollektivavtal, AI-chatt, lönedata och rättsfall.",
+  },
   robots: {
     index: true,
     follow: true,
@@ -57,7 +62,11 @@ const jsonLd = {
     email: "info@kollektivavtal.ai",
     contactType: "customer service",
   },
-  sameAs: [],
+  sameAs: [
+    "https://www.linkedin.com/company/kollektivavtal-ai/",
+    "https://www.instagram.com/kollektivavtal.ai",
+    "https://www.facebook.com/profile.php?id=61587547443940",
+  ],
 };
 
 export default function RootLayout({
