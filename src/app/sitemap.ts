@@ -15,6 +15,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  // English agreement pages
+  const enAgreementPages = agreements.map((a) => ({
+    url: `${baseUrl}/en/avtal/${a.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
   const courtCasePages = courtCases.map((c) => ({
     url: `${baseUrl}/rattsfall/${c.id}`,
     lastModified: new Date(c.date || new Date()),
@@ -136,5 +144,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.3,
     },
+    // English pages
+    {
+      url: `${baseUrl}/en`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    ...enAgreementPages,
   ];
 }

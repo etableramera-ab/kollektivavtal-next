@@ -31,6 +31,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://kollektivavtal.ai",
+    languages: {
+      "sv": "https://kollektivavtal.ai",
+      "en": "https://kollektivavtal.ai/en",
+      "x-default": "https://kollektivavtal.ai",
+    },
   },
 };
 

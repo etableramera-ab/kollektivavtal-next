@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const navLinks = [
   { href: "/avtal", label: "Kollektivavtal" },
@@ -52,6 +53,7 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <LanguageSwitcher />
           </nav>
 
           <button
@@ -101,6 +103,9 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
+              <div className="pt-4">
+                <LanguageSwitcher />
+              </div>
             </nav>
           </motion.div>
         )}
