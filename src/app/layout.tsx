@@ -66,6 +66,7 @@ const jsonLd = {
     "https://www.linkedin.com/company/kollektivavtal-ai/",
     "https://www.instagram.com/kollektivavtal.ai",
     "https://www.facebook.com/profile.php?id=61587547443940",
+    "https://www.youtube.com/@Allakollektivavtal",
   ],
 };
 
