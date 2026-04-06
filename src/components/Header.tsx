@@ -66,7 +66,7 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/">
-            <img src="/Images/Logo-vit.svg" alt="kollektivavtal.ai" style={{ height: '32px', width: 'auto' }} />
+            <img src="/Images/Logo-vit.svg" alt="kollektivavtal.ai" style={{ height: '44px', width: 'auto' }} />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-5">
