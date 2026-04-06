@@ -60,13 +60,13 @@ export default function JamforOverview() {
           <AnimatedSection>
             <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">Jämför per ämne</h2>
           </AnimatedSection>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-stretch">
             {topics.map((t, i) => (
               <AnimatedSection key={t.href} delay={i * 0.05}>
-                <Link href={t.href} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                  <t.icon size={24} className="mx-auto text-accent mb-2" />
+                <Link href={t.href} className="flex flex-col items-center justify-center rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center h-full min-h-[160px]">
+                  <t.icon size={24} className="mx-auto text-primary mb-2" />
                   <p className="font-semibold text-text-primary text-sm">{t.title}</p>
-                  <p className="text-xs text-text-secondary mt-1">{t.desc}</p>
+                  <p className="text-xs text-text-secondary mt-1 line-clamp-2 min-h-[32px]">{t.desc}</p>
                 </Link>
               </AnimatedSection>
             ))}
