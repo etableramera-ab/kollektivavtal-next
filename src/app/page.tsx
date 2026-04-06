@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import SearchAutocomplete from "@/components/SearchAutocomplete";
 import {
   Search,
   FileText,
@@ -112,13 +113,8 @@ export default function Home() {
             <AnimatedSection delay={0.15}>
               <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
                 <p className="font-semibold text-text-primary text-lg mb-4">Hitta ditt avtal</p>
-                <div className="relative mb-4">
-                  <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-                  <input
-                    type="text"
-                    placeholder="Sök på yrke, bransch eller företag..."
-                    className="w-full h-12 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
-                  />
+                <div className="mb-4">
+                  <SearchAutocomplete variant="hero" />
                 </div>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {quickLinks.map((q) => (
