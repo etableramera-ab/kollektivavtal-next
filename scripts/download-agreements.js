@@ -51,6 +51,8 @@ const agreements = [
   { slug: 'villkorsavtal-ofr', url: 'https://reservofficerarna.se/app/uploads/2026/01/villkorsavtalet-2026.pdf' },
   // Arbetsgivarverket — Villkorsavtal Seko
   { slug: 'villkorsavtal-seko', url: 'https://www.seko.se/48dfcd/siteassets/kollektivavtal/branschavtal/avtal-staten/villkorsavtal-staten/villkorsavtal-mellan-arbetsgivarverket-och-seko-20240701.pdf' },
+  // Transport — Transportavtalet
+  { slug: 'transportavtalet', url: 'https://usercontent.one/wp/husbyarbetarblad.se/wp-content/uploads/2024/01/transportavtalet-2023-04-01-2025-03-31-1.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
