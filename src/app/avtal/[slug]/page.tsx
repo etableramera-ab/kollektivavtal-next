@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { agreements, getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import AgreementPageClient from "./AgreementPageClient";
 
 interface PageProps {
@@ -115,6 +116,7 @@ export default function AgreementPage({ params }: PageProps) {
 
       <AgreementPageClient
         agreement={agreement}
+        isVerified={isVerifiedAgreement(agreement.slug)}
         keyFactCards={keyFactCards.map((c) => ({
           label: c.label,
           value: c.value,

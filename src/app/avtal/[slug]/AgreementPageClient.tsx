@@ -20,6 +20,7 @@ import {
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import FaqAccordion from "@/components/FaqAccordion";
 import AgreementChat from "@/components/AgreementChat";
+import WageDisclaimer from "@/components/WageDisclaimer";
 import type { Agreement } from "@/data/agreements";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -61,6 +62,7 @@ interface Props {
   relatedAgreements: RelatedAgreement[];
   suggestedQuestions: string[];
   relatedCases: RelatedCase[];
+  isVerified?: boolean;
 }
 
 export default function AgreementPageClient({
@@ -69,6 +71,7 @@ export default function AgreementPageClient({
   relatedAgreements,
   suggestedQuestions,
   relatedCases,
+  isVerified = false,
 }: Props) {
   // Fix 2: Scroll to top on navigation
   useEffect(() => {
@@ -212,6 +215,7 @@ export default function AgreementPageClient({
             <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-6">
               Lönetabell — {agreement.shortName}
             </h2>
+            <WageDisclaimer isVerified={isVerified} />
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>

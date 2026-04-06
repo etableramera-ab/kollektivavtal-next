@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Users } from "lucide-react";
+import { ArrowRight, Users, ShieldCheck } from "lucide-react";
 import { agreements } from "@/data/agreements";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 type SectorFilter = "alla" | "privat" | "kommun_region" | "stat";
@@ -84,9 +85,17 @@ export default function AvtalOverview() {
                     className="group rounded-[12px] border border-border bg-white p-5 shadow-sm h-full flex flex-col"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                        {a.shortName}
-                      </h2>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h2 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
+                          {a.shortName}
+                        </h2>
+                        {isVerifiedAgreement(a.slug) && (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                            <ShieldCheck className="w-3 h-3" />
+                            Verifierad
+                          </span>
+                        )}
+                      </div>
                       <span className="shrink-0 rounded-[6px] bg-background text-text-secondary text-xs font-medium px-2 py-1">
                         {a.sectorLabel}
                       </span>

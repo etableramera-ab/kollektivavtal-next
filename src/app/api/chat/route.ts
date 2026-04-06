@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 import { getAgreementBySlug } from "@/data/agreements";
 import { getTruncatedAgreementText } from "@/lib/agreement-text-loader";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 
 // Kommun/region agreements that should also include AB text
 const KOMMUN_AGREEMENTS_NEEDING_AB = [
@@ -111,6 +112,12 @@ AVTALSTEXTER:
 ${textSections.join("\n\n---\n\n")}`;
   } else {
     systemPrompt = agreement.aiSystemPrompt;
+  }
+
+  // Add data quality context
+  const verified = isVerifiedAgreement(agreementSlug);
+  if (!verified) {
+    systemPrompt += `\n\nVIKTIGT: Löneuppgifterna för detta avtal är UPPSKATTNINGAR baserade på branschdata, inte verifierade från avtalstexten. Om användaren frågar om specifika löner, SÄGA ALLTID att siffrorna är uppskattningar och rekommendera att kontrollera med fackförbundet. Gissa ALDRIG exakta belopp.`;
   }
 
   const response = await client.messages.create({
