@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Disclaimer from "@/components/Disclaimer";
+import CookieConsent from "@/components/CookieConsent";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -75,14 +75,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX";
-
   return (
     <html lang="sv">
       <head>
         <meta name="theme-color" content="#0F2B46" />
         <meta name="google-site-verification" content="Bm7t4B2dfkjxPTdY8c6p6-m7cY-r_fFtXhKgI5SpUl8" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9148299323154794" crossOrigin="anonymous"></script>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
@@ -94,19 +91,7 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Disclaimer />
         <Footer />
-
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga4" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gaId}');
-          `}
-        </Script>
+        <CookieConsent />
       </body>
     </html>
   );
