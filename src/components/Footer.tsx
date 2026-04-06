@@ -43,7 +43,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <div className="mb-8">
           <Link href="/" style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
             kollektivavtal.ai
@@ -160,7 +160,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-8 border-t border-white/20">
+        <div className="mt-8 pt-6 border-t border-white/20">
           <div className="flex flex-wrap items-center gap-6 mb-4">
             <LanguageSwitcher />
           </div>
