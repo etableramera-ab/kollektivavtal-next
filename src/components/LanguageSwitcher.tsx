@@ -15,8 +15,7 @@ const languageNames: Record<Locale, { name: string; flag: string }> = {
   pl: { name: "Polski", flag: "🇵🇱" },
 };
 
-// Only show languages that have a dictionary — add more here as they are translated
-const availableLocales: Locale[] = ["sv", "en", "ar"];
+const availableLocales: Locale[] = ["sv", "en", "ar", "so", "fa", "es", "pl"];
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
@@ -124,25 +123,6 @@ export default function LanguageSwitcher() {
             );
           })}
 
-          <div className="border-t border-gray-100 mt-1 pt-1">
-            <p className="px-4 py-1 text-xs text-gray-400 uppercase tracking-wide">
-              Kommer snart / Coming soon
-            </p>
-            {(["so", "fa", "es", "pl"] as Locale[])
-              .filter((l) => !availableLocales.includes(l))
-              .map((locale) => {
-                const lang = languageNames[locale];
-                return (
-                  <div
-                    key={locale}
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-400 cursor-not-allowed"
-                  >
-                    <span className="text-lg opacity-50">{lang.flag}</span>
-                    <span>{lang.name}</span>
-                  </div>
-                );
-              })}
-          </div>
         </div>
       )}
     </div>

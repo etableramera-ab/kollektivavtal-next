@@ -15,21 +15,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // English agreement pages
-  const enAgreementPages = agreements.map((a) => ({
-    url: `${baseUrl}/en/avtal/${a.slug}`,
+  // All non-default locale pages
+  const allLocales = ["en", "ar", "so", "fa", "es", "pl"];
+
+  const localeHomePages = allLocales.map((locale) => ({
+    url: `${baseUrl}/${locale}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
-    priority: 0.7,
+    priority: locale === "en" ? 0.9 : 0.8,
   }));
 
-  // Arabic agreement pages
-  const arAgreementPages = agreements.map((a) => ({
-    url: `${baseUrl}/ar/avtal/${a.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }));
+  const localeAgreementPages = allLocales.flatMap((locale) =>
+    agreements.map((a) => ({
+      url: `${baseUrl}/${locale}/avtal/${a.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: locale === "en" ? 0.7 : 0.6,
+    }))
+  );
 
   const courtCasePages = courtCases.map((c) => ({
     url: `${baseUrl}/rattsfall/${c.id}`,
@@ -152,21 +155,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.3,
     },
-    // English pages
-    {
-      url: `${baseUrl}/en`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
-    ...enAgreementPages,
-    // Arabic pages
-    {
-      url: `${baseUrl}/ar`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    ...arAgreementPages,
+    // All locale pages (en, ar, so, fa, es, pl)
+    ...localeHomePages,
+    ...localeAgreementPages,
   ];
 }
