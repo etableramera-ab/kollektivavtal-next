@@ -26,6 +26,7 @@ export const VERIFIED_AGREEMENTS = new Set([
   "svemek-avtalet",
   "kemiskt-avtal-ifmetall",
   "installationsavtalet",
+  "bemanningsavtalet",
 ]);
 
 export function isVerifiedAgreement(slug: string): boolean {

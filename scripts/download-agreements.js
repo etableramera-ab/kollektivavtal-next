@@ -41,6 +41,8 @@ const agreements = [
   { slug: 'kemiskt-avtal-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/kemiska-fabriker-2025-2027.pdf' },
   // Elektrikerna — Installationsavtalet
   { slug: 'installationsavtalet', url: 'https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/installationsavtalet-2025-2027.pdf' },
+  // LO-förbunden — Bemanningsavtalet
+  { slug: 'bemanningsavtalet', url: 'https://www.livs.se/globalassets/livs.se/arbetsplats--och-avtalsfragor/avtal-2020-2025/material-avtal-2020-2025/bemanningsavtalet-2025-05-01---2027-04-30.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
