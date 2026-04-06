@@ -47,6 +47,10 @@ const agreements = [
   { slug: 'fastighetsavtalet', url: 'https://www.akavia.se/siteassets/03-rad-och-stod/kollektivavtal-privat-sektor/almega/kollektivavtal---avtal-2025---fastighetsarbetsgivarna---20250601.pdf' },
   // Skogsstyrelsen — VISST (Villkorsavtal för skogligt arbete)
   { slug: 'skogsavtalet', url: 'https://www.skogsstyrelsen.se/globalassets/om-oss/kollektivavtal/visst-2026-2027.pdf' },
+  // Arbetsgivarverket — Villkorsavtal OFR/S,P,O
+  { slug: 'villkorsavtal-ofr', url: 'https://reservofficerarna.se/app/uploads/2026/01/villkorsavtalet-2026.pdf' },
+  // Arbetsgivarverket — Villkorsavtal Seko
+  { slug: 'villkorsavtal-seko', url: 'https://www.seko.se/48dfcd/siteassets/kollektivavtal/branschavtal/avtal-staten/villkorsavtal-staten/villkorsavtal-mellan-arbetsgivarverket-och-seko-20240701.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
