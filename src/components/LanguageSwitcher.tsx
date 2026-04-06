@@ -16,7 +16,7 @@ const languageNames: Record<Locale, { name: string; flag: string }> = {
 };
 
 // Only show languages that have a dictionary — add more here as they are translated
-const availableLocales: Locale[] = ["sv", "en"];
+const availableLocales: Locale[] = ["sv", "en", "ar"];
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
@@ -128,7 +128,7 @@ export default function LanguageSwitcher() {
             <p className="px-4 py-1 text-xs text-gray-400 uppercase tracking-wide">
               Kommer snart / Coming soon
             </p>
-            {(["ar", "so", "fa", "es", "pl"] as Locale[])
+            {(["so", "fa", "es", "pl"] as Locale[])
               .filter((l) => !availableLocales.includes(l))
               .map((locale) => {
                 const lang = languageNames[locale];

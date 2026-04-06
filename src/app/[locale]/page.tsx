@@ -17,6 +17,7 @@ import {
   UtensilsCrossed,
   Landmark,
   ArrowRight,
+  ArrowLeft,
   Scale,
   Shield,
   Rocket,
@@ -47,6 +48,8 @@ export default function LocaleHomePage() {
   const locale = (params.locale as string) || "sv";
   const dict = getDictionary(locale);
   const prefix = locale === "sv" ? "" : `/${locale}`;
+  const isRTL = locale === "ar" || locale === "fa";
+  const DirArrow = isRTL ? ArrowLeft : ArrowRight;
 
   const keyStats = [
     { number: 617, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
@@ -55,59 +58,62 @@ export default function LocaleHomePage() {
     { number: 617, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
   ];
 
+  const t = (sv: string, en: string, ar: string) =>
+    locale === "ar" ? ar : locale === "en" ? en : sv;
+
   const agreements = [
     {
       name: "HÖK Kommunal",
-      desc: locale === "en" ? "Main agreement for municipal employees in healthcare, care and education" : "Huvudöverenskommelse för kommunalt anställda inom vård, omsorg och skola",
+      desc: t("Huvudöverenskommelse för kommunalt anställda inom vård, omsorg och skola", "Main agreement for municipal employees in healthcare, care and education", "الاتفاقية الرئيسية للموظفين البلديين في الرعاية الصحية والتعليم"),
       employees: "~1 100 000",
       icon: Building2,
       slug: "hok-kommunal",
     },
     {
       name: "Teknikavtalet",
-      desc: locale === "en" ? "Industry's largest agreement for engineers, technicians and assemblers" : "Industrins största avtal för ingenjörer, tekniker och montörer",
+      desc: t("Industrins största avtal för ingenjörer, tekniker och montörer", "Industry's largest agreement for engineers, technicians and assemblers", "أكبر اتفاقية صناعية للمهندسين والفنيين والمركّبين"),
       employees: "~300 000",
       icon: Cpu,
       slug: "teknikavtalet",
     },
     {
       name: "Handelsavtalet",
-      desc: locale === "en" ? "Agreement for employees in retail and wholesale" : "Avtal för anställda inom detaljhandel och partihandel",
+      desc: t("Avtal för anställda inom detaljhandel och partihandel", "Agreement for employees in retail and wholesale", "اتفاقية للموظفين في تجارة التجزئة والجملة"),
       employees: "~250 000",
       icon: ShoppingCart,
       slug: "handelsavtalet",
     },
     {
       name: "Byggavtalet",
-      desc: locale === "en" ? "Agreement for construction workers and infrastructure staff" : "Avtal för byggnadsarbetare och anläggningspersonal",
+      desc: t("Avtal för byggnadsarbetare och anläggningspersonal", "Agreement for construction workers and infrastructure staff", "اتفاقية لعمال البناء والبنية التحتية"),
       employees: "~150 000",
       icon: HardHat,
       slug: "byggavtalet",
     },
     {
       name: "IT-avtalet",
-      desc: locale === "en" ? "Agreement for employees in IT and telecom" : "Avtal för anställda inom IT- och telekombranschen",
+      desc: t("Avtal för anställda inom IT- och telekombranschen", "Agreement for employees in IT and telecom", "اتفاقية للموظفين في قطاع تكنولوجيا المعلومات والاتصالات"),
       employees: "~100 000",
       icon: Cpu,
       slug: "it-avtalet",
     },
     {
       name: "Transportavtalet",
-      desc: locale === "en" ? "Agreement for professional drivers, warehouse and logistics staff" : "Avtal för yrkesförare, lagerarbetare och logistikpersonal",
+      desc: t("Avtal för yrkesförare, lagerarbetare och logistikpersonal", "Agreement for professional drivers, warehouse and logistics staff", "اتفاقية للسائقين المحترفين وعمال المستودعات واللوجستيات"),
       employees: "~120 000",
       icon: Truck,
       slug: "transportavtalet",
     },
     {
       name: "Hotell & Restaurang",
-      desc: locale === "en" ? "Agreement for employees in hotels, restaurants and cafés" : "Avtal för anställda inom hotell-, restaurang- och caféverksamhet",
+      desc: t("Avtal för anställda inom hotell-, restaurang- och caféverksamhet", "Agreement for employees in hotels, restaurants and cafés", "اتفاقية للموظفين في الفنادق والمطاعم والمقاهي"),
       employees: "~130 000",
       icon: UtensilsCrossed,
       slug: "hotell-restaurang",
     },
     {
-      name: locale === "en" ? "Government Conditions Agreement" : "Statliga villkorsavtal",
-      desc: locale === "en" ? "Conditions agreements for government employees in agencies and departments" : "Villkorsavtal för statligt anställda inom myndigheter och verk",
+      name: t("Statliga villkorsavtal", "Government Conditions Agreement", "اتفاقية شروط العمل الحكومية"),
+      desc: t("Villkorsavtal för statligt anställda inom myndigheter och verk", "Conditions agreements for government employees in agencies and departments", "اتفاقية شروط للموظفين الحكوميين في الوكالات والإدارات"),
       employees: "~270 000",
       icon: Landmark,
       slug: "statliga-villkorsavtal",
@@ -140,12 +146,12 @@ export default function LocaleHomePage() {
             <div className="mt-8 sm:mt-10 relative max-w-xl mx-auto group/search">
               <Search
                 size={20}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary"
+                className={`absolute top-1/2 -translate-y-1/2 text-text-secondary ${isRTL ? "right-4" : "left-4"}`}
               />
               <input
                 type="text"
                 placeholder={dict.nav.search}
-                className="w-full rounded-[12px] bg-white text-text-primary py-4 pl-12 pr-4 text-base shadow-lg outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-accent transition-transform focus:scale-[1.02]"
+                className={`w-full rounded-[12px] bg-white text-text-primary py-4 text-base shadow-lg outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-accent transition-transform focus:scale-[1.02] ${isRTL ? "pr-12 pl-4" : "pl-12 pr-4"}`}
               />
             </div>
 
@@ -246,14 +252,14 @@ export default function LocaleHomePage() {
           </AnimatedSection>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {[
-              { title: locale === "en" ? "Assistant Nurse" : "Undersköterska", median: "31 000", slug: "underskoterska" },
-              { title: locale === "en" ? "Electrician" : "Elektriker", median: "35 000", slug: "elektriker" },
-              { title: locale === "en" ? "Chef" : "Kock", median: "28 000", slug: "kock" },
-              { title: locale === "en" ? "Teacher" : "Lärare", median: "37 000", slug: "larare-grundskola" },
-              { title: locale === "en" ? "Truck Driver" : "Lastbilschaufför", median: "32 000", slug: "lastbilschauffor" },
-              { title: locale === "en" ? "Software Developer" : "Systemutvecklare", median: "48 000", slug: "systemutvecklare" },
-              { title: locale === "en" ? "Sales Associate" : "Butikssäljare", median: "27 000", slug: "butikssaljare" },
-              { title: locale === "en" ? "Construction Worker" : "Byggnadsarbetare", median: "33 000", slug: "byggnadsarbetare" },
+              { title: t("Undersköterska", "Assistant Nurse", "مساعد تمريض"), median: "31 000", slug: "underskoterska" },
+              { title: t("Elektriker", "Electrician", "كهربائي"), median: "35 000", slug: "elektriker" },
+              { title: t("Kock", "Chef", "طاهي"), median: "28 000", slug: "kock" },
+              { title: t("Lärare", "Teacher", "معلم"), median: "37 000", slug: "larare-grundskola" },
+              { title: t("Lastbilschaufför", "Truck Driver", "سائق شاحنة"), median: "32 000", slug: "lastbilschauffor" },
+              { title: t("Systemutvecklare", "Software Developer", "مطور برمجيات"), median: "48 000", slug: "systemutvecklare" },
+              { title: t("Butikssäljare", "Sales Associate", "بائع"), median: "27 000", slug: "butikssaljare" },
+              { title: t("Byggnadsarbetare", "Construction Worker", "عامل بناء"), median: "33 000", slug: "byggnadsarbetare" },
             ].map((occ, i) => (
               <AnimatedSection key={occ.slug} delay={i * 0.05}>
                 <Link href={`${prefix}/yrke/${occ.slug}`} className="block">
@@ -272,7 +278,7 @@ export default function LocaleHomePage() {
           </div>
           <AnimatedSection delay={0.4}>
             <Link href={`${prefix}/yrke`} className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
-              {dict.home.seeAllOccupations} <ArrowRight size={14} />
+              {dict.home.seeAllOccupations} <DirArrow size={14} />
             </Link>
           </AnimatedSection>
         </div>
@@ -302,7 +308,7 @@ export default function LocaleHomePage() {
                     <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
                     <p className="text-xs text-text-secondary mt-2">{a.employees} {dict.home.employees}</p>
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-3">
-                      {dict.home.readMore} <ArrowRight size={14} />
+                      {dict.home.readMore} <DirArrow size={14} />
                     </span>
                   </motion.div>
                 </Link>
@@ -329,7 +335,7 @@ export default function LocaleHomePage() {
               href={`${prefix}/statistik/loner`}
               className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2 hover:underline min-h-[44px]"
             >
-              {dict.home.fullSalaryStats} <ArrowRight size={14} />
+              {dict.home.fullSalaryStats} <DirArrow size={14} />
             </Link>
           </AnimatedSection>
         </div>
@@ -353,9 +359,9 @@ export default function LocaleHomePage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
-                    <th className="text-left p-4 font-semibold text-text-primary">{dict.home.benefit}</th>
-                    <th className="text-left p-4 font-semibold text-success">{dict.home.withAgreement}</th>
-                    <th className="text-left p-4 font-semibold text-accent">{dict.home.withoutAgreementShort}</th>
+                    <th className={`${isRTL ? "text-right" : "text-left"} p-4 font-semibold text-text-primary`}>{dict.home.benefit}</th>
+                    <th className={`${isRTL ? "text-right" : "text-left"} p-4 font-semibold text-success`}>{dict.home.withAgreement}</th>
+                    <th className={`${isRTL ? "text-right" : "text-left"} p-4 font-semibold text-accent`}>{dict.home.withoutAgreementShort}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -414,7 +420,7 @@ export default function LocaleHomePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
           >
-            {dict.home.compareInsurance} <ArrowRight size={14} />
+            {dict.home.compareInsurance} <DirArrow size={14} />
           </a>
         </div>
       </section>
@@ -438,7 +444,7 @@ export default function LocaleHomePage() {
                 <Link href={item.href} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center">
                   <p className="font-semibold text-text-primary text-sm">{item.title}</p>
                   <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
-                    {dict.home.compareAll} <ArrowRight size={12} />
+                    {dict.home.compareAll} <DirArrow size={12} />
                   </span>
                 </Link>
               </AnimatedSection>
@@ -475,7 +481,7 @@ export default function LocaleHomePage() {
             href={`${prefix}/rattsfall`}
             className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
           >
-            {dict.home.seeAllCases} <ArrowRight size={14} />
+            {dict.home.seeAllCases} <DirArrow size={14} />
           </Link>
         </div>
       </section>
@@ -506,7 +512,7 @@ export default function LocaleHomePage() {
           </div>
           <AnimatedSection delay={0.3}>
             <Link href={`${prefix}/blogg`} className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
-              {dict.home.allArticles} <ArrowRight size={14} />
+              {dict.home.allArticles} <DirArrow size={14} />
             </Link>
           </AnimatedSection>
         </div>

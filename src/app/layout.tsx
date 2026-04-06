@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     languages: {
       "sv": "https://kollektivavtal.ai",
       "en": "https://kollektivavtal.ai/en",
+      "ar": "https://kollektivavtal.ai/ar",
       "x-default": "https://kollektivavtal.ai",
     },
   },

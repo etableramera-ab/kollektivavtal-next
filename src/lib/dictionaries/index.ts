@@ -1,8 +1,9 @@
 import sv from "./sv";
 import en from "./en";
+import ar from "./ar";
 import type { Dictionary } from "./sv";
 
-const dictionaries: Record<string, Dictionary> = { sv, en };
+const dictionaries: Record<string, Dictionary> = { sv, en, ar };
 
 export function getDictionary(locale: string): Dictionary {
   return dictionaries[locale] || dictionaries.sv;

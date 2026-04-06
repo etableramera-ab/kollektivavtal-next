@@ -1,5 +1,13 @@
+import { Noto_Sans_Arabic } from "next/font/google";
 import { locales, defaultLocale } from "@/lib/dictionaries";
 import { notFound } from "next/navigation";
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic",
+  display: "swap",
+});
 
 export function generateStaticParams() {
   return locales
@@ -21,7 +29,12 @@ export default function LocaleLayout({
   const isRTL = params.locale === "ar" || params.locale === "fa";
 
   return (
-    <div dir={isRTL ? "rtl" : "ltr"} lang={params.locale}>
+    <div
+      dir={isRTL ? "rtl" : "ltr"}
+      lang={params.locale}
+      className={isRTL ? notoSansArabic.variable : ""}
+      style={isRTL ? { fontFamily: "var(--font-arabic), sans-serif" } : {}}
+    >
       {children}
     </div>
   );

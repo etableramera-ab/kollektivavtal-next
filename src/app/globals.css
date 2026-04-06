@@ -21,3 +21,18 @@ body {
   background: var(--color-background);
   font-family: var(--font-sans);
 }
+
+/* RTL support */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .search-icon-left {
+  left: auto;
+  right: 1rem;
+}
+
+[dir="rtl"] .search-input-padded {
+  padding-left: 1rem;
+  padding-right: 3rem;
+}
