@@ -49,8 +49,8 @@ export default function Lonekalkylator() {
   );
 
   const chartData = [
-    { name: "Din grundlön", value: result.baseWage, fill: "#0F2B46" },
-    { name: "Medianlön", value: result.medianWage, fill: "#E8613C" },
+    { name: "Din grundlön", value: result.baseWage, fill: "#0F766E" },
+    { name: "Medianlön", value: result.medianWage, fill: "#D97706" },
     { name: "Utan avtal", value: 0, fill: "#E2E8F0" },
   ];
 

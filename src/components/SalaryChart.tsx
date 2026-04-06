@@ -68,7 +68,7 @@ export default function SalaryChart() {
         />
         <Bar dataKey="lon" radius={[0, 6, 6, 0]} barSize={isMobile ? 22 : 28}>
           {data.map((_, index) => (
-            <Cell key={index} fill={index < 2 ? "#E8613C" : "#0F2B46"} />
+            <Cell key={index} fill={index < 2 ? "#D97706" : "#0F766E"} />
           ))}
         </Bar>
       </BarChart>

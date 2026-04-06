@@ -19,9 +19,9 @@ import { CountUp } from "@/components/ui/CountUp";
 import { getWageData } from "@/lib/scb-wages";
 
 const coverageData = [
-  { name: "Kommun/region", value: 100, color: "#0F2B46" },
+  { name: "Kommun/region", value: 100, color: "#0F766E" },
   { name: "Stat", value: 100, color: "#1a4570" },
-  { name: "Privat (med avtal)", value: 83, color: "#E8613C" },
+  { name: "Privat (med avtal)", value: 83, color: "#D97706" },
   { name: "Privat (utan avtal)", value: 17, color: "#E2E8F0" },
 ];
 
@@ -159,7 +159,7 @@ export default function StatistikOverview() {
                   />
                   <Bar dataKey="medianWage" radius={[0, 6, 6, 0]} barSize={24}>
                     {wageData.map((_, i) => (
-                      <Cell key={i} fill={i < 2 ? "#E8613C" : "#0F2B46"} />
+                      <Cell key={i} fill={i < 2 ? "#D97706" : "#0F766E"} />
                     ))}
                   </Bar>
                 </BarChart>

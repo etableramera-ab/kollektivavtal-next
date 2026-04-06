@@ -105,7 +105,7 @@ export default function LonerPage() {
                   />
                   <Bar dataKey="medianWage" radius={[0, 6, 6, 0]} barSize={26}>
                     {sorted.map((_, i) => (
-                      <Cell key={i} fill={i < 2 ? "#E8613C" : "#0F2B46"} />
+                      <Cell key={i} fill={i < 2 ? "#D97706" : "#0F766E"} />
                     ))}
                   </Bar>
                 </BarChart>

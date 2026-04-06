@@ -36,8 +36,8 @@ export default function OccupationPageClient({
 }: Props) {
   const chartData = [
     { name: "Lägst (avtal)", value: occ.salary.minimum, fill: "#E2E8F0" },
-    { name: "Median (SCB)", value: occ.salary.median, fill: "#0F2B46" },
-    { name: "Topp (P90)", value: occ.salary.p90, fill: "#E8613C" },
+    { name: "Median (SCB)", value: occ.salary.median, fill: "#0F766E" },
+    { name: "Topp (P90)", value: occ.salary.p90, fill: "#D97706" },
   ];
 
   const demandBadge = Object.entries(demandColors).find(([k]) =>
