@@ -45,6 +45,8 @@ const agreements = [
   { slug: 'bemanningsavtalet', url: 'https://www.livs.se/globalassets/livs.se/arbetsplats--och-avtalsfragor/avtal-2020-2025/material-avtal-2020-2025/bemanningsavtalet-2025-05-01---2027-04-30.pdf' },
   // Almega Fastighetsarbetsgivarna — Fastighetsavtalet (tjänsteman)
   { slug: 'fastighetsavtalet', url: 'https://www.akavia.se/siteassets/03-rad-och-stod/kollektivavtal-privat-sektor/almega/kollektivavtal---avtal-2025---fastighetsarbetsgivarna---20250601.pdf' },
+  // Skogsstyrelsen — VISST (Villkorsavtal för skogligt arbete)
+  { slug: 'skogsavtalet', url: 'https://www.skogsstyrelsen.se/globalassets/om-oss/kollektivavtal/visst-2026-2027.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');

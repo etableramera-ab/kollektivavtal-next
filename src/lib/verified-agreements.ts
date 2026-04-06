@@ -28,6 +28,7 @@ export const VERIFIED_AGREEMENTS = new Set([
   "installationsavtalet",
   "bemanningsavtalet",
   "fastighetsavtalet",
+  "skogsavtalet",
 ]);
 
 export function isVerifiedAgreement(slug: string): boolean {
