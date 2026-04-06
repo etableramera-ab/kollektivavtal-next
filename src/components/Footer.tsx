@@ -46,7 +46,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="mb-8">
           <Link href="/">
-            <img src="/Images/Logo-vit.svg" alt="kollektivavtal.ai" style={{ height: '40px', width: 'auto' }} />
+            <img src="/Images/Logo-vit.svg" alt="kollektivavtal.ai" style={{ height: '30px', width: 'auto' }} />
           </Link>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
