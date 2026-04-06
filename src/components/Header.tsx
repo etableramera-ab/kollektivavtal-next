@@ -2,17 +2,20 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const mainLinks = [
-  { href: "/avtal", label: "Kollektivavtal" },
-  { href: "/yrke", label: "Yrken" },
-  { href: "/statistik", label: "Statistik" },
-  { href: "/rattsfall", label: "Rättsfall" },
-  { href: "/blogg", label: "Blogg" },
+  { href: "/avtal", label: "Kollektivavtal", match: "/avtal" },
+  { href: "/yrke", label: "Yrken", match: "/yrke" },
+  { href: "/statistik", label: "Statistik", match: "/statistik" },
+  { href: "/rattsfall", label: "Rättsfall", match: "/rattsfall" },
+  { href: "/blogg", label: "Blogg", match: "/blogg" },
 ];
+
+const toolPaths = ["/hitta-avtal", "/lonekalkylator", "/jamfor"];
 
 const toolLinks = [
   { href: "/hitta-avtal", label: "Hitta ditt avtal" },
@@ -37,6 +40,9 @@ export default function Header() {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  const isToolActive = toolPaths.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -70,21 +76,31 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-5">
-            {mainLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-white/80 hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {mainLinks.map((link) => {
+              const active = pathname.startsWith(link.match);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors pb-1 ${
+                    active
+                      ? "text-white border-b-2 border-accent"
+                      : "text-white/80 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
 
-            {/* Verktyg dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setToolsOpen(!toolsOpen)}
-                className="flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors pb-1 ${
+                  isToolActive
+                    ? "text-white border-b-2 border-accent"
+                    : "text-white/80 hover:text-white"
+                }`}
               >
                 Verktyg
                 <ChevronDown size={14} className={`transition-transform ${toolsOpen ? "rotate-180" : ""}`} />
@@ -107,7 +123,7 @@ export default function Header() {
 
             <Link
               href="/hitta-avtal"
-              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white bg-accent hover:bg-accent-hover rounded-md transition-colors"
+              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white bg-accent hover:bg-accent-hover hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200"
             >
               Hitta ditt avtal
             </Link>
@@ -152,16 +168,21 @@ export default function Header() {
             </div>
 
             <nav className="px-4 pt-4">
-              {mobileLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block py-4 text-lg font-medium text-text-primary hover:text-primary border-b border-border last:border-0"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {mobileLinks.map((link) => {
+                const active = pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`block py-4 text-lg font-medium border-b border-border last:border-0 ${
+                      active ? "text-primary" : "text-text-primary hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
               <Link
                 href="/hitta-avtal"
                 onClick={() => setMobileOpen(false)}

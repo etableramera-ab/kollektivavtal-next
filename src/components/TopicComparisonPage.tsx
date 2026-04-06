@@ -35,7 +35,7 @@ export default function TopicComparisonPage({ title, subtitle, aeoAnswer, column
       <section className="bg-primary text-white py-10 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-2xl sm:text-4xl font-extrabold">{title}</h1>
+            <h1 className="text-2xl sm:text-4xl" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{title}</h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">{subtitle}</p>
           </AnimatedSection>
         </div>
@@ -43,8 +43,8 @@ export default function TopicComparisonPage({ title, subtitle, aeoAnswer, column
 
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-4 sm:p-5">
-            <p className="text-sm text-blue-900 leading-relaxed">{aeoAnswer}</p>
+          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
+            <p className="text-sm text-text-primary leading-relaxed">{aeoAnswer}</p>
           </div>
         </div>
       </section>
@@ -57,7 +57,7 @@ export default function TopicComparisonPage({ title, subtitle, aeoAnswer, column
 
           {ctaText && ctaHref && (
             <AnimatedSection delay={0.1}>
-              <Link href={ctaHref} className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-4 hover:underline min-h-[44px]">
+              <Link href={ctaHref} className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-4 hover:underline min-h-[44px]">
                 {ctaText} <ArrowRight size={14} />
               </Link>
             </AnimatedSection>

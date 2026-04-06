@@ -71,31 +71,31 @@ export default function ComparisonTable({ columns, rows, sectorFilter = true }: 
       )}
 
       {/* Desktop table */}
-      <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-sm overflow-x-auto">
-        <table className="w-full text-sm">
+      <div className="hidden md:block rounded-xl border border-border bg-white overflow-hidden overflow-x-auto">
+        <table className="w-full text-sm min-w-[600px]">
           <thead>
-            <tr className="border-b border-border bg-background">
+            <tr className="bg-primary text-white">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`p-3 font-semibold text-text-primary ${col.align === "right" ? "text-right" : "text-left"} ${col.sortable ? "cursor-pointer hover:text-accent select-none" : ""}`}
+                  className={`p-4 font-semibold text-sm ${col.align === "right" ? "text-right" : "text-left"} ${col.sortable ? "cursor-pointer hover:text-white/80 select-none" : ""}`}
                   onClick={col.sortable ? () => toggleSort(col.key) : undefined}
                 >
                   <span className="inline-flex items-center gap-1">
                     {col.label}
-                    {col.sortable && <ArrowUpDown size={12} className="text-text-secondary" />}
+                    {col.sortable && <ArrowUpDown size={12} className="text-white/60" />}
                   </span>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {sorted.map((row) => (
-              <tr key={row.slug} className="border-b border-border last:border-0 hover:bg-background/50">
+            {sorted.map((row, i) => (
+              <tr key={row.slug} className={`border-b border-surface-dark last:border-0 hover:bg-[#F0FDFA] transition-colors ${i % 2 === 1 ? "bg-background" : ""}`}>
                 {columns.map((col) => (
-                  <td key={col.key} className={`p-3 ${col.align === "right" ? "text-right" : ""} ${col.key === "name" ? "font-medium text-text-primary" : "text-text-secondary"}`}>
+                  <td key={col.key} className={`px-4 py-3.5 ${col.align === "right" ? "text-right" : ""} ${col.key === "name" ? "font-semibold text-text-primary" : "text-text-primary"}`}>
                     {col.key === "name" ? (
-                      <Link href={`/avtal/${row.slug}`} className="text-accent hover:underline">{String(row[col.key])}</Link>
+                      <Link href={`/avtal/${row.slug}`} className="text-primary hover:underline">{String(row[col.key])}</Link>
                     ) : (
                       String(row[col.key])
                     )}
