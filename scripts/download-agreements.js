@@ -39,6 +39,8 @@ const agreements = [
   { slug: 'teknikavtalet-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/teknikavtalet-2025-2027.pdf' },
   { slug: 'svemek-avtalet', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/svemek-2025-2027.pdf' },
   { slug: 'kemiskt-avtal-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/kemiska-fabriker-2025-2027.pdf' },
+  // Elektrikerna — Installationsavtalet
+  { slug: 'installationsavtalet', url: 'https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/installationsavtalet-2025-2027.pdf' },
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
