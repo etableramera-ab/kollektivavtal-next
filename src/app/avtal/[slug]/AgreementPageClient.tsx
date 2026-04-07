@@ -20,6 +20,7 @@ import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import FaqAccordion from "@/components/FaqAccordion";
 import AgreementChat from "@/components/AgreementChat";
 import WageDisclaimer from "@/components/WageDisclaimer";
+import { getAgreementHeroImage } from "@/lib/sector-images";
 import type { Agreement } from "@/data/agreements";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -87,7 +88,7 @@ export default function AgreementPageClient({
   return (
     <>
       {/* Hero / Breadcrumb */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-12">
+      <section style={{ backgroundImage: `linear-gradient(135deg, rgba(15,118,110,0.82) 0%, rgba(10,95,89,0.87) 100%), url('${getAgreementHeroImage(agreement.slug, agreement.sectorLabel)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white py-10 sm:py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-[13px] text-white/60 mb-6">

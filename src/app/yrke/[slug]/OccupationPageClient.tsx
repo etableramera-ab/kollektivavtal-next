@@ -8,6 +8,7 @@ import {
   ChevronRight, ArrowRight, TrendingDown, Minus, TrendingUp, Scale, ExternalLink,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { getOccupationHeroImage } from "@/lib/sector-images";
 import FaqAccordion from "@/components/FaqAccordion";
 import AgreementChat from "@/components/AgreementChat";
 import type { Occupation } from "@/data/occupations";
@@ -53,7 +54,7 @@ export default function OccupationPageClient({
   return (
     <>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-16">
+      <section style={{ backgroundImage: `linear-gradient(135deg, rgba(15,118,110,0.82) 0%, rgba(10,95,89,0.87) 100%), url('${getOccupationHeroImage(occ.category)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white py-10 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">

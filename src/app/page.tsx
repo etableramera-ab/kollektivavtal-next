@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import {
   Search,
@@ -44,10 +45,10 @@ const tools = [
 ];
 
 const topAgreements = [
-  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal" },
-  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet" },
-  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet" },
-  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet" },
+  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal", img: "/images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet", img: "/images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
+  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet", img: "/images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet", img: "/images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
 ];
 
 const topOccupations = [
@@ -192,14 +193,16 @@ export default function Home() {
                 {topAgreements.map((a, i) => (
                   <AnimatedSection key={a.slug} delay={i * 0.08}>
                     <Link href={`/avtal/${a.slug}`} className="block h-full group">
-                      <div className="rounded-lg border border-border bg-white p-5 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-                        <div className="w-10 h-10 rounded-full bg-[#F0FDFA] flex items-center justify-center mb-3">
-                          <a.icon size={20} className="text-primary" />
+                      <div className="rounded-lg border border-border bg-white h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden">
+                        <div className="relative h-[140px] sm:h-[140px]">
+                          <Image src={a.img} alt={a.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />
                         </div>
+                        <div className="p-5">
                         <h3 className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{a.name}</h3>
                         <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
                         <p className="text-xs text-text-secondary mt-2">{a.employees} anställda</p>
                         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-3">Läs mer <ArrowRight size={14} /></span>
+                        </div>
                       </div>
                     </Link>
                   </AnimatedSection>
@@ -259,7 +262,7 @@ export default function Home() {
       </section>
 
       {/* ─── VAD FÖRLORAR DU? ─── */}
-      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #0D5E58 0%, #0F766E 50%, #14B8A6 100%)" }}>
+      <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(135deg, rgba(13,94,88,0.88) 0%, rgba(15,118,110,0.85) 50%, rgba(20,184,166,0.88) 100%), url('/images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white text-center" style={serif}>
@@ -382,7 +385,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <AnimatedSection>
                 <Link href={`/blogg/${blogPosts[0].slug}`} className="block h-full group">
-                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
+                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ backgroundImage: "linear-gradient(135deg, rgba(15,118,110,0.85) 0%, rgba(10,95,89,0.9) 100%), url('/images/blog/avtalsrorelsen-2027.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
                     <span className="rounded-full bg-white/15 text-white text-xs font-medium px-3 py-1 self-start mb-3">
                       {blogPosts[0].category}
                     </span>
