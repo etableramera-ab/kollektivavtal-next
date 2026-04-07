@@ -1,5 +1,4 @@
 import Link from "next/link";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const socialLinks = [
   {
@@ -161,9 +160,6 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-6 border-t border-white/20">
-          <div className="flex flex-wrap items-center gap-6 mb-4">
-            <LanguageSwitcher />
-          </div>
           <p className="text-xs text-white/50">
             En tjänst från Etablera Mera AB (559444-2526)
           </p>
