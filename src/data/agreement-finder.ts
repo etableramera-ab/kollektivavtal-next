@@ -168,8 +168,9 @@ export const finderData: FinderSector[] = [
         occupations: [
           { label: "Undersköterska", agreementSlug: "hok-kommunal" },
           { label: "Vårdbiträde", agreementSlug: "hok-kommunal" },
-          { label: "Sjuksköterska", agreementSlug: "ab-kommunalt" },
+          { label: "Sjuksköterska", agreementSlug: "sjukskoterska-avtal" },
           { label: "Arbetsterapeut", agreementSlug: "ab-kommunalt" },
+          { label: "Fysioterapeut", agreementSlug: "ab-kommunalt" },
         ],
       },
       {
@@ -177,8 +178,18 @@ export const finderData: FinderSector[] = [
         occupations: [
           { label: "Barnskötare", agreementSlug: "hok-kommunal" },
           { label: "Förskollärare", agreementSlug: "ab-kommunalt" },
-          { label: "Lärare (grundskola)", agreementSlug: "ab-kommunalt" },
-          { label: "Lärare (gymnasium)", agreementSlug: "ab-kommunalt" },
+          { label: "Lärare (grundskola)", agreementSlug: "laraavtalet" },
+          { label: "Lärare (gymnasium)", agreementSlug: "laraavtalet" },
+          { label: "Elevassistent", agreementSlug: "hok-kommunal" },
+        ],
+      },
+      {
+        label: "Sjukvård (region)",
+        occupations: [
+          { label: "Sjuksköterska (region)", agreementSlug: "sjukskoterska-avtal" },
+          { label: "Barnmorska", agreementSlug: "sjukskoterska-avtal" },
+          { label: "Läkare (kommun/region)", agreementSlug: "lakare-kommun" },
+          { label: "Biomedicinsk analytiker", agreementSlug: "sjukskoterska-avtal" },
         ],
       },
       {
@@ -189,12 +200,20 @@ export const finderData: FinderSector[] = [
         ],
       },
       {
-        label: "Administration & Tjänstemän",
+        label: "Socialtjänst",
         occupations: [
           { label: "Socialsekreterare", agreementSlug: "hok-vision" },
+          { label: "Biståndshandläggare", agreementSlug: "hok-vision" },
+          { label: "Familjebehandlare", agreementSlug: "hok-vision" },
+        ],
+      },
+      {
+        label: "Administration & Tjänstemän",
+        occupations: [
           { label: "Handläggare", agreementSlug: "hok-vision" },
           { label: "Ekonom", agreementSlug: "hok-vision" },
           { label: "HR-specialist", agreementSlug: "hok-vision" },
+          { label: "Kommunikatör", agreementSlug: "hok-vision" },
         ],
       },
       {
@@ -203,6 +222,15 @@ export const finderData: FinderSector[] = [
           { label: "Vaktmästare", agreementSlug: "hok-kommunal" },
           { label: "Fastighetstekniker", agreementSlug: "hok-kommunal" },
           { label: "IT-tekniker (kommun)", agreementSlug: "hok-vision" },
+          { label: "VA-tekniker", agreementSlug: "hok-kommunal" },
+        ],
+      },
+      {
+        label: "Kost & Städ",
+        occupations: [
+          { label: "Kökspersonal (kommun)", agreementSlug: "hok-kommunal" },
+          { label: "Kokerska", agreementSlug: "hok-kommunal" },
+          { label: "Lokalvårdare", agreementSlug: "hok-kommunal" },
         ],
       },
       {
@@ -210,6 +238,15 @@ export const finderData: FinderSector[] = [
         occupations: [
           { label: "Bibliotekarie", agreementSlug: "hok-vision" },
           { label: "Fritidsledare", agreementSlug: "ab-kommunalt" },
+          { label: "Kultursamordnare", agreementSlug: "hok-vision" },
+        ],
+      },
+      {
+        label: "Samhällsplanering & Miljö",
+        occupations: [
+          { label: "Planarkitekt", agreementSlug: "hok-akademiker" },
+          { label: "Miljöinspektör", agreementSlug: "hok-vision" },
+          { label: "Bygglovhandläggare", agreementSlug: "hok-vision" },
         ],
       },
     ],
@@ -225,6 +262,7 @@ export const finderData: FinderSector[] = [
           { label: "Handläggare (akademiker)", agreementSlug: "villkorsavtal-saco" },
           { label: "Utredare", agreementSlug: "villkorsavtal-saco" },
           { label: "Forskare", agreementSlug: "villkorsavtal-saco" },
+          { label: "Jurist (statlig)", agreementSlug: "villkorsavtal-saco" },
         ],
       },
       {
@@ -233,6 +271,7 @@ export const finderData: FinderSector[] = [
           { label: "Handläggare (tjänsteman)", agreementSlug: "villkorsavtal-ofr" },
           { label: "Tulltjänsteman", agreementSlug: "villkorsavtal-ofr" },
           { label: "Administratör (statlig)", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Registrator", agreementSlug: "villkorsavtal-ofr" },
         ],
       },
       {
@@ -241,6 +280,7 @@ export const finderData: FinderSector[] = [
           { label: "Universitetslektor", agreementSlug: "villkorsavtal-saco" },
           { label: "Doktorand", agreementSlug: "villkorsavtal-saco" },
           { label: "Administratör (universitet)", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Forskningsingenjör", agreementSlug: "villkorsavtal-saco" },
         ],
       },
       {
@@ -248,13 +288,15 @@ export const finderData: FinderSector[] = [
         occupations: [
           { label: "Polis", agreementSlug: "villkorsavtal-ofr" },
           { label: "Civilanställd (polis)", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Forensiker", agreementSlug: "villkorsavtal-saco" },
         ],
       },
       {
         label: "Försvarsmakten",
         occupations: [
           { label: "Officer", agreementSlug: "villkorsavtal-ofr" },
-          { label: "Civilanställd (försvar)", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Specialistofficer", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Civilanställd (försvar)", agreementSlug: "villkorsavtal-seko" },
         ],
       },
       {
@@ -262,14 +304,37 @@ export const finderData: FinderSector[] = [
         occupations: [
           { label: "Kriminalvårdare", agreementSlug: "villkorsavtal-ofr" },
           { label: "Domstolshandläggare", agreementSlug: "villkorsavtal-saco" },
+          { label: "Frivårdsinspektör", agreementSlug: "villkorsavtal-ofr" },
         ],
       },
       {
-        label: "Infrastruktur & Service (statlig)",
+        label: "Tull & Kustbevakning",
+        occupations: [
+          { label: "Tulltjänsteman", agreementSlug: "villkorsavtal-ofr" },
+          { label: "Kustbevakare", agreementSlug: "villkorsavtal-ofr" },
+        ],
+      },
+      {
+        label: "Infrastruktur & Transport",
         occupations: [
           { label: "Vägarbetare (Trafikverket)", agreementSlug: "villkorsavtal-seko" },
           { label: "Banarbetare", agreementSlug: "villkorsavtal-seko" },
-          { label: "Vaktpersonal (statlig)", agreementSlug: "villkorsavtal-seko" },
+          { label: "Signaltekniker", agreementSlug: "villkorsavtal-seko" },
+        ],
+      },
+      {
+        label: "Service & Drift (statlig)",
+        occupations: [
+          { label: "Vaktmästare (statlig)", agreementSlug: "villkorsavtal-seko" },
+          { label: "Lokalvårdare (statlig)", agreementSlug: "villkorsavtal-seko" },
+          { label: "Vaktpersonal", agreementSlug: "villkorsavtal-seko" },
+        ],
+      },
+      {
+        label: "Skogsbruk (statligt)",
+        occupations: [
+          { label: "Skogsarbetare (Skogsstyrelsen)", agreementSlug: "skogsavtalet" },
+          { label: "Skogsvårdare", agreementSlug: "skogsavtalet" },
         ],
       },
     ],
