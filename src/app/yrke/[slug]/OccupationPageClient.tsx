@@ -63,7 +63,7 @@ export default function OccupationPageClient({
               <ChevronRight size={14} />
               <span className="text-white/90">{occ.title}</span>
             </nav>
-            <h1 className="text-2xl sm:text-4xl font-extrabold leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               Lön som {occ.titleGenitive} 2026
             </h1>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -150,7 +150,7 @@ export default function OccupationPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-4">
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               Ditt kollektivavtal: {agreementShortName}
             </h2>
             <p className="text-sm text-text-secondary mb-4">{occ.description}</p>
@@ -184,7 +184,7 @@ export default function OccupationPageClient({
         <section className="py-12 sm:py-16">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-4">OB-tillägg</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>OB-tillägg</h2>
               <p className="text-sm text-text-secondary mb-4">Så mycket mer tjänar du på obekväm arbetstid</p>
               <div className="rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
                 <table className="w-full text-sm">
@@ -257,7 +257,7 @@ export default function OccupationPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">Vanliga frågor om lön som {occ.titleGenitive}</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Vanliga frågor om lön som {occ.titleGenitive}</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <FaqAccordion items={occ.faq} />
@@ -283,7 +283,7 @@ export default function OccupationPageClient({
         <section className="py-12 sm:py-16 bg-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">Relaterade yrken</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Relaterade yrken</h2>
             </AnimatedSection>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {relatedOccupations.map((r, i) => (

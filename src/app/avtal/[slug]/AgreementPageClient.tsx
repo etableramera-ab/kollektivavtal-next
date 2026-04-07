@@ -96,7 +96,7 @@ export default function AgreementPageClient({
               <span className="text-white/90">{agreement.shortName}</span>
             </nav>
 
-            <h1 className="text-3xl sm:text-[40px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               {agreement.name}
             </h1>
             <p className="mt-2 text-base text-white/75">
@@ -161,7 +161,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               Om {agreement.shortName}
             </h2>
             <div className="text-text-primary leading-relaxed space-y-4">
@@ -199,7 +199,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               Lönetabell — {agreement.shortName}
             </h2>
             <WageDisclaimer isVerified={isVerified} />
@@ -259,7 +259,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>OB-tillägg</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>OB-tillägg</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <div className="rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
@@ -288,7 +288,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Övertidsersättning</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Övertidsersättning</h2>
             <p className="text-text-primary">{agreement.keyFacts.overtimeRate}</p>
           </AnimatedSection>
         </div>
@@ -298,7 +298,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Semester och ledighet</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Semester och ledighet</h2>
             <p className="text-text-primary leading-relaxed">
               Semesterrätten enligt {agreement.shortName} är {agreement.keyFacts.vacationDays}.
               Föräldralön: {agreement.keyFacts.parentalPay}.
@@ -312,7 +312,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Pension</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Pension</h2>
             <p className="text-text-primary leading-relaxed">
               Anställda som omfattas av {agreement.shortName} har tjänstepension via{" "}
               {agreement.keyFacts.pension}. Arbetsgivaren betalar in pensionsavgifter utöver lönen.
@@ -325,7 +325,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
               Vanliga frågor om {agreement.shortName}
             </h2>
           </AnimatedSection>
@@ -340,7 +340,7 @@ export default function AgreementPageClient({
         <section className="py-12 sm:py-16">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[28px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
                 Rättsfall som rör {agreement.shortName}
               </h2>
             </AnimatedSection>
@@ -371,7 +371,7 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[28px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Se även</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Se även</h2>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {relatedAgreements.map((a, i) => (

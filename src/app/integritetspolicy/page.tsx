@@ -12,7 +12,7 @@ export default function Integritetspolicy() {
   return (
     <section className="py-12 sm:py-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-text-primary mb-6">
+        <h1 className="text-4xl sm:text-5xl md:text-[56px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
           Integritetspolicy
         </h1>
         <p className="text-sm text-text-secondary mb-8">
