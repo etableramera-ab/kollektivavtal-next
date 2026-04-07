@@ -146,14 +146,18 @@ export default function AgreementPageClient({
       </section>
 
       {/* AI-chatt */}
-      <section className="py-12 sm:py-16 bg-background">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <AgreementChat
-              agreementSlug={agreement.slug}
-              agreementName={agreement.shortName}
-              suggestedQuestions={suggestedQuestions}
-            />
+            <div className="bg-[#F5F3FF] border border-[#DDD6FE] rounded-xl p-6 sm:p-8">
+              <h2 className="text-[20px] font-semibold text-text-primary mb-1">Fråga AI-experten om {agreement.shortName}</h2>
+              <p className="text-[15px] text-text-secondary mb-5">Ställ frågor om lön, OB, semester och mer</p>
+              <AgreementChat
+                agreementSlug={agreement.slug}
+                agreementName={agreement.shortName}
+                suggestedQuestions={suggestedQuestions}
+              />
+            </div>
           </AnimatedSection>
         </div>
       </section>

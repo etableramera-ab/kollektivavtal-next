@@ -19,6 +19,7 @@ import {
   Cpu,
   HardHat,
   ShoppingCart,
+  MessageCircle,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
@@ -109,6 +110,12 @@ export default function Home() {
                 <Link href="/hitta-avtal" className="block w-full h-12 rounded-lg text-white text-sm font-semibold uppercase tracking-widest flex items-center justify-center transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(217,119,6,0.3)]" style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}>
                   Sök
                 </Link>
+                <button
+                  onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
+                  className="block w-full text-center text-sm font-medium text-[#7C3AED] mt-3 hover:underline"
+                >
+                  💬 Eller fråga AI-experten direkt →
+                </button>
               </div>
             </AnimatedSection>
           </div>
@@ -126,6 +133,7 @@ export default function Home() {
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-2">
                 <item.icon size={18} strokeWidth={1.5} className="text-primary" />
+
                 <span className="text-sm font-bold text-text-primary">
                   {item.decimal ? (
                     <><CountUp end={3} duration={1.5} />,<CountUp end={4} duration={1.5} /></>
@@ -137,6 +145,13 @@ export default function Home() {
                 </span>
               </div>
             ))}
+            <button
+              onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              <MessageCircle size={18} strokeWidth={1.5} className="text-[#7C3AED]" />
+              <span className="text-sm font-bold text-[#7C3AED]">AI-expert på alla avtal</span>
+            </button>
           </div>
         </div>
       </section>
@@ -238,6 +253,77 @@ export default function Home() {
               </AnimatedSection>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ─── AI-CHATT SEKTION ─── */}
+      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+            {/* Left text */}
+            <AnimatedSection>
+              <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-white/70 mb-4">
+                AI-expert på 617 avtal
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-[44px] text-white leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+                Chatta med en expert som läst hela ditt avtal
+              </h2>
+              <p className="mt-4 text-[17px] text-white/80 max-w-[480px] leading-relaxed">
+                Ställ frågor om lön, OB-tillägg, semester, uppsägningstid, pension — och få svar direkt.
+              </p>
+              <div className="mt-6 space-y-3">
+                {[
+                  "Svar på sekunder — inte timmar",
+                  "Tränad på alla 617 avtal och 2 009 domar",
+                  "Helt gratis, alltid",
+                ].map((text) => (
+                  <div key={text} className="flex items-center gap-3">
+                    <span className="text-accent text-lg">✓</span>
+                    <span className="text-[16px] font-medium text-white">{text}</span>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            {/* Right: chat preview */}
+            <AnimatedSection delay={0.15}>
+              <div className="bg-white rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+                <div className="space-y-3 mb-4">
+                  <div className="flex gap-2">
+                    <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-white text-[10px] font-bold">AI</span>
+                    </div>
+                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">
+                      Hej! Jag kan svara på frågor om alla 617 kollektivavtal. Vad vill du veta?
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="bg-[#F0EEED] rounded-xl px-4 py-2.5 text-sm text-text-primary">
+                      Vad är OB-tillägg för en undersköterska?
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-white text-[10px] font-bold">AI</span>
+                    </div>
+                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">
+                      Enligt HÖK Kommunal har undersköterskor OB-tillägg på: Kväll 43 kr/tim, Natt 116 kr/tim, Helg 57 kr/tim...
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement;
+                    btn?.click();
+                  }}
+                  className="block w-full py-3 rounded-lg text-white text-[16px] font-semibold text-center transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(124,58,237,0.3)]"
+                  style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+                >
+                  Testa själv — ställ en fråga
+                </button>
+              </div>
+            </AnimatedSection>
+          </div>
         </div>
       </section>
 

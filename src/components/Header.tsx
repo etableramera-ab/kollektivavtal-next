@@ -122,9 +122,19 @@ export default function Header() {
               )}
             </div>
 
+            <button
+              onClick={() => {
+                const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement;
+                btn?.click();
+              }}
+              className="px-3.5 py-1.5 text-sm font-semibold text-white rounded-md transition-all duration-200 hover:bg-[rgba(124,58,237,0.35)]"
+              style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.4)" }}
+            >
+              💬 Fråga AI
+            </button>
             <Link
               href="/hitta-avtal"
-              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200 shadow-[0_2px_8px_rgba(217,119,6,0.25)] hover:shadow-[0_4px_16px_rgba(217,119,6,0.35)]"
+              className="ml-1 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200 shadow-[0_2px_8px_rgba(217,119,6,0.25)] hover:shadow-[0_4px_16px_rgba(217,119,6,0.35)]"
               style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}
             >
               Hitta ditt avtal

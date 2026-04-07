@@ -14,6 +14,10 @@
   --color-success: #16A34A;
   --color-border: #E5E2DD;
   --color-card: #FFFFFF;
+  --color-chat: #7C3AED;
+  --color-chat-hover: #6D28D9;
+  --color-chat-light: #F5F3FF;
+  --color-chat-border: #DDD6FE;
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "DM Serif Display", Georgia, serif;

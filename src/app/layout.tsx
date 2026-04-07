@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Disclaimer from "@/components/Disclaimer";
 import CookieConsent from "@/components/CookieConsent";
 import ScrollToTop from "@/components/ScrollToTop";
+import FloatingChat from "@/components/FloatingChat";
 import "./globals.css";
 
 const inter = Inter({
@@ -103,6 +104,7 @@ export default function RootLayout({
           <Disclaimer />
         </div>
         <Footer />
+        <FloatingChat />
         <CookieConsent />
       </body>
     </html>
