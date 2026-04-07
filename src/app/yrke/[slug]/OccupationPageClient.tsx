@@ -100,7 +100,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm text-center">
                 <TrendingDown size={20} className="mx-auto text-text-secondary mb-1" />
                 <p className="text-xs text-text-secondary">Lägst (avtal)</p>
-                <p className="text-lg sm:text-2xl font-extrabold text-text-primary">{occ.salary.minimum.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.minimum.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -108,7 +108,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border-2 border-accent bg-white p-4 shadow-sm text-center">
                 <Minus size={20} className="mx-auto text-accent mb-1" />
                 <p className="text-xs text-text-secondary">Median (SCB)</p>
-                <p className="text-lg sm:text-2xl font-extrabold text-accent">{occ.salary.median.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-accent" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.median.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -116,7 +116,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm text-center">
                 <TrendingUp size={20} className="mx-auto text-success mb-1" />
                 <p className="text-xs text-text-secondary">Topp (P90)</p>
-                <p className="text-lg sm:text-2xl font-extrabold text-text-primary">{occ.salary.p90.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.p90.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -291,7 +291,7 @@ export default function OccupationPageClient({
                   <Link href={`/yrke/${r.slug}`} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                       <p className="font-semibold text-text-primary text-sm">{r.title}</p>
-                      <p className="text-sm font-bold text-accent">{r.median.toLocaleString("sv-SE")} kr</p>
+                      <p className="text-sm font-normal text-accent" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{r.median.toLocaleString("sv-SE")} kr</p>
                     </div>
                     <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
                       Se lön <ArrowRight size={12} />
