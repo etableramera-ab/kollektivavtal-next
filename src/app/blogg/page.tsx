@@ -11,7 +11,13 @@ const blogImages: Record<string, string> = {
   "loneforhojning-2026": "/Images/blog/loneforhojning-2026.jpg",
   "avtalsrorelsen-2027-guide": "/Images/blog/avtalsrorelsen-2027.jpg",
   "ob-tillagg-2026-alla-branscher": "/Images/blog/ob-tillagg-2026.jpg",
-  "minimilon-sverige-2026": "/Images/blog/minimilon-2026.jpg",
+  "minimiion-sverige-2026": "/Images/blog/minimilon-2026.jpg",
+  "uppsagningstid-enligt-kollektivavtal": "/Images/blog/uppsagningstid-2026.jpg",
+  "foraldralon-kollektivavtal-2026": "/Images/blog/foraldralon-2026.jpg",
+  "tjanstepension-kollektivavtal": "/Images/blog/tjanstepension-2026.jpg",
+  "skillnad-med-utan-kollektivavtal": "/Images/blog/med-utan-kollektivavtal.jpg",
+  "sa-fungerar-loneforhandling": "/Images/blog/loneforhandling-guide.jpg",
+  "arbetstidsforkortning-2026": "/Images/blog/arbetstidsforkortning-2026.jpg",
 };
 
 const categories = ["Alla", "Löner", "Avtalsrörelsen", "Rättigheter", "Guider"];
