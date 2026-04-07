@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Disclaimer from "@/components/Disclaimer";
 import CookieConsent from "@/components/CookieConsent";
+import ScrollToTop from "@/components/ScrollToTop";
 import "./globals.css";
 
 const inter = Inter({
@@ -94,6 +95,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
+        <ScrollToTop />
         <Header />
         <div className="bg-[#F8F7F4]">
           <main className="min-h-screen">{children}</main>
