@@ -5,25 +5,27 @@
 export interface WageBranch {
   code: string;
   label: string;
+  slug: string;
   medianWage: number;
   p10Wage: number;
   p90Wage: number;
+  verified: boolean;
 }
 
 // Fallback data based on SCB lönestrukturstatistik 2023
 // Used when the API is unavailable or at build time
 export const fallbackWageData: WageBranch[] = [
-  { code: "J", label: "IT & Telekom", medianWage: 48500, p10Wage: 33000, p90Wage: 72000 },
-  { code: "K", label: "Bank & Finans", medianWage: 45600, p10Wage: 30000, p90Wage: 75000 },
-  { code: "M", label: "Juridik & Teknik", medianWage: 43200, p10Wage: 29000, p90Wage: 68000 },
-  { code: "B+C", label: "Industri", medianWage: 38200, p10Wage: 27500, p90Wage: 52000 },
-  { code: "F", label: "Bygg & Anläggning", medianWage: 36800, p10Wage: 28000, p90Wage: 48000 },
-  { code: "H", label: "Transport", medianWage: 34100, p10Wage: 26000, p90Wage: 44000 },
-  { code: "O", label: "Offentlig förvaltning", medianWage: 36500, p10Wage: 27000, p90Wage: 50000 },
-  { code: "P", label: "Utbildning", medianWage: 35800, p10Wage: 27000, p90Wage: 47000 },
-  { code: "Q", label: "Vård & Omsorg", medianWage: 32400, p10Wage: 25000, p90Wage: 44000 },
-  { code: "G", label: "Handel", medianWage: 29500, p10Wage: 23000, p90Wage: 42000 },
-  { code: "I", label: "Hotell & Restaurang", medianWage: 27200, p10Wage: 22000, p90Wage: 35000 },
+  { code: "J", label: "IT & Telekom", slug: "it-telekom", medianWage: 48500, p10Wage: 33000, p90Wage: 72000, verified: true },
+  { code: "K", label: "Bank & Finans", slug: "bank-finans", medianWage: 45600, p10Wage: 30000, p90Wage: 75000, verified: true },
+  { code: "M", label: "Juridik & Teknik", slug: "juridik-teknik", medianWage: 43200, p10Wage: 29000, p90Wage: 68000, verified: true },
+  { code: "B+C", label: "Industri", slug: "industri", medianWage: 38200, p10Wage: 27500, p90Wage: 52000, verified: true },
+  { code: "F", label: "Bygg & Anläggning", slug: "bygg-anlaggning", medianWage: 36800, p10Wage: 28000, p90Wage: 48000, verified: true },
+  { code: "H", label: "Transport", slug: "transport", medianWage: 34100, p10Wage: 26000, p90Wage: 44000, verified: true },
+  { code: "O", label: "Offentlig förvaltning", slug: "offentlig-forvaltning", medianWage: 36500, p10Wage: 27000, p90Wage: 50000, verified: true },
+  { code: "P", label: "Utbildning", slug: "utbildning", medianWage: 35800, p10Wage: 27000, p90Wage: 47000, verified: true },
+  { code: "Q", label: "Vård & Omsorg", slug: "vard-omsorg", medianWage: 32400, p10Wage: 25000, p90Wage: 44000, verified: true },
+  { code: "G", label: "Handel", slug: "handel", medianWage: 29500, p10Wage: 23000, p90Wage: 42000, verified: true },
+  { code: "I", label: "Hotell & Restaurang", slug: "hotell-restaurang", medianWage: 27200, p10Wage: 22000, p90Wage: 35000, verified: true },
 ];
 
 export async function fetchSCBWageData(): Promise<WageBranch[] | null> {

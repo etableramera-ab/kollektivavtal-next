@@ -4,9 +4,18 @@ import { courtCases } from "@/data/court-cases";
 import { occupations } from "@/data/occupations";
 import { blogPosts } from "@/data/blog-posts";
 import { vsComparisons } from "@/data/comparisons";
+import { fallbackWageData } from "@/lib/scb-wages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://kollektivavtal.ai";
+
+  // Branch salary pages
+  const branchPages = fallbackWageData.map((d) => ({
+    url: `${baseUrl}/statistik/loner/${d.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
   const agreementPages = agreements.map((a) => ({
     url: `${baseUrl}/avtal/${a.slug}`,
@@ -79,6 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    ...branchPages,
     {
       url: `${baseUrl}/statistik/avtalsrorelsen`,
       lastModified: new Date(),

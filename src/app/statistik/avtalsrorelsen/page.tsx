@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Check, Clock, Mail } from "lucide-react";
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import { Check, Clock, Mail, Search } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const timeline = [
@@ -37,12 +38,27 @@ const timeline = [
   },
 ];
 
-const statusTable = [
-  { name: "HÖK Kommunal", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
-  { name: "AB Kommunalt", status: "Löpande", validUntil: "Löpande", next: "Löpande uppdateringar", color: "bg-blue-500" },
-  { name: "Teknikavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
-  { name: "Handelsavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
-  { name: "Byggavtalet", status: "Klart", validUntil: "2027", next: "2027", color: "bg-success" },
+const allStatusTable = [
+  { name: "AB Kommunalt", slug: "ab-kommunalt", status: "Löpande", validUntil: "Löpande", next: "Löpande", color: "bg-blue-500" },
+  { name: "HÖK Kommunal", slug: "hok-kommunal", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Teknikavtalet", slug: "teknikavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Handelsavtalet", slug: "handelsavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Läraravtalet", slug: "laraavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "HÖK Vision", slug: "hok-vision", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Teknikavtalet IF Metall", slug: "teknikavtalet-ifmetall", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Hotell & Restaurang", slug: "hotell-restaurang", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Villkorsavtal Saco-S", slug: "villkorsavtal-saco", status: "Klart", validUntil: "2027", next: "2027", color: "bg-success" },
+  { name: "IT-avtalet", slug: "it-avtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Byggavtalet", slug: "byggavtalet", status: "Klart", validUntil: "2027", next: "2027", color: "bg-success" },
+  { name: "Villkorsavtal OFR", slug: "villkorsavtal-ofr", status: "Klart", validUntil: "2027", next: "2027", color: "bg-success" },
+  { name: "Transportavtalet", slug: "transportavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Bemanningsavtalet", slug: "bemanningsavtalet", status: "Klart", validUntil: "April 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Villkorsavtal Seko", slug: "villkorsavtal-seko", status: "Klart", validUntil: "2027", next: "2027", color: "bg-success" },
+  { name: "Installationsavtalet", slug: "installationsavtalet", status: "Klart", validUntil: "April 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Fastighetsavtalet", slug: "fastighetsavtalet", status: "Klart", validUntil: "Maj 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Bankavtalet", slug: "bankavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "Livsmedelsavtalet", slug: "livsmedelsavtalet", status: "Klart", validUntil: "Mars 2027", next: "Våren 2027", color: "bg-success" },
+  { name: "VISST (Skogsavtalet)", slug: "skogsavtalet", status: "Klart", validUntil: "Dec 2027", next: "2028", color: "bg-success" },
 ];
 
 const results = [
@@ -55,6 +71,16 @@ const results = [
 export default function Avtalsrorelsen() {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
+  const [tableSearch, setTableSearch] = useState("");
+  const [showAll, setShowAll] = useState(false);
+
+  const filteredTable = useMemo(() => {
+    if (!tableSearch.trim()) return allStatusTable;
+    const q = tableSearch.toLowerCase();
+    return allStatusTable.filter((r) => r.name.toLowerCase().includes(q));
+  }, [tableSearch]);
+
+  const visibleTable = showAll ? filteredTable : filteredTable.slice(0, 10);
 
   return (
     <>
@@ -73,8 +99,8 @@ export default function Avtalsrorelsen() {
 
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-4 sm:p-5">
-            <p className="text-sm text-blue-900 leading-relaxed">
+          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
+            <p className="text-sm text-text-primary leading-relaxed">
               Avtalsrörelsen 2025 resulterade i det så kallade märket på 6,4% löneökning över två
               år. De flesta avtal löper till mars 2027, då nästa stora avtalsrörelse väntar.
             </p>
@@ -121,36 +147,42 @@ export default function Avtalsrorelsen() {
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-6">
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Status per avtal
             </h2>
+            <div className="relative mb-4">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <input type="text" value={tableSearch} onChange={(e) => setTableSearch(e.target.value)} placeholder="Sök avtal..." className="w-full sm:w-80 h-10 rounded-lg border border-border pl-9 pr-4 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+            </div>
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
             {/* Desktop */}
-            <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
+            <div className="hidden md:block rounded-xl border border-border bg-white overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border bg-background">
-                    <th className="text-left p-4 font-semibold text-text-primary">Avtal</th>
-                    <th className="text-left p-4 font-semibold text-text-primary">Status</th>
-                    <th className="text-left p-4 font-semibold text-text-primary">Gäller t.o.m.</th>
-                    <th className="text-left p-4 font-semibold text-text-primary">Nästa omförhandling</th>
+                  <tr className="bg-surface-dark border-b-2 border-border">
+                    <th className="text-left px-4 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Avtal</th>
+                    <th className="text-left px-4 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Status</th>
+                    <th className="text-left px-4 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Gäller t.o.m.</th>
+                    <th className="text-left px-4 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Nästa</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {statusTable.map((row) => (
-                    <tr key={row.name} className="border-b border-border last:border-0">
-                      <td className="p-4 font-medium text-text-primary">{row.name}</td>
-                      <td className="p-4">
-                        <span className={`inline-flex items-center gap-1.5 text-xs font-medium text-white px-2.5 py-1 rounded-full ${row.color}`}>
-                          {row.status === "Klart" && <Check size={12} />}
-                          {row.status === "Löpande" && <Clock size={12} />}
+                  {visibleTable.map((row) => (
+                    <tr key={row.name} className="border-b border-surface-dark last:border-0 hover:bg-background transition-colors">
+                      <td className="px-4 py-3 font-medium text-text-primary">
+                        <Link href={`/avtal/${row.slug}`} className="text-primary hover:underline">{row.name}</Link>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex items-center gap-1 text-xs font-medium text-white px-2.5 py-0.5 rounded-full ${row.color}`}>
+                          {row.status === "Klart" && <Check size={10} />}
+                          {row.status === "Löpande" && <Clock size={10} />}
                           {row.status}
                         </span>
                       </td>
-                      <td className="p-4 text-text-secondary">{row.validUntil}</td>
-                      <td className="p-4 text-text-secondary">{row.next}</td>
+                      <td className="px-4 py-3 text-sm text-text-secondary">{row.validUntil}</td>
+                      <td className="px-4 py-3 text-sm text-text-secondary">{row.next}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -159,10 +191,10 @@ export default function Avtalsrorelsen() {
 
             {/* Mobile */}
             <div className="md:hidden space-y-3">
-              {statusTable.map((row) => (
-                <div key={row.name} className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+              {visibleTable.map((row) => (
+                <Link key={row.name} href={`/avtal/${row.slug}`} className="block rounded-xl border border-border bg-white p-4 hover:border-primary transition-colors">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="font-semibold text-text-primary text-sm">{row.name}</p>
+                    <p className="font-semibold text-primary text-sm">{row.name}</p>
                     <span className={`inline-flex items-center gap-1 text-xs font-medium text-white px-2 py-0.5 rounded-full ${row.color}`}>
                       {row.status === "Klart" && <Check size={10} />}
                       {row.status === "Löpande" && <Clock size={10} />}
@@ -172,9 +204,17 @@ export default function Avtalsrorelsen() {
                   <p className="text-xs text-text-secondary">
                     Gäller t.o.m. {row.validUntil} — nästa: {row.next}
                   </p>
-                </div>
+                </Link>
               ))}
             </div>
+
+            {!showAll && filteredTable.length > 10 && (
+              <div className="text-center mt-6">
+                <button onClick={() => setShowAll(true)} className="px-6 py-2.5 rounded-lg border border-primary text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-colors">
+                  Visa alla {filteredTable.length} avtal
+                </button>
+              </div>
+            )}
           </AnimatedSection>
         </div>
       </section>

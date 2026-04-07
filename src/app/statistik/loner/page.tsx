@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { getWageData } from "@/lib/scb-wages";
 
@@ -44,8 +46,8 @@ export default function LonerPage() {
 
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-4 sm:p-5">
-            <p className="text-sm text-blue-900 leading-relaxed">
+          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
+            <p className="text-sm text-text-primary leading-relaxed">
               Medianlönen i Sverige varierar kraftigt mellan branscher. IT och finans toppar listan
               medan hotell och restaurang ligger lägst. Statistiken nedan visar medianlöner — hälften
               tjänar mer, hälften tjänar mindre.
@@ -128,8 +130,11 @@ export default function LonerPage() {
                 </thead>
                 <tbody>
                   {sorted.map((d) => (
-                    <tr key={d.code} className="border-b border-border last:border-0">
-                      <td className="p-4 font-medium text-text-primary">{d.label}</td>
+                    <tr key={d.code} className="border-b border-border last:border-0 hover:bg-background transition-colors cursor-pointer" onClick={() => window.location.href = `/statistik/loner/${d.slug}`}>
+                      <td className="p-4 font-medium text-text-primary">
+                        {d.label}
+                        {d.verified && <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1.5 -mt-0.5" />}
+                      </td>
                       <td className="p-4 text-right text-text-secondary">
                         {d.p10Wage ? `${d.p10Wage.toLocaleString("sv-SE")} kr` : "—"}
                       </td>
@@ -148,8 +153,11 @@ export default function LonerPage() {
             {/* Mobile cards */}
             <div className="md:hidden space-y-3">
               {sorted.map((d) => (
-                <div key={d.code} className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
-                  <p className="font-semibold text-text-primary text-sm">{d.label}</p>
+                <Link key={d.code} href={`/statistik/loner/${d.slug}`} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+                  <p className="font-semibold text-text-primary text-sm">
+                    {d.label}
+                    {d.verified && <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1 -mt-0.5" />}
+                  </p>
                   <div className="flex gap-4 mt-2">
                     <div>
                       <p className="text-xs text-text-secondary">P10</p>
@@ -170,7 +178,7 @@ export default function LonerPage() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
