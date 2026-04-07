@@ -157,7 +157,7 @@ export default function Home() {
       </section>
 
       {/* ─── AI-CHATT SEKTION ─── */}
-      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
+      <section className="mt-12 py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
@@ -186,12 +186,9 @@ export default function Home() {
                     <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
                     <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Hej! Jag kan svara på frågor om alla 617 kollektivavtal. Vad vill du veta?</div>
                   </div>
-                  <div className="flex justify-end">
-                    <div className="bg-[#F0EEED] rounded-xl px-4 py-2.5 text-sm text-text-primary">Vad är OB-tillägg för en undersköterska?</div>
-                  </div>
                   <div className="flex gap-2">
                     <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Enligt HÖK Kommunal har undersköterskor OB-tillägg på: Kväll 43 kr/tim, Natt 116 kr/tim, Helg 57 kr/tim...</div>
+                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Fråga om löner, OB-tillägg, semester, pension — jag har läst alla 617 avtal och kan hjälpa dig.</div>
                   </div>
                 </div>
                 <button
