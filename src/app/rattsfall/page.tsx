@@ -62,12 +62,15 @@ export default function Rattsfall() {
       {/* Featured 3 */}
       <section className="py-8 sm:py-10">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="border-t border-border pt-6 mb-6">
+            <h2 className="text-3xl sm:text-[40px] text-text-primary" style={serif}>Senaste rättsfallen</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {/* Large teal card */}
             <div className="md:col-span-3">
               <AnimatedSection>
-                <Link href={`/rattsfall/${featured3[0].id}`} className="block h-full group">
-                  <div className="rounded-xl p-7 sm:p-8 min-h-[280px] max-h-[360px] overflow-hidden flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
+                <Link href={`/rattsfall/${featured3[0].id}`} className="block group">
+                  <div className="rounded-xl p-7 sm:p-8 h-[320px] overflow-hidden flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-[13px] text-white/70">{featured3[0].date}</span>
                       {featured3[0].isGuiding && (
@@ -89,17 +92,17 @@ export default function Rattsfall() {
             </div>
 
             {/* 2 side cards */}
-            <div className="md:col-span-2 flex flex-col gap-4">
+            <div className="md:col-span-2 flex flex-col gap-6">
               {featured3.slice(1, 3).map((c, i) => (
                 <AnimatedSection key={c.id} delay={(i + 1) * 0.1}>
-                  <Link href={`/rattsfall/${c.id}`} className="block h-full group">
-                    <div className="rounded-xl border border-border bg-white p-5 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200 overflow-hidden">
+                  <Link href={`/rattsfall/${c.id}`} className="block group">
+                    <div className="rounded-xl border border-border bg-white p-5 h-[148px] overflow-hidden hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="text-[13px] text-primary font-medium">{c.date}</span>
                         {c.isGuiding && (
                           <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium px-2 py-0.5 border border-primary/20">Vägledande</span>
                         )}
-                        <span className="rounded bg-[#FFF7ED] text-accent text-[11px] font-medium px-2 py-0.5 border border-[#FDE68A]">{c.topic}</span>
+                        <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium px-2 py-0.5 border border-primary/20">{c.topic}</span>
                       </div>
                       <p className="text-[12px] text-text-secondary mb-1">{c.caseNumber}</p>
                       <h3 className="text-[18px] text-text-primary leading-snug line-clamp-3 group-hover:text-primary transition-colors" style={serif}>
@@ -176,9 +179,9 @@ export default function Rattsfall() {
                   <div className="flex flex-wrap items-center gap-2 mb-1">
                     <span className="text-sm font-semibold text-text-primary">{c.caseNumber}</span>
                     <span className="text-sm text-text-secondary">{c.date}</span>
-                    <span className="rounded bg-[#FFF7ED] text-accent text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#FDE68A]">{c.topic}</span>
+                    <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium px-2 py-0.5 border border-primary/20">{c.topic}</span>
                     {c.isGuiding && (
-                      <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#D1E7E4]">Vägledande</span>
+                      <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium px-2 py-0.5 border border-primary/20">Vägledande</span>
                     )}
                   </div>
                   <p className="text-[16px] font-medium text-text-primary truncate">
