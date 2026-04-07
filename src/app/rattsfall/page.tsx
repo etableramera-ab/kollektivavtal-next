@@ -121,27 +121,27 @@ export default function Rattsfall() {
       {/* Sticky filter */}
       <div className="sticky top-[64px] z-40 bg-[#F0EEED] border-t-2 border-t-primary border-b border-border">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-            <div className="relative w-full sm:w-[340px]">
+          <div className="space-y-3">
+            <div className="relative">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={`Sök i ${courtCases.length.toLocaleString("sv-SE")} domar...`}
-                className="w-full h-10 rounded-lg border border-border pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                className="w-full h-11 rounded-lg border border-border bg-white pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex gap-2 overflow-x-auto flex-nowrap scrollbar-hide">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <div className="flex gap-2 flex-nowrap shrink-0">
                 {topics.map((t) => (
                   <button
                     key={t}
                     onClick={() => setTopic(t)}
-                    className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] transition-all min-h-[32px] ${
+                    className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] transition-all min-h-[36px] ${
                       topic === t
                         ? "bg-primary text-white font-medium"
-                        : "border border-border text-[#6B7280] hover:border-primary hover:text-primary"
+                        : "bg-white border border-border text-[#374151] hover:border-primary hover:text-primary"
                     }`}
                   >
                     {t}
@@ -151,7 +151,7 @@ export default function Rattsfall() {
               <select
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                className="shrink-0 rounded-lg border border-border px-3 py-1.5 text-sm outline-none focus:border-primary"
+                className="shrink-0 rounded-lg border border-border bg-white px-3 h-[36px] text-sm outline-none focus:border-primary"
               >
                 <option value="Alla">Alla år</option>
                 {years.map((y) => (

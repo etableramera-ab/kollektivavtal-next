@@ -143,18 +143,18 @@ export default function YrkeOverview() {
       {/* ─── ZON 2: Sticky search + filter ─── */}
       <div className="sticky top-[64px] z-40 bg-[#F0EEED] border-t-2 border-t-primary border-b border-border">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-            <div className="relative w-full sm:w-[360px]">
+          <div className="space-y-3">
+            <div className="relative">
               <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={`Sök bland ${occupations.length} yrken...`}
-                className="w-full h-11 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
-            <div className="flex flex-wrap gap-1.5 overflow-x-auto">
+            <div className="flex gap-2 overflow-x-auto flex-nowrap scrollbar-hide">
               {categories.map((c) => (
                 <button
                   key={c}
