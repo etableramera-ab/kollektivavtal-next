@@ -131,14 +131,12 @@ export default function YrkeOverview() {
                     transition={{ duration: 0.2 }}
                     className="group rounded-[12px] border border-border bg-white p-4 shadow-sm h-full"
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-[22px] text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
-                        {o.title}
-                      </h2>
-                      <span className="shrink-0 rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5">
-                        {o.sector}
-                      </span>
-                    </div>
+                    <h2 className="text-[22px] text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+                      {o.title}
+                    </h2>
+                    <span className="inline-block rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5 mt-1.5">
+                      {o.sector}
+                    </span>
                     <p className="text-[32px] font-normal text-accent mt-2" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
                       {o.salary.median.toLocaleString("sv-SE")} kr
                     </p>
