@@ -28,9 +28,13 @@ const keyStats = [
   { end: 6.4, suffix: "%", label: "löneökningstakt (märket)", decimals: true },
 ];
 
-const allSorted = [...occupations].sort((a, b) => b.salary.median - a.salary.median);
-const top4 = allSorted.slice(0, 4);
-const rest8 = allSorted.slice(4, 12);
+const featuredSlugs = ["systemutvecklare", "sjukskoterska", "byggnadsarbetare", "butikschef"];
+const featuredSet = new Set(featuredSlugs);
+const top4 = featuredSlugs.map((s) => occupations.find((o) => o.slug === s)!).filter(Boolean);
+const rest8 = [...occupations]
+  .filter((o) => !featuredSet.has(o.slug))
+  .sort((a, b) => b.salary.median - a.salary.median)
+  .slice(0, 8);
 
 export default function StatistikOverview() {
   const wageData = getWageData();
