@@ -262,7 +262,7 @@ export default function Home() {
       </section>
 
       {/* ─── VAD FÖRLORAR DU? ─── */}
-      <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(135deg, rgba(13,94,88,0.88) 0%, rgba(15,118,110,0.85) 50%, rgba(20,184,166,0.88) 100%), url('/images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+      <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(135deg, rgba(13,94,88,0.88) 0%, rgba(15,118,110,0.85) 50%, rgba(20,184,166,0.88) 100%), url('/Images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white text-center" style={serif}>
@@ -385,7 +385,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <AnimatedSection>
                 <Link href={`/blogg/${blogPosts[0].slug}`} className="block h-full group">
-                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ backgroundImage: "linear-gradient(135deg, rgba(15,118,110,0.85) 0%, rgba(10,95,89,0.9) 100%), url('/images/blog/avtalsrorelsen-2027.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ backgroundImage: "linear-gradient(135deg, rgba(15,118,110,0.85) 0%, rgba(10,95,89,0.9) 100%), url('/Images/blog/avtalsrorelsen-2027.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
                     <span className="rounded-full bg-white/15 text-white text-xs font-medium px-3 py-1 self-start mb-3">
                       {blogPosts[0].category}
                     </span>
