@@ -123,34 +123,36 @@ export default function Home() {
       </section>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="border-b border-border border-t-[3px] border-t-primary" style={{ background: "linear-gradient(90deg, #F8F7F4 0%, #FFFFFF 50%, #F8F7F4 100%)" }}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+      <section className="bg-[#F0EEED] border-t-2 border-t-primary py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap justify-center gap-10 sm:gap-12">
             {[
               { icon: FileText, num: 617, text: "avtal sammanfattade" },
               { icon: Users, num: 3.4, text: "miljoner anställda", decimal: true },
               { icon: ShieldCheck, num: 92, text: "% avtalstäckning", suffix: "%" },
             ].map((item) => (
-              <div key={item.text} className="flex items-center gap-2">
-                <item.icon size={18} strokeWidth={1.5} className="text-primary" />
-
-                <span className="text-sm font-bold text-text-primary">
-                  {item.decimal ? (
-                    <><CountUp end={3} duration={1.5} />,<CountUp end={4} duration={1.5} /></>
-                  ) : (
-                    <CountUp end={item.num} duration={1.5} suffix={item.suffix === "%" ? "%" : ""} />
-                  )}
-                  {!item.suffix && ` ${item.text}`}
-                  {item.suffix === "%" && ` ${item.text.replace("% ", "")}`}
-                </span>
+              <div key={item.text} className="flex items-center gap-2.5">
+                <item.icon size={22} strokeWidth={1.5} className="text-primary" />
+                <div>
+                  <span className="text-[24px] text-primary" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+                    {item.decimal ? (
+                      <>{item.num.toLocaleString("sv-SE")}</>
+                    ) : (
+                      <CountUp end={item.num} duration={1.5} suffix={item.suffix === "%" ? "%" : ""} />
+                    )}
+                  </span>
+                  <span className="text-[15px] font-medium text-[#374151] ml-1.5">
+                    {!item.suffix ? item.text : item.text.replace("% ", "")}
+                  </span>
+                </div>
               </div>
             ))}
             <button
               onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
-              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity"
             >
-              <MessageCircle size={18} strokeWidth={1.5} className="text-[#7C3AED]" />
-              <span className="text-sm font-bold text-[#7C3AED]">AI-expert på alla avtal</span>
+              <MessageCircle size={22} strokeWidth={1.5} className="text-[#7C3AED]" />
+              <span className="text-[15px] font-medium text-[#7C3AED]">AI-expert på alla avtal</span>
             </button>
           </div>
         </div>
