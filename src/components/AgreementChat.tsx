@@ -24,11 +24,16 @@ export default function AgreementChat({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    // Scroll inside the chat container only — not the page
+    const container = chatContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages, loading]);
 
   async function sendMessage(text: string) {
     if (!text.trim() || loading) return;
@@ -86,7 +91,7 @@ export default function AgreementChat({
       </div>
 
       {/* Chat area */}
-      <div className="h-[320px] sm:h-[380px] overflow-y-auto p-4 sm:p-5 space-y-3 bg-white">
+      <div ref={chatContainerRef} className="h-[320px] sm:h-[380px] overflow-y-auto p-4 sm:p-5 space-y-3 bg-white">
         {messages.length === 0 && (
           <div className="text-center py-8">
             <p className="text-sm text-text-secondary mb-4">
