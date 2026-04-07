@@ -45,10 +45,10 @@ const tools = [
 ];
 
 const topAgreements = [
-  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal", img: "/images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
-  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet", img: "/images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
-  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet", img: "/images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
-  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet", img: "/images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
+  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal", img: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet", img: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
+  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet", img: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet", img: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
 ];
 
 const topOccupations = [
