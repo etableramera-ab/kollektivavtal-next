@@ -2,12 +2,16 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import { courtCases, getAvailableYears, getAvailableTopics } from "@/data/court-cases";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 const INITIAL_COUNT = 20;
+
+// Featured: 3 most recent by date
+const featured3 = [...courtCases].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+const featuredIds = new Set(featured3.map((c) => c.id));
 
 export default function Rattsfall() {
   const [topic, setTopic] = useState("Alla");
@@ -19,7 +23,7 @@ export default function Rattsfall() {
   const topics = ["Alla", "Vägledande", ...getAvailableTopics()];
 
   const filtered = useMemo(() => {
-    let result = [...courtCases];
+    let result = courtCases.filter((c) => !featuredIds.has(c.id));
     if (topic === "Vägledande") result = result.filter((c) => c.isGuiding);
     else if (topic !== "Alla") result = result.filter((c) => c.topic === topic);
     if (year !== "Alla") result = result.filter((c) => c.year === parseInt(year));
@@ -37,14 +41,13 @@ export default function Rattsfall() {
   }, [topic, year, search]);
 
   const visible = filtered.slice(0, visibleCount);
-
   useMemo(() => setVisibleCount(INITIAL_COUNT), [topic, year, search]);
 
   return (
     <>
       {/* Hero */}
       <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-14">
-        <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8 text-center">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
               Rättsfall från Arbetsdomstolen
@@ -56,90 +59,131 @@ export default function Rattsfall() {
         </div>
       </section>
 
-      {/* Filter bar */}
-      <section className="bg-white border-b border-border">
-        <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8 pt-4 pb-5">
-          {/* Search */}
-          <div className="relative mb-4">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={`Sök i ${courtCases.length.toLocaleString("sv-SE")} domar...`}
-              className="w-full h-11 rounded-lg border border-border pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
-            />
-          </div>
+      {/* Featured 3 */}
+      <section className="py-8 sm:py-10">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {/* Large teal card */}
+            <div className="md:col-span-3">
+              <AnimatedSection>
+                <Link href={`/rattsfall/${featured3[0].id}`} className="block h-full group">
+                  <div className="rounded-xl p-7 sm:p-8 min-h-[280px] max-h-[360px] overflow-hidden flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[13px] text-white/70">{featured3[0].date}</span>
+                      {featured3[0].isGuiding && (
+                        <span className="rounded bg-white/15 text-white text-[11px] font-medium px-2 py-0.5">Vägledande</span>
+                      )}
+                      <span className="rounded bg-white/15 text-white text-[11px] font-medium px-2 py-0.5">{featured3[0].topic}</span>
+                    </div>
+                    <p className="text-white/50 text-[13px] mb-1">{featured3[0].caseNumber}</p>
+                    <h2 className="text-[20px] sm:text-[24px] text-white leading-snug line-clamp-4" style={serif}>
+                      {featured3[0].title || featured3[0].summary.substring(0, 120)}
+                    </h2>
+                    <p className="text-[14px] text-white/75 mt-2 line-clamp-2">{featured3[0].summary}</p>
+                    <span className="text-[14px] font-semibold text-accent mt-3 inline-flex items-center gap-1">
+                      Läs mer <ArrowRight size={14} />
+                    </span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            </div>
 
-          {/* Pills + year */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex flex-wrap gap-1.5 flex-1 overflow-x-auto">
-              {topics.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTopic(t)}
-                  className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] transition-all min-h-[32px] ${
-                    topic === t
-                      ? "bg-primary text-white font-medium"
-                      : "border border-border text-[#6B7280] hover:border-primary hover:text-primary"
-                  }`}
-                >
-                  {t}
-                </button>
+            {/* 2 side cards */}
+            <div className="md:col-span-2 flex flex-col gap-4">
+              {featured3.slice(1, 3).map((c, i) => (
+                <AnimatedSection key={c.id} delay={(i + 1) * 0.1}>
+                  <Link href={`/rattsfall/${c.id}`} className="block h-full group">
+                    <div className="rounded-xl border border-border bg-white p-5 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200 overflow-hidden">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-[13px] text-primary font-medium">{c.date}</span>
+                        {c.isGuiding && (
+                          <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium px-2 py-0.5 border border-primary/20">Vägledande</span>
+                        )}
+                        <span className="rounded bg-[#FFF7ED] text-accent text-[11px] font-medium px-2 py-0.5 border border-[#FDE68A]">{c.topic}</span>
+                      </div>
+                      <p className="text-[12px] text-text-secondary mb-1">{c.caseNumber}</p>
+                      <h3 className="text-[18px] text-text-primary leading-snug line-clamp-3 group-hover:text-primary transition-colors" style={serif}>
+                        {c.title || c.summary.substring(0, 80)}
+                      </h3>
+                      <p className="text-[13px] text-text-secondary mt-1.5 line-clamp-2">{c.summary}</p>
+                    </div>
+                  </Link>
+                </AnimatedSection>
               ))}
             </div>
-            <select
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              className="shrink-0 rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
-            >
-              <option value="Alla">Alla år</option>
-              {years.map((y) => (
-                <option key={y} value={y}>{y}</option>
-              ))}
-            </select>
           </div>
         </div>
       </section>
 
-      {/* Case list */}
+      {/* Sticky filter */}
+      <div className="sticky top-[64px] z-40 bg-white border-t border-b border-border shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <div className="relative w-full sm:w-[340px]">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={`Sök i ${courtCases.length.toLocaleString("sv-SE")} domar...`}
+                className="w-full h-10 rounded-lg border border-border pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex flex-wrap gap-1.5 overflow-x-auto">
+                {topics.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTopic(t)}
+                    className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] transition-all min-h-[32px] ${
+                      topic === t
+                        ? "bg-primary text-white font-medium"
+                        : "border border-border text-[#6B7280] hover:border-primary hover:text-primary"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              <select
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                className="shrink-0 rounded-lg border border-border px-3 py-1.5 text-sm outline-none focus:border-primary"
+              >
+                <option value="Alla">Alla år</option>
+                {years.map((y) => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Compact rows */}
       <section className="py-6 sm:py-8 pb-16 sm:pb-20">
-        <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <p className="text-[15px] text-text-secondary mb-4">
             {filtered.length.toLocaleString("sv-SE")} domar
             {topic !== "Alla" ? ` — ${topic}` : ""}
             {year !== "Alla" ? ` från ${year}` : ""}
           </p>
 
-          <div className="space-y-3">
-            {visible.map((c) => (
-              <Link key={c.id} href={`/rattsfall/${c.id}`} className="block group">
-                <div className="rounded-[10px] border border-border bg-white px-5 py-4 sm:flex sm:gap-5 hover:border-primary hover:bg-[#FAFAF8] transition-all duration-150 cursor-pointer">
-                  {/* Left: date + case number */}
-                  <div className="sm:w-[100px] shrink-0 mb-2 sm:mb-0">
-                    <p className="text-[13px] font-medium text-primary">{c.date}</p>
-                    <p className="text-[12px] text-[#6B7280]">{c.caseNumber}</p>
-                  </div>
-
-                  {/* Right: badges + title + summary */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap gap-1.5 mb-1.5">
-                      {c.isGuiding && (
-                        <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#D1E7E4]">
-                          Vägledande
-                        </span>
-                      )}
-                      <span className="rounded bg-[#FFF7ED] text-accent text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#FDE68A]">
-                        {c.topic}
-                      </span>
-                    </div>
-                    <p className="text-[16px] font-semibold text-text-primary line-clamp-2 leading-snug">
-                      {c.title || c.summary.substring(0, 120)}
-                    </p>
-                    {c.summary && (
-                      <p className="text-sm text-[#6B7280] mt-1 line-clamp-1">{c.summary}</p>
+          <div className="rounded-xl border border-border bg-white overflow-hidden">
+            {visible.map((c, i) => (
+              <Link key={c.id} href={`/rattsfall/${c.id}`} className="block">
+                <div className={`px-5 py-3.5 hover:bg-[#F8F7F4] transition-colors cursor-pointer ${i < visible.length - 1 ? "border-b border-[#F0EEED]" : ""}`}>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="text-sm font-semibold text-text-primary">{c.caseNumber}</span>
+                    <span className="text-sm text-text-secondary">{c.date}</span>
+                    <span className="rounded bg-[#FFF7ED] text-accent text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#FDE68A]">{c.topic}</span>
+                    {c.isGuiding && (
+                      <span className="rounded bg-[#F0FDFA] text-primary text-[11px] font-medium uppercase tracking-wide px-2 py-0.5 border border-[#D1E7E4]">Vägledande</span>
                     )}
                   </div>
+                  <p className="text-[16px] font-medium text-text-primary truncate">
+                    {c.title || c.summary.substring(0, 120)}
+                  </p>
                 </div>
               </Link>
             ))}
@@ -155,7 +199,7 @@ export default function Rattsfall() {
                 onClick={() => setVisibleCount((v) => v + INITIAL_COUNT)}
                 className="px-6 py-2.5 rounded-lg border border-primary text-primary font-medium text-sm hover:bg-primary hover:text-white transition-colors"
               >
-                Visa fler ({filtered.length - visibleCount} kvar)
+                Visa fler domar ({filtered.length - visibleCount} kvar)
               </button>
             </div>
           )}
