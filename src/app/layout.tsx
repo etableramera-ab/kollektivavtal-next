@@ -22,13 +22,13 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Kollektivavtal i Sverige 2026 — Hitta, förstå och jämför ditt avtal | kollektivavtal.ai",
+  title: "Kollektivavtal.ai — Chatta med en AI-expert på Sveriges 617 kollektivavtal",
   description:
-    "Sveriges största guide till alla 617 kollektivavtal. Sök på ditt yrke, jämför avtal, chatta med AI-expert och se lönestatistik. Gratis och öppet för alla.",
+    "Sök bland alla 617 kollektivavtal, jämför löner och villkor, och chatta med en AI-expert som kan just ditt avtal. Helt gratis.",
   openGraph: {
-    title: "Kollektivavtal i Sverige 2026 — Hitta, förstå och jämför ditt avtal",
+    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 617 avtal",
     description:
-      "Sveriges största guide till alla 617 kollektivavtal. Sök på ditt yrke, jämför avtal, chatta med AI-expert och se lönestatistik.",
+      "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
     url: "https://kollektivavtal.ai",
     siteName: "kollektivavtal.ai",
     locale: "sv_SE",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "kollektivavtal.ai",
-    description: "617 kollektivavtal, AI-chatt, lönedata och rättsfall.",
+    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 617 avtal",
+    description: "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
   },
   robots: {
     index: true,
