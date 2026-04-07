@@ -123,7 +123,7 @@ export default function Home() {
       </section>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="bg-[#F0EEED] border-t-2 border-t-primary py-8">
+      <section className="bg-[#F0EEED] py-8 -mt-px">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-10 sm:gap-12">
             {[
@@ -159,7 +159,7 @@ export default function Home() {
       </section>
 
       {/* ─── AI-CHATT SEKTION ─── */}
-      <section className="mt-12 py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
+      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
