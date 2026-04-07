@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { message, agreementSlug, history } = await req.json();
+  const { message, agreementSlug, history, locale } = await req.json();
 
   const agreement = getAgreementBySlug(agreementSlug);
   if (!agreement) {
@@ -118,6 +118,19 @@ ${textSections.join("\n\n---\n\n")}`;
   const verified = isVerifiedAgreement(agreementSlug);
   if (!verified) {
     systemPrompt += `\n\nVIKTIGT: Löneuppgifterna för detta avtal är UPPSKATTNINGAR baserade på branschdata, inte verifierade från avtalstexten. Om användaren frågar om specifika löner, SÄGA ALLTID att siffrorna är uppskattningar och rekommendera att kontrollera med fackförbundet. Gissa ALDRIG exakta belopp.`;
+  }
+
+  // Respond in user's language
+  const langMap: Record<string, string> = {
+    en: "Always respond in English.",
+    ar: "أجب دائماً باللغة العربية.",
+    so: "Had iyo jeer ku jawaab af-Soomaali.",
+    fa: "همیشه به فارسی پاسخ دهید.",
+    es: "Responde siempre en español.",
+    pl: "Zawsze odpowiadaj po polsku.",
+  };
+  if (locale && langMap[locale]) {
+    systemPrompt += `\n\n${langMap[locale]}`;
   }
 
   const response = await client.messages.create({

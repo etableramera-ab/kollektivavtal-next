@@ -6,41 +6,43 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-
-const mainLinks = [
-  { href: "/avtal", label: "Kollektivavtal", match: "/avtal" },
-  { href: "/yrke", label: "Yrken", match: "/yrke" },
-  { href: "/statistik", label: "Statistik", match: "/statistik" },
-  { href: "/rattsfall", label: "Rättsfall", match: "/rattsfall" },
-  { href: "/blogg", label: "Blogg", match: "/blogg" },
-];
+import { useLocale } from "@/lib/useLocale";
 
 const toolPaths = ["/hitta-avtal", "/lonekalkylator", "/jamfor"];
 
-const toolLinks = [
-  { href: "/hitta-avtal", label: "Hitta ditt avtal" },
-  { href: "/lonekalkylator", label: "Lönekalkylator" },
-  { href: "/jamfor", label: "Jämför villkor" },
-  { href: "/statistik/avtalsrorelsen", label: "Avtalsrörelsen" },
-];
-
-const mobileLinks = [
-  { href: "/avtal", label: "Kollektivavtal" },
-  { href: "/yrke", label: "Yrken" },
-  { href: "/hitta-avtal", label: "Hitta ditt avtal" },
-  { href: "/lonekalkylator", label: "Lönekalkylator" },
-  { href: "/jamfor", label: "Jämför villkor" },
-  { href: "/statistik", label: "Statistik" },
-  { href: "/rattsfall", label: "Rättsfall" },
-  { href: "/blogg", label: "Blogg" },
-];
-
 export default function Header() {
+  const { dict } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  const mainLinks = [
+    { href: "/avtal", label: dict.nav.agreements, match: "/avtal" },
+    { href: "/yrke", label: dict.nav.occupations, match: "/yrke" },
+    { href: "/statistik", label: dict.nav.statistics, match: "/statistik" },
+    { href: "/rattsfall", label: dict.nav.courtCases, match: "/rattsfall" },
+    { href: "/blogg", label: dict.nav.blog, match: "/blogg" },
+  ];
+
+  const toolLinks = [
+    { href: "/hitta-avtal", label: dict.nav.findAgreement },
+    { href: "/lonekalkylator", label: dict.nav.calculator },
+    { href: "/jamfor", label: dict.compare.compare },
+    { href: "/statistik/avtalsrorelsen", label: dict.home.bargainingRound },
+  ];
+
+  const mobileLinks = [
+    { href: "/avtal", label: dict.nav.agreements },
+    { href: "/yrke", label: dict.nav.occupations },
+    { href: "/hitta-avtal", label: dict.nav.findAgreement },
+    { href: "/lonekalkylator", label: dict.nav.calculator },
+    { href: "/jamfor", label: dict.compare.compare },
+    { href: "/statistik", label: dict.nav.statistics },
+    { href: "/rattsfall", label: dict.nav.courtCases },
+    { href: "/blogg", label: dict.nav.blog },
+  ];
 
   const isToolActive = toolPaths.some((p) => pathname.startsWith(p));
 
@@ -103,7 +105,7 @@ export default function Header() {
                     : "text-white/80 hover:text-white"
                 }`}
               >
-                Verktyg
+                {dict.home.tools}
                 <ChevronDown size={14} className={`transition-transform ${toolsOpen ? "rotate-180" : ""}`} />
               </button>
               {toolsOpen && (

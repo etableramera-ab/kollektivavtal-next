@@ -4,18 +4,22 @@ import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { MessageCircle, X, Send, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "@/lib/useLocale";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-const quickQuestions = [
-  "Vad tjänar en undersköterska?",
-  "Vad är OB-tillägg?",
-  "Har jag rätt till föräldralön?",
-  "Vilken uppsägningstid gäller?",
-];
+const chatTexts: Record<string, { label: string; title: string; subtitle: string; placeholder: string; disclaimer: string; questions: string[] }> = {
+  sv: { label: "Fråga om ditt avtal", title: "AI-expert på kollektivavtal", subtitle: "Svarar på frågor om alla 617 avtal", placeholder: "Ställ en fråga om ditt avtal...", disclaimer: "AI-svar är vägledande och kan innehålla fel", questions: ["Vad tjänar en undersköterska?", "Vad är OB-tillägg?", "Har jag rätt till föräldralön?", "Vilken uppsägningstid gäller?"] },
+  en: { label: "Ask about your agreement", title: "AI expert on collective agreements", subtitle: "Answers questions about all 617 agreements", placeholder: "Ask a question about your agreement...", disclaimer: "AI answers are for guidance and may contain errors", questions: ["What does a nurse earn?", "What are unsocial hours supplements?", "Am I entitled to parental pay?", "What notice period applies?"] },
+  ar: { label: "اسأل عن اتفاقيتك", title: "خبير ذكاء اصطناعي في الاتفاقيات", subtitle: "يجيب على أسئلة حول جميع 617 اتفاقية", placeholder: "...اطرح سؤالاً عن اتفاقيتك", disclaimer: "إجابات الذكاء الاصطناعي إرشادية وقد تحتوي على أخطاء", questions: ["كم يكسب الممرض؟", "ما هو بدل الأوقات غير الاجتماعية؟", "هل لدي حق في إجازة الوالدين؟"] },
+  so: { label: "Ka weydii heshiiskaaga", title: "Khabiirka AI ee heshiisyada", subtitle: "Wuxuu ka jawaabaa su'aalaha 617 heshiis", placeholder: "Su'aal ka weydii heshiiskaaga...", disclaimer: "Jawaabaha AI waa hagid", questions: ["Muxuu qaataa kalkaaliyaha?", "Maxay yihiin lacagaha OB?"] },
+  fa: { label: "درباره قراردادتان بپرسید", title: "کارشناس هوش مصنوعی قراردادها", subtitle: "به سوالات درباره 617 قرارداد پاسخ می‌دهد", placeholder: "سوالی درباره قراردادتان بپرسید...", disclaimer: "پاسخ‌های هوش مصنوعی راهنما هستند", questions: ["حقوق پرستار چقدر است؟", "فوق‌العاده ساعات غیراجتماعی چیست؟"] },
+  es: { label: "Pregunta sobre tu convenio", title: "Experto IA en convenios", subtitle: "Responde preguntas sobre los 617 convenios", placeholder: "Haz una pregunta sobre tu convenio...", disclaimer: "Las respuestas de IA son orientativas", questions: ["¿Cuánto gana una enfermera?", "¿Qué es el complemento por horas no sociales?"] },
+  pl: { label: "Zapytaj o swój układ", title: "Ekspert AI ds. układów zbiorowych", subtitle: "Odpowiada na pytania o 617 układów", placeholder: "Zadaj pytanie o swój układ...", disclaimer: "Odpowiedzi AI mają charakter orientacyjny", questions: ["Ile zarabia pielęgniarka?", "Co to jest dodatek za godziny niespołeczne?"] },
+};
 
 // Pages where inline chat already exists — hide floating button
 const inlineChatPaths = ["/yrke/"];
@@ -29,6 +33,8 @@ export default function FloatingChat() {
   const [labelDismissed, setLabelDismissed] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { locale } = useLocale();
+  const t = chatTexts[locale] || chatTexts.sv;
 
   const hideButton = inlineChatPaths.some((p) => pathname.startsWith(p) && pathname !== p);
 
@@ -54,6 +60,7 @@ export default function FloatingChat() {
           message: text.trim(),
           agreementSlug: "handelsavtalet",
           history: messages.slice(-4),
+          locale,
         }),
       });
       const data = await res.json();
@@ -75,7 +82,7 @@ export default function FloatingChat() {
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 sm:bottom-6 sm:right-6">
           {!labelDismissed && (
             <div className="hidden sm:flex items-center gap-2 bg-white border border-[#DDD6FE] rounded-full px-4 py-2 shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-              <span className="text-[13px] font-semibold text-[#7C3AED]">Fråga om ditt avtal</span>
+              <span className="text-[13px] font-semibold text-[#7C3AED]">{t.label}</span>
               <button onClick={() => setLabelDismissed(true)} className="text-[#7C3AED]/50 hover:text-[#7C3AED]">
                 <X size={14} />
               </button>
@@ -105,8 +112,8 @@ export default function FloatingChat() {
             {/* Header */}
             <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}>
               <div>
-                <p className="text-[16px] font-semibold text-white">AI-expert på kollektivavtal</p>
-                <p className="text-[13px] text-white/80">Svarar på frågor om alla 617 avtal</p>
+                <p className="text-[16px] font-semibold text-white">{t.title}</p>
+                <p className="text-[13px] text-white/80">{t.subtitle}</p>
               </div>
               <button onClick={() => setOpen(false)} className="text-white/70 hover:text-white p-1" aria-label="Stäng chatt">
                 <X size={20} />
@@ -119,7 +126,7 @@ export default function FloatingChat() {
                 <div className="text-center py-4">
                   <p className="text-sm text-text-secondary mb-3">Välj en fråga eller skriv din egen</p>
                   <div className="flex flex-wrap justify-center gap-2">
-                    {quickQuestions.map((q) => (
+                    {t.questions.map((q) => (
                       <button
                         key={q}
                         onClick={() => sendMessage(q)}
@@ -173,7 +180,7 @@ export default function FloatingChat() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ställ en fråga om ditt avtal..."
+                placeholder={t.placeholder}
                 className="flex-1 h-11 rounded-lg border border-[#DDD6FE] px-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED]"
                 disabled={loading}
               />
@@ -187,7 +194,7 @@ export default function FloatingChat() {
                 <Send size={18} />
               </button>
             </form>
-            <p className="px-4 pb-2 text-[11px] text-[#6B7280]">AI-svar är vägledande och kan innehålla fel</p>
+            <p className="px-4 pb-2 text-[11px] text-[#6B7280]">{t.disclaimer}</p>
           </motion.div>
         )}
       </AnimatePresence>
