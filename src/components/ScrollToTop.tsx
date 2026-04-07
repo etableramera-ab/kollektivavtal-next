@@ -1,32 +1,24 @@
 "use client";
 
-import { useEffect, useLayoutEffect, Suspense } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-function ScrollToTopInner() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-  }, []);
-
-  useIsomorphicLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [pathname, searchParams]);
-
-  return null;
-}
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function ScrollToTop() {
-  return (
-    <Suspense fallback={null}>
-      <ScrollToTopInner />
-    </Suspense>
-  );
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Force scroll to top on every navigation — target all possible scroll containers
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Also try after a microtask in case React hasn't flushed DOM yet
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+  }, [pathname]);
+
+  return null;
 }
