@@ -65,8 +65,8 @@ export default function Header() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "fixed shadow-md" : "absolute"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "shadow-md" : ""
       }`}
       style={scrolled ? { background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" } : { background: "transparent" }}
     >

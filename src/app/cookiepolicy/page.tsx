@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Cookiepolicy() {
   return (
-    <section className="pt-24 pb-12 sm:pt-28 sm:pb-20">
+    <section className="pt-[120px] pb-12 sm:pb-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl sm:text-5xl md:text-[56px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
           Cookiepolicy

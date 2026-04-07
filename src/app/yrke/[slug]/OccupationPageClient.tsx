@@ -54,7 +54,7 @@ export default function OccupationPageClient({
   return (
     <>
       {/* Hero */}
-      <section style={{ backgroundImage: `linear-gradient(135deg, rgba(15,118,110,0.82) 0%, rgba(10,95,89,0.87) 100%), url('${getOccupationHeroImage(occ.category)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white pt-24 pb-10 sm:pt-28 sm:pb-16">
+      <section style={{ backgroundImage: `linear-gradient(135deg, rgba(15,118,110,0.82) 0%, rgba(10,95,89,0.87) 100%), url('${getOccupationHeroImage(occ.category)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white pt-[120px] pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">
