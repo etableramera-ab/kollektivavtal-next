@@ -58,7 +58,7 @@ export default function FloatingChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: text.trim(),
-          agreementSlug: "handelsavtalet",
+          mode: "global",
           history: messages.slice(-4),
           locale,
         }),

@@ -27,15 +27,16 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { message, agreementSlug, history, locale } = await req.json();
-
-  const agreement = getAgreementBySlug(agreementSlug);
-  if (!agreement) {
-    return NextResponse.json({ error: "Avtal hittades inte" }, { status: 404 });
-  }
+  const { message, agreementSlug, mode, history, locale } = await req.json();
 
   if (!message || typeof message !== "string") {
     return NextResponse.json({ error: "Meddelande saknas" }, { status: 400 });
+  }
+
+  const isGlobal = mode === "global";
+  const agreement = isGlobal ? null : getAgreementBySlug(agreementSlug);
+  if (!isGlobal && !agreement) {
+    return NextResponse.json({ error: "Avtal hittades inte" }, { status: 404 });
   }
 
   const client = new Anthropic({ apiKey });
@@ -54,37 +55,48 @@ export async function POST(req: NextRequest) {
   messages.push({ role: "user", content: message });
 
   // Build system prompt
-  const fullText = getTruncatedAgreementText(agreementSlug, 60000);
-
-  // For kommun/region: also load AB
-  let abText: string | null = null;
-  if (KOMMUN_AGREEMENTS_NEEDING_AB.includes(agreementSlug)) {
-    abText = getTruncatedAgreementText("ab-kommunalt", 30000);
-  }
-
-  // Load extra texts (bilaga M, bilaga R, etc)
-  const extras = EXTRA_TEXTS[agreementSlug] || [];
-  const extraTexts = extras
-    .map((slug) => getTruncatedAgreementText(slug, 15000))
-    .filter(Boolean);
-
   let systemPrompt: string;
 
-  if (fullText || abText) {
-    const unions = agreement.parties.unions.join(" eller ");
-    const textSections: string[] = [];
+  if (isGlobal) {
+    // Global chat — general expert on all 617 agreements
+    systemPrompt = `Du är en AI-expert på alla 617 kollektivavtal i Sverige. Du kan svara på frågor om löner, OB-tillägg, semester, pension, uppsägningstid, föräldralön och andra villkor för ALLA avtal och yrken.
 
-    if (abText) {
-      textSections.push(`AB (ALLMÄNNA BESTÄMMELSER) — reglerar arbetstid, semester, sjuklön, uppsägning:\n${abText}`);
-    }
-    if (fullText) {
-      textSections.push(`${agreement.name.toUpperCase()} — reglerar löner och specifika villkor:\n${fullText}`);
-    }
-    for (const extra of extraTexts) {
-      textSections.push(`BILAGA/TILLÄGG:\n${extra}`);
+STRIKTA REGLER:
+- Svara baserat på din kunskap om svenska kollektivavtal.
+- Om du inte vet svaret på en specifik fråga, hänvisa till rätt fackförbund.
+- Svara på det språk användaren frågar på.
+- Håll svaren under 200 ord.
+- Gissa ALDRIG exakta lönesiffror om du inte är säker — säg istället att användaren bör kontrollera med sitt fackförbund.
+- Avsluta ALLTID med: "Kontakta ditt fackförbund för bindande besked."`;
+  } else {
+    // Agreement-specific chat
+    const fullText = getTruncatedAgreementText(agreementSlug, 60000);
+
+    let abText: string | null = null;
+    if (KOMMUN_AGREEMENTS_NEEDING_AB.includes(agreementSlug)) {
+      abText = getTruncatedAgreementText("ab-kommunalt", 30000);
     }
 
-    systemPrompt = `Du är en AI-expert på ${agreement.name}. Du har tillgång till avtalstexter nedan.
+    const extras = EXTRA_TEXTS[agreementSlug] || [];
+    const extraTexts = extras
+      .map((slug) => getTruncatedAgreementText(slug, 15000))
+      .filter(Boolean);
+
+    if (fullText || abText) {
+      const unions = agreement!.parties.unions.join(" eller ");
+      const textSections: string[] = [];
+
+      if (abText) {
+        textSections.push(`AB (ALLMÄNNA BESTÄMMELSER) — reglerar arbetstid, semester, sjuklön, uppsägning:\n${abText}`);
+      }
+      if (fullText) {
+        textSections.push(`${agreement!.name.toUpperCase()} — reglerar löner och specifika villkor:\n${fullText}`);
+      }
+      for (const extra of extraTexts) {
+        textSections.push(`BILAGA/TILLÄGG:\n${extra}`);
+      }
+
+      systemPrompt = `Du är en AI-expert på ${agreement!.name}. Du har tillgång till avtalstexter nedan.
 ${abText ? "\nOBS: Kommun/region har en dubbel struktur — AB (Allmänna Bestämmelser) reglerar grundvillkor (arbetstid, semester, sjuklön, uppsägning) och HÖK/löneavtalet reglerar löner. Använd BÅDA för att svara." : ""}
 
 STRIKTA REGLER:
@@ -97,27 +109,28 @@ STRIKTA REGLER:
 - Gissa ALDRIG — om du är osäker, säg det.
 
 AVTALSINFORMATION:
-Avtal: ${agreement.name}
-Parter: ${agreement.parties.unions.join(", ")} och ${agreement.parties.employers.join(", ")}
-Giltighetsperiod: ${agreement.validPeriod}
-Antal anställda: ${agreement.employeeCount.toLocaleString("sv-SE")}
+Avtal: ${agreement!.name}
+Parter: ${agreement!.parties.unions.join(", ")} och ${agreement!.parties.employers.join(", ")}
+Giltighetsperiod: ${agreement!.validPeriod}
+Antal anställda: ${agreement!.employeeCount.toLocaleString("sv-SE")}
 
 SAMMANFATTNING AV NYCKELVILLKOR:
-${Object.entries(agreement.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
+${Object.entries(agreement!.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
 
 LÖNETABELL:
-${agreement.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n")}
+${agreement!.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n")}
 
 AVTALSTEXTER:
 ${textSections.join("\n\n---\n\n")}`;
-  } else {
-    systemPrompt = agreement.aiSystemPrompt;
-  }
+    } else {
+      systemPrompt = agreement!.aiSystemPrompt;
+    }
 
-  // Add data quality context
-  const verified = isVerifiedAgreement(agreementSlug);
-  if (!verified) {
-    systemPrompt += `\n\nVIKTIGT: Löneuppgifterna för detta avtal är UPPSKATTNINGAR baserade på branschdata, inte verifierade från avtalstexten. Om användaren frågar om specifika löner, SÄGA ALLTID att siffrorna är uppskattningar och rekommendera att kontrollera med fackförbundet. Gissa ALDRIG exakta belopp.`;
+    // Add data quality context for specific agreements
+    const verified = isVerifiedAgreement(agreementSlug);
+    if (!verified) {
+      systemPrompt += `\n\nVIKTIGT: Löneuppgifterna för detta avtal är UPPSKATTNINGAR baserade på branschdata, inte verifierade från avtalstexten. Om användaren frågar om specifika löner, SÄGA ALLTID att siffrorna är uppskattningar och rekommendera att kontrollera med fackförbundet. Gissa ALDRIG exakta belopp.`;
+    }
   }
 
   // Respond in user's language
