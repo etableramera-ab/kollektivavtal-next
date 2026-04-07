@@ -10,7 +10,7 @@ import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import { getWageData } from "@/lib/scb-wages";
 import { occupations } from "@/data/occupations";
-import { getOccupationHeroImage } from "@/lib/sector-images";
+
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 
@@ -30,6 +30,12 @@ const keyStats = [
 
 const featuredSlugs = ["systemutvecklare", "sjukskoterska", "byggnadsarbetare", "butikschef"];
 const featuredSet = new Set(featuredSlugs);
+const featuredImg: Record<string, string> = {
+  "systemutvecklare": "/Images/sectors/it-tech.jpg",
+  "sjukskoterska": "/Images/sectors/vard-omsorg.jpg",
+  "byggnadsarbetare": "/Images/sectors/bygg-anlaggning.jpg",
+  "butikschef": "/Images/sectors/handel.jpg",
+};
 const top4 = featuredSlugs.map((s) => occupations.find((o) => o.slug === s)!).filter(Boolean);
 const rest8 = [...occupations]
   .filter((o) => !featuredSet.has(o.slug))
@@ -97,7 +103,7 @@ export default function StatistikOverview() {
                 <Link href={`/yrke/${o.slug}`} className="block h-full group">
                   <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
                     <div className="relative h-[100px]">
-                      <Image src={getOccupationHeroImage(o.category)} alt={o.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
+                      <Image src={featuredImg[o.slug] || "/Images/misc/meeting-room.jpg"} alt={o.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
                     </div>
                     <div className="p-4">
                       <p className="text-[16px] text-text-primary group-hover:text-primary transition-colors font-medium">{o.title}</p>
