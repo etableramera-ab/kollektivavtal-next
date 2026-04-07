@@ -200,6 +200,28 @@ export default function AgreementPageClient({
         </div>
       </section>
 
+      {/* Insurance ad — mid-article */}
+      <section className="pb-6">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <a
+            href={`https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=mid-article&utm_campaign=avtal-${agreement.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-r-[10px] border-l-[3px] border-l-accent bg-background p-5 flex items-center gap-4 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all"
+          >
+            <div className="shrink-0 w-10 h-10 rounded-full bg-[#FEF3C7] flex items-center justify-center">
+              <Shield size={20} className="text-accent" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-text-primary text-[17px]">Har du rätt försäkringsskydd?</p>
+              <p className="text-[15px] text-text-secondary mt-0.5">Kollektivavtalet ger grundskydd — men det kan vara värt att jämföra med privata alternativ.</p>
+              <p className="text-[15px] font-semibold text-accent mt-1">Jämför försäkringar gratis →</p>
+            </div>
+            <span className="text-[11px] text-[#9CA3AF] shrink-0 self-start">Annons</span>
+          </a>
+        </div>
+      </section>
+
       {/* Lönetabell */}
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">

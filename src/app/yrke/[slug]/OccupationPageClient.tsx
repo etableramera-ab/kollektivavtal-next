@@ -246,6 +246,22 @@ export default function OccupationPageClient({
                   Läs {agreementShortName} →
                 </Link>
               </div>
+
+              {/* Insurance ad */}
+              <a
+                href={`https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=sidebar&utm_campaign=yrke-${occ.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl bg-[#FEF3C7] border border-[#FDE68A] p-5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Scale size={18} className="text-accent" />
+                  <p className="font-semibold text-text-primary text-[16px]">Skydda din inkomst</p>
+                </div>
+                <p className="text-sm text-[#374151]">Komplettera ditt kollektivavtal med rätt försäkringar.</p>
+                <p className="text-sm font-semibold text-accent mt-2">Jämför på allaforsakringar.com →</p>
+                <p className="text-[11px] text-[#9CA3AF] text-right mt-2">Annons</p>
+              </a>
             </div>
           </div>
         </div>

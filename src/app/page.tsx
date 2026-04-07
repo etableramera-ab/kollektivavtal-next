@@ -20,6 +20,7 @@ import {
   HardHat,
   ShoppingCart,
   MessageCircle,
+  Shield,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
@@ -231,6 +232,24 @@ export default function Home() {
               </AnimatedSection>
             ))}
           </div>
+
+          <AnimatedSection delay={0.3}>
+            <a
+              href="https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=verktyg&utm_campaign=startsida"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 block rounded-lg border border-[#FDE68A] bg-[#FEF3C7] p-4 flex items-center gap-4 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-200"
+            >
+              <div className="shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                <Shield size={20} className="text-accent" />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-text-primary text-[15px]">Jämför försäkringar</p>
+                <p className="text-[13px] text-text-secondary">Hitta rätt skydd — oberoende jämförelser</p>
+              </div>
+              <span className="text-[11px] text-[#9CA3AF] shrink-0">Annons</span>
+            </a>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -398,11 +417,22 @@ export default function Home() {
           </div>
 
           <AnimatedSection delay={0.2}>
-            <p className="text-center mt-8">
-              <Link href="/jamfor" className="text-[15px] font-medium text-white hover:text-accent underline-offset-4 hover:underline transition-colors duration-150">
-                Saknar du kollektivavtal? Se vad du kan göra <ArrowRight size={14} className="inline ml-1" />
-              </Link>
-            </p>
+            <div className="max-w-[800px] mx-auto mt-10 rounded-[10px] p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)" }}>
+              <div>
+                <p className="text-[18px] font-semibold text-white">Saknar du kollektivavtal?</p>
+                <p className="text-[15px] text-white/80 mt-1">Se vilka försäkringar som kompenserar för tjänstepension, föräldralön och inkomstbortfall.</p>
+              </div>
+              <a
+                href="https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=native&utm_campaign=forlorar-sektion"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 px-7 py-3 rounded-lg text-white font-semibold text-[15px] transition-all hover:-translate-y-px"
+                style={{ background: "#D97706" }}
+              >
+                Jämför försäkringar →
+              </a>
+            </div>
+            <p className="text-center mt-2 text-[11px] text-white/40">Annons</p>
           </AnimatedSection>
         </div>
       </section>

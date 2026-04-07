@@ -169,6 +169,31 @@ export default function BlogPostClient({ post, prevPost, nextPost }: Props) {
         </div>
       </section>
 
+      {/* Insurance ad — blog bottom */}
+      <section className="py-6">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <a
+            href={`https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=blog-bottom&utm_campaign=blogg-${post.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-xl p-8 sm:p-10 text-center border border-[#FDE68A] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all"
+            style={{ background: "linear-gradient(135deg, #F8F7F4 0%, #FEF3C7 100%)" }}
+          >
+            <p className="text-2xl sm:text-[28px] text-text-primary" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+              Vill du jämföra försäkringar?
+            </p>
+            <p className="text-[16px] text-text-secondary mt-2 max-w-md mx-auto">
+              Hitta rätt hemförsäkring, inkomstförsäkring och tjänstepension — oberoende jämförelser på ett ställe.
+            </p>
+            <span className="inline-block mt-4 px-8 py-3 rounded-lg text-white font-semibold text-[16px]" style={{ background: "#D97706" }}>
+              Jämför på allaforsakringar.com →
+            </span>
+            <p className="text-[13px] text-[#6B7280] mt-3">Oberoende jämförelser · Gratis · Inga bindningar</p>
+            <p className="text-[11px] text-[#9CA3AF] mt-1">Annons</p>
+          </a>
+        </div>
+      </section>
+
       {/* Disclaimer */}
       <section className="pb-12">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
