@@ -2,9 +2,17 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { blogPosts } from "@/data/blog-posts";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+
+const blogImages: Record<string, string> = {
+  "loneforhojning-2026": "/Images/blog/loneforhojning-2026.jpg",
+  "avtalsrorelsen-2027-guide": "/Images/blog/avtalsrorelsen-2027.jpg",
+  "ob-tillagg-2026-alla-branscher": "/Images/blog/ob-tillagg-2026.jpg",
+  "minimilon-sverige-2026": "/Images/blog/minimilon-2026.jpg",
+};
 
 const categories = ["Alla", "Löner", "Avtalsrörelsen", "Rättigheter", "Guider"];
 
@@ -55,7 +63,13 @@ export default function BloggOverview() {
             {filtered.map((post, i) => (
               <AnimatedSection key={post.slug} delay={i * 0.05}>
                 <Link href={`/blogg/${post.slug}`} className="block">
-                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="rounded-[12px] border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    {blogImages[post.slug] && (
+                      <div className="relative h-[180px]">
+                        <Image src={blogImages[post.slug]} alt={`Illustration till ${post.title}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 720px" />
+                      </div>
+                    )}
+                    <div className="p-5">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="rounded-full bg-primary text-white text-[13px] font-semibold px-3.5 py-1">
                         {post.category}
@@ -70,6 +84,7 @@ export default function BloggOverview() {
                     <span className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-3">
                       Läs mer <ArrowRight size={14} />
                     </span>
+                    </div>
                   </div>
                 </Link>
               </AnimatedSection>
