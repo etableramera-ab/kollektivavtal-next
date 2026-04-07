@@ -58,7 +58,7 @@ export default function JamforOverview() {
       <section className="pb-12 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Jämför per ämne</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Jämför per ämne</h2>
           </AnimatedSection>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-stretch">
             {topics.map((t, i) => (
@@ -78,7 +78,7 @@ export default function JamforOverview() {
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Jämför två avtal</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Jämför två avtal</h2>
             <div className="flex flex-col sm:flex-row gap-3 items-end">
               <div className="flex-1">
                 <label className="text-xs text-text-secondary mb-1 block">Avtal 1</label>
@@ -107,7 +107,7 @@ export default function JamforOverview() {
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Populära jämförelser</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Populära jämförelser</h2>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {vsComparisons.map((c, i) => {

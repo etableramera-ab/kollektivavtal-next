@@ -65,7 +65,7 @@ const comparisonRows = [
   { feature: "Uppsägningstid", med: "Upp till 6 mån", utan: "1 mån enligt LAS" },
 ];
 
-const serif = { fontFamily: "var(--font-instrument-serif, var(--font-serif))" };
+const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"avtal" | "yrken">("avtal");

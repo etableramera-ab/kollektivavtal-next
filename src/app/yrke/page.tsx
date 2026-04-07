@@ -50,7 +50,7 @@ export default function YrkeOverview() {
       <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Löner per yrke 2026
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
@@ -132,14 +132,14 @@ export default function YrkeOverview() {
                     className="group rounded-[12px] border border-border bg-white p-4 shadow-sm h-full"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-[22px] text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                      <h2 className="text-[22px] text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
                         {o.title}
                       </h2>
                       <span className="shrink-0 rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5">
                         {o.sector}
                       </span>
                     </div>
-                    <p className="text-[32px] font-normal text-accent mt-2" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                    <p className="text-[32px] font-normal text-accent mt-2" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
                       {o.salary.median.toLocaleString("sv-SE")} kr
                     </p>
                     <p className="text-xs text-text-secondary">medianlön/mån</p>

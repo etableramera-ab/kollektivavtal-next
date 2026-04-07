@@ -43,7 +43,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
               <span className="text-white/90">{courtCase.caseNumber}</span>
             </nav>
 
-            <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               {courtCase.title || courtCase.caseNumber}
             </h1>
 
@@ -87,7 +87,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Referat</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Referat</h2>
               <div className="text-text-primary leading-relaxed text-sm sm:text-base">
                 <p>{courtCase.summary}</p>
               </div>
@@ -112,7 +112,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Relaterat avtal</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Relaterat avtal</h2>
               <Link
                 href={`/avtal/${relatedAgreement.slug}`}
                 className="block rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow"

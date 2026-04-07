@@ -72,7 +72,7 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" style={{ fontFamily: "'Instrument Serif', serif", fontSize: '22px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+          <Link href="/" style={{ fontFamily: "'DM Serif Display', serif", fontSize: '22px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
             kollektivavtal.ai
           </Link>
 
@@ -156,7 +156,7 @@ export default function Header() {
                 href="/"
                 onClick={() => setMobileOpen(false)}
                 className="text-xl text-primary"
-                style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}
+                style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}
               >
                 kollektivavtal.ai
               </Link>

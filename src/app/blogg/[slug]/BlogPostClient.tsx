@@ -33,7 +33,7 @@ export default function BlogPostClient({ post, prevPost, nextPost }: Props) {
               <span className="text-sm text-white/60">{post.readingTime}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{post.title}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{post.title}</h1>
             <p className="text-sm text-white/60 mt-3">Av {post.author}</p>
           </AnimatedSection>
         </div>
@@ -56,7 +56,7 @@ export default function BlogPostClient({ post, prevPost, nextPost }: Props) {
           {post.content.map((section, i) => (
             <AnimatedSection key={i} delay={i * 0.05}>
               <div className="mb-8 sm:mb-10">
-                <h2 className="text-2xl sm:text-[32px] text-text-primary mb-3" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{section.heading}</h2>
+                <h2 className="text-2xl sm:text-[32px] text-text-primary mb-3" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{section.heading}</h2>
                 {section.text.split("\n\n").map((paragraph, j) => (
                   <p key={j} className="text-text-primary leading-relaxed mb-3 text-sm sm:text-base">
                     {paragraph}
@@ -72,7 +72,7 @@ export default function BlogPostClient({ post, prevPost, nextPost }: Props) {
       <section className="py-8 sm:py-12 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Vanliga frågor</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Vanliga frågor</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <FaqAccordion items={post.faq} />

@@ -63,7 +63,7 @@ export default function OccupationPageClient({
               <ChevronRight size={14} />
               <span className="text-white/90">{occ.title}</span>
             </nav>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Lön som {occ.titleGenitive} 2026
             </h1>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -100,7 +100,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm text-center">
                 <TrendingDown size={20} className="mx-auto text-text-secondary mb-1" />
                 <p className="text-xs text-text-secondary">Lägst (avtal)</p>
-                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.minimum.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{occ.salary.minimum.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -108,7 +108,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border-2 border-accent bg-white p-4 shadow-sm text-center">
                 <Minus size={20} className="mx-auto text-accent mb-1" />
                 <p className="text-xs text-text-secondary">Median (SCB)</p>
-                <p className="text-lg sm:text-2xl font-normal text-accent" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.median.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-accent" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{occ.salary.median.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -116,7 +116,7 @@ export default function OccupationPageClient({
               <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm text-center">
                 <TrendingUp size={20} className="mx-auto text-success mb-1" />
                 <p className="text-xs text-text-secondary">Topp (P90)</p>
-                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{occ.salary.p90.toLocaleString("sv-SE")}</p>
+                <p className="text-lg sm:text-2xl font-normal text-text-primary" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{occ.salary.p90.toLocaleString("sv-SE")}</p>
                 <p className="text-xs text-text-secondary">kr/mån</p>
               </div>
             </AnimatedSection>
@@ -150,7 +150,7 @@ export default function OccupationPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Ditt kollektivavtal: {agreementShortName}
             </h2>
             <p className="text-sm text-text-secondary mb-4">{occ.description}</p>
@@ -184,7 +184,7 @@ export default function OccupationPageClient({
         <section className="py-12 sm:py-16">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>OB-tillägg</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>OB-tillägg</h2>
               <p className="text-sm text-text-secondary mb-4">Så mycket mer tjänar du på obekväm arbetstid</p>
               <div className="rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
                 <table className="w-full text-sm">
@@ -257,7 +257,7 @@ export default function OccupationPageClient({
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Vanliga frågor om lön som {occ.titleGenitive}</h2>
+            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Vanliga frågor om lön som {occ.titleGenitive}</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <FaqAccordion items={occ.faq} />
@@ -283,7 +283,7 @@ export default function OccupationPageClient({
         <section className="py-12 sm:py-16 bg-white">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>Relaterade yrken</h2>
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Relaterade yrken</h2>
             </AnimatedSection>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {relatedOccupations.map((r, i) => (
@@ -291,7 +291,7 @@ export default function OccupationPageClient({
                   <Link href={`/yrke/${r.slug}`} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
                       <p className="font-semibold text-text-primary text-sm">{r.title}</p>
-                      <p className="text-sm font-normal text-accent" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>{r.median.toLocaleString("sv-SE")} kr</p>
+                      <p className="text-sm font-normal text-accent" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{r.median.toLocaleString("sv-SE")} kr</p>
                     </div>
                     <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
                       Se lön <ArrowRight size={12} />

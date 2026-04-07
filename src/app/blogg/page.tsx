@@ -21,7 +21,7 @@ export default function BloggOverview() {
       <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Nyheter och guider om kollektivavtal
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
@@ -63,7 +63,7 @@ export default function BloggOverview() {
                       <span className="text-xs text-text-secondary">{post.publishDate}</span>
                       <span className="text-xs text-text-secondary">{post.readingTime}</span>
                     </div>
-                    <h2 className="text-[24px] text-text-primary leading-snug" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+                    <h2 className="text-[24px] text-text-primary leading-snug" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
                       {post.title}
                     </h2>
                     <p className="text-sm text-text-secondary mt-2">{post.excerpt}</p>

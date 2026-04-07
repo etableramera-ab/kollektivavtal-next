@@ -31,7 +31,7 @@ export default function VsPageClient({ name1, name2, slug1, slug2, rows }: Props
               <ChevronRight size={14} />
               <span className="text-white/90">{name1} vs {name2}</span>
             </nav>
-            <h1 className="text-3xl sm:text-4xl md:text-[56px]" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
+            <h1 className="text-3xl sm:text-4xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               {name1} vs {name2}
             </h1>
             <p className="mt-2 text-base text-white/80">

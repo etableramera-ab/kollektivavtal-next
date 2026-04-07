@@ -45,7 +45,7 @@ export default function Footer() {
     <footer className="text-white" style={{ background: "linear-gradient(180deg, #0D5E58 0%, #0A4F4A 100%)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <div className="mb-8">
-          <Link href="/" style={{ fontFamily: "'Instrument Serif', serif", fontSize: '20px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+          <Link href="/" style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
             kollektivavtal.ai
           </Link>
         </div>
