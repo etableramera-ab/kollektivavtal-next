@@ -119,8 +119,8 @@ export default function Rattsfall() {
       </section>
 
       {/* Sticky filter */}
-      <div className="sticky top-[64px] z-40 bg-white border-t border-b border-border shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-4">
+      <div className="sticky top-[64px] z-40 bg-[#F0EEED] border-t-2 border-t-primary border-b border-border">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
             <div className="relative w-full sm:w-[340px]">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
@@ -133,7 +133,7 @@ export default function Rattsfall() {
               />
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex flex-wrap gap-1.5 overflow-x-auto">
+              <div className="flex gap-2 overflow-x-auto flex-nowrap scrollbar-hide">
                 {topics.map((t) => (
                   <button
                     key={t}
