@@ -67,15 +67,15 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all text-sm font-medium"
+        className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg border border-white/30 hover:border-white/60 transition-all text-sm font-medium text-white"
         aria-label="Välj språk / Select language"
         aria-expanded={isOpen}
       >
-        <Globe className="w-4 h-4 text-gray-500" />
+        <Globe className="w-4 h-4 text-white/80" />
         <span>{current.flag}</span>
         <span className="hidden sm:inline">{current.name}</span>
         <svg
-          className={`w-3 h-3 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`w-3 h-3 text-white/80 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
