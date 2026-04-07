@@ -144,7 +144,7 @@ export default function AvtalOverview() {
                 className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
-            <div className="flex gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
+            <div className="flex gap-2 flex-nowrap overflow-x-auto scrollbar-hide pr-4">
               {filters.map((f) => (
                 <button
                   key={f.value}

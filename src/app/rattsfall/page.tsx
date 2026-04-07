@@ -132,8 +132,8 @@ export default function Rattsfall() {
                 className="w-full h-11 rounded-lg border border-border bg-white pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
-            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
-              <div className="flex gap-2 flex-nowrap shrink-0">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pr-1">
+              <div className="flex gap-2 flex-nowrap shrink-0 pr-4">
                 {topics.map((t) => (
                   <button
                     key={t}

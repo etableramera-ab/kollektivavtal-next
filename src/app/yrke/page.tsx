@@ -154,7 +154,7 @@ export default function YrkeOverview() {
                 className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
-            <div className="flex gap-2 overflow-x-auto flex-nowrap scrollbar-hide">
+            <div className="flex gap-2 overflow-x-auto flex-nowrap scrollbar-hide pr-4">
               {categories.map((c) => (
                 <button
                   key={c}
