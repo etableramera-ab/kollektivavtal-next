@@ -76,9 +76,9 @@ export default function AgreementChat({
   return (
     <div className="rounded-xl border border-border bg-white shadow-sm overflow-hidden">
       {/* Header bar */}
-      <div className="bg-primary px-5 py-4 sm:px-6">
+      <div className="px-5 py-4 sm:px-6" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}>
         <div className="flex items-center gap-2.5">
-          <MessageSquare size={22} className="text-accent shrink-0" />
+          <MessageSquare size={22} className="text-[#7C3AED] shrink-0" />
           <div>
             <h3 className="text-base font-bold text-white">
               AI-expert på {agreementName}
@@ -102,7 +102,7 @@ export default function AgreementChat({
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-[#D4532E] transition-colors text-left"
+                  className="rounded-full bg-[#7C3AED] px-4 py-2 text-sm font-medium text-white hover:bg-[#6D28D9] transition-colors text-left"
                 >
                   {q}
                 </button>
@@ -123,7 +123,7 @@ export default function AgreementChat({
               className={`max-w-[85%] rounded-[10px] px-4 py-2.5 text-sm leading-relaxed ${
                 msg.role === "user"
                   ? "bg-[#F1F5F9] text-text-primary"
-                  : "bg-white border-l-[3px] border-l-accent text-text-primary shadow-sm"
+                  : "bg-white border-l-[3px] border-l-[#7C3AED] text-text-primary shadow-sm"
               }`}
             >
               <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -133,7 +133,7 @@ export default function AgreementChat({
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-white border-l-[3px] border-l-accent rounded-[10px] px-4 py-3 shadow-sm">
+            <div className="bg-white border-l-[3px] border-l-[#7C3AED] rounded-[10px] px-4 py-3 shadow-sm">
               <div className="flex gap-1">
                 <span className="w-2 h-2 bg-text-secondary/40 rounded-full animate-bounce" />
                 <span className="w-2 h-2 bg-text-secondary/40 rounded-full animate-bounce [animation-delay:0.1s]" />
@@ -166,13 +166,13 @@ export default function AgreementChat({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ställ en fråga om avtalet..."
-          className="flex-1 rounded-[8px] border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          className="flex-1 rounded-[8px] border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED]"
           disabled={loading}
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded-[8px] bg-accent text-white p-3 hover:bg-[#D4532E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="rounded-[8px] bg-[#7C3AED] text-white p-3 hover:bg-[#6D28D9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Skicka"
         >
           <Send size={18} />

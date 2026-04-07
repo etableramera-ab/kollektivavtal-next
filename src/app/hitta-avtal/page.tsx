@@ -292,13 +292,14 @@ export default function HittaAvtal() {
                       >
                         Läs hela sammanfattningen <ArrowRight size={16} />
                       </Link>
-                      <Link
-                        href={`/avtal/${agreement.slug}#chatt`}
-                        className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-border bg-white px-6 py-3 text-sm font-medium text-text-primary hover:border-accent hover:text-accent transition-colors min-h-[44px]"
+                      <button
+                        onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
+                        className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white min-h-[44px] transition-all hover:-translate-y-px"
+                        style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
                       >
                         <MessageSquare size={16} />
-                        Chatta med AI-expert
-                      </Link>
+                        Fråga AI-experten
+                      </button>
                     </div>
                   </div>
                 ) : (
