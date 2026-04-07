@@ -218,7 +218,7 @@ export default function Home() {
             {tools.map((tool, i) => (
               <AnimatedSection key={tool.href} delay={i * 0.08}>
                 <Link href={tool.href} className="block group">
-                  <div className="rounded-lg border border-border bg-white p-5 min-h-[80px] flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                  <div className="rounded-lg border border-border bg-white p-5 min-h-[80px] flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                     <div className="shrink-0 w-11 h-11 rounded-full bg-[#F0FDFA] flex items-center justify-center">
                       <tool.icon size={20} className="text-primary" />
                     </div>
@@ -258,7 +258,7 @@ export default function Home() {
                 {topAgreements.map((a, i) => (
                   <AnimatedSection key={a.slug} delay={i * 0.08}>
                     <Link href={`/avtal/${a.slug}`} className="block h-full group">
-                      <div className="rounded-lg border border-border bg-white h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden">
+                      <div className="rounded-lg border border-border bg-white h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden">
                         <div className="relative h-[140px] sm:h-[140px]">
                           <Image src={a.img} alt={a.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />
                         </div>
@@ -287,7 +287,7 @@ export default function Home() {
                 {topOccupations.map((occ, i) => (
                   <AnimatedSection key={occ.slug} delay={i * 0.08}>
                     <Link href={`/yrke/${occ.slug}`} className="block group">
-                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                         <p className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{occ.title}</p>
                         <p className="text-2xl font-normal text-accent mt-2" style={serif}>{occ.median} kr</p>
                         <p className="text-xs text-text-secondary mt-1">medianlön</p>
@@ -419,7 +419,7 @@ export default function Home() {
             {latestCases.map((c, i) => (
               <AnimatedSection key={c.id} delay={i * 0.1}>
                 <Link href={`/rattsfall/${c.id}`} className="block h-full group">
-                  <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                  <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                     <p className="text-[13px] text-primary font-medium">{c.date}</p>
                     <h3 className="text-text-primary mt-1 leading-snug text-[22px]" style={serif}>{c.caseNumber} — {c.title}</h3>
                     <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
@@ -468,7 +468,7 @@ export default function Home() {
                 {blogPosts.slice(1, 3).map((post, i) => (
                   <AnimatedSection key={post.slug} delay={(i + 1) * 0.1}>
                     <Link href={`/blogg/${post.slug}`} className="block h-full group">
-                      <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="rounded-full bg-[#F0FDFA] text-primary text-xs font-medium px-3 py-0.5 border border-primary/20">{post.category}</span>
                           <span className="text-xs text-text-secondary">{post.publishDate}</span>

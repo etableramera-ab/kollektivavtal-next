@@ -110,7 +110,7 @@ export default function YrkeOverview() {
             {featured.map((o, i) => (
               <AnimatedSection key={o.slug} delay={i * 0.04}>
                 <Link href={`/yrke/${o.slug}`} className="block h-full group">
-                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
+                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms]">
                     <div className="relative h-[100px] sm:h-[120px]">
                       <Image
                         src={featuredImages[o.slug]?.src || "/Images/misc/meeting-room.jpg"}

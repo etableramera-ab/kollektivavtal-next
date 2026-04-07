@@ -101,7 +101,7 @@ export default function StatistikOverview() {
             {top4.map((o, i) => (
               <AnimatedSection key={o.slug} delay={i * 0.05}>
                 <Link href={`/yrke/${o.slug}`} className="block h-full group">
-                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
+                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms]">
                     <div className="relative h-[100px]">
                       <Image src={featuredImg[o.slug] || "/Images/misc/meeting-room.jpg"} alt={o.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
                     </div>
@@ -209,12 +209,12 @@ export default function StatistikOverview() {
       <section className="py-10 sm:py-12 bg-white">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link href="/statistik/loner" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-md transition-all block">
+            <Link href="/statistik/loner" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all block">
               <h3 className="font-semibold text-text-primary group-hover:text-primary transition-colors">Lönestatistik per bransch</h3>
               <p className="text-sm text-text-secondary mt-1">Detaljerad lönestatistik med percentiler och filter</p>
               <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Se lönedata <ArrowRight size={14} /></span>
             </Link>
-            <Link href="/statistik/avtalsrorelsen" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-md transition-all block">
+            <Link href="/statistik/avtalsrorelsen" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all block">
               <h3 className="font-semibold text-text-primary group-hover:text-primary transition-colors">Avtalsrörelsen 2025–2027</h3>
               <p className="text-sm text-text-secondary mt-1">Status, resultat och nästa omförhandling</p>
               <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Följ utvecklingen <ArrowRight size={14} /></span>

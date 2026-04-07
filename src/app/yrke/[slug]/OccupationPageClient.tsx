@@ -255,7 +255,7 @@ export default function OccupationPageClient({
       <section className="py-10 bg-white">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href="https://allaadvokater.se" target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border bg-white p-5 hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+            <a href="https://allaadvokater.se" target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border bg-white p-5 hover:border-primary hover:-translate-y-px hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-200">
               <div className="flex items-center gap-3">
                 <Scale size={24} className="text-primary shrink-0" />
                 <div>
@@ -264,7 +264,7 @@ export default function OccupationPageClient({
                 </div>
               </div>
             </a>
-            <Link href={`/avtal/${agreementSlug}`} className="block rounded-xl border border-border bg-white p-5 hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+            <Link href={`/avtal/${agreementSlug}`} className="block rounded-xl border border-border bg-white p-5 hover:border-primary hover:-translate-y-px hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-200">
               <div className="flex items-center gap-3">
                 <ArrowRight size={24} className="text-primary shrink-0" />
                 <div>

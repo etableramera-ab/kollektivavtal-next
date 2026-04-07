@@ -92,7 +92,7 @@ export default function AvtalOverview() {
             {top8.map((a, i) => (
               <AnimatedSection key={a.slug} delay={i * 0.04}>
                 <Link href={`/avtal/${a.slug}`} className="block h-full group">
-                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
+                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms]">
                     <div className="relative h-[120px] sm:h-[160px]">
                       <Image
                         src={featuredImages[a.slug]?.src || "/Images/misc/meeting-room.jpg"}

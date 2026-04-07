@@ -69,7 +69,7 @@ export default function BloggOverview() {
             {filtered.map((post, i) => (
               <AnimatedSection key={post.slug} delay={i * 0.05}>
                 <Link href={`/blogg/${post.slug}`} className="block">
-                  <div className="rounded-[12px] border border-border bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                  <div className="rounded-[12px] border border-border bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-shadow overflow-hidden">
                     {blogImages[post.slug] && (
                       <div className="relative h-[180px]">
                         <Image src={blogImages[post.slug]} alt={`Illustration till ${post.title}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 720px" />

@@ -96,7 +96,7 @@ export default function Rattsfall() {
               {featured3.slice(1, 3).map((c, i) => (
                 <AnimatedSection key={c.id} delay={(i + 1) * 0.1}>
                   <Link href={`/rattsfall/${c.id}`} className="block group">
-                    <div className="rounded-xl border border-border bg-white p-5 h-[148px] overflow-hidden hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+                    <div className="rounded-xl border border-border bg-white p-5 h-[148px] overflow-hidden hover:border-primary hover:-translate-y-px hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-200">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="text-[13px] text-primary font-medium">{c.date}</span>
                         {c.isGuiding && (

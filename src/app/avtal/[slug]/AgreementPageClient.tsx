@@ -133,7 +133,7 @@ export default function AgreementPageClient({
               const Icon = iconMap[card.label] || Banknote;
               return (
                 <AnimatedSection key={card.label} delay={i * 0.05}>
-                  <div className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-sm h-full flex flex-col">
+                  <div className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)] h-full flex flex-col">
                     <Icon size={20} className="text-accent mb-2 shrink-0" />
                     <p className="text-xs text-text-secondary">{card.label}</p>
                     <p className="text-sm font-semibold text-text-primary mt-0.5">{card.value}</p>
@@ -211,7 +211,7 @@ export default function AgreementPageClient({
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
+            <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
@@ -238,7 +238,7 @@ export default function AgreementPageClient({
           <div className="md:hidden space-y-3">
             {agreement.wageTable.map((row, i) => (
               <AnimatedSection key={row.role} delay={i * 0.05}>
-                <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+                <div className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
                   <p className="font-semibold text-text-primary text-sm">{row.role}</p>
                   <p className="text-xs text-text-secondary mt-0.5">{row.comment}</p>
                   <div className="flex gap-4 mt-3">
@@ -267,7 +267,7 @@ export default function AgreementPageClient({
             <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>OB-tillägg</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <div className="rounded-[12px] border border-border bg-white shadow-sm overflow-hidden">
+            <div className="rounded-[12px] border border-border bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
@@ -353,7 +353,7 @@ export default function AgreementPageClient({
               {relatedCases.map((c, i) => (
                 <AnimatedSection key={c.id} delay={i * 0.05}>
                   <Link href={`/rattsfall/${c.id}`} className="block">
-                    <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-shadow">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <span className="text-xs font-medium text-text-secondary">{c.caseNumber}</span>
                         <span className="text-xs text-text-secondary">{c.date}</span>
@@ -385,7 +385,7 @@ export default function AgreementPageClient({
                   <motion.div
                     whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                     transition={{ duration: 0.2 }}
-                    className="rounded-[12px] border border-border bg-white p-4 shadow-sm"
+                    className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
                   >
                     <h3 className="font-semibold text-text-primary">{a.shortName}</h3>
                     <p className="text-xs text-text-secondary mt-1">
@@ -408,7 +408,7 @@ export default function AgreementPageClient({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <AnimatedSection>
               <a href="https://allaadvokater.se" target="_blank" rel="noopener noreferrer" className="block">
-                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4">
+                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center gap-4">
                   <Scale size={28} className="text-accent shrink-0" />
                   <div>
                     <p className="font-semibold text-text-primary">Behöver du juridisk hjälp?</p>
@@ -419,7 +419,7 @@ export default function AgreementPageClient({
             </AnimatedSection>
             <AnimatedSection delay={0.1}>
               <a href="https://allaforsakringar.com" target="_blank" rel="noopener noreferrer" className="block">
-                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-sm flex items-center gap-4">
+                <motion.div whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }} transition={{ duration: 0.2 }} className="rounded-[12px] border border-border bg-white p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)] flex items-center gap-4">
                   <Shield size={28} className="text-accent shrink-0" />
                   <div>
                     <p className="font-semibold text-text-primary">Jämför inkomstförsäkringar</p>
