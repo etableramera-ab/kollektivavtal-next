@@ -33,7 +33,7 @@ export default function JamforOverview() {
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-16">
+      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-24 pb-10 sm:pt-28 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-2xl sm:text-4xl font-extrabold">Jämför kollektivavtal</h1>

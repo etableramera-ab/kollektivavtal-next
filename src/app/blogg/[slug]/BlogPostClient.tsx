@@ -16,7 +16,7 @@ export default function BlogPostClient({ post, prevPost, nextPost }: Props) {
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary text-white py-10 sm:py-14">
+      <section className="bg-primary text-white pt-24 pb-10 sm:pt-28 sm:pb-14">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">

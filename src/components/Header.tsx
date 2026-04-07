@@ -45,7 +45,7 @@ export default function Header() {
   const isToolActive = toolPaths.some((p) => pathname.startsWith(p));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -65,10 +65,10 @@ export default function Header() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`sticky top-0 z-50 transition-all duration-200 ${
-        scrolled ? "shadow-md" : ""
+      className={`top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "fixed shadow-md" : "absolute"
       }`}
-      style={{ background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" }}
+      style={scrolled ? { background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" } : { background: "transparent" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
