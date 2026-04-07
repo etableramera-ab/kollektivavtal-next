@@ -95,7 +95,7 @@ export default function Home() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.15}>
-              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
+              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25),0_8px_20px_rgba(0,0,0,0.15)]">
                 <p className="font-semibold text-text-primary text-lg mb-4">Hitta ditt avtal</p>
                 <div className="mb-4">
                   <SearchAutocomplete variant="hero" />
@@ -180,7 +180,7 @@ export default function Home() {
               </div>
             </AnimatedSection>
             <AnimatedSection delay={0.15}>
-              <div className="bg-white rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+              <div className="bg-white rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.2),0_8px_20px_rgba(0,0,0,0.12)]">
                 <div className="space-y-3 mb-4">
                   <div className="flex gap-2">
                     <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
