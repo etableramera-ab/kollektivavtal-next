@@ -13,7 +13,7 @@ const sv = {
     statistics: "Statistik",
     compare: "Jämför",
     courtCases: "Rättsfall",
-    blog: "Blogg",
+    blog: "Nyheter",
     about: "Om oss",
     search: "Sök på yrke, bransch eller företag...",
   },
