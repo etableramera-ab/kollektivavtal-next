@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Users, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Search, ChevronRight, ShieldCheck } from "lucide-react";
 import { agreements } from "@/data/agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { getAgreementHeroImage } from "@/lib/sector-images";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 type SectorFilter = "alla" | "privat" | "kommun_region" | "stat";
@@ -17,110 +18,204 @@ const filters: { value: SectorFilter; label: string }[] = [
   { value: "stat", label: "Stat" },
 ];
 
+const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
+
+// Top 8 by employee count
+const top8 = [...agreements].sort((a, b) => b.employeeCount - a.employeeCount).slice(0, 8);
+const top8Slugs = new Set(top8.map((a) => a.slug));
+
+const PAGE_SIZE = 30;
+
 export default function AvtalOverview() {
   const [sector, setSector] = useState<SectorFilter>("alla");
+  const [search, setSearch] = useState("");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const filtered =
-    sector === "alla"
-      ? agreements
-      : agreements.filter((a) => a.sector === sector);
+  const listAgreements = useMemo(() => {
+    let result = agreements.filter((a) => !top8Slugs.has(a.slug));
+    if (sector !== "alla") result = result.filter((a) => a.sector === sector);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(
+        (a) =>
+          a.name.toLowerCase().includes(q) ||
+          a.shortName.toLowerCase().includes(q) ||
+          a.sectorLabel.toLowerCase().includes(q)
+      );
+    }
+    return result.sort((a, b) => b.employeeCount - a.employeeCount);
+  }, [sector, search]);
+
+  const paginated = listAgreements.slice(0, visibleCount);
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-12 pb-12 sm:pb-20">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      {/* ─── HERO ─── */}
+      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-12 pb-12 sm:pb-16">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
               Kollektivavtal i Sverige
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              Hitta och förstå ditt kollektivavtal. Vi sammanfattar villkor, löner, OB-tillägg och
-              pension på klarspråk.
+              617 avtal sammanfattade på klarspråk — löner, OB-tillägg, semester och pension.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      <section className="py-8 sm:py-10">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-5">
-              <p className="text-sm sm:text-base text-blue-900 leading-relaxed">
-                Sverige har omkring 617 kollektivavtal som täcker 92% av alla anställda. Här
-                sammanfattar vi de största avtalen på klarspråk — med lönetabeller, OB-tillägg,
-                semesterregler och AI-expert som svarar på dina frågor.
-              </p>
-            </div>
-          </AnimatedSection>
+      {/* ─── ZON 1: Featured top 8 ─── */}
+      <section className="py-10 sm:py-12">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {top8.map((a, i) => (
+              <AnimatedSection key={a.slug} delay={i * 0.04}>
+                <Link href={`/avtal/${a.slug}`} className="block h-full group">
+                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
+                    <div className="relative h-[120px] sm:h-[160px]">
+                      <Image
+                        src={getAgreementHeroImage(a.slug, a.sectorLabel)}
+                        alt={a.shortName}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <span className="rounded-full bg-primary text-white text-[12px] font-semibold px-3 py-0.5">
+                          {a.sectorLabel}
+                        </span>
+                        <span className="text-sm font-medium text-text-secondary">
+                          {a.employeeCount.toLocaleString("sv-SE")} anställda
+                        </span>
+                      </div>
+                      <h2 className="text-[22px] sm:text-[24px] text-text-primary group-hover:text-primary transition-colors" style={serif}>
+                        {a.shortName}
+                        {isVerifiedAgreement(a.slug) && (
+                          <ShieldCheck className="inline w-4 h-4 text-primary ml-1.5 -mt-1" />
+                        )}
+                      </h2>
+                      <p className="text-sm text-text-secondary mt-1 line-clamp-2 leading-snug">{a.summary}</p>
+                      <span className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-3">
+                        Läs mer <ChevronRight size={14} />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="pb-16 sm:pb-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <div className="flex flex-wrap gap-2 mb-8">
+      {/* ─── ZON 2: Sticky search + filter ─── */}
+      <div className="sticky top-[64px] z-40 bg-white border-t border-b border-border shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <div className="relative w-full sm:w-[400px]">
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
+                placeholder="Sök bland 617 avtal..."
+                className="w-full h-11 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
               {filters.map((f) => (
                 <button
                   key={f.value}
-                  onClick={() => setSector(f.value)}
-                  className={`rounded-[8px] px-4 py-2.5 text-sm font-medium transition-colors min-h-[44px] ${
+                  onClick={() => { setSector(f.value); setVisibleCount(PAGE_SIZE); }}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors min-h-[40px] ${
                     sector === f.value
                       ? "bg-primary text-white"
-                      : "bg-white border border-border text-text-secondary hover:text-primary hover:border-primary"
+                      : "bg-white border border-border text-[#374151] hover:border-primary hover:bg-[#F0FDFA]"
                   }`}
                 >
                   {f.label}
                 </button>
               ))}
             </div>
-          </AnimatedSection>
+          </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filtered.map((a, i) => (
-              <AnimatedSection key={a.slug} delay={i * 0.05}>
-                <Link href={`/avtal/${a.slug}`} className="block h-full">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-5 shadow-sm h-full flex flex-col"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h2 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                          {a.shortName}
-                        </h2>
-                        {isVerifiedAgreement(a.slug) && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                            <ShieldCheck className="w-3 h-3" />
-                            Verifierad
-                          </span>
-                        )}
-                      </div>
-                      <span className="shrink-0 rounded-[6px] bg-background text-text-secondary text-xs font-medium px-2 py-1">
-                        {a.sectorLabel}
+      {/* ─── ZON 3: All agreements table ─── */}
+      <section className="py-8 sm:py-10 pb-16 sm:pb-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-[32px] text-text-primary mb-1" style={serif}>Alla avtal</h2>
+          <p className="text-[15px] text-text-secondary mb-6">{listAgreements.length} avtal</p>
+
+          {/* Desktop table */}
+          <div className="hidden md:block rounded-xl border border-border bg-white overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-surface-dark border-b-2 border-border">
+                  <th className="text-left px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Avtalsnamn</th>
+                  <th className="text-left px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Sektor</th>
+                  <th className="text-right px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Anställda</th>
+                  <th className="w-10"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginated.map((a) => (
+                  <tr key={a.slug} className="border-b border-surface-dark last:border-0 hover:bg-background transition-colors cursor-pointer group" onClick={() => window.location.href = `/avtal/${a.slug}`}>
+                    <td className="px-5 py-4">
+                      <span className="font-semibold text-[16px] text-text-primary group-hover:text-primary transition-colors">
+                        {a.shortName}
                       </span>
-                    </div>
-                    <p className="text-sm text-text-secondary mt-2 leading-snug flex-1">
-                      {a.summary.slice(0, 120)}...
+                      {isVerifiedAgreement(a.slug) && (
+                        <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1.5 -mt-0.5" />
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-sm text-text-secondary">{a.sectorLabel}</td>
+                    <td className="px-5 py-4 text-sm font-medium text-primary text-right">{a.employeeCount.toLocaleString("sv-SE")}</td>
+                    <td className="px-3 py-4"><ChevronRight size={16} className="text-text-secondary" /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile list */}
+          <div className="md:hidden rounded-xl border border-border bg-white overflow-hidden">
+            {paginated.map((a, i) => (
+              <Link key={a.slug} href={`/avtal/${a.slug}`} className="block">
+                <div className={`flex items-center justify-between px-4 py-4 hover:bg-background transition-colors ${i < paginated.length - 1 ? "border-b border-surface-dark" : ""}`}>
+                  <div>
+                    <p className="font-semibold text-[16px] text-text-primary">
+                      {a.shortName}
+                      {isVerifiedAgreement(a.slug) && (
+                        <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1 -mt-0.5" />
+                      )}
                     </p>
-                    <div className="flex items-center gap-1 text-xs text-text-secondary mt-3">
-                      <Users size={14} />
-                      <span>{a.employeeCount.toLocaleString("sv-SE")} anställda</span>
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-3">
-                      Läs mer <ArrowRight size={14} />
-                    </span>
-                  </motion.div>
-                </Link>
-              </AnimatedSection>
+                    <p className="text-[13px] text-text-secondary mt-0.5">
+                      {a.sectorLabel} · {a.employeeCount.toLocaleString("sv-SE")} anställda
+                    </p>
+                  </div>
+                  <ChevronRight size={16} className="text-text-secondary shrink-0" />
+                </div>
+              </Link>
             ))}
           </div>
 
-          <AnimatedSection delay={0.3}>
-            <p className="text-sm text-text-secondary mt-10 text-center">
-              {agreements.length} av 617 avtal sammanfattade. Fler läggs till löpande.
-            </p>
-          </AnimatedSection>
+          {/* Load more */}
+          {visibleCount < listAgreements.length && (
+            <div className="text-center mt-8">
+              <button
+                onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+                className="px-6 py-3 rounded-lg border border-primary text-primary font-semibold text-[15px] hover:bg-primary hover:text-white transition-colors"
+              >
+                Visa fler avtal ({listAgreements.length - visibleCount} kvar)
+              </button>
+            </div>
+          )}
+
+          <p className="text-xs text-[#6B7280] mt-8 text-center">
+            {agreements.length} av 617 avtal sammanfattade. Fler läggs till löpande.
+          </p>
         </div>
       </section>
     </>
