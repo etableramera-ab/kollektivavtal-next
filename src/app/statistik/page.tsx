@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
@@ -9,6 +10,7 @@ import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import { getWageData } from "@/lib/scb-wages";
 import { occupations } from "@/data/occupations";
+import { getOccupationHeroImage } from "@/lib/sector-images";
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 
@@ -26,15 +28,16 @@ const keyStats = [
   { end: 6.4, suffix: "%", label: "löneökningstakt (märket)", decimals: true },
 ];
 
-const topOccupations = [...occupations]
-  .sort((a, b) => b.salary.median - a.salary.median)
-  .slice(0, 12);
+const allSorted = [...occupations].sort((a, b) => b.salary.median - a.salary.median);
+const top4 = allSorted.slice(0, 4);
+const rest8 = allSorted.slice(4, 12);
 
 export default function StatistikOverview() {
   const wageData = getWageData();
 
   return (
     <>
+      {/* Hero */}
       <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
@@ -48,51 +51,76 @@ export default function StatistikOverview() {
         </div>
       </section>
 
-      {/* 1. Nyckeltal */}
+      {/* 1. Nyckeltal — horizontal row */}
       <section className="py-10 sm:py-12 bg-white">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 md:flex md:justify-center md:gap-16">
             {keyStats.map((stat, i) => (
               <AnimatedSection key={stat.label} delay={i * 0.1}>
-                <div className="rounded-xl border border-border bg-white p-4 sm:p-5 text-center">
-                  <p className="text-2xl sm:text-3xl text-text-primary" style={serif}>
+                <div className={`text-center py-3 md:py-0 ${i > 0 ? "md:border-l md:border-border md:pl-16" : ""}`}>
+                  <p className="text-3xl sm:text-[48px] text-primary leading-none" style={serif}>
                     {stat.decimals ? (
                       <>{stat.end.toLocaleString("sv-SE")}{stat.suffix || ""}</>
                     ) : (
                       <CountUp end={stat.end} suffix={stat.suffix || ""} duration={1.5} />
                     )}
                   </p>
-                  <p className="text-xs sm:text-sm text-text-secondary mt-1">{stat.label}</p>
+                  <p className="text-[15px] text-text-secondary mt-2">{stat.label}</p>
                 </div>
               </AnimatedSection>
             ))}
           </div>
-          <p className="text-xs text-[#6B7280] mt-3 text-center">Källa: Medlingsinstitutet, SCB</p>
+          <p className="text-[13px] text-[#6B7280] mt-5 text-center">Källa: Medlingsinstitutet, SCB</p>
         </div>
       </section>
 
       {/* 2. Populära yrken */}
       <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={serif}>
-              Populära yrken — vad tjänar de?
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {topOccupations.map((o, i) => (
-              <AnimatedSection key={o.slug} delay={i * 0.03}>
-                <Link href={`/yrke/${o.slug}`} className="block group">
-                  <div className="rounded-xl border border-border bg-white p-4 hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
-                    <p className="text-[16px] text-text-primary group-hover:text-primary transition-colors font-medium">{o.title}</p>
-                    <p className="text-[22px] text-accent mt-1" style={serif}>{o.salary.median.toLocaleString("sv-SE")} kr</p>
-                    <p className="text-[12px] text-text-secondary">medianlön/mån</p>
+          <div className="border-t border-border pt-8 mb-6">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-[40px] text-text-primary" style={serif}>
+                Populära yrken — vad tjänar de?
+              </h2>
+              <p className="text-[16px] text-text-secondary mt-2">De högst betalda yrkena med kollektivavtal</p>
+            </AnimatedSection>
+          </div>
+
+          {/* Top 4 with images */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {top4.map((o, i) => (
+              <AnimatedSection key={o.slug} delay={i * 0.05}>
+                <Link href={`/yrke/${o.slug}`} className="block h-full group">
+                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
+                    <div className="relative h-[100px]">
+                      <Image src={getOccupationHeroImage(o.category)} alt={o.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
+                    </div>
+                    <div className="p-4">
+                      <p className="text-[16px] text-text-primary group-hover:text-primary transition-colors font-medium">{o.title}</p>
+                      <p className="text-[24px] text-accent mt-1" style={serif}>{o.salary.median.toLocaleString("sv-SE")} kr</p>
+                      <p className="text-[12px] text-text-secondary">medianlön/mån</p>
+                    </div>
                   </div>
                 </Link>
               </AnimatedSection>
             ))}
           </div>
-          <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-5 hover:underline min-h-[44px]">
+
+          {/* Rest 8 as compact list */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+            {rest8.map((o, i) => (
+              <AnimatedSection key={o.slug} delay={0.2 + i * 0.02}>
+                <Link href={`/yrke/${o.slug}`} className="block">
+                  <div className="flex items-center justify-between py-3 border-b border-surface-dark hover:bg-background -mx-2 px-2 rounded transition-colors">
+                    <span className="text-[15px] font-medium text-text-primary">{o.title}</span>
+                    <span className="text-[18px] text-accent shrink-0 ml-3" style={serif}>{o.salary.median.toLocaleString("sv-SE")} kr</span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          <Link href="/yrke" className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-5 hover:underline min-h-[44px]">
             Se alla {occupations.length} yrken <ArrowRight size={14} />
           </Link>
         </div>
@@ -101,11 +129,13 @@ export default function StatistikOverview() {
       {/* 3. Medianlöner per bransch */}
       <section className="py-10 sm:py-12 bg-white">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={serif}>
-              Medianlöner per bransch
-            </h2>
-          </AnimatedSection>
+          <div className="border-t border-border pt-8 mb-6">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-[40px] text-text-primary" style={serif}>
+                Medianlöner per bransch
+              </h2>
+            </AnimatedSection>
+          </div>
           <AnimatedSection delay={0.1}>
             <div className="rounded-xl border border-border bg-white p-4 sm:p-6">
               <ResponsiveContainer width="100%" height={400}>
@@ -120,8 +150,8 @@ export default function StatistikOverview() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-xs text-[#6B7280] mt-3">Källa: SCB lönestrukturstatistik 2023</p>
-            <Link href="/statistik/loner" className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-2 hover:underline min-h-[44px]">
+            <p className="text-[13px] text-[#6B7280] mt-3">Källa: SCB lönestrukturstatistik 2023</p>
+            <Link href="/statistik/loner" className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-2 hover:underline min-h-[44px]">
               Se detaljerad lönestatistik <ArrowRight size={14} />
             </Link>
           </AnimatedSection>
@@ -131,11 +161,13 @@ export default function StatistikOverview() {
       {/* 4. Avtalstäckning */}
       <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={serif}>
-              Avtalstäckning per sektor
-            </h2>
-          </AnimatedSection>
+          <div className="border-t border-border pt-8 mb-6">
+            <AnimatedSection>
+              <h2 className="text-3xl sm:text-[40px] text-text-primary" style={serif}>
+                Avtalstäckning per sektor
+              </h2>
+            </AnimatedSection>
+          </div>
           <AnimatedSection delay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div className="rounded-xl border border-border bg-white p-4">
@@ -156,7 +188,7 @@ export default function StatistikOverview() {
                     <span className="text-sm font-semibold text-text-primary">{d.value}%</span>
                   </div>
                 ))}
-                <p className="text-xs text-[#6B7280] pt-2">Källa: Medlingsinstitutet</p>
+                <p className="text-[13px] text-[#6B7280] pt-2">Källa: Medlingsinstitutet</p>
               </div>
             </div>
           </AnimatedSection>
