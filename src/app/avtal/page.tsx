@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Search, ChevronRight, ShieldCheck } from "lucide-react";
 import { agreements } from "@/data/agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
-import { getAgreementHeroImage } from "@/lib/sector-images";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 type SectorFilter = "alla" | "privat" | "kommun_region" | "stat";
@@ -20,9 +19,31 @@ const filters: { value: SectorFilter; label: string }[] = [
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 
-// Top 8 by employee count
-const top8 = [...agreements].sort((a, b) => b.employeeCount - a.employeeCount).slice(0, 8);
-const top8Slugs = new Set(top8.map((a) => a.slug));
+// Handpicked top 8 workplace agreements (largest by employees, excluding structural/pension)
+const featuredSlugs = [
+  "hok-kommunal",       // 540 000 — vard-omsorg.jpg
+  "teknikavtalet",      // 300 000 — industri.jpg
+  "handelsavtalet",     // 250 000 — handel.jpg
+  "byggavtalet",        // 100 000 — bygg-anlaggning.jpg
+  "ab-kommunalt",       // 1 100 000 — skola-utbildning.jpg
+  "it-avtalet",         // 100 000 — it-tech.jpg
+  "transportavtalet",   // 80 000 — transport.jpg
+  "hotell-restaurang",  // 120 000 — hotell-restaurang.jpg
+];
+
+const featuredImages: Record<string, { src: string; alt: string }> = {
+  "hok-kommunal":      { src: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  "teknikavtalet":     { src: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
+  "handelsavtalet":    { src: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  "byggavtalet":       { src: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
+  "ab-kommunalt":      { src: "/Images/sectors/skola-utbildning.jpg", alt: "Lärare i skolmiljö" },
+  "it-avtalet":        { src: "/Images/sectors/it-tech.jpg", alt: "IT-utvecklare vid dator" },
+  "transportavtalet":  { src: "/Images/sectors/transport.jpg", alt: "Lastbilschaufför" },
+  "hotell-restaurang": { src: "/Images/sectors/hotell-restaurang.jpg", alt: "Kock i restaurangkök" },
+};
+
+const top8 = featuredSlugs.map((slug) => agreements.find((a) => a.slug === slug)!).filter(Boolean);
+const top8Slugs = new Set(featuredSlugs);
 
 const PAGE_SIZE = 30;
 
@@ -74,8 +95,8 @@ export default function AvtalOverview() {
                   <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.1)] transition-all duration-[250ms]">
                     <div className="relative h-[120px] sm:h-[160px]">
                       <Image
-                        src={getAgreementHeroImage(a.slug, a.sectorLabel)}
-                        alt={a.shortName}
+                        src={featuredImages[a.slug]?.src || "/Images/misc/meeting-room.jpg"}
+                        alt={featuredImages[a.slug]?.alt || a.shortName}
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 100vw, 50vw"
