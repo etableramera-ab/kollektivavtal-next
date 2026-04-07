@@ -42,7 +42,7 @@ export default function BloggOverview() {
                   className={`rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors min-h-[36px] ${
                     category === c
                       ? "bg-primary text-white"
-                      : "bg-white border border-border text-text-secondary hover:border-primary"
+                      : "bg-white border border-border text-[#374151] hover:bg-[#F0FDFA] hover:border-primary"
                   }`}
                 >
                   {c}
@@ -57,17 +57,17 @@ export default function BloggOverview() {
                 <Link href={`/blogg/${post.slug}`} className="block">
                   <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className="rounded-[4px] bg-accent/10 text-accent text-xs font-medium px-2 py-0.5">
+                      <span className="rounded-full bg-primary text-white text-[13px] font-semibold px-3.5 py-1">
                         {post.category}
                       </span>
                       <span className="text-xs text-text-secondary">{post.publishDate}</span>
                       <span className="text-xs text-text-secondary">{post.readingTime}</span>
                     </div>
-                    <h2 className="font-semibold text-text-primary text-base sm:text-lg leading-snug">
+                    <h2 className="text-[24px] text-text-primary leading-snug" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
                       {post.title}
                     </h2>
                     <p className="text-sm text-text-secondary mt-2">{post.excerpt}</p>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-3">
+                    <span className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-3">
                       Läs mer <ArrowRight size={14} />
                     </span>
                   </div>

@@ -70,7 +70,7 @@ export default function Rattsfall() {
 
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-4 sm:p-5">
+          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
             <p className="text-sm text-blue-900 leading-relaxed">
               Arbetsdomstolen avgör tvister om kollektivavtal och arbetsrätt i Sverige. Referaten kommer
               från Domstolsverkets öppna data och är offentliga handlingar.
@@ -105,7 +105,7 @@ export default function Rattsfall() {
                     className={`rounded-[6px] px-2.5 py-1 text-xs font-medium transition-colors min-h-[32px] ${
                       topic === t
                         ? "bg-primary text-white"
-                        : "bg-white border border-border text-text-secondary hover:border-primary"
+                        : "bg-white border border-border text-[#374151] hover:bg-[#F0FDFA] hover:border-primary"
                     }`}
                   >
                     {t}
@@ -146,9 +146,9 @@ export default function Rattsfall() {
                       <span className="text-xs font-medium text-text-secondary">{c.caseNumber}</span>
                       <span className="text-xs text-text-secondary">{c.date}</span>
                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeColor}`}>{c.topic}</span>
-                      {c.isGuiding && <span className="rounded-full px-2 py-0.5 text-[10px] font-medium bg-accent/10 text-accent">Vägledande</span>}
+                      {c.isGuiding && <span className="rounded-full px-2 py-0.5 text-[10px] font-medium bg-primary text-white">Vägledande</span>}
                     </div>
-                    <h3 className="font-semibold text-text-primary text-sm leading-snug line-clamp-2">
+                    <h3 className="font-semibold text-text-primary text-[20px] leading-snug line-clamp-2">
                       {c.title || c.summary.substring(0, 120)}
                     </h3>
                     {c.summary && (

@@ -62,8 +62,8 @@ export default function YrkeOverview() {
 
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[12px] bg-blue-50 border border-blue-200 p-4 sm:p-5">
-            <p className="text-sm text-blue-900 leading-relaxed">
+          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
+            <p className="text-sm text-text-primary leading-relaxed">
               Här hittar du löner och villkor för {occupations.length} vanliga yrken i Sverige. Se minimilön
               enligt kollektivavtal, medianlön från SCB och OB-tillägg per yrke.
             </p>
@@ -93,7 +93,7 @@ export default function YrkeOverview() {
                   className={`rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors min-h-[36px] ${
                     category === c
                       ? "bg-primary text-white"
-                      : "bg-white border border-border text-text-secondary hover:border-primary"
+                      : "bg-white border border-border text-[#374151] hover:bg-[#F0FDFA] hover:border-primary"
                   }`}
                 >
                   {c}
@@ -113,7 +113,7 @@ export default function YrkeOverview() {
                   className={`rounded-[6px] px-3 py-1.5 text-xs font-medium transition-colors min-h-[36px] ${
                     sortBy === s.value
                       ? "bg-accent text-white"
-                      : "bg-white border border-border text-text-secondary hover:border-accent"
+                      : "bg-white border border-border text-[#374151] hover:bg-[#F0FDFA] hover:border-accent"
                   }`}
                 >
                   {s.label}
@@ -132,18 +132,18 @@ export default function YrkeOverview() {
                     className="group rounded-[12px] border border-border bg-white p-4 shadow-sm h-full"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="font-semibold text-text-primary group-hover:text-accent transition-colors text-sm">
+                      <h2 className="text-[22px] text-text-primary group-hover:text-primary transition-colors" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
                         {o.title}
                       </h2>
-                      <span className="shrink-0 rounded-[4px] bg-background text-text-secondary text-[10px] font-medium px-1.5 py-0.5">
+                      <span className="shrink-0 rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5">
                         {o.sector}
                       </span>
                     </div>
-                    <p className="text-2xl font-extrabold text-accent mt-2">
+                    <p className="text-[32px] font-normal text-accent mt-2" style={{ fontFamily: "var(--font-instrument-serif, var(--font-serif))" }}>
                       {o.salary.median.toLocaleString("sv-SE")} kr
                     </p>
                     <p className="text-xs text-text-secondary">medianlön/mån</p>
-                    <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-2">
+                    <span className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-2">
                       Se lön och villkor <ArrowRight size={12} />
                     </span>
                   </motion.div>
