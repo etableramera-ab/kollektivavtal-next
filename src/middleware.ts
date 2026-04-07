@@ -3,15 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 const locales = ["sv", "en", "ar", "so", "fa", "es", "pl"];
 const defaultLocale = "sv";
 
-// Paths that have dynamic locale versions: /[locale]/avtal/[slug]
-function hasLocaleVersion(pathname: string): boolean {
-  // Homepage
-  if (pathname === "/" || pathname === "") return true;
-  // Individual agreement pages: /avtal/[slug]
-  if (pathname.startsWith("/avtal/") && pathname.split("/").length === 3) return true;
-  return false;
-}
-
 function getLocale(request: NextRequest): string {
   const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
   if (cookieLocale && locales.includes(cookieLocale)) return cookieLocale;
@@ -46,12 +37,9 @@ export function middleware(request: NextRequest) {
 
   if (pathnameHasLocale) return;
 
-  // Swedish (default) needs no prefix
+  // Swedish (default) needs no prefix — existing URLs work as-is
   const locale = getLocale(request);
   if (locale === defaultLocale) return;
-
-  // Only redirect if the path has a locale version — otherwise serve Swedish
-  if (!hasLocaleVersion(pathname)) return;
 
   // Redirect to /{locale}/path
   request.nextUrl.pathname = `/${locale}${pathname}`;

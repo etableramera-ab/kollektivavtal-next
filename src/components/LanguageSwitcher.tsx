@@ -40,20 +40,36 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Only these paths have locale versions
+  function hasLocaleVersion(path: string): boolean {
+    if (path === "/" || path === "") return true;
+    if (path.startsWith("/avtal/") && path.split("/").length === 3) return true;
+    return false;
+  }
+
   function switchLocale(newLocale: Locale) {
-    let newPath = pathname;
+    // Strip existing locale prefix
+    let basePath = pathname;
     for (const locale of locales) {
       if (pathname.startsWith(`/${locale}/`)) {
-        newPath = pathname.replace(`/${locale}/`, "/");
+        basePath = pathname.replace(`/${locale}/`, "/");
         break;
       } else if (pathname === `/${locale}`) {
-        newPath = "/";
+        basePath = "/";
         break;
       }
     }
 
-    if (newLocale !== defaultLocale) {
-      newPath = `/${newLocale}${newPath}`;
+    let newPath: string;
+    if (newLocale === defaultLocale) {
+      // Going to Swedish — use the base path directly
+      newPath = basePath;
+    } else if (hasLocaleVersion(basePath)) {
+      // This path has a locale version — use it
+      newPath = `/${newLocale}${basePath}`;
+    } else {
+      // No locale version for this path — go to locale homepage
+      newPath = `/${newLocale}`;
     }
 
     document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000`;

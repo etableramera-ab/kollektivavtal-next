@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const mainLinks = [
   { href: "/avtal", label: "Kollektivavtal", match: "/avtal" },
@@ -138,6 +139,7 @@ export default function Header() {
             >
               Hitta ditt avtal
             </Link>
+            <LanguageSwitcher />
           </nav>
 
           <button
