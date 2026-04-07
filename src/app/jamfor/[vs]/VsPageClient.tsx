@@ -21,7 +21,7 @@ interface Props {
 export default function VsPageClient({ name1, name2, slug1, slug2, rows }: Props) {
   return (
     <>
-      <section className="bg-primary text-white pt-[120px] pb-10 sm:pb-16">
+      <section className="bg-primary text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">

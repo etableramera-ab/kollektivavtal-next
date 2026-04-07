@@ -85,7 +85,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <head>
-        <meta name="theme-color" content="#0F766E" />
+        <meta name="theme-color" content="#0D5E58" />
         <meta name="google-site-verification" content="Bm7t4B2dfkjxPTdY8c6p6-m7cY-r_fFtXhKgI5SpUl8" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
@@ -95,8 +95,10 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
         <Header />
-        <main className="min-h-screen">{children}</main>
-        <Disclaimer />
+        <div className="bg-[#F8F7F4]">
+          <main className="min-h-screen">{children}</main>
+          <Disclaimer />
+        </div>
         <Footer />
         <CookieConsent />
       </body>

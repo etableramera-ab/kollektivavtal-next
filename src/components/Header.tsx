@@ -65,10 +65,10 @@ export default function Header() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
-      style={scrolled ? { background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" } : { background: "transparent" }}
+      style={{ background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">

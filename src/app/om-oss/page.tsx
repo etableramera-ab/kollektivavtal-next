@@ -94,7 +94,7 @@ export default function OmOss() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary text-white pt-[120px] pb-12 sm:pb-20">
+      <section className="bg-primary text-white pt-12 pb-12 sm:pb-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
             Om kollektivavtal.ai
