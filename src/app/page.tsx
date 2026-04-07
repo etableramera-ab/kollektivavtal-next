@@ -33,6 +33,7 @@ const quickLinks = [
   { label: "Byggavtalet", slug: "byggavtalet" },
   { label: "HÖK Kommunal", slug: "hok-kommunal" },
   { label: "IT-avtalet", slug: "it-avtalet" },
+  { label: "Transportavtalet", slug: "transportavtalet" },
 ];
 
 const tools = [
@@ -72,21 +73,21 @@ export default function Home() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="bg-primary text-white">
+      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20 md:pt-12 md:pb-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
               <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent mb-4">
                 Sveriges 617 kollektivavtal — på klarspråk
               </p>
-              <h1 className="text-4xl sm:text-5xl leading-[1.15] text-white" style={serif}>
+              <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-[1.1] text-white" style={serif}>
                 Förstå ditt kollektivavtal
               </h1>
-              <p className="mt-5 text-base sm:text-lg text-white/75 max-w-[480px] leading-relaxed">
+              <p className="mt-5 text-base sm:text-lg text-white/80 max-w-[480px] leading-relaxed">
                 Sök bland alla 617 avtal. Jämför löner, OB-tillägg och villkor.
                 Chatta med en AI-expert som kan just ditt avtal.
               </p>
-              <p className="mt-6 text-xs text-white/50">
+              <p className="mt-6 text-xs text-white/60">
                 3,4 miljoner anställda · 92% avtalstäckning · Källa: Medlingsinstitutet
               </p>
             </AnimatedSection>
@@ -97,14 +98,14 @@ export default function Home() {
                 <div className="mb-4">
                   <SearchAutocomplete variant="hero" />
                 </div>
-                <div className="flex flex-wrap gap-2 mb-5">
+                <div className="flex flex-wrap gap-2 mb-5 justify-center">
                   {quickLinks.map((q) => (
                     <Link key={q.slug} href={`/avtal/${q.slug}`} className="rounded-full border border-border px-4 py-1.5 text-xs text-primary hover:bg-primary hover:text-white transition-all duration-200">
                       {q.label}
                     </Link>
                   ))}
                 </div>
-                <Link href="/hitta-avtal" className="block w-full h-12 rounded-lg bg-accent hover:bg-accent-hover active:translate-y-0 text-white text-sm font-semibold uppercase tracking-widest flex items-center justify-center transition-all duration-200 hover:-translate-y-px">
+                <Link href="/hitta-avtal" className="block w-full h-12 rounded-lg text-white text-sm font-semibold uppercase tracking-widest flex items-center justify-center transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(217,119,6,0.3)]" style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}>
                   Sök
                 </Link>
               </div>
@@ -113,8 +114,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── TRUST BAR with CountUp ─── */}
-      <section className="bg-white border-b border-border">
+      {/* ─── TRUST BAR ─── */}
+      <section className="border-b border-border border-t-[3px] border-t-primary" style={{ background: "linear-gradient(90deg, #F8F7F4 0%, #FFFFFF 50%, #F8F7F4 100%)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
             {[
@@ -140,18 +141,18 @@ export default function Home() {
       </section>
 
       {/* ─── VAD VILL DU GÖRA? ─── */}
-      <section className="py-14 sm:py-16">
+      <section className="py-14 sm:py-16" style={{ background: "linear-gradient(180deg, #F0EEED 0%, #F8F7F4 100%)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl text-text-primary" style={serif}>Vad vill du göra?</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Vad vill du göra?</h2>
             </AnimatedSection>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tools.map((tool, i) => (
-              <AnimatedSection key={tool.href} delay={i * 0.05}>
+              <AnimatedSection key={tool.href} delay={i * 0.08}>
                 <Link href={tool.href} className="block group">
-                  <div className="rounded-lg border border-border bg-white p-5 min-h-[80px] flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.06)] transition-all duration-200">
+                  <div className="rounded-lg border border-border bg-white p-5 min-h-[80px] flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                     <div className="shrink-0 w-11 h-11 rounded-full bg-[#F0FDFA] flex items-center justify-center">
                       <tool.icon size={20} className="text-primary" />
                     </div>
@@ -168,11 +169,11 @@ export default function Home() {
       </section>
 
       {/* ─── UTFORSKA AVTAL OCH YRKEN ─── */}
-      <section className="py-14 sm:py-16 bg-surface-dark">
+      <section className="py-14 sm:py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl text-text-primary" style={serif}>Utforska avtal och yrken</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Utforska avtal och yrken</h2>
             </AnimatedSection>
           </div>
 
@@ -189,13 +190,13 @@ export default function Home() {
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {topAgreements.map((a, i) => (
-                  <AnimatedSection key={a.slug} delay={i * 0.05}>
+                  <AnimatedSection key={a.slug} delay={i * 0.08}>
                     <Link href={`/avtal/${a.slug}`} className="block h-full group">
-                      <div className="rounded-lg border border-border bg-white p-5 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+                      <div className="rounded-lg border border-border bg-white p-5 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                         <div className="w-10 h-10 rounded-full bg-[#F0FDFA] flex items-center justify-center mb-3">
                           <a.icon size={20} className="text-primary" />
                         </div>
-                        <h3 className="text-xl text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{a.name}</h3>
+                        <h3 className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{a.name}</h3>
                         <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
                         <p className="text-xs text-text-secondary mt-2">{a.employees} anställda</p>
                         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-3">Läs mer <ArrowRight size={14} /></span>
@@ -204,7 +205,7 @@ export default function Home() {
                   </AnimatedSection>
                 ))}
               </div>
-              <AnimatedSection delay={0.25}>
+              <AnimatedSection delay={0.35}>
                 <Link href="/avtal" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
                   Se alla 617 avtal <ArrowRight size={14} />
                 </Link>
@@ -216,10 +217,10 @@ export default function Home() {
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {topOccupations.map((occ, i) => (
-                  <AnimatedSection key={occ.slug} delay={i * 0.05}>
+                  <AnimatedSection key={occ.slug} delay={i * 0.08}>
                     <Link href={`/yrke/${occ.slug}`} className="block group">
-                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:border-primary hover:-translate-y-px hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
-                        <p className="text-xl text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{occ.title}</p>
+                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                        <p className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{occ.title}</p>
                         <p className="text-2xl font-normal text-accent mt-2" style={serif}>{occ.median} kr</p>
                         <p className="text-xs text-text-secondary mt-1">medianlön</p>
                       </div>
@@ -227,7 +228,7 @@ export default function Home() {
                   </AnimatedSection>
                 ))}
               </div>
-              <AnimatedSection delay={0.25}>
+              <AnimatedSection delay={0.35}>
                 <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
                   Se alla 50 yrken <ArrowRight size={14} />
                 </Link>
@@ -242,14 +243,14 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl text-text-primary" style={serif}>Lönestatistik per bransch</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Lönestatistik per bransch</h2>
             </AnimatedSection>
           </div>
           <AnimatedSection delay={0.1}>
             <div className="rounded-xl border border-border bg-white p-6 sm:p-8">
               <SalaryChart />
             </div>
-            <p className="text-[13px] text-text-secondary mt-3">Källa: SCB, egen bearbetning</p>
+            <p className="text-[13px] text-[#6B7280] mt-3">Källa: SCB, egen bearbetning</p>
             <Link href="/statistik/loner" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-2 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
               Se fullständig lönestatistik <ArrowRight size={14} />
             </Link>
@@ -257,19 +258,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── VAD FÖRLORAR DU? — Teal dramatic section ─── */}
-      <section className="bg-primary py-16 sm:py-20">
+      {/* ─── VAD FÖRLORAR DU? ─── */}
+      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #0D5E58 0%, #0F766E 50%, #14B8A6 100%)" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <h2 className="text-3xl sm:text-4xl text-white text-center" style={serif}>
+            <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white text-center" style={serif}>
               Vad förlorar du utan kollektivavtal?
             </h2>
-            <p className="text-white/70 mt-2 text-center max-w-2xl mx-auto">
+            <p className="text-white/80 mt-3 text-center max-w-2xl mx-auto">
               Utan kollektivavtal saknar du tjänstepension, föräldralön, OB-tillägg och mycket mer.
             </p>
           </AnimatedSection>
 
-          {/* Desktop table */}
           <AnimatedSection delay={0.1}>
             <div className="hidden md:block max-w-[800px] mx-auto mt-10 rounded-xl bg-white p-2 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
               <table className="w-full text-[15px]">
@@ -303,7 +303,6 @@ export default function Home() {
             </div>
           </AnimatedSection>
 
-          {/* Mobile cards */}
           <div className="md:hidden space-y-3 mt-10">
             {comparisonRows.map((row, i) => (
               <AnimatedSection key={row.feature} delay={i * 0.05}>
@@ -345,16 +344,16 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl text-text-primary" style={serif}>Senaste arbetsrättsdomar</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Senaste arbetsrättsdomar</h2>
             </AnimatedSection>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {latestCases.map((c, i) => (
               <AnimatedSection key={c.id} delay={i * 0.1}>
                 <Link href={`/rattsfall/${c.id}`} className="block h-full group">
-                  <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+                  <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                     <p className="text-[13px] text-primary font-medium">{c.date}</p>
-                    <h3 className="text-text-primary mt-1 leading-snug text-xl" style={serif}>{c.caseNumber} — {c.title}</h3>
+                    <h3 className="text-text-primary mt-1 leading-snug text-[22px]" style={serif}>{c.caseNumber} — {c.title}</h3>
                     <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
                     <span className="inline-block mt-3 text-xs font-medium bg-[#F0FDFA] text-primary px-3 py-1 rounded-full border border-primary/20">
                       {c.topic}
@@ -370,27 +369,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── BLOGG — Editorial layout ─── */}
+      {/* ─── BLOGG ─── */}
       <section className="py-14 sm:py-16 bg-surface-dark">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl text-text-primary" style={serif}>Senaste från bloggen</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Senaste från bloggen</h2>
             </AnimatedSection>
           </div>
 
           {blogPosts.length >= 3 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Featured article */}
               <AnimatedSection>
                 <Link href={`/blogg/${blogPosts[0].slug}`} className="block h-full group">
-                  <div className="rounded-[10px] bg-primary hover:bg-primary-dark p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-colors duration-200">
+                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
                     <span className="rounded-full bg-white/15 text-white text-xs font-medium px-3 py-1 self-start mb-3">
                       {blogPosts[0].category}
                     </span>
-                    <p className="text-[13px] text-white/60 mb-1">{blogPosts[0].publishDate}</p>
+                    <p className="text-[13px] text-white/70 mb-1">{blogPosts[0].publishDate}</p>
                     <h3 className="text-2xl sm:text-[28px] text-white leading-snug" style={serif}>{blogPosts[0].title}</h3>
-                    <p className="text-[15px] text-white/75 mt-2 line-clamp-2">{blogPosts[0].excerpt}</p>
+                    <p className="text-[15px] text-white/80 mt-2 line-clamp-2">{blogPosts[0].excerpt}</p>
                     <span className="text-sm font-medium text-accent mt-4 inline-flex items-center gap-1">
                       Läs mer <ArrowRight size={14} />
                     </span>
@@ -398,17 +396,16 @@ export default function Home() {
                 </Link>
               </AnimatedSection>
 
-              {/* Side articles */}
               <div className="flex flex-col gap-4">
                 {blogPosts.slice(1, 3).map((post, i) => (
                   <AnimatedSection key={post.slug} delay={(i + 1) * 0.1}>
                     <Link href={`/blogg/${post.slug}`} className="block h-full group">
-                      <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_2px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+                      <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(15,118,110,0.12)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="rounded-full bg-[#F0FDFA] text-primary text-xs font-medium px-3 py-0.5 border border-primary/20">{post.category}</span>
                           <span className="text-xs text-text-secondary">{post.publishDate}</span>
                         </div>
-                        <h3 className="text-xl text-text-primary leading-snug group-hover:text-primary transition-colors duration-150" style={serif}>{post.title}</h3>
+                        <h3 className="text-[22px] text-text-primary leading-snug group-hover:text-primary transition-colors duration-150" style={serif}>{post.title}</h3>
                         <p className="text-sm text-text-secondary mt-2 line-clamp-2">{post.excerpt}</p>
                       </div>
                     </Link>

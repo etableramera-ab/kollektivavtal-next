@@ -65,9 +65,10 @@ export default function Header() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className={`sticky top-0 z-50 bg-primary transition-all duration-200 ${
+      className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
+      style={{ background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -123,7 +124,8 @@ export default function Header() {
 
             <Link
               href="/hitta-avtal"
-              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white bg-accent hover:bg-accent-hover hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200"
+              className="ml-2 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200 shadow-[0_2px_8px_rgba(217,119,6,0.25)] hover:shadow-[0_4px_16px_rgba(217,119,6,0.35)]"
+              style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}
             >
               Hitta ditt avtal
             </Link>

@@ -53,7 +53,7 @@ export default function OccupationPageClient({
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary text-white py-10 sm:py-16">
+      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white py-10 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">
