@@ -2,36 +2,29 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronRight, Search, ArrowRight } from "lucide-react";
 import { courtCases, getAvailableYears, getAvailableTopics } from "@/data/court-cases";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
-const PER_PAGE = 20;
+const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
+const INITIAL_COUNT = 20;
 
-const topicColors: Record<string, string> = {
-  Uppsägning: "bg-red-100 text-red-800 border-l-red-500",
-  Lön: "bg-green-100 text-green-800 border-l-green-500",
-  Diskriminering: "bg-purple-100 text-purple-800 border-l-purple-500",
-  Stridsåtgärd: "bg-orange-100 text-orange-800 border-l-orange-500",
-  Kollektivavtalstolkning: "bg-blue-100 text-blue-800 border-l-blue-500",
-  Medbestämmande: "bg-cyan-100 text-cyan-800 border-l-cyan-500",
-  Arbetstid: "bg-yellow-100 text-yellow-800 border-l-yellow-500",
-  Arbetsskyldighet: "bg-indigo-100 text-indigo-800 border-l-indigo-500",
-  Skadestånd: "bg-amber-100 text-amber-800 border-l-amber-500",
-  Övrigt: "bg-gray-100 text-gray-800 border-l-gray-400",
-};
+// Featured: 3 most recent (prefer guiding)
+const guiding = courtCases.filter((c) => c.isGuiding);
+const featured3 = guiding.length >= 3 ? guiding.slice(0, 3) : courtCases.slice(0, 3);
+const featuredIds = new Set(featured3.map((c) => c.id));
 
 export default function Rattsfall() {
   const [topic, setTopic] = useState("Alla");
   const [year, setYear] = useState("Alla");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   const years = getAvailableYears();
   const topics = ["Alla", ...getAvailableTopics()];
 
   const filtered = useMemo(() => {
-    let result = [...courtCases];
+    let result = courtCases.filter((c) => !featuredIds.has(c.id));
     if (topic !== "Alla") result = result.filter((c) => c.topic === topic);
     if (year !== "Alla") result = result.filter((c) => c.year === parseInt(year));
     if (search.trim()) {
@@ -47,62 +40,102 @@ export default function Rattsfall() {
     return result;
   }, [topic, year, search]);
 
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const paginated = filtered.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
+  const visible = filtered.slice(0, visibleCount);
 
-  // Reset page when filters change
-  useMemo(() => setPage(0), [topic, year, search]);
+  // Reset count when filters change
+  useMemo(() => setVisibleCount(INITIAL_COUNT), [topic, year, search]);
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      {/* Hero */}
+      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-14">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
               Rättsfall från Arbetsdomstolen
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              {courtCases.length.toLocaleString("sv-SE")} domar om kollektivavtal och arbetsrätt (1993–2024)
+              {courtCases.length.toLocaleString("sv-SE")} domar om kollektivavtal och arbetsrätt
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      <section className="py-6 sm:py-8">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-5">
-            <p className="text-sm text-blue-900 leading-relaxed">
-              Arbetsdomstolen avgör tvister om kollektivavtal och arbetsrätt i Sverige. Referaten kommer
-              från Domstolsverkets öppna data och är offentliga handlingar.
-            </p>
+      {/* ZON 1: Featured top 3 */}
+      <section className="py-8 sm:py-10">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {/* Large featured */}
+            <AnimatedSection>
+              <Link href={`/rattsfall/${featured3[0].id}`} className="block h-full group md:col-span-3">
+                <div className="rounded-xl p-8 sm:p-10 h-full min-h-[280px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm text-white/70">{featured3[0].date}</span>
+                    {featured3[0].isGuiding && (
+                      <span className="rounded-full bg-white/15 text-white text-xs font-semibold px-3 py-0.5">Vägledande</span>
+                    )}
+                    <span className="rounded-full bg-white/15 text-white text-xs font-medium px-3 py-0.5">{featured3[0].topic}</span>
+                  </div>
+                  <p className="text-white/60 text-sm mb-1">{featured3[0].caseNumber}</p>
+                  <h2 className="text-2xl sm:text-[28px] text-white leading-snug" style={serif}>
+                    {featured3[0].title || featured3[0].summary.substring(0, 100)}
+                  </h2>
+                  <p className="text-[15px] text-white/80 mt-2 line-clamp-3">{featured3[0].summary}</p>
+                  <span className="text-[15px] font-semibold text-accent mt-4 inline-flex items-center gap-1">
+                    Läs mer <ArrowRight size={14} />
+                  </span>
+                </div>
+              </Link>
+            </AnimatedSection>
+
+            {/* 2 side cards */}
+            <div className="md:col-span-2 flex flex-col gap-4">
+              {featured3.slice(1, 3).map((c, i) => (
+                <AnimatedSection key={c.id} delay={(i + 1) * 0.1}>
+                  <Link href={`/rattsfall/${c.id}`} className="block h-full group">
+                    <div className="rounded-xl border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(15,118,110,0.08)] transition-all duration-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[13px] text-primary font-medium">{c.date}</span>
+                        {c.isGuiding && (
+                          <span className="rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5">Vägledande</span>
+                        )}
+                        <span className="rounded-full bg-[#F0FDFA] text-primary text-[11px] font-medium px-2.5 py-0.5 border border-primary/20">{c.topic}</span>
+                      </div>
+                      <p className="text-[13px] text-text-secondary mb-1">{c.caseNumber}</p>
+                      <h3 className="text-[20px] text-text-primary leading-snug group-hover:text-primary transition-colors" style={serif}>
+                        {c.title || c.summary.substring(0, 80)}
+                      </h3>
+                      <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
+                    </div>
+                  </Link>
+                </AnimatedSection>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="pb-16 sm:pb-20">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          {/* Search */}
-          <div className="relative mb-4">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Sök i domar..."
-              className="w-full rounded-[8px] border border-border pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
-            />
-          </div>
-
-          {/* Filters */}
-          <div className="space-y-3 mb-6">
-            <div>
-              <p className="text-xs font-medium text-text-secondary mb-1.5">Ämne</p>
-              <div className="flex flex-wrap gap-1.5">
+      {/* ZON 2: Sticky search + filter */}
+      <div className="sticky top-[64px] z-40 bg-white border-t border-b border-border shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <div className="relative w-full sm:w-[360px]">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={`Sök i ${courtCases.length.toLocaleString("sv-SE")} domar...`}
+                className="w-full h-11 rounded-lg border border-border pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex flex-wrap gap-1.5 overflow-x-auto">
                 {topics.map((t) => (
                   <button
                     key={t}
                     onClick={() => setTopic(t)}
-                    className={`rounded-[6px] px-2.5 py-1 text-xs font-medium transition-colors min-h-[32px] ${
+                    className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors min-h-[32px] ${
                       topic === t
                         ? "bg-primary text-white"
                         : "bg-white border border-border text-[#374151] hover:bg-[#F0FDFA] hover:border-primary"
@@ -112,13 +145,10 @@ export default function Rattsfall() {
                   </button>
                 ))}
               </div>
-            </div>
-            <div>
-              <p className="text-xs font-medium text-text-secondary mb-1.5">År</p>
               <select
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                className="rounded-[6px] border border-border px-3 py-1.5 text-xs outline-none focus:border-accent"
+                className="shrink-0 rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
               >
                 <option value="Alla">Alla år</option>
                 {years.map((y) => (
@@ -127,67 +157,58 @@ export default function Rattsfall() {
               </select>
             </div>
           </div>
+        </div>
+      </div>
 
-          <p className="text-xs text-text-secondary mb-4">
+      {/* ZON 3: Compact list */}
+      <section className="py-8 sm:py-10 pb-16 sm:pb-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-[32px] text-text-primary mb-1" style={serif}>Alla domar</h2>
+          <p className="text-[15px] text-text-secondary mb-6">
             {filtered.length.toLocaleString("sv-SE")} domar
             {topic !== "Alla" ? ` inom ${topic}` : ""}
             {year !== "Alla" ? ` från ${year}` : ""}
           </p>
 
-          {/* Results */}
-          <div className="space-y-2">
-            {paginated.map((c) => {
-              const borderColor = topicColors[c.topic]?.split(" ").pop() || "border-l-gray-400";
-              const badgeColor = topicColors[c.topic]?.split(" ").slice(0, 2).join(" ") || "bg-gray-100 text-gray-800";
-              return (
-                <Link key={c.id} href={`/rattsfall/${c.id}`} className="block">
-                  <div className={`rounded-[10px] border border-border bg-white p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow border-l-4 ${borderColor}`}>
-                    <div className="flex flex-wrap items-center gap-1.5 mb-1">
-                      <span className="text-xs font-medium text-text-secondary">{c.caseNumber}</span>
-                      <span className="text-xs text-text-secondary">{c.date}</span>
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeColor}`}>{c.topic}</span>
-                      {c.isGuiding && <span className="rounded-full px-2 py-0.5 text-[10px] font-medium bg-primary text-white">Vägledande</span>}
+          <div className="rounded-xl border border-border bg-white overflow-hidden">
+            {visible.map((c, i) => (
+              <Link key={c.id} href={`/rattsfall/${c.id}`} className="block">
+                <div className={`flex items-center gap-3 px-5 py-4 hover:bg-background transition-colors ${i < visible.length - 1 ? "border-b border-surface-dark" : ""}`}>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-sm font-semibold text-text-primary">{c.caseNumber}</span>
+                      <span className="text-sm text-text-secondary">{c.date}</span>
+                      <span className="rounded-full bg-[#F0FDFA] text-primary text-[12px] font-medium px-2.5 py-0.5 border border-primary/20">{c.topic}</span>
+                      {c.isGuiding && (
+                        <span className="rounded-full bg-primary text-white text-[11px] font-semibold px-2.5 py-0.5">Vägledande</span>
+                      )}
                     </div>
-                    <h3 className="font-semibold text-text-primary text-[20px] leading-snug line-clamp-2">
+                    <p className="text-[16px] font-medium text-text-primary truncate">
                       {c.title || c.summary.substring(0, 120)}
-                    </h3>
-                    {c.summary && (
-                      <p className="text-xs text-text-secondary mt-1 line-clamp-2">{c.summary}</p>
-                    )}
+                    </p>
                   </div>
-                </Link>
-              );
-            })}
+                  <ChevronRight size={16} className="text-text-secondary shrink-0" />
+                </div>
+              </Link>
+            ))}
           </div>
 
           {filtered.length === 0 && (
             <p className="text-sm text-text-secondary text-center py-8">Inga domar matchar.</p>
           )}
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-8">
+          {visibleCount < filtered.length && (
+            <div className="text-center mt-8">
               <button
-                onClick={() => setPage(Math.max(0, page - 1))}
-                disabled={page === 0}
-                className="rounded-[6px] border border-border p-2 hover:bg-background disabled:opacity-30 min-w-[36px] min-h-[36px] flex items-center justify-center"
+                onClick={() => setVisibleCount((v) => v + INITIAL_COUNT)}
+                className="px-6 py-3 rounded-lg border border-primary text-primary font-semibold text-[15px] hover:bg-primary hover:text-white transition-colors"
               >
-                <ChevronLeft size={16} />
-              </button>
-              <span className="text-sm text-text-secondary px-3">
-                Sida {page + 1} av {totalPages}
-              </span>
-              <button
-                onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
-                disabled={page >= totalPages - 1}
-                className="rounded-[6px] border border-border p-2 hover:bg-background disabled:opacity-30 min-w-[36px] min-h-[36px] flex items-center justify-center"
-              >
-                <ChevronRight size={16} />
+                Visa fler domar ({filtered.length - visibleCount} kvar)
               </button>
             </div>
           )}
 
-          <p className="text-xs text-text-secondary mt-6 text-center">
+          <p className="text-xs text-[#6B7280] mt-8 text-center">
             Källa: Domstolsverkets öppna data. Referaten är offentliga handlingar.
           </p>
         </div>
