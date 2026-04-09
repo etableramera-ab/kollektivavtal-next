@@ -35,10 +35,16 @@ export function generateMetadata({ params }: PageProps): Metadata {
       ? `Everything about ${agreement.name}: wages, benefits, vacation, pension and more. Covers ${agreement.employeeCount.toLocaleString("en")} employees.`
       : `Allt om ${agreement.name}: löner från ${agreement.keyFacts.minimumWage}, OB-tillägg, semester, pension och mer. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda.`,
     alternates: {
-      canonical: `https://kollektivavtal.ai/avtal/${params.slug}`,
+      canonical: `https://kollektivavtal.ai/${params.locale}/avtal/${params.slug}`,
       languages: {
-        sv: `https://kollektivavtal.ai/avtal/${params.slug}`,
-        en: `https://kollektivavtal.ai/en/avtal/${params.slug}`,
+        "sv": `https://kollektivavtal.ai/avtal/${params.slug}`,
+        "en": `https://kollektivavtal.ai/en/avtal/${params.slug}`,
+        "ar": `https://kollektivavtal.ai/ar/avtal/${params.slug}`,
+        "so": `https://kollektivavtal.ai/so/avtal/${params.slug}`,
+        "fa": `https://kollektivavtal.ai/fa/avtal/${params.slug}`,
+        "es": `https://kollektivavtal.ai/es/avtal/${params.slug}`,
+        "pl": `https://kollektivavtal.ai/pl/avtal/${params.slug}`,
+        "x-default": `https://kollektivavtal.ai/avtal/${params.slug}`,
       },
     },
   };
