@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Mail } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Cookiepolicy — kollektivavtal.ai",
-  description:
-    "Information om hur kollektivavtal.ai använder cookies.",
+  title: "Cookiepolicy - kollektivavtal.ai",
+  description: "Information om hur kollektivavtal.ai hanterar cookies.",
+  alternates: { canonical: "https://kollektivavtal.ai/cookiepolicy" },
 };
 
 export default function Cookiepolicy() {

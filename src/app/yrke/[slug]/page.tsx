@@ -18,6 +18,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `Lön som ${occ.titleGenitive} 2026 — Minimilön, OB-tillägg och villkor | kollektivavtal.ai`,
     description: `Vad tjänar en ${occ.titleGenitive} 2026? Lägsta lön enligt kollektivavtal är ${occ.salary.minimum.toLocaleString("sv-SE")} kr. Medianlön ${occ.salary.median.toLocaleString("sv-SE")} kr. Se OB-tillägg, semester, pension och mer.`,
+    alternates: { canonical: `https://kollektivavtal.ai/yrke/${occ.slug}` },
     openGraph: {
       title: `Lön som ${occ.titleGenitive} 2026`,
       description: `Medianlön ${occ.salary.median.toLocaleString("sv-SE")} kr/mån. Se OB, pension och villkor.`,

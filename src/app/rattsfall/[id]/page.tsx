@@ -29,6 +29,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"} | kollektivavtal.ai`,
     description: desc,
+    alternates: { canonical: `https://kollektivavtal.ai/rattsfall/${courtCase.id}` },
     openGraph: {
       title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"}`,
       description: desc,

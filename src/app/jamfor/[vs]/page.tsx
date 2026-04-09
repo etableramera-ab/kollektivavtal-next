@@ -30,6 +30,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `${a1.shortName} vs ${a2.shortName} — Jämför löner, OB och villkor 2026 | kollektivavtal.ai`,
     description: `Jämför ${a1.shortName} och ${a2.shortName}. Se skillnader i lön, OB-tillägg, semester, pension och övertid.`,
+    alternates: { canonical: `https://kollektivavtal.ai/jamfor/${params.vs}` },
   };
 }
 

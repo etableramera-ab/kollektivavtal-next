@@ -17,6 +17,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `${post.title} | kollektivavtal.ai`,
     description: post.metaDescription,
+    alternates: { canonical: `https://kollektivavtal.ai/blogg/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.metaDescription,

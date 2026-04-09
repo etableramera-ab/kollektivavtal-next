@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Om kollektivavtal.ai — Mission, datakvalitet och företagsinfo",
   description:
     "kollektivavtal.ai drivs av Etablera Mera AB och är en oberoende informationsplattform som förklarar Sveriges 617 kollektivavtal på klarspråk med AI-stöd.",
+  alternates: { canonical: "https://kollektivavtal.ai/om-oss" },
 };
 
 const features = [

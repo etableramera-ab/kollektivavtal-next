@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Integritetspolicy — kollektivavtal.ai",
   description:
     "Så hanterar kollektivavtal.ai dina personuppgifter. Vi värnar om din integritet.",
+  alternates: { canonical: "https://kollektivavtal.ai/integritetspolicy" },
 };
 
 export default function Integritetspolicy() {

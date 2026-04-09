@@ -28,6 +28,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `${agreement.name} 2026 — Löner, OB-tillägg, semester och villkor | kollektivavtal.ai`,
     description: `Allt om ${agreement.name}: löner från ${agreement.keyFacts.minimumWage}, OB-tillägg, semester, pension och mer. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda.`,
+    alternates: { canonical: `https://kollektivavtal.ai/avtal/${agreement.slug}` },
     openGraph: {
       title: `${agreement.name} 2026 — Löner, OB-tillägg och villkor`,
       description: `Sammanfattning av ${agreement.name} på klarspråk. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda inom ${agreement.sectorLabel.toLowerCase()}.`,
