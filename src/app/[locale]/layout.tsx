@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_Arabic } from "next/font/google";
 import { locales, defaultLocale } from "@/lib/dictionaries";
 import { notFound } from "next/navigation";
+import { buildLocalizedUrl, getOgLocale, getOgAlternateLocales, type Locale } from "@/lib/metadata";
 
 const notoSansArabic = Noto_Sans_Arabic({
   subsets: ["arabic"],
@@ -17,9 +18,10 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+  const locale = params.locale as Locale;
   return {
     alternates: {
-      canonical: `https://kollektivavtal.ai/${params.locale}`,
+      canonical: buildLocalizedUrl(locale, "/"),
       languages: {
         "sv": "https://kollektivavtal.ai",
         "en": "https://kollektivavtal.ai/en",
@@ -30,6 +32,11 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
         "pl": "https://kollektivavtal.ai/pl",
         "x-default": "https://kollektivavtal.ai",
       },
+    },
+    openGraph: {
+      url: buildLocalizedUrl(locale, "/"),
+      locale: getOgLocale(locale),
+      alternateLocale: getOgAlternateLocales(locale),
     },
   };
 }

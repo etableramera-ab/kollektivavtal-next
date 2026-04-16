@@ -11,6 +11,7 @@ import {
 import { agreements, getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { buildLocalizedUrl, getOgLocale, getOgAlternateLocales, type Locale } from "@/lib/metadata";
 import AgreementPageClient from "@/app/avtal/[slug]/AgreementPageClient";
 
 interface PageProps {
@@ -46,6 +47,11 @@ export function generateMetadata({ params }: PageProps): Metadata {
         "pl": `https://kollektivavtal.ai/pl/avtal/${params.slug}`,
         "x-default": `https://kollektivavtal.ai/avtal/${params.slug}`,
       },
+    },
+    openGraph: {
+      url: buildLocalizedUrl(params.locale as Locale, `/avtal/${params.slug}`),
+      locale: getOgLocale(params.locale as Locale),
+      alternateLocale: getOgAlternateLocales(params.locale as Locale),
     },
   };
 }

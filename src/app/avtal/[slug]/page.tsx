@@ -11,6 +11,7 @@ import {
 import { agreements, getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { buildHreflangs, getOgAlternateLocales } from "@/lib/metadata";
 import AgreementPageClient from "./AgreementPageClient";
 
 interface PageProps {
@@ -28,11 +29,16 @@ export function generateMetadata({ params }: PageProps): Metadata {
   return {
     title: `${agreement.name} 2026 — Löner, OB-tillägg, semester och villkor | kollektivavtal.ai`,
     description: `Allt om ${agreement.name}: löner från ${agreement.keyFacts.minimumWage}, OB-tillägg, semester, pension och mer. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda.`,
-    alternates: { canonical: `https://kollektivavtal.ai/avtal/${agreement.slug}` },
+    alternates: {
+      canonical: `https://kollektivavtal.ai/avtal/${agreement.slug}`,
+      languages: buildHreflangs(`/avtal/${agreement.slug}`),
+    },
     openGraph: {
       title: `${agreement.name} 2026 — Löner, OB-tillägg och villkor`,
       description: `Sammanfattning av ${agreement.name} på klarspråk. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda inom ${agreement.sectorLabel.toLowerCase()}.`,
       url: `https://kollektivavtal.ai/avtal/${agreement.slug}`,
+      locale: "sv_SE",
+      alternateLocale: getOgAlternateLocales("sv"),
     },
   };
 }
