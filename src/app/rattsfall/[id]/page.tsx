@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { courtCases, getCourtCaseById } from "@/data/court-cases";
 import { getAgreementBySlug } from "@/data/agreements";
@@ -30,6 +30,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"} | kollektivavtal.ai`,
     description: desc,
     alternates: { canonical: `https://kollektivavtal.ai/rattsfall/${courtCase.id}` },
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${courtCase.caseNumber} — ${courtCase.title || "Arbetsdomstolen"}`,
       description: desc,
@@ -40,7 +41,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
 
 export default function CourtCasePage({ params }: PageProps) {
   const courtCase = getCourtCaseById(params.id);
-  if (!courtCase) notFound();
+  if (!courtCase) permanentRedirect("/rattsfall");
 
   const relatedAgreement = courtCase.relatedAgreement
     ? getAgreementBySlug(courtCase.relatedAgreement)
