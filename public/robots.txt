@@ -43,4 +43,4 @@ Disallow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://kollektivavtal.ai/sitemap.xml
+Sitemap: https://kollektivavtal.ai/sitemap-index.xml
