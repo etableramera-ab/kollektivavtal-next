@@ -22,7 +22,7 @@ const coverageData = [
 ];
 
 const keyStats = [
-  { end: 617, label: "kollektivavtal" },
+  { end: 515, label: "kollektivavtal" },
   { end: 3.4, label: "miljoner anställda", decimals: true },
   { end: 92, suffix: "%", label: "avtalstäckning" },
   { end: 6.4, suffix: "%", label: "löneökningstakt (märket)", decimals: true },

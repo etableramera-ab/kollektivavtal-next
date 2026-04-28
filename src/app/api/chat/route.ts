@@ -58,8 +58,8 @@ export async function POST(req: NextRequest) {
   let systemPrompt: string;
 
   if (isGlobal) {
-    // Global chat — general expert on all 617 agreements
-    systemPrompt = `Du är en AI-expert på alla 617 kollektivavtal i Sverige. Du kan svara på frågor om löner, OB-tillägg, semester, pension, uppsägningstid, föräldralön och andra villkor för ALLA avtal och yrken.
+    // Global chat — general expert on all 515 agreements
+    systemPrompt = `Du är en AI-expert på alla 515 kollektivavtal i Sverige. Du kan svara på frågor om löner, OB-tillägg, semester, pension, uppsägningstid, föräldralön och andra villkor för ALLA avtal och yrken.
 
 STRIKTA REGLER:
 - Svara baserat på din kunskap om svenska kollektivavtal.

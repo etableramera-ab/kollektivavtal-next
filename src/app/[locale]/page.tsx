@@ -52,10 +52,10 @@ export default function LocaleHomePage() {
   const DirArrow = isRTL ? ArrowLeft : ArrowRight;
 
   const keyStats = [
-    { number: 617, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
+    { number: 515, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
     { number: 3.4, suffix: "", label: dict.hero.stats.employees, icon: Users },
     { number: 92, suffix: "%", label: dict.hero.stats.coverage, icon: ShieldCheck },
-    { number: 617, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
+    { number: 515, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
   ];
 
   const t = (sv: string, en: string, ar: string) =>

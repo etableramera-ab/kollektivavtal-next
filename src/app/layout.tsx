@@ -23,22 +23,22 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Kollektivavtal.ai — Chatta med en AI-expert på Sveriges 617 kollektivavtal",
+  title: "Kollektivavtal.ai — Chatta med en AI-expert på Sveriges 515 kollektivavtal",
   description:
-    "Sök bland alla 617 kollektivavtal, jämför löner och villkor, och chatta med en AI-expert som kan just ditt avtal. Helt gratis.",
+    "Sök bland alla 515 kollektivavtal, jämför löner och villkor, och chatta med en AI-expert som kan just ditt avtal. Helt gratis.",
   openGraph: {
-    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 617 avtal",
+    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 515 avtal",
     description:
       "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
     url: "https://kollektivavtal.ai",
     siteName: "kollektivavtal.ai",
     locale: "sv_SE",
     type: "website",
-    images: [{ url: "https://kollektivavtal.ai/Images/og-image.png", width: 1200, height: 630, alt: "kollektivavtal.ai — Chatta med en AI-expert på alla 617 kollektivavtal" }],
+    images: [{ url: "https://kollektivavtal.ai/Images/og-image.png", width: 1200, height: 630, alt: "kollektivavtal.ai — Chatta med en AI-expert på alla 515 kollektivavtal" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 617 avtal",
+    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 515 avtal",
     description: "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
     images: ["https://kollektivavtal.ai/Images/og-image.png"],
   },

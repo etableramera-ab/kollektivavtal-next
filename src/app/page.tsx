@@ -81,13 +81,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
               <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent mb-4">
-                Sveriges 617 kollektivavtal — på klarspråk
+                Sveriges 515 kollektivavtal — på klarspråk
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-[1.1] text-white" style={serif}>
                 Förstå ditt kollektivavtal
               </h1>
               <p className="mt-5 text-base sm:text-lg text-white/80 max-w-[480px] leading-relaxed">
-                Sök bland alla 617 avtal. Jämför löner, OB-tillägg och villkor.
+                Sök bland alla 515 avtal. Jämför löner, OB-tillägg och villkor.
                 Chatta med en AI-expert som kan just ditt avtal.
               </p>
               <p className="mt-6 text-xs text-white/60">
@@ -128,7 +128,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-10 sm:gap-12">
             {[
-              { icon: FileText, num: 617, text: "avtal sammanfattade" },
+              { icon: FileText, num: 515, text: "avtal sammanfattade" },
               { icon: Users, num: 3.4, text: "miljoner anställda", decimal: true },
               { icon: ShieldCheck, num: 92, text: "% avtalstäckning", suffix: "%" },
             ].map((item) => (
@@ -165,7 +165,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
               <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-white/70 mb-4">
-                AI-expert på 617 avtal
+                AI-expert på 515 avtal
               </p>
               <h2 className="text-3xl sm:text-4xl md:text-[44px] text-white leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
                 Chatta med en expert som läst hela ditt avtal
@@ -174,7 +174,7 @@ export default function Home() {
                 Ställ frågor om lön, OB-tillägg, semester, uppsägningstid, pension — och få svar direkt.
               </p>
               <div className="mt-6 space-y-3">
-                {["Svar på sekunder — inte timmar", "Tränad på alla 617 avtal och 2 009 domar", "Helt gratis, alltid"].map((text) => (
+                {["Svar på sekunder — inte timmar", "Tränad på alla 515 avtal och 2 009 domar", "Helt gratis, alltid"].map((text) => (
                   <div key={text} className="flex items-center gap-3">
                     <span className="text-accent text-lg">✓</span>
                     <span className="text-[16px] font-medium text-white">{text}</span>
@@ -187,11 +187,11 @@ export default function Home() {
                 <div className="space-y-3 mb-4">
                   <div className="flex gap-2">
                     <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Hej! Jag kan svara på frågor om alla 617 kollektivavtal. Vad vill du veta?</div>
+                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Hej! Jag kan svara på frågor om alla 515 kollektivavtal. Vad vill du veta?</div>
                   </div>
                   <div className="flex gap-2">
                     <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Fråga om löner, OB-tillägg, semester, pension — jag har läst alla 617 avtal och kan hjälpa dig.</div>
+                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Fråga om löner, OB-tillägg, semester, pension — jag har läst alla 515 avtal och kan hjälpa dig.</div>
                   </div>
                 </div>
                 <button
@@ -294,7 +294,7 @@ export default function Home() {
               </div>
               <AnimatedSection delay={0.35}>
                 <Link href="/avtal" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-                  Se alla 617 avtal <ArrowRight size={14} />
+                  Se alla 515 avtal <ArrowRight size={14} />
                 </Link>
               </AnimatedSection>
             </div>

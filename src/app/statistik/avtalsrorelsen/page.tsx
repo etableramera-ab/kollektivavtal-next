@@ -252,7 +252,7 @@ export default function Avtalsrorelsen() {
                 Blick framåt — avtalsrörelsen 2027
               </h2>
               <p className="text-text-primary leading-relaxed">
-                Under 2027 ska närmare 500 av arbetsmarknadens 617 avtal omförhandlas för 3,4
+                Under 2027 ska närmare 500 av arbetsmarknadens 515 avtal omförhandlas för 3,4
                 miljoner anställda. Det blir den största avtalsrörelsen på flera år. Följ
                 utvecklingen här.
               </p>

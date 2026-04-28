@@ -48,7 +48,7 @@ export default function JamforOverview() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
-              Sverige har 617 kollektivavtal med olika villkor. Här jämför vi OB-tillägg, minimilöner, semester, pension och mer för alla 25 avtal vi sammanfattat.
+              Sverige har 515 kollektivavtal med olika villkor. Här jämför vi OB-tillägg, minimilöner, semester, pension och mer för alla 25 avtal vi sammanfattat.
             </p>
           </div>
         </div>

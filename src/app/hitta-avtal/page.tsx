@@ -93,7 +93,7 @@ export default function HittaAvtal() {
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
               Du hittar ditt kollektivavtal genom att välja bransch och yrke nedan. Sverige har
-              omkring 617 kollektivavtal som täcker 92% av alla anställda.
+              omkring 515 kollektivavtal som täcker 92% av alla anställda.
             </p>
           </div>
         </div>
@@ -310,7 +310,7 @@ export default function HittaAvtal() {
                       </h2>
                       <p className="text-sm text-text-secondary leading-relaxed">
                         Avtalet för {occupation.label} inom {branch?.label} finns ännu inte i vår
-                        databas. Vi arbetar med att sammanfatta alla 617 kollektivavtal och lägger
+                        databas. Vi arbetar med att sammanfatta alla 515 kollektivavtal och lägger
                         till fler löpande.
                       </p>
                     </div>

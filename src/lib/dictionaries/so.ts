@@ -4,7 +4,7 @@ const so: Dictionary = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "Hagaha ugu dhammaystiran ee heshiisyada shaqaalaha Sweden. 617 heshiis, AI chat, xogta mushaharka iyo dacwadaha maxkamadda.",
+      "Hagaha ugu dhammaystiran ee heshiisyada shaqaalaha Sweden. 515 heshiis, AI chat, xogta mushaharka iyo dacwadaha maxkamadda.",
   },
   nav: {
     home: "Bogga Hore",
@@ -22,7 +22,7 @@ const so: Dictionary = {
   hero: {
     title: "Heshiisyada Shaqaalaha Sweden — Oo Dhan Meel Keliya",
     subtitle:
-      "Hagaha ugu weyn ee AI lagu taageerayo ee dhammaan 617 heshiisyada shaqaalaha Sweden. Raadi, barbar dhig oo la hadal khabiir ku takhasusay heshiiskaaga.",
+      "Hagaha ugu weyn ee AI lagu taageerayo ee dhammaan 515 heshiisyada shaqaalaha Sweden. Raadi, barbar dhig oo la hadal khabiir ku takhasusay heshiiskaaga.",
     cta: "Raadi Heshiiskaaga",
     ctaSecondary: "Fiiri Dhammaan Heshiisyada",
     stats: {

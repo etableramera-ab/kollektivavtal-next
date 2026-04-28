@@ -4,7 +4,7 @@ const es: Dictionary = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "La guía más completa de convenios colectivos de Suecia. 617 convenios, chat con IA, datos salariales y casos judiciales.",
+      "La guía más completa de convenios colectivos de Suecia. 515 convenios, chat con IA, datos salariales y casos judiciales.",
   },
   nav: {
     home: "Inicio",
@@ -22,7 +22,7 @@ const es: Dictionary = {
   hero: {
     title: "Convenios Colectivos Suecos — En Lenguaje Claro",
     subtitle:
-      "La mayor guía impulsada por IA de los 617 convenios colectivos de Suecia. Busca, compara y chatea con un experto en tu convenio.",
+      "La mayor guía impulsada por IA de los 515 convenios colectivos de Suecia. Busca, compara y chatea con un experto en tu convenio.",
     cta: "Encuentra tu Convenio",
     ctaSecondary: "Ver Todos los Convenios",
     stats: {

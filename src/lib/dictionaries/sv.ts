@@ -2,7 +2,7 @@ const sv = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "Sveriges mest heltäckande guide till kollektivavtal. 617 avtal, AI-chatt, lönedata och rättsfall.",
+      "Sveriges mest heltäckande guide till kollektivavtal. 515 avtal, AI-chatt, lönedata och rättsfall.",
   },
   nav: {
     home: "Startsida",
@@ -20,7 +20,7 @@ const sv = {
   hero: {
     title: "Förstå ditt kollektivavtal — på klarspråk",
     subtitle:
-      "Sveriges största AI-drivna guide till alla 617 kollektivavtal. Sök, jämför och chatta med en expert på just ditt avtal.",
+      "Sveriges största AI-drivna guide till alla 515 kollektivavtal. Sök, jämför och chatta med en expert på just ditt avtal.",
     cta: "Hitta ditt avtal",
     ctaSecondary: "Utforska alla avtal",
     stats: {

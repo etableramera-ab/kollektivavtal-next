@@ -75,12 +75,12 @@ export const blogPosts: BlogPost[] = [
     author: "Redaktionen, kollektivavtal.ai",
     category: "Avtalsrörelsen",
     readingTime: "7 min",
-    aeoAnswer: "Under 2027 omförhandlas cirka 500 av Sveriges 617 kollektivavtal för 3,4 miljoner anställda. Det blir den största avtalsrörelsen på flera år. Förhandlingarna startar hösten 2026 och de stora avtalen löper ut 31 mars 2027.",
+    aeoAnswer: "Under 2027 omförhandlas cirka 500 av Sveriges 515 kollektivavtal för 3,4 miljoner anställda. Det blir den största avtalsrörelsen på flera år. Förhandlingarna startar hösten 2026 och de stora avtalen löper ut 31 mars 2027.",
     excerpt: "500 avtal omförhandlas 2027 för 3,4 miljoner anställda. Här är den kompletta guiden.",
     content: [
       {
         heading: "Vad händer 2027?",
-        text: "Våren 2027 löper de flesta av Sveriges kollektivavtal ut — de som tecknades i avtalsrörelsen 2025. Närmare 500 av arbetsmarknadens 617 avtal ska omförhandlas, och det berör 3,4 miljoner anställda.\n\nDet gör 2027 till den största avtalsrörelsen på flera år. Alla stora avtal — Teknikavtalet, Handelsavtalet, HÖK Kommunal, Byggavtalet, de statliga villkorsavtalen och många fler — ska förhandlas om samtidigt."
+        text: "Våren 2027 löper de flesta av Sveriges kollektivavtal ut — de som tecknades i avtalsrörelsen 2025. Närmare 500 av arbetsmarknadens 515 avtal ska omförhandlas, och det berör 3,4 miljoner anställda.\n\nDet gör 2027 till den största avtalsrörelsen på flera år. Alla stora avtal — Teknikavtalet, Handelsavtalet, HÖK Kommunal, Byggavtalet, de statliga villkorsavtalen och många fler — ska förhandlas om samtidigt."
       },
       {
         heading: "Tidslinje — när händer vad?",
@@ -101,7 +101,7 @@ export const blogPosts: BlogPost[] = [
     ],
     faq: [
       { question: "När börjar avtalsrörelsen 2027?", answer: "Förhandlingarna startar på allvar i januari–februari 2027. Förberedelserna med kravformuleringar börjar hösten 2026." },
-      { question: "Vilka avtal berörs?", answer: "Cirka 500 av 617 avtal som löper ut 31 mars 2027, inklusive Teknikavtalet, Handelsavtalet, HÖK Kommunal och Byggavtalet." },
+      { question: "Vilka avtal berörs?", answer: "Cirka 500 av 515 avtal som löper ut 31 mars 2027, inklusive Teknikavtalet, Handelsavtalet, HÖK Kommunal och Byggavtalet." },
       { question: "Vad händer om parterna inte kommer överens?", answer: "Medlingsinstitutet kan kopplas in. I sista hand kan strejk (facket) eller lockout (arbetsgivaren) bli aktuellt." },
       { question: "Hur mycket löneökning kan jag förvänta mig?", answer: "Det beror på förhandlingarna, men baserat på inflationsutvecklingen och fackets krav kan 3-4% per år vara rimligt." },
       { question: "Påverkas jag om jag inte är fackmedlem?", answer: "Om du har kollektivavtal på arbetsplatsen gäller det dig oavsett fackmedlemskap. Men utan fack har du inget inflytande över kraven." },

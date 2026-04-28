@@ -4,7 +4,7 @@ const en: Dictionary = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "Sweden's most comprehensive guide to collective agreements. 617 agreements, AI chat, salary data and court cases.",
+      "Sweden's most comprehensive guide to collective agreements. 515 agreements, AI chat, salary data and court cases.",
   },
   nav: {
     home: "Home",
@@ -22,7 +22,7 @@ const en: Dictionary = {
   hero: {
     title: "Swedish Collective Agreements — In Plain Language",
     subtitle:
-      "Sweden's largest AI-powered guide to all 617 collective agreements. Search, compare and chat with an expert on your specific agreement.",
+      "Sweden's largest AI-powered guide to all 515 collective agreements. Search, compare and chat with an expert on your specific agreement.",
     cta: "Find Your Agreement",
     ctaSecondary: "Browse All Agreements",
     stats: {

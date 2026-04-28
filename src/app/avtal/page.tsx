@@ -79,7 +79,7 @@ export default function AvtalOverview() {
               Kollektivavtal i Sverige
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              617 avtal sammanfattade på klarspråk — löner, OB-tillägg, semester och pension.
+              515 avtal sammanfattade på klarspråk — löner, OB-tillägg, semester och pension.
             </p>
           </AnimatedSection>
         </div>
@@ -140,7 +140,7 @@ export default function AvtalOverview() {
                 type="text"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
-                placeholder="Sök bland 617 avtal..."
+                placeholder="Sök bland 515 avtal..."
                 className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
@@ -235,7 +235,7 @@ export default function AvtalOverview() {
           )}
 
           <p className="text-xs text-[#6B7280] mt-8 text-center">
-            {agreements.length} av 617 avtal sammanfattade. Fler läggs till löpande.
+            {agreements.length} av 515 avtal sammanfattade. Fler läggs till löpande.
           </p>
         </div>
       </section>

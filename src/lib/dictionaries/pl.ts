@@ -4,7 +4,7 @@ const pl: Dictionary = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "Najpełniejszy przewodnik po szwedzkich układach zbiorowych. 617 układów, czat AI, dane płacowe i orzeczenia sądowe.",
+      "Najpełniejszy przewodnik po szwedzkich układach zbiorowych. 515 układów, czat AI, dane płacowe i orzeczenia sądowe.",
   },
   nav: {
     home: "Strona główna",
@@ -22,7 +22,7 @@ const pl: Dictionary = {
   hero: {
     title: "Szwedzkie Układy Zbiorowe — Prostym Językiem",
     subtitle:
-      "Największy przewodnik oparty na AI po wszystkich 617 szwedzkich układach zbiorowych. Szukaj, porównuj i rozmawiaj z ekspertem od Twojego układu.",
+      "Największy przewodnik oparty na AI po wszystkich 515 szwedzkich układach zbiorowych. Szukaj, porównuj i rozmawiaj z ekspertem od Twojego układu.",
     cta: "Znajdź Swój Układ",
     ctaSecondary: "Przeglądaj Wszystkie Układy",
     stats: {
