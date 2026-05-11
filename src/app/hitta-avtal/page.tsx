@@ -35,8 +35,14 @@ const slideVariants = {
   }),
 };
 
+// Render step 1 visible in SSR; only animate enters once the user has navigated.
+function getInitial(step: number, hasInteracted: boolean) {
+  return step === 1 && !hasInteracted ? false : "enter";
+}
+
 export default function HittaAvtal() {
   const [step, setStep] = useState(1);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [direction, setDirection] = useState(1);
   const [sectorIdx, setSectorIdx] = useState<number | null>(null);
   const [branchIdx, setBranchIdx] = useState<number | null>(null);
@@ -54,6 +60,7 @@ export default function HittaAvtal() {
       : null;
 
   function goTo(s: number) {
+    setHasInteracted(true);
     setDirection(s > step ? 1 : -1);
     setStep(s);
   }
@@ -137,7 +144,7 @@ export default function HittaAvtal() {
                 key="step1"
                 custom={direction}
                 variants={slideVariants}
-                initial="enter"
+                initial={getInitial(1, hasInteracted)}
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.25, ease: "easeInOut" }}

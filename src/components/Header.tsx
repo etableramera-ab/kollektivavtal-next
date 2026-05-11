@@ -63,10 +63,7 @@ export default function Header() {
   }, []);
 
   return (
-    <motion.header
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
+    <header
       className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
@@ -208,6 +205,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }
