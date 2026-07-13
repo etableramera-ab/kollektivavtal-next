@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getAgreementBySlug } from "@/data/agreements";
-import { vsComparisons } from "@/data/comparisons";
+import { publicComparisons } from "@/lib/public-agreements";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import VsPageClient from "./VsPageClient";
 
 interface PageProps {
-  params: { vs: string };
+  params: Promise<{ vs: string }>;
 }
+
+export const dynamicParams = false;
 
 function parseVsSlug(vs: string) {
   const match = vs.match(/^(.+)-vs-(.+)$/);
@@ -15,31 +18,33 @@ function parseVsSlug(vs: string) {
 }
 
 export function generateStaticParams() {
-  return vsComparisons.map((c) => {
+  return publicComparisons.map((c) => {
     const sorted = [c.slug1, c.slug2].sort();
     return { vs: `${sorted[0]}-vs-${sorted[1]}` };
   });
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const parsed = parseVsSlug(params.vs);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { vs } = await params;
+  const parsed = parseVsSlug(vs);
   if (!parsed) return {};
   const a1 = getAgreementBySlug(parsed.slug1);
   const a2 = getAgreementBySlug(parsed.slug2);
-  if (!a1 || !a2) return {};
+  if (!a1 || !a2 || !isVerifiedAgreement(parsed.slug1) || !isVerifiedAgreement(parsed.slug2)) return {};
   return {
     title: `${a1.shortName} vs ${a2.shortName} — Jämför löner, OB och villkor 2026 | kollektivavtal.ai`,
     description: `Jämför ${a1.shortName} och ${a2.shortName}. Se skillnader i lön, OB-tillägg, semester, pension och övertid.`,
-    alternates: { canonical: `https://kollektivavtal.ai/jamfor/${params.vs}` },
+    alternates: { canonical: `https://kollektivavtal.ai/jamfor/${vs}` },
   };
 }
 
-export default function VsPage({ params }: PageProps) {
-  const parsed = parseVsSlug(params.vs);
+export default async function VsPage({ params }: PageProps) {
+  const { vs } = await params;
+  const parsed = parseVsSlug(vs);
   if (!parsed) notFound();
   const a1 = getAgreementBySlug(parsed.slug1);
   const a2 = getAgreementBySlug(parsed.slug2);
-  if (!a1 || !a2) notFound();
+  if (!a1 || !a2 || !isVerifiedAgreement(parsed.slug1) || !isVerifiedAgreement(parsed.slug2)) notFound();
 
   const rows = [
     { label: "Sektor", v1: a1.sectorLabel, v2: a2.sectorLabel },

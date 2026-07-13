@@ -1,6 +1,5 @@
-import { agreements } from "@/data/agreements";
-import { occupations } from "@/data/occupations";
-import { blogPosts } from "@/data/blog-posts";
+import { publicAgreements } from "@/lib/public-agreements";
+import { publicOccupations } from "@/lib/public-occupations";
 import { fallbackWageData } from "@/lib/scb-wages";
 
 const BASE = "https://kollektivavtal.ai";
@@ -8,15 +7,14 @@ const BASE = "https://kollektivavtal.ai";
 export function GET() {
   const now = new Date().toISOString();
 
-  const topAgreements = [...agreements]
+  const topAgreements = [...publicAgreements]
     .sort((a, b) => b.employeeCount - a.employeeCount)
     .slice(0, 20);
 
   const urls: string[] = [
     BASE,
     ...topAgreements.map((a) => `${BASE}/avtal/${a.slug}`),
-    ...blogPosts.map((p) => `${BASE}/blogg/${p.slug}`),
-    ...occupations.map((o) => `${BASE}/yrke/${o.slug}`),
+    ...publicOccupations.map((o) => `${BASE}/yrke/${o.slug}`),
     `${BASE}/statistik`,
     `${BASE}/statistik/loner`,
     ...fallbackWageData.map((d) => `${BASE}/statistik/loner/${d.slug}`),

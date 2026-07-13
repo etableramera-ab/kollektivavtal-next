@@ -1,11 +1,10 @@
 import { permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { courtCases, getCourtCaseById } from "@/data/court-cases";
-import { getAgreementBySlug } from "@/data/agreements";
 import CourtCaseClient from "./CourtCaseClient";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 // Generate static pages for cases from 2020+ (faster builds)
@@ -18,8 +17,9 @@ export function generateStaticParams() {
 // Allow dynamic rendering for older cases
 export const dynamicParams = true;
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const courtCase = getCourtCaseById(params.id);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const courtCase = getCourtCaseById(id);
   if (!courtCase) return {};
 
   const desc = courtCase.summary
@@ -39,13 +39,10 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function CourtCasePage({ params }: PageProps) {
-  const courtCase = getCourtCaseById(params.id);
+export default async function CourtCasePage({ params }: PageProps) {
+  const { id } = await params;
+  const courtCase = getCourtCaseById(id);
   if (!courtCase) permanentRedirect("/rattsfall");
-
-  const relatedAgreement = courtCase.relatedAgreement
-    ? getAgreementBySlug(courtCase.relatedAgreement)
-    : null;
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -71,11 +68,7 @@ export default function CourtCasePage({ params }: PageProps) {
       />
       <CourtCaseClient
         courtCase={courtCase}
-        relatedAgreement={
-          relatedAgreement
-            ? { slug: relatedAgreement.slug, name: relatedAgreement.name, shortName: relatedAgreement.shortName }
-            : null
-        }
+        relatedAgreement={null}
       />
     </>
   );

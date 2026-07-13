@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAgreementBySlug } from "@/data/agreements";
 import { getTruncatedAgreementText } from "@/lib/agreement-text-loader";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { createPublicAgreementView } from "@/lib/agreement-fact-status";
 
 // Kommun/region agreements that should also include AB text
 const KOMMUN_AGREEMENTS_NEEDING_AB = [
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest) {
   if (!isGlobal && !agreement) {
     return NextResponse.json({ error: "Avtal hittades inte" }, { status: 404 });
   }
+  const publicAgreement = agreement ? createPublicAgreementView(agreement) : null;
 
   const client = new Anthropic({ apiKey });
 
@@ -58,18 +60,21 @@ export async function POST(req: NextRequest) {
   let systemPrompt: string;
 
   if (isGlobal) {
-    // Global chat — general expert on all 515 agreements
-    systemPrompt = `Du är en AI-expert på alla 515 kollektivavtal i Sverige. Du kan svara på frågor om löner, OB-tillägg, semester, pension, uppsägningstid, föräldralön och andra villkor för ALLA avtal och yrken.
+    // Global chat — cautious guide without agreement-specific source text
+    systemPrompt = `Du är en försiktig guide till svenska kollektivavtal. I det här globala läget har du inte tillgång till fullständig och verifierad avtalstext för varje avtal. Din huvuduppgift är att hjälpa användaren förstå allmänna begrepp och hitta vilket avtalsområde som kan vara relevant.
 
 STRIKTA REGLER:
-- Svara baserat på din kunskap om svenska kollektivavtal.
-- Om du inte vet svaret på en specifik fråga, hänvisa till rätt fackförbund.
+- Påstå ALDRIG att du kan eller har läst alla svenska kollektivavtal.
+- Ge inte exakta löner, OB-belopp, uppsägningstider eller andra avtalsvillkor utan avtalsspecifikt källunderlag.
+- Om frågan gäller ett specifikt villkor, be användaren välja ett avtal med källunderlag eller hänvisa till avtalsparterna.
+- Var tydlig med skillnaden mellan allmän information och ett verifierat avtalsvillkor.
 - Svara på det språk användaren frågar på.
 - Håll svaren under 200 ord.
-- Gissa ALDRIG exakta lönesiffror om du inte är säker — säg istället att användaren bör kontrollera med sitt fackförbund.
+- Gissa ALDRIG.
 - Avsluta ALLTID med: "Kontakta ditt fackförbund för bindande besked."`;
   } else {
     // Agreement-specific chat
+    const verified = isVerifiedAgreement(agreementSlug);
     const fullText = getTruncatedAgreementText(agreementSlug, 60000);
 
     let abText: string | null = null;
@@ -82,7 +87,7 @@ STRIKTA REGLER:
       .map((slug) => getTruncatedAgreementText(slug, 15000))
       .filter(Boolean);
 
-    if (fullText || abText) {
+    if (verified && (fullText || abText)) {
       const unions = agreement!.parties.unions.join(" eller ");
       const textSections: string[] = [];
 
@@ -115,21 +120,30 @@ Giltighetsperiod: ${agreement!.validPeriod}
 Antal anställda: ${agreement!.employeeCount.toLocaleString("sv-SE")}
 
 SAMMANFATTNING AV NYCKELVILLKOR:
-${Object.entries(agreement!.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
+${Object.entries(publicAgreement!.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
 
 LÖNETABELL:
-${agreement!.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n")}
+${publicAgreement!.wageTable.length > 0 ? publicAgreement!.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n") : "Ingen publicerbar lönetabell finns ännu. Ange inga belopp."}
 
 AVTALSTEXTER:
 ${textSections.join("\n\n---\n\n")}`;
     } else {
-      systemPrompt = agreement!.aiSystemPrompt;
+      const unions = agreement!.parties.unions.join(" eller ");
+      systemPrompt = `Du är en försiktig guide till ${agreement!.name}. Det finns inte ett tillräckligt verifierat källunderlag tillgängligt i den här chatten.
+
+STRIKTA REGLER:
+- Ge inga exakta löner, OB-belopp, uppsägningstider eller andra avtalsvillkor.
+- Använd inte uppskattningar eller äldre sammanfattningar som fakta.
+- Säg tydligt att underlaget inte räcker för ett säkert svar.
+- Hjälp endast med allmänna begrepp och hänvisa till avtalsparterna.
+- Gissa ALDRIG.
+- Svara kort och tydligt.
+- Avsluta ALLTID med: "Kontakta ${unions} för bindande besked."`;
     }
 
     // Add data quality context for specific agreements
-    const verified = isVerifiedAgreement(agreementSlug);
     if (!verified) {
-      systemPrompt += `\n\nVIKTIGT: Löneuppgifterna för detta avtal är UPPSKATTNINGAR baserade på branschdata, inte verifierade från avtalstexten. Om användaren frågar om specifika löner, SÄGA ALLTID att siffrorna är uppskattningar och rekommendera att kontrollera med fackförbundet. Gissa ALDRIG exakta belopp.`;
+      systemPrompt += `\n\nVIKTIGT: Presentera inga avtalsuppgifter eller belopp som fakta utan verifierat källunderlag.`;
     }
   }
 

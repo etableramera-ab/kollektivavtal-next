@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Löner per yrke 2026 — Medianlön och villkor | kollektivavtal.ai",
-  description: "Se minimilön, medianlön och OB-tillägg för 50 yrken med kollektivavtal i Sverige.",
+  title: "Löner per yrke — SCB 2025 | kollektivavtal.ai",
+  description: "Medianlön och lönespridning per yrke från SCB:s officiella lönestrukturstatistik 2025.",
   alternates: { canonical: "https://kollektivavtal.ai/yrke" },
 };
 export default function Layout({ children }: { children: React.ReactNode }) { return children; }

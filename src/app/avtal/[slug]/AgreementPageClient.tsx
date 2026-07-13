@@ -88,7 +88,7 @@ export default function AgreementPageClient({
   return (
     <>
       {/* Hero / Breadcrumb */}
-      <section style={{ backgroundImage: `linear-gradient(135deg, rgba(15,118,110,0.82) 0%, rgba(10,95,89,0.87) 100%), url('${getAgreementHeroImage(agreement.slug, agreement.sectorLabel)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white pt-10 pb-10 sm:pb-12">
+      <section style={{ backgroundImage: `linear-gradient(rgba(22,75,63,0.9), rgba(22,75,63,0.9)), url('${getAgreementHeroImage(agreement.slug, agreement.sectorLabel)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white pt-10 pb-10 sm:pb-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-[13px] text-white/60 mb-6">
@@ -101,8 +101,7 @@ export default function AgreementPageClient({
               {agreement.name}
             </h1>
             <p className="mt-2 text-base text-white/75">
-              Gäller {agreement.employeeCount.toLocaleString("sv-SE")} anställda inom{" "}
-              {agreement.sectorLabel.toLowerCase()}
+              Avtalsområde inom {agreement.sectorLabel.toLowerCase()}
             </p>
 
             <p className="mt-3 text-[13px] text-white/50">
@@ -133,7 +132,7 @@ export default function AgreementPageClient({
               const Icon = iconMap[card.label] || Banknote;
               return (
                 <AnimatedSection key={card.label} delay={i * 0.05}>
-                  <div className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)] h-full flex flex-col">
+                  <div className="rounded-sm border border-border bg-card p-4 sm:p-5 h-full flex flex-col">
                     <Icon size={20} className="text-accent mb-2 shrink-0" />
                     <p className="text-xs text-text-secondary">{card.label}</p>
                     <p className="text-sm font-semibold text-text-primary mt-0.5">{card.value}</p>
@@ -149,8 +148,8 @@ export default function AgreementPageClient({
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <div className="bg-[#F5F3FF] border border-[#DDD6FE] rounded-xl p-6 sm:p-8">
-              <h2 className="text-[20px] font-semibold text-text-primary mb-1">Fråga AI-experten om {agreement.shortName}</h2>
+            <div className="bg-[#E8EEE9] border border-[#C9D5CF] rounded-sm p-6 sm:p-8">
+              <h2 className="text-[20px] font-semibold text-text-primary mb-1">Fråga AI-guiden om {agreement.shortName}</h2>
               <p className="text-[15px] text-text-secondary mb-5">Ställ frågor om lön, OB, semester och mer</p>
               <AgreementChat
                 agreementSlug={agreement.slug}
@@ -173,8 +172,7 @@ export default function AgreementPageClient({
               <p>
                 Avtalsparterna är {agreement.parties.unions.join(", ")} på arbetstagarsidan och{" "}
                 {agreement.parties.employers.join(", ")} på arbetsgivarsidan.
-                Avtalet gäller {agreement.employeeCount.toLocaleString("sv-SE")} anställda
-                och löper under perioden {agreement.validPeriod}.
+                Avtalet löper under perioden {agreement.validPeriod}.
               </p>
               <p>
                 Lägsta lön: {agreement.keyFacts.minimumWage}.
@@ -223,6 +221,7 @@ export default function AgreementPageClient({
       </section>
 
       {/* Lönetabell */}
+      {agreement.wageTable.length > 0 ? (
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -233,13 +232,12 @@ export default function AgreementPageClient({
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            <div className="hidden md:block rounded-[12px] border border-border bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="hidden md:block rounded-sm border border-border bg-card overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
                     <th className="text-left p-4 font-semibold text-text-primary">Roll</th>
                     <th className="text-left p-4 font-semibold text-text-primary">Lägsta lön</th>
-                    <th className="text-left p-4 font-semibold text-text-primary">Medianlön</th>
                     <th className="text-left p-4 font-semibold text-text-secondary">Kommentar</th>
                   </tr>
                 </thead>
@@ -248,7 +246,6 @@ export default function AgreementPageClient({
                     <tr key={row.role} className="border-b border-border last:border-0">
                       <td className="p-4 font-medium text-text-primary">{row.role}</td>
                       <td className="p-4 text-text-primary">{row.minimum}</td>
-                      <td className="p-4 text-text-primary font-medium">{row.median}</td>
                       <td className="p-4 text-text-secondary text-xs">{row.comment}</td>
                     </tr>
                   ))}
@@ -260,7 +257,7 @@ export default function AgreementPageClient({
           <div className="md:hidden space-y-3">
             {agreement.wageTable.map((row, i) => (
               <AnimatedSection key={row.role} delay={i * 0.05}>
-                <div className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+                <div className="rounded-sm border border-border bg-card p-4">
                   <p className="font-semibold text-text-primary text-sm">{row.role}</p>
                   <p className="text-xs text-text-secondary mt-0.5">{row.comment}</p>
                   <div className="flex gap-4 mt-3">
@@ -268,19 +265,31 @@ export default function AgreementPageClient({
                       <p className="text-xs text-text-secondary">Lägsta</p>
                       <p className="text-sm font-medium text-text-primary">{row.minimum}</p>
                     </div>
-                    <div>
-                      <p className="text-xs text-text-secondary">Median</p>
-                      <p className="text-sm font-semibold text-accent">{row.median}</p>
-                    </div>
                   </div>
                 </div>
               </AnimatedSection>
             ))}
           </div>
 
-          <p className="text-xs text-text-secondary mt-3">Källa: SCB, egen sammanställning</p>
+          <p className="text-xs text-text-secondary mt-3">
+            Lägstanivåerna bygger på det angivna avtalsunderlaget. Kontrollera alltid aktuellt
+            belopp hos avtalsparterna.
+          </p>
         </div>
       </section>
+      ) : (
+        <section className="py-10 sm:py-12">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="border-l-[3px] border-l-accent bg-[#EFE7DA] p-5">
+              <p className="font-semibold text-text-primary">Lönenivåer granskas</p>
+              <p className="text-[15px] text-text-secondary mt-1 leading-relaxed">
+                Vi publicerar inte en lönetabell för {agreement.shortName} förrän nivåerna har
+                kontrollerats mot rätt del av avtalet. Kontakta avtalsparterna för aktuella belopp.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* OB-tillägg */}
       <section className="py-12 sm:py-16 bg-white">
@@ -289,7 +298,7 @@ export default function AgreementPageClient({
             <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>OB-tillägg</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <div className="rounded-[12px] border border-border bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div className="rounded-sm border border-border bg-card overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
@@ -349,6 +358,7 @@ export default function AgreementPageClient({
       </section>
 
       {/* FAQ */}
+      {agreement.faq.length > 0 && (
       <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
@@ -361,6 +371,7 @@ export default function AgreementPageClient({
           </AnimatedSection>
         </div>
       </section>
+      )}
 
       {/* Relaterade rättsfall */}
       {relatedCases.length > 0 && (
@@ -375,7 +386,7 @@ export default function AgreementPageClient({
               {relatedCases.map((c, i) => (
                 <AnimatedSection key={c.id} delay={i * 0.05}>
                   <Link href={`/rattsfall/${c.id}`} className="block">
-                    <div className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-shadow">
+                    <div className="rounded-sm border border-border bg-card p-4 hover:border-primary transition-colors">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <span className="text-xs font-medium text-text-secondary">{c.caseNumber}</span>
                         <span className="text-xs text-text-secondary">{c.date}</span>
@@ -407,7 +418,7 @@ export default function AgreementPageClient({
                   <motion.div
                     whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                     transition={{ duration: 0.2 }}
-                    className="rounded-[12px] border border-border bg-white p-4 shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
+                    className="rounded-sm border border-border bg-card p-4"
                   >
                     <h3 className="font-semibold text-text-primary">{a.shortName}</h3>
                     <p className="text-xs text-text-secondary mt-1">

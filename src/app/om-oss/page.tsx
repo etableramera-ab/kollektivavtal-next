@@ -15,35 +15,35 @@ import {
 export const metadata: Metadata = {
   title: "Om kollektivavtal.ai — Mission, datakvalitet och företagsinfo",
   description:
-    "kollektivavtal.ai drivs av Etablera Mera AB och är en oberoende informationsplattform som förklarar Sveriges 515 kollektivavtal på klarspråk med AI-stöd.",
+    "kollektivavtal.ai drivs av Etablera Mera AB och är en oberoende informationsplattform som förklarar svenska kollektivavtal på klarspråk med AI-stöd.",
   alternates: { canonical: "https://kollektivavtal.ai/om-oss" },
 };
 
 const features = [
   {
     icon: FileText,
-    title: "515 kollektivavtal",
-    desc: "Hela svenska arbetsmarknaden täckt, från byggnadsarbetare till systemutvecklare",
+    title: "30 avtal med aktuellt källunderlag",
+    desc: "Utvalda avtal har aktuella avtalstexter som underlag och fler granskas löpande",
   },
   {
     icon: MessageSquare,
-    title: "AI-chattexpert",
-    desc: "Ställ frågor om ditt avtal och få svar grundade i avtalstexten",
+    title: "Försiktig AI-guide",
+    desc: "Ställ frågor och få tydligt besked när svaret saknar tillräckligt källunderlag",
   },
   {
     icon: ShieldCheck,
-    title: "Verifierad lönedata",
-    desc: "32 avtal med data direkt från officiella avtalstexter, markerade med grön badge",
+    title: "Tydlig källstatus",
+    desc: "Lönetabeller visas bara där beloppen kan matchas mot det lokala källunderlaget",
   },
   {
     icon: Scale,
     title: "2 009 rättsfall",
-    desc: "Domar från Arbetsdomstolen kopplade till relevanta avtal",
+    desc: "Sökbara domar med länkar till Arbetsdomstolens officiella källor",
   },
   {
     icon: BarChart3,
-    title: "Löneverktyg",
-    desc: "Kalkylator, jämförelser och SCB-statistik",
+    title: "SCB-statistik",
+    desc: "Officiell lönestatistik för säkert matchade yrkesgrupper",
   },
   {
     icon: Globe,
@@ -116,16 +116,16 @@ export default function OmOss() {
             <p>
               kollektivavtal.ai finns för att göra arbetsmarknadens viktigaste
               dokument tillgängliga för alla. Sveriges kollektivavtal reglerar
-              löner, arbetstider, semester och rättigheter för över 3,4 miljoner
+              löner, arbetstider, semester och rättigheter för över 4 miljoner
               anställda — men informationen har historiskt varit fragmenterad
               över dussintals fackliga webbplatser, ofta bakom inloggning och
               skriven på svårtolkat juridiskt språk.
             </p>
             <p>
-              Vi sammanfattar och förklarar alla 515 svenska kollektivavtal på
+              Vi bygger en källmedveten guide till svenska kollektivavtal på
               klarspråk. Med hjälp av AI-teknik kan du ställa frågor om ditt
-              avtal, jämföra villkor mellan branscher och förstå vad som
-              faktiskt gäller på din arbetsplats.
+              avtal, jämföra villkor mellan branscher och se när informationen
+              behöver kontrolleras med avtalsparterna.
             </p>
             <p>
               Plattformen är oberoende — vi är inte knutna till något
@@ -238,12 +238,12 @@ export default function OmOss() {
               <ShieldCheck className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-green-800">
-                  Verifierad data (grön badge)
+                  Aktuellt källunderlag
                 </p>
                 <p className="text-sm text-green-700 mt-1">
-                  32 avtal där löner, OB-tillägg och villkor är hämtade direkt
-                  från officiella avtalstexter (PDF). Dessa markeras med
-                  &quot;Verifierad lönedata&quot; på avtalssidan.
+                  30 avtal har ett aktuellt källdokument. Lönetabeller visas
+                  bara där beloppen kan matchas mot underlaget. Övriga
+                  uppgifter döljs eller hänvisar till den officiella källan.
                 </p>
               </div>
             </div>
@@ -252,13 +252,11 @@ export default function OmOss() {
               <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-amber-800">
-                  Uppskattad data (gul badge)
+                  Innehåll som väntar på granskning
                 </p>
                 <p className="text-sm text-amber-700 mt-1">
-                  Övriga avtal där löneuppgifter är uppskattningar baserade på
-                  branschdata. Dessa markeras tydligt med &quot;Uppskattade
-                  löneuppgifter&quot; och en uppmaning att kontrollera med
-                  fackförbundet.
+                  Avtal, jämförelser, kalkylatorer och artiklar som saknar tillräckligt
+                  källstöd hålls stängda tills uppgifterna har kontrollerats.
                 </p>
               </div>
             </div>
@@ -270,9 +268,8 @@ export default function OmOss() {
                   Rättsfall och statistik
                 </p>
                 <p className="text-sm text-blue-700 mt-1">
-                  2 009 domar importerade från Domstolsverkets öppna API.
-                  Lönestatistik från SCB via deras officiella API, i enlighet
-                  med tecknat API-avtal.
+                  2 009 domar med länkar till Arbetsdomstolens officiella sidor.
+                  Lönestatistik hämtas från SCB:s öppna officiella data.
                 </p>
               </div>
             </div>
@@ -301,8 +298,7 @@ export default function OmOss() {
               aldrig publikt.
             </p>
             <p>
-              SCB-data visas med &quot;Källa: SCB&quot; i enlighet med
-              API-avtalet.
+              SCB-data märks med källa, statistikår och den yrkesgrupp som uppgiften avser.
             </p>
           </div>
         </section>
@@ -409,7 +405,7 @@ export default function OmOss() {
                 name: "Kim Stockblom",
               },
               description:
-                "Oberoende informationsplattform som sammanfattar och förklarar Sveriges 515 kollektivavtal.",
+                "Oberoende informationsplattform som sammanfattar och förklarar svenska kollektivavtal med tydlig information om källunderlaget.",
               email: "info@kollektivavtal.ai",
               sameAs: [
                 "https://www.linkedin.com/company/kollektivavtal-ai/",

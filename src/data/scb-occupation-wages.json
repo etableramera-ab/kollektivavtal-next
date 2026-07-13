@@ -1,0 +1,264 @@
+{
+  "source": "SCB, lönestrukturstatistik för hela ekonomin",
+  "sourceUrl": "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__AM__AM0110__AM0110A/LoneSpridSektYrk4AN/",
+  "year": 2025,
+  "fetchedAt": "2026-07-12",
+  "occupations": [
+    {
+      "slug": "vardbitrade",
+      "code": "5330",
+      "label": "Vårdbiträden",
+      "median": 29100,
+      "p10": 25000,
+      "p90": 34800
+    },
+    {
+      "slug": "sjukskoterska",
+      "code": "2221",
+      "label": "Grundutbildade sjuksköterskor",
+      "median": 42900,
+      "p10": 35200,
+      "p90": 54400
+    },
+    {
+      "slug": "barnskotare",
+      "code": "5311",
+      "label": "Barnskötare",
+      "median": 28100,
+      "p10": 23500,
+      "p90": 33000
+    },
+    {
+      "slug": "forskollararare",
+      "code": "2343",
+      "label": "Förskollärare",
+      "median": 37800,
+      "p10": 32500,
+      "p90": 43000
+    },
+    {
+      "slug": "larare-grundskola",
+      "code": "2341",
+      "label": "Grundskollärare",
+      "median": 42100,
+      "p10": 32500,
+      "p90": 50000
+    },
+    {
+      "slug": "larare-gymnasium",
+      "code": "2330",
+      "label": "Gymnasielärare",
+      "median": 44200,
+      "p10": 37400,
+      "p90": 51200
+    },
+    {
+      "slug": "ambulanssjukvardare",
+      "code": "5326",
+      "label": "Ambulanssjukvårdare",
+      "median": 39100,
+      "p10": 32800,
+      "p90": 46500
+    },
+    {
+      "slug": "brandman",
+      "code": "5411",
+      "label": "Brandmän",
+      "median": 37600,
+      "p10": 33700,
+      "p90": 44600
+    },
+    {
+      "slug": "kassapersonal",
+      "code": "5230",
+      "label": "Kassapersonal m.fl.",
+      "median": 29300,
+      "p10": 23000,
+      "p90": 38400
+    },
+    {
+      "slug": "lagerarbetare",
+      "code": "4322",
+      "label": "Lager- och terminalpersonal",
+      "median": 33400,
+      "p10": 28900,
+      "p90": 42700
+    },
+    {
+      "slug": "butikschef",
+      "code": "5221",
+      "label": "Säljande butikschefer och avdelningschefer i butik",
+      "median": 38400,
+      "p10": 31000,
+      "p90": 49200
+    },
+    {
+      "slug": "elektriker",
+      "code": "7411",
+      "label": "Installations- och serviceelektriker",
+      "median": 40000,
+      "p10": 27400,
+      "p90": 49900
+    },
+    {
+      "slug": "anlaggningsarbetare",
+      "code": "7114",
+      "label": "Anläggningsarbetare",
+      "median": 40200,
+      "p10": 32000,
+      "p90": 50700
+    },
+    {
+      "slug": "snickare",
+      "code": "7111",
+      "label": "Träarbetare, snickare m.fl.",
+      "median": 40300,
+      "p10": 33400,
+      "p90": 44900
+    },
+    {
+      "slug": "betongarbetare",
+      "code": "7113",
+      "label": "Betongarbetare",
+      "median": 40000,
+      "p10": 33300,
+      "p90": 51500
+    },
+    {
+      "slug": "malare",
+      "code": "7131",
+      "label": "Målare",
+      "median": 37900,
+      "p10": 32200,
+      "p90": 41100
+    },
+    {
+      "slug": "rormokare",
+      "code": "7125",
+      "label": "VVS-montörer m.fl.",
+      "median": 42700,
+      "p10": 33900,
+      "p90": 48800
+    },
+    {
+      "slug": "svetsare",
+      "code": "7212",
+      "label": "Svetsare och gasskärare",
+      "median": 35500,
+      "p10": 30500,
+      "p90": 44000
+    },
+    {
+      "slug": "cnc-opertor",
+      "code": "7223",
+      "label": "Maskinställare och maskinoperatörer, metallarbete",
+      "median": 35300,
+      "p10": 29000,
+      "p90": 45100
+    },
+    {
+      "slug": "systemutvecklare",
+      "code": "2512",
+      "label": "Mjukvaru- och systemutvecklare m.fl.",
+      "median": 53500,
+      "p10": 39600,
+      "p90": 72600
+    },
+    {
+      "slug": "lastbilschauffor",
+      "code": "8332",
+      "label": "Lastbilsförare m.fl.",
+      "median": 33900,
+      "p10": 30700,
+      "p90": 39600
+    },
+    {
+      "slug": "busschauffor",
+      "code": "8331",
+      "label": "Buss- och spårvagnsförare",
+      "median": 33200,
+      "p10": 30500,
+      "p90": 36500
+    },
+    {
+      "slug": "kock",
+      "code": "5120",
+      "label": "Kockar och kallskänkor",
+      "median": 32200,
+      "p10": 28600,
+      "p90": 37400
+    },
+    {
+      "slug": "servitor",
+      "code": "5131",
+      "label": "Hovmästare och servitörer",
+      "median": 30200,
+      "p10": 23400,
+      "p90": 36900
+    },
+    {
+      "slug": "hotellreceptionist",
+      "code": "4224",
+      "label": "Hotellreceptionister m.fl.",
+      "median": 30200,
+      "p10": 25100,
+      "p90": 36100
+    },
+    {
+      "slug": "bartender",
+      "code": "5132",
+      "label": "Bartendrar",
+      "median": 31300,
+      "p10": 25500,
+      "p90": 37700
+    },
+    {
+      "slug": "bankradgivare",
+      "code": "3312",
+      "label": "Banktjänstemän",
+      "median": 43700,
+      "p10": 30000,
+      "p90": 66100
+    },
+    {
+      "slug": "polis",
+      "code": "3360",
+      "label": "Poliser",
+      "median": 43300,
+      "p10": 34600,
+      "p90": 54000
+    },
+    {
+      "slug": "kriminalvardare",
+      "code": "5412",
+      "label": "Kriminalvårdare",
+      "median": 34900,
+      "p10": 31800,
+      "p90": 39300
+    },
+    {
+      "slug": "fastighetsskotare",
+      "code": "5152",
+      "label": "Fastighetsskötare",
+      "median": 33300,
+      "p10": 28000,
+      "p90": 39600
+    },
+    {
+      "slug": "frisor",
+      "code": "5141",
+      "label": "Frisörer",
+      "median": 32900,
+      "p10": 24400,
+      "p90": 42100
+    },
+    {
+      "slug": "personlig-assistent",
+      "code": "5343",
+      "label": "Personliga assistenter",
+      "median": 31900,
+      "p10": 26000,
+      "p90": 37300
+    }
+  ]
+}

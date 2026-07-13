@@ -6,19 +6,6 @@ import { ChevronRight, ExternalLink, Scale, ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import type { CourtCase } from "@/data/court-cases";
 
-const topicBadge: Record<string, string> = {
-  Uppsägning: "bg-red-100 text-red-800",
-  Lön: "bg-green-100 text-green-800",
-  Diskriminering: "bg-purple-100 text-purple-800",
-  Stridsåtgärd: "bg-orange-100 text-orange-800",
-  Kollektivavtalstolkning: "bg-blue-100 text-blue-800",
-  Medbestämmande: "bg-cyan-100 text-cyan-800",
-  Arbetstid: "bg-yellow-100 text-yellow-800",
-  Arbetsskyldighet: "bg-indigo-100 text-indigo-800",
-  Skadestånd: "bg-amber-100 text-amber-800",
-  Övrigt: "bg-gray-100 text-gray-800",
-};
-
 interface Props {
   courtCase: CourtCase;
   relatedAgreement: { slug: string; name: string; shortName: string } | null;
@@ -32,7 +19,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary text-white pt-10 pb-10 sm:pb-14">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-14">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <nav className="flex items-center gap-1.5 text-sm text-white/60 mb-6 flex-wrap">
@@ -54,7 +41,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
               <span className="rounded-[6px] bg-white/15 px-3 py-1 text-xs font-medium">
                 {courtCase.date}
               </span>
-              <span className={`rounded-[6px] px-3 py-1 text-xs font-medium ${topicBadge[courtCase.topic] || "bg-gray-100 text-gray-800"}`}>
+              <span className="rounded-sm px-3 py-1 text-xs font-medium bg-surface-dark text-primary-dark">
                 {courtCase.topic}
               </span>
               {courtCase.isGuiding && (
@@ -73,7 +60,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap gap-1.5">
               {courtCase.keywords.map((kw) => (
-                <span key={kw} className="rounded-full bg-background border border-border px-2.5 py-0.5 text-xs text-text-secondary">
+                <span key={kw} className="border-b border-border px-1 py-1 text-xs text-text-secondary">
                   {kw}
                 </span>
               ))}
@@ -87,8 +74,11 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <AnimatedSection>
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Referat</h2>
-              <div className="text-text-primary leading-relaxed text-sm sm:text-base">
+              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Kort sammanfattning</h2>
+              <p className="text-xs text-text-secondary mb-4">
+                kollektivavtal.ai:s sammanfattning – kontrollera alltid den officiella domen.
+              </p>
+              <div className="text-text-primary leading-[1.7] text-[16px] sm:text-[17px]">
                 <p>{courtCase.summary}</p>
               </div>
             </AnimatedSection>
@@ -115,7 +105,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
               <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Relaterat avtal</h2>
               <Link
                 href={`/avtal/${relatedAgreement.slug}`}
-                className="block rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+                className="block rounded-sm border border-border bg-card p-5 hover:border-primary transition-colors"
               >
                 <p className="font-semibold text-text-primary">{relatedAgreement.name}</p>
                 <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2">
@@ -132,7 +122,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <p className="text-xs text-text-secondary mb-3">
-              Källa: Domstolsverkets öppna data — {courtCase.caseNumber}. Referatet är en offentlig handling.
+              Källa: Arbetsdomstolen — {courtCase.caseNumber}.
             </p>
             <a
               href={courtCase.sourceUrl}
@@ -155,7 +145,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
               href="https://allaadvokater.se"
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+              className="block rounded-sm border border-border bg-card p-5 hover:border-primary transition-colors"
             >
               <div className="flex items-center gap-4">
                 <Scale size={28} className="text-accent shrink-0" />
@@ -173,7 +163,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
       <section className="pb-12">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-[12px] bg-amber-50 border border-amber-200 p-4 text-xs text-amber-900 leading-relaxed">
-            Rättsfallsreferat från Domstolsverkets öppna data. Informationen är vägledande och ersätter inte
+            Sammanfattningen är vägledande och ersätter inte
             den officiella domen. Kontakta ditt fackförbund eller en arbetsrättsjurist för juridisk rådgivning.
           </div>
         </div>

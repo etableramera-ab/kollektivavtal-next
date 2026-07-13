@@ -15,7 +15,7 @@ export default function Cookiepolicy() {
           Cookiepolicy
         </h1>
         <p className="text-sm text-text-secondary mb-8">
-          Senast uppdaterad: mars 2026
+          Senast uppdaterad: juli 2026
         </p>
 
         <div className="space-y-8 text-text-primary leading-relaxed">
@@ -34,30 +34,18 @@ export default function Cookiepolicy() {
               <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm">
                 <h3 className="font-semibold text-text-primary text-sm">Nödvändiga cookies</h3>
                 <p className="text-sm text-text-secondary mt-1">
-                  Krävs för att sajten ska fungera. Inkluderar sessionscookies för att hantera
-                  din uppkoppling. Dessa kan inte stängas av.
+                  Teknisk lagring kan användas när det krävs för säkerhet och grundläggande
+                  funktioner på sajten.
                 </p>
                 <p className="text-xs text-text-secondary mt-2">Lagringstid: sessionen</p>
               </div>
 
               <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm">
-                <h3 className="font-semibold text-text-primary text-sm">Analyticscookies (GA4)</h3>
-                <p className="text-sm text-text-secondary mt-1">
-                  Google Analytics 4 samlar in anonym statistik om hur sajten används —
-                  sidvisningar, sessionslängd, trafikkällor och ungefärlig geografisk position.
-                  Informationen hjälper oss förbättra sajten.
-                </p>
-                <p className="text-xs text-text-secondary mt-2">
-                  Cookies: _ga, _ga_*, lagringstid: upp till 14 månader
-                </p>
-              </div>
-
-              <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm">
                 <h3 className="font-semibold text-text-primary text-sm">Annonscookies (Google AdSense)</h3>
                 <p className="text-sm text-text-secondary mt-1">
-                  Google AdSense använder cookies för att visa relevanta annonser baserat på
-                  dina intressen och tidigare besök. Google kan dela data med
-                  annonspartners.
+                  Google AdSense kan använda cookies eller liknande teknik för annonsering.
+                  I EES visas Googles samtyckesruta där du kan godkänna eller avvisa de val som
+                  erbjuds. Vilka cookies som används beror på ditt val och Googles tjänst.
                 </p>
                 <p className="text-xs text-text-secondary mt-2">
                   Cookies: diverse Google-cookies, lagringstid: varierar
@@ -70,17 +58,8 @@ export default function Cookiepolicy() {
             <h2 className="text-lg font-bold mb-2">Hantera cookies</h2>
             <p className="text-sm">
               Du kan blockera eller radera cookies via din webbläsares inställningar. Observera
-              att sajten kan fungera sämre om nödvändiga cookies blockeras. För att välja bort
-              Google Analytics kan du installera{" "}
-              <a
-                href="https://tools.google.com/dlpage/gaoptout"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:underline"
-              >
-                Googles opt-out-tillägg
-              </a>
-              . För annonsinställningar, besök{" "}
+              att sajten kan fungera sämre om nödvändig lagring blockeras. Du kan också göra val
+              i Googles samtyckesruta. För Googles annonsinställningar, besök{" "}
               <a
                 href="https://adssettings.google.com"
                 target="_blank"

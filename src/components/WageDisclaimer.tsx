@@ -13,11 +13,12 @@ export default function WageDisclaimer({ isVerified }: WageDisclaimerProps) {
         <ShieldCheck className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
         <div>
           <p className="text-sm font-semibold text-green-800">
-            Verifierad lönedata
+            Källunderlag finns
           </p>
           <p className="text-sm text-green-700 mt-1">
-            Löneuppgifterna på denna sida är hämtade från den officiella
-            avtalstexten.
+            Avtalstexten finns som underlag. Medianlöner är en separat
+            sammanställning och avtalsbelopp kan ändras. Kontrollera alltid
+            den officiella källan eller fråga avtalsparterna före beslut.
           </p>
         </div>
       </div>

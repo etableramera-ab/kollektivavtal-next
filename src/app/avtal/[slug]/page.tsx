@@ -11,31 +11,36 @@ import {
 import { agreements, getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements } from "@/lib/public-agreements";
+import { createPublicAgreementView } from "@/lib/agreement-fact-status";
 import { buildHreflangs, getOgAlternateLocales } from "@/lib/metadata";
 import AgreementPageClient from "./AgreementPageClient";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return agreements.map((a) => ({ slug: a.slug }));
+  return publicAgreements.map((a) => ({ slug: a.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const agreement = getAgreementBySlug(params.slug);
-  if (!agreement) return {};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const agreement = getAgreementBySlug(slug);
+  if (!agreement || !isVerifiedAgreement(slug)) return {};
 
   return {
     title: `${agreement.name} 2026 — Löner, OB-tillägg, semester och villkor | kollektivavtal.ai`,
-    description: `Allt om ${agreement.name}: löner från ${agreement.keyFacts.minimumWage}, OB-tillägg, semester, pension och mer. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda.`,
+    description: `Översikt av ${agreement.name}: parter, giltighetsperiod, villkor och tydlig information om källunderlaget.`,
     alternates: {
       canonical: `https://kollektivavtal.ai/avtal/${agreement.slug}`,
       languages: buildHreflangs(`/avtal/${agreement.slug}`),
     },
     openGraph: {
       title: `${agreement.name} 2026 — Löner, OB-tillägg och villkor`,
-      description: `Sammanfattning av ${agreement.name} på klarspråk. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda inom ${agreement.sectorLabel.toLowerCase()}.`,
+      description: `Sammanfattning av ${agreement.name} på klarspråk med tydlig information om källunderlaget.`,
       url: `https://kollektivavtal.ai/avtal/${agreement.slug}`,
       locale: "sv_SE",
       alternateLocale: getOgAlternateLocales("sv"),
@@ -43,22 +48,11 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function AgreementPage({ params }: PageProps) {
-  const agreement = getAgreementBySlug(params.slug);
-  if (!agreement) notFound();
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: agreement.faq.map((f) => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.answer,
-      },
-    })),
-  };
+export default async function AgreementPage({ params }: PageProps) {
+  const { slug } = await params;
+  const agreement = getAgreementBySlug(slug);
+  if (!agreement || !isVerifiedAgreement(slug)) notFound();
+  const publicAgreement = createPublicAgreementView(agreement);
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -86,19 +80,19 @@ export default function AgreementPage({ params }: PageProps) {
   };
 
   const keyFactCards = [
-    { label: "Lägsta lön", value: agreement.keyFacts.minimumWage, icon: Banknote },
-    { label: "Arbetstid/vecka", value: agreement.keyFacts.workHoursPerWeek, icon: Clock },
-    { label: "Semester", value: agreement.keyFacts.vacationDays, icon: CalendarDays },
-    { label: "OB natt", value: agreement.keyFacts.obNight, icon: Moon },
-    { label: "Föräldralön", value: agreement.keyFacts.parentalPay, icon: Baby },
-    { label: "Pension", value: agreement.keyFacts.pension, icon: PiggyBank },
+    { label: "Lägsta lön", value: publicAgreement.keyFacts.minimumWage, icon: Banknote },
+    { label: "Arbetstid/vecka", value: publicAgreement.keyFacts.workHoursPerWeek, icon: Clock },
+    { label: "Semester", value: publicAgreement.keyFacts.vacationDays, icon: CalendarDays },
+    { label: "OB natt", value: publicAgreement.keyFacts.obNight, icon: Moon },
+    { label: "Föräldralön", value: publicAgreement.keyFacts.parentalPay, icon: Baby },
+    { label: "Pension", value: publicAgreement.keyFacts.pension, icon: PiggyBank },
   ];
 
   const relatedAgreements = agreement.relatedAgreements
     .map((slug) => agreements.find((a) => a.slug === slug))
-    .filter(Boolean);
+    .filter((a) => a && isVerifiedAgreement(a.slug));
 
-  const suggestedQuestions = agreement.faq.slice(0, 3).map((f) => f.question);
+  const suggestedQuestions = publicAgreement.faq.slice(0, 3).map((f) => f.question);
 
   const relatedCases = getCourtCasesByAgreement(agreement.slug).map((c) => ({
     id: c.id,
@@ -114,15 +108,11 @@ export default function AgreementPage({ params }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <AgreementPageClient
-        agreement={agreement}
+        agreement={publicAgreement}
         isVerified={isVerifiedAgreement(agreement.slug)}
         keyFactCards={keyFactCards.map((c) => ({
           label: c.label,

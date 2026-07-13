@@ -1,39 +1,46 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { occupations, getOccupationBySlug } from "@/data/occupations";
+import { publicOccupations, getPublicOccupationBySlug } from "@/lib/public-occupations";
 import { getAgreementBySlug } from "@/data/agreements";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import OccupationPageClient from "./OccupationPageClient";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export function generateStaticParams() {
-  return occupations.map((o) => ({ slug: o.slug }));
+  return publicOccupations.map((o) => ({ slug: o.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const occ = getOccupationBySlug(params.slug);
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const occ = getPublicOccupationBySlug(slug);
   if (!occ) return {};
   return {
-    title: `Lön som ${occ.titleGenitive} 2026 — Minimilön, OB-tillägg och villkor | kollektivavtal.ai`,
-    description: `Vad tjänar en ${occ.titleGenitive} 2026? Lägsta lön enligt kollektivavtal är ${occ.salary.minimum.toLocaleString("sv-SE")} kr. Medianlön ${occ.salary.median.toLocaleString("sv-SE")} kr. Se OB-tillägg, semester, pension och mer.`,
+    title: `Lön som ${occ.titleGenitive} — SCB 2025 | kollektivavtal.ai`,
+    description: `Medianlön, 10:e och 90:e percentil för ${occ.titleGenitive} enligt SCB:s lönestrukturstatistik 2025.`,
     alternates: { canonical: `https://kollektivavtal.ai/yrke/${occ.slug}` },
     openGraph: {
-      title: `Lön som ${occ.titleGenitive} 2026`,
-      description: `Medianlön ${occ.salary.median.toLocaleString("sv-SE")} kr/mån. Se OB, pension och villkor.`,
+      title: `Lön som ${occ.titleGenitive} — SCB 2025`,
+      description: `Medianlön ${occ.salary.median.toLocaleString("sv-SE")} kr/mån enligt SCB 2025.`,
       url: `https://kollektivavtal.ai/yrke/${occ.slug}`,
     },
   };
 }
 
-export default function OccupationPage({ params }: PageProps) {
-  const occ = getOccupationBySlug(params.slug);
+export default async function OccupationPage({ params }: PageProps) {
+  const { slug } = await params;
+  const occ = getPublicOccupationBySlug(slug);
   if (!occ) notFound();
 
-  const agreement = getAgreementBySlug(occ.agreement);
+  const agreement = isVerifiedAgreement(occ.agreement)
+    ? getAgreementBySlug(occ.agreement)
+    : null;
   const relatedOccs = occ.relatedOccupations
-    .map((s) => occupations.find((o) => o.slug === s))
+    .map((s) => publicOccupations.find((o) => o.slug === s))
     .filter(Boolean)
     .map((o) => ({ slug: o!.slug, title: o!.title, median: o!.salary.median }));
 
@@ -82,7 +89,7 @@ export default function OccupationPage({ params }: PageProps) {
         occupation={occ}
         agreementName={agreement?.name || ""}
         agreementShortName={agreement?.shortName || ""}
-        agreementSlug={occ.agreement}
+        agreementSlug={agreement?.slug || ""}
         relatedOccupations={relatedOccs}
       />
     </>

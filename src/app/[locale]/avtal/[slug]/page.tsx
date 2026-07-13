@@ -11,69 +11,76 @@ import {
 import { agreements, getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements } from "@/lib/public-agreements";
+import { createPublicAgreementView } from "@/lib/agreement-fact-status";
 import { buildLocalizedUrl, getOgLocale, getOgAlternateLocales, type Locale } from "@/lib/metadata";
 import AgreementPageClient from "@/app/avtal/[slug]/AgreementPageClient";
 
 interface PageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return agreements.map((a) => ({ slug: a.slug }));
+  return publicAgreements.map((a) => ({ slug: a.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const agreement = getAgreementBySlug(params.slug);
-  if (!agreement) return {};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolved = await params;
+  const agreement = getAgreementBySlug(resolved.slug);
+  if (!agreement || !isVerifiedAgreement(resolved.slug)) return {};
 
-  const isEn = params.locale === "en";
+  const isEn = resolved.locale === "en";
 
   return {
     title: isEn
       ? `${agreement.name} 2026 — Wages, conditions & benefits | kollektivavtal.ai`
       : `${agreement.name} 2026 — Löner, OB-tillägg, semester och villkor | kollektivavtal.ai`,
     description: isEn
-      ? `Everything about ${agreement.name}: wages, benefits, vacation, pension and more. Covers ${agreement.employeeCount.toLocaleString("en")} employees.`
-      : `Allt om ${agreement.name}: löner från ${agreement.keyFacts.minimumWage}, OB-tillägg, semester, pension och mer. Gäller ${agreement.employeeCount.toLocaleString("sv-SE")} anställda.`,
+      ? `Overview of ${agreement.name}: parties, validity period, conditions and source status.`
+      : `Översikt av ${agreement.name}: parter, giltighetsperiod, villkor och tydlig information om källunderlaget.`,
     alternates: {
-      canonical: `https://kollektivavtal.ai/${params.locale}/avtal/${params.slug}`,
+      canonical: `https://kollektivavtal.ai/${resolved.locale}/avtal/${resolved.slug}`,
       languages: {
-        "sv": `https://kollektivavtal.ai/avtal/${params.slug}`,
-        "en": `https://kollektivavtal.ai/en/avtal/${params.slug}`,
-        "ar": `https://kollektivavtal.ai/ar/avtal/${params.slug}`,
-        "so": `https://kollektivavtal.ai/so/avtal/${params.slug}`,
-        "fa": `https://kollektivavtal.ai/fa/avtal/${params.slug}`,
-        "es": `https://kollektivavtal.ai/es/avtal/${params.slug}`,
-        "pl": `https://kollektivavtal.ai/pl/avtal/${params.slug}`,
-        "x-default": `https://kollektivavtal.ai/avtal/${params.slug}`,
+        "sv": `https://kollektivavtal.ai/avtal/${resolved.slug}`,
+        "en": `https://kollektivavtal.ai/en/avtal/${resolved.slug}`,
+        "ar": `https://kollektivavtal.ai/ar/avtal/${resolved.slug}`,
+        "so": `https://kollektivavtal.ai/so/avtal/${resolved.slug}`,
+        "fa": `https://kollektivavtal.ai/fa/avtal/${resolved.slug}`,
+        "es": `https://kollektivavtal.ai/es/avtal/${resolved.slug}`,
+        "pl": `https://kollektivavtal.ai/pl/avtal/${resolved.slug}`,
+        "x-default": `https://kollektivavtal.ai/avtal/${resolved.slug}`,
       },
     },
     openGraph: {
-      url: buildLocalizedUrl(params.locale as Locale, `/avtal/${params.slug}`),
-      locale: getOgLocale(params.locale as Locale),
-      alternateLocale: getOgAlternateLocales(params.locale as Locale),
+      url: buildLocalizedUrl(resolved.locale as Locale, `/avtal/${resolved.slug}`),
+      locale: getOgLocale(resolved.locale as Locale),
+      alternateLocale: getOgAlternateLocales(resolved.locale as Locale),
     },
   };
 }
 
-export default function LocaleAgreementPage({ params }: PageProps) {
-  const agreement = getAgreementBySlug(params.slug);
-  if (!agreement) notFound();
+export default async function LocaleAgreementPage({ params }: PageProps) {
+  const resolved = await params;
+  const agreement = getAgreementBySlug(resolved.slug);
+  if (!agreement || !isVerifiedAgreement(resolved.slug)) notFound();
+  const publicAgreement = createPublicAgreementView(agreement);
 
   const keyFactCards = [
-    { label: "Lägsta lön", value: agreement.keyFacts.minimumWage, icon: Banknote },
-    { label: "Arbetstid/vecka", value: agreement.keyFacts.workHoursPerWeek, icon: Clock },
-    { label: "Semester", value: agreement.keyFacts.vacationDays, icon: CalendarDays },
-    { label: "OB natt", value: agreement.keyFacts.obNight, icon: Moon },
-    { label: "Föräldralön", value: agreement.keyFacts.parentalPay, icon: Baby },
-    { label: "Pension", value: agreement.keyFacts.pension, icon: PiggyBank },
+    { label: "Lägsta lön", value: publicAgreement.keyFacts.minimumWage, icon: Banknote },
+    { label: "Arbetstid/vecka", value: publicAgreement.keyFacts.workHoursPerWeek, icon: Clock },
+    { label: "Semester", value: publicAgreement.keyFacts.vacationDays, icon: CalendarDays },
+    { label: "OB natt", value: publicAgreement.keyFacts.obNight, icon: Moon },
+    { label: "Föräldralön", value: publicAgreement.keyFacts.parentalPay, icon: Baby },
+    { label: "Pension", value: publicAgreement.keyFacts.pension, icon: PiggyBank },
   ];
 
   const relatedAgreements = agreement.relatedAgreements
     .map((slug) => agreements.find((a) => a.slug === slug))
-    .filter(Boolean);
+    .filter((a) => a && isVerifiedAgreement(a.slug));
 
-  const suggestedQuestions = agreement.faq.slice(0, 3).map((f) => f.question);
+  const suggestedQuestions = publicAgreement.faq.slice(0, 3).map((f) => f.question);
 
   const relatedCases = getCourtCasesByAgreement(agreement.slug).map((c) => ({
     id: c.id,
@@ -87,7 +94,7 @@ export default function LocaleAgreementPage({ params }: PageProps) {
 
   return (
     <AgreementPageClient
-      agreement={agreement}
+      agreement={publicAgreement}
       isVerified={isVerifiedAgreement(agreement.slug)}
       keyFactCards={keyFactCards.map((c) => ({
         label: c.label,

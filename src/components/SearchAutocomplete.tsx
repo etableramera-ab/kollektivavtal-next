@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { agreements } from "@/data/agreements";
-import { occupations } from "@/data/occupations";
+import { publicAgreements } from "@/lib/public-agreements";
+import { publicOccupations } from "@/lib/public-occupations";
 
 interface SearchResult {
   type: "avtal" | "yrke";
@@ -20,7 +20,7 @@ function search(query: string): SearchResult[] {
   const results: SearchResult[] = [];
 
   // Search agreements
-  const matchedAgreements = agreements.filter(
+  const matchedAgreements = publicAgreements.filter(
     (a) =>
       a.name.toLowerCase().includes(q) ||
       a.shortName.toLowerCase().includes(q) ||
@@ -37,18 +37,15 @@ function search(query: string): SearchResult[] {
     });
   }
 
-  // Search occupations
-  const matchedOccupations = occupations.filter(
-    (o) =>
-      o.title.toLowerCase().includes(q) ||
-      o.category.toLowerCase().includes(q)
+  const matchedOccupations = publicOccupations.filter((o) =>
+    o.title.toLowerCase().includes(q)
   );
   for (const o of matchedOccupations.slice(0, 5)) {
     results.push({
       type: "yrke",
       name: o.title,
       slug: o.slug,
-      extra: `${o.salary.median.toLocaleString("sv-SE")} kr medianlön`,
+      extra: `${o.salary.median.toLocaleString("sv-SE")} kr · SCB 2025`,
     });
   }
 

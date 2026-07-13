@@ -5,7 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from "recharts";
 import { Scale, MessageCircle } from "lucide-react";
-import { agreements } from "@/data/agreements";
+import { publicWageAgreements } from "@/lib/public-agreements";
 import { calculateWage } from "@/lib/wage-calculator";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
@@ -28,7 +28,7 @@ export default function Lonekalkylator() {
     weekdayEvening: 0, night: 0, weekend: 0, holiday: 0,
   });
 
-  const agreement = agreements[agreementIdx];
+  const agreement = publicWageAgreements[agreementIdx];
   const roles = agreement.wageTable;
   const currentRole = roles[roleIdx] || roles[0];
   const hourly = isHourlyWage(currentRole);
@@ -54,13 +54,29 @@ export default function Lonekalkylator() {
     { name: "Medianlön", value: medianMonthly, fill: "#D97706" },
   ];
 
+  return (
+    <section className="bg-primary-dark text-white py-16 sm:py-24">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+        <h1 className="text-4xl sm:text-5xl" style={{ fontFamily: "var(--font-serif)" }}>
+          Lönekalkylatorn byggs om
+        </h1>
+        <p className="mt-4 text-white/80 leading-relaxed">
+          Den tidigare kalkylatorn gjorde egna antaganden om erfarenhet, OB och pension. Vi öppnar
+          den igen när varje beräkning kan göras med kontrollerade uppgifter.
+        </p>
+      </div>
+    </section>
+  );
+
+  /* The previous interface is retained locally while the calculation model is rebuilt. */
+
   function handleObChange(key: keyof typeof obHours, val: string) {
     setObHours((prev) => ({ ...prev, [key]: parseInt(val) || 0 }));
   }
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
@@ -89,19 +105,19 @@ export default function Lonekalkylator() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Input */}
             <AnimatedSection>
-              <div className="rounded-xl border border-border bg-white p-5 sm:p-6 shadow-sm space-y-5">
+              <div className="rounded-sm border border-border bg-card p-5 sm:p-6 space-y-5">
                 <h2 className="font-bold text-text-primary">Dina uppgifter</h2>
 
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-1.5">Kollektivavtal</label>
-                  <select value={agreementIdx} onChange={(e) => { setAgreementIdx(Number(e.target.value)); setRoleIdx(0); }} className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white">
-                    {agreements.map((a, i) => (<option key={a.slug} value={i}>{a.shortName}</option>))}
+                  <select value={agreementIdx} onChange={(e) => { setAgreementIdx(Number(e.target.value)); setRoleIdx(0); }} className="w-full rounded-sm border border-border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white">
+                    {publicWageAgreements.map((a, i) => (<option key={a.slug} value={i}>{a.shortName}</option>))}
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-1.5">Yrkesgrupp</label>
-                  <select value={roleIdx} onChange={(e) => setRoleIdx(Number(e.target.value))} className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white">
+                  <select value={roleIdx} onChange={(e) => setRoleIdx(Number(e.target.value))} className="w-full rounded-sm border border-border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white">
                     {roles.map((r, i) => (<option key={r.role} value={i}>{r.role}</option>))}
                   </select>
                 </div>
@@ -114,7 +130,7 @@ export default function Lonekalkylator() {
 
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-1.5">Arbetstid</label>
-                  <select value={employmentRate} onChange={(e) => setEmploymentRate(Number(e.target.value))} className="w-full rounded-lg border border-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white">
+                  <select value={employmentRate} onChange={(e) => setEmploymentRate(Number(e.target.value))} className="w-full rounded-sm border border-border px-4 py-3 text-[15px] outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white">
                     <option value={1.0}>Heltid 100%</option>
                     <option value={0.75}>Deltid 75%</option>
                     <option value={0.5}>Deltid 50%</option>
@@ -152,7 +168,7 @@ export default function Lonekalkylator() {
             {/* Result */}
             <AnimatedSection delay={0.15}>
               <div className="space-y-4">
-                <div className="rounded-xl border-2 border-primary bg-white p-5 sm:p-6 shadow-sm">
+                <div className="rounded-sm border-2 border-primary bg-card p-5 sm:p-6">
                   {hourly ? (
                     <>
                       <p className="text-sm text-text-secondary">Timlön enligt avtal</p>
@@ -177,14 +193,14 @@ export default function Lonekalkylator() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
+                  <div className="rounded-sm border border-border bg-card p-4">
                     <p className="text-xs text-text-secondary">Grundlön (lägst)</p>
                     <p className="text-lg font-bold text-text-primary">
                       {hourly ? `${baseHourly} kr/tim` : `${result.baseWage.toLocaleString("sv-SE")} kr`}
                     </p>
                     {hourly && <p className="text-xs text-text-secondary">≈ {baseMonthly.toLocaleString("sv-SE")} kr/mån</p>}
                   </div>
-                  <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
+                  <div className="rounded-sm border border-border bg-card p-4">
                     <p className="text-xs text-text-secondary">Medianlön</p>
                     <p className="text-lg font-bold text-accent">
                       {hourly ? `${medianHourly} kr/tim` : `${result.medianWage.toLocaleString("sv-SE")} kr`}
@@ -192,12 +208,12 @@ export default function Lonekalkylator() {
                     {hourly && <p className="text-xs text-text-secondary">≈ {medianMonthly.toLocaleString("sv-SE")} kr/mån</p>}
                   </div>
                   {useOb && result.obTotal > 0 && (
-                    <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
+                    <div className="rounded-sm border border-border bg-card p-4">
                       <p className="text-xs text-text-secondary">OB-tillägg</p>
                       <p className="text-lg font-bold text-success">+{result.obTotal.toLocaleString("sv-SE")} kr</p>
                     </div>
                   )}
-                  <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
+                  <div className="rounded-sm border border-border bg-card p-4">
                     <p className="text-xs text-text-secondary">Pension (arbetsgivare)</p>
                     <p className="text-lg font-bold text-text-primary">{result.pensionContribution.toLocaleString("sv-SE")} kr</p>
                   </div>
@@ -205,7 +221,7 @@ export default function Lonekalkylator() {
 
                 {/* Chart — only show if we have meaningful monthly values */}
                 {baseMonthly > 0 && (
-                  <div className="rounded-xl border border-border bg-white p-4 shadow-sm">
+                  <div className="rounded-sm border border-border bg-card p-4">
                     <p className="text-sm font-medium text-text-primary mb-3">Jämförelse (månadslön)</p>
                     <ResponsiveContainer width="100%" height={140}>
                       <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 10 }}>
@@ -226,10 +242,10 @@ export default function Lonekalkylator() {
                   <button
                     onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
                     className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white min-h-[44px] transition-all hover:-translate-y-px"
-                    style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+                    style={{ background: "#285E52" }}
                   >
                     <MessageCircle size={16} />
-                    Fråga AI-experten
+                    Fråga AI-guiden
                   </button>
                   <a
                     href="https://allaadvokater.se"

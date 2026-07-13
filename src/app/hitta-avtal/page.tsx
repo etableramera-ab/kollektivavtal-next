@@ -11,10 +11,10 @@ import {
   ArrowRight,
   MessageSquare,
   Check,
-  Mail,
 } from "lucide-react";
 import { finderData } from "@/data/agreement-finder";
 import { getAgreementBySlug } from "@/data/agreements";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const sectorIcons = {
@@ -47,15 +47,13 @@ export default function HittaAvtal() {
   const [sectorIdx, setSectorIdx] = useState<number | null>(null);
   const [branchIdx, setBranchIdx] = useState<number | null>(null);
   const [occupationIdx, setOccupationIdx] = useState<number | null>(null);
-  const [email, setEmail] = useState("");
-  const [emailSent, setEmailSent] = useState(false);
 
   const sector = sectorIdx !== null ? finderData[sectorIdx] : null;
   const branch = sector && branchIdx !== null ? sector.branches[branchIdx] : null;
   const occupation =
     branch && occupationIdx !== null ? branch.occupations[occupationIdx] : null;
   const agreement =
-    occupation?.agreementSlug
+    occupation?.agreementSlug && isVerifiedAgreement(occupation.agreementSlug)
       ? getAgreementBySlug(occupation.agreementSlug)
       : null;
 
@@ -81,7 +79,7 @@ export default function HittaAvtal() {
   return (
     <>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
@@ -99,8 +97,8 @@ export default function HittaAvtal() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
-              Du hittar ditt kollektivavtal genom att välja bransch och yrke nedan. Sverige har
-              omkring 515 kollektivavtal som täcker 92% av alla anställda.
+              Du hittar ditt kollektivavtal genom att välja bransch och yrke nedan. På den svenska
+              arbetsmarknaden finns drygt 600 centrala kollektivavtal och 88% av alla anställda omfattas.
             </p>
           </div>
         </div>
@@ -164,7 +162,7 @@ export default function HittaAvtal() {
                           setSectorIdx(i);
                           goTo(2);
                         }}
-                        className="rounded-[12px] border border-border bg-white p-6 shadow-sm text-left hover:border-accent transition-colors"
+                        className="rounded-sm border border-border bg-card p-6 text-left hover:border-primary transition-colors"
                       >
                         <Icon size={28} className="text-accent mb-3" />
                         <p className="font-semibold text-text-primary">{s.label}</p>
@@ -200,7 +198,7 @@ export default function HittaAvtal() {
                         setBranchIdx(i);
                         goTo(3);
                       }}
-                      className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-sm text-left hover:border-accent transition-colors"
+                      className="rounded-sm border border-border bg-card p-4 sm:p-5 text-left hover:border-primary transition-colors"
                     >
                       <p className="font-semibold text-text-primary text-sm">{b.label}</p>
                       <p className="text-xs text-text-secondary mt-1">
@@ -236,7 +234,7 @@ export default function HittaAvtal() {
                         setOccupationIdx(i);
                         goTo(4);
                       }}
-                      className="rounded-[12px] border border-border bg-white p-4 sm:p-5 shadow-sm text-left hover:border-accent transition-colors"
+                      className="rounded-sm border border-border bg-card p-4 sm:p-5 text-left hover:border-primary transition-colors"
                     >
                       <p className="font-semibold text-text-primary text-sm">{o.label}</p>
                     </motion.button>
@@ -258,7 +256,7 @@ export default function HittaAvtal() {
               >
                 {agreement ? (
                   <div className="space-y-6">
-                    <div className="rounded-[12px] border-2 border-accent bg-white p-6 shadow-sm">
+                    <div className="rounded-sm border-2 border-accent bg-card p-6">
                       <div className="flex items-center gap-2 mb-3">
                         <Check size={20} className="text-success" />
                         <p className="text-sm font-medium text-success">Avtal hittat</p>
@@ -272,19 +270,19 @@ export default function HittaAvtal() {
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+                      <div className="rounded-sm border border-border bg-card p-4">
                         <p className="text-xs text-text-secondary">Lägsta lön</p>
                         <p className="text-sm font-semibold text-text-primary mt-0.5">
                           {agreement.keyFacts.minimumWage}
                         </p>
                       </div>
-                      <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+                      <div className="rounded-sm border border-border bg-card p-4">
                         <p className="text-xs text-text-secondary">OB natt</p>
                         <p className="text-sm font-semibold text-text-primary mt-0.5">
                           {agreement.keyFacts.obNight}
                         </p>
                       </div>
-                      <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm">
+                      <div className="rounded-sm border border-border bg-card p-4">
                         <p className="text-xs text-text-secondary">Semester</p>
                         <p className="text-sm font-semibold text-text-primary mt-0.5">
                           {agreement.keyFacts.vacationDays}
@@ -302,60 +300,33 @@ export default function HittaAvtal() {
                       <button
                         onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
                         className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white min-h-[44px] transition-all hover:-translate-y-px"
-                        style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+                        style={{ background: "#285E52" }}
                       >
                         <MessageSquare size={16} />
-                        Fråga AI-experten
+                        Fråga AI-guiden
                       </button>
                     </div>
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    <div className="rounded-[12px] border border-border bg-white p-6 shadow-sm">
+                    <div className="rounded-sm border border-border bg-card p-6">
                       <h2 className="text-xl font-bold text-text-primary mb-2">
                         Vi arbetar med att lägga till detta avtal
                       </h2>
                       <p className="text-sm text-text-secondary leading-relaxed">
                         Avtalet för {occupation.label} inom {branch?.label} finns ännu inte i vår
-                        databas. Vi arbetar med att sammanfatta alla 515 kollektivavtal och lägger
-                        till fler löpande.
+                        databas. Vi arbetar med att verifiera och förbättra avtalsguiden och lägger
+                        till fler avtal med tydligt källunderlag löpande.
                       </p>
                     </div>
 
-                    <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm">
-                      <p className="text-sm font-medium text-text-primary mb-3">
-                        Vill du bli notifierad när avtalet läggs till?
+                    <div className="rounded-sm border border-border bg-card p-5">
+                      <p className="text-sm text-text-secondary">
+                        Tipsa gärna om en officiell källa via{" "}
+                        <a href="mailto:info@kollektivavtal.ai" className="text-accent hover:underline">
+                          info@kollektivavtal.ai
+                        </a>.
                       </p>
-                      {emailSent ? (
-                        <div className="flex items-center gap-2 text-sm text-success">
-                          <Check size={16} />
-                          <span>Tack, vi meddelar dig</span>
-                        </div>
-                      ) : (
-                        <form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            if (email.trim()) setEmailSent(true);
-                          }}
-                          className="flex gap-2"
-                        >
-                          <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="din@email.se"
-                            required
-                            className="flex-1 rounded-[8px] border border-border px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
-                          />
-                          <button
-                            type="submit"
-                            className="rounded-[8px] bg-accent text-white px-4 py-3 text-sm font-medium hover:bg-accent/90 transition-colors min-h-[44px] flex items-center gap-1"
-                          >
-                            <Mail size={16} />
-                            Meddela mig
-                          </button>
-                        </form>
-                      )}
                     </div>
 
                     <Link

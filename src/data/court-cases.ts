@@ -25,7 +25,10 @@ export function getCourtCaseById(id: string): CourtCase | undefined {
 }
 
 export function getCourtCasesByAgreement(slug: string): CourtCase[] {
-  return courtCases.filter((c) => c.relatedAgreement === slug);
+  // The imported agreement associations have not been verified against the judgments.
+  // Keep cases searchable, but do not present them as belonging to a specific agreement.
+  void slug;
+  return [];
 }
 
 export function getCourtCasesByYear(year: number): CourtCase[] {

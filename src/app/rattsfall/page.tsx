@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Search, ArrowRight } from "lucide-react";
 import { courtCases, getAvailableYears, getAvailableTopics } from "@/data/court-cases";
@@ -41,12 +41,12 @@ export default function Rattsfall() {
   }, [topic, year, search]);
 
   const visible = filtered.slice(0, visibleCount);
-  useMemo(() => setVisibleCount(INITIAL_COUNT), [topic, year, search]);
+  useEffect(() => setVisibleCount(INITIAL_COUNT), [topic, year, search]);
 
   return (
     <>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-14">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-14">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
@@ -70,7 +70,7 @@ export default function Rattsfall() {
             <div className="md:col-span-3">
               <AnimatedSection>
                 <Link href={`/rattsfall/${featured3[0].id}`} className="block group">
-                  <div className="rounded-xl p-7 sm:p-8 h-[320px] overflow-hidden flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 100%)" }}>
+                  <div className="rounded-sm p-7 sm:p-8 h-[320px] overflow-hidden flex flex-col justify-end bg-primary-dark border border-primary-dark">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-[13px] text-white/70">{featured3[0].date}</span>
                       {featured3[0].isGuiding && (
@@ -96,7 +96,7 @@ export default function Rattsfall() {
               {featured3.slice(1, 3).map((c, i) => (
                 <AnimatedSection key={c.id} delay={(i + 1) * 0.1}>
                   <Link href={`/rattsfall/${c.id}`} className="block group">
-                    <div className="rounded-xl border border-border bg-white p-5 h-[148px] overflow-hidden hover:border-primary hover:-translate-y-px hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-200">
+                    <div className="rounded-sm border border-border bg-card p-5 h-[148px] overflow-hidden hover:border-primary transition-colors duration-150">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="text-[13px] text-primary font-medium">{c.date}</span>
                         {c.isGuiding && (
@@ -119,7 +119,7 @@ export default function Rattsfall() {
       </section>
 
       {/* Sticky filter */}
-      <div className="sticky top-[64px] z-40 bg-[#F0EEED] border-t-2 border-t-primary border-b border-border">
+      <div className="sticky top-[64px] z-40 bg-surface-dark border-t-2 border-t-primary border-b border-border">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-5">
           <div className="space-y-3">
             <div className="relative">
@@ -129,7 +129,7 @@ export default function Rattsfall() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={`Sök i ${courtCases.length.toLocaleString("sv-SE")} domar...`}
-                className="w-full h-11 rounded-lg border border-border bg-white pl-9 pr-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                className="w-full h-11 rounded-sm border border-border bg-white pl-9 pr-4 text-[15px] outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/20 focus:border-primary"
               />
             </div>
             <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pr-1">
@@ -138,7 +138,7 @@ export default function Rattsfall() {
                   <button
                     key={t}
                     onClick={() => setTopic(t)}
-                    className={`shrink-0 rounded-full px-3 py-1.5 text-[13px] transition-all min-h-[36px] ${
+                    className={`shrink-0 rounded-sm px-3 py-2 text-[14px] transition-colors min-h-[40px] ${
                       topic === t
                         ? "bg-primary text-white font-medium"
                         : "bg-white border border-border text-[#374151] hover:border-primary hover:text-primary"
@@ -151,7 +151,7 @@ export default function Rattsfall() {
               <select
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                className="shrink-0 rounded-lg border border-border bg-white px-3 h-[36px] text-sm outline-none focus:border-primary"
+                className="shrink-0 rounded-sm border border-border bg-white px-3 h-[40px] text-sm outline-none focus:border-primary"
               >
                 <option value="Alla">Alla år</option>
                 {years.map((y) => (
@@ -172,7 +172,7 @@ export default function Rattsfall() {
             {year !== "Alla" ? ` från ${year}` : ""}
           </p>
 
-          <div className="rounded-xl border border-border bg-white overflow-hidden">
+          <div className="rounded-sm border border-border bg-card overflow-hidden">
             {visible.map((c, i) => (
               <Link key={c.id} href={`/rattsfall/${c.id}`} className="block">
                 <div className={`px-5 py-3.5 hover:bg-[#F8F7F4] transition-colors cursor-pointer ${i < visible.length - 1 ? "border-b border-[#F0EEED]" : ""}`}>
@@ -200,7 +200,7 @@ export default function Rattsfall() {
             <div className="text-center mt-8">
               <button
                 onClick={() => setVisibleCount((v) => v + INITIAL_COUNT)}
-                className="px-6 py-2.5 rounded-lg border border-primary text-primary font-medium text-sm hover:bg-primary hover:text-white transition-colors"
+                className="px-6 py-3 rounded-sm border border-primary text-primary font-medium text-[15px] hover:bg-primary hover:text-white transition-colors min-h-[44px]"
               >
                 Visa fler domar ({filtered.length - visibleCount} kvar)
               </button>

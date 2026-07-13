@@ -123,9 +123,7 @@ export default function LonerPage() {
                 <thead>
                   <tr className="border-b border-border bg-background">
                     <th className="text-left p-4 font-semibold text-text-primary">Bransch</th>
-                    <th className="text-right p-4 font-semibold text-text-primary">Percentil 10</th>
                     <th className="text-right p-4 font-semibold text-accent">Medianlön</th>
-                    <th className="text-right p-4 font-semibold text-text-primary">Percentil 90</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -135,14 +133,8 @@ export default function LonerPage() {
                         {d.label}
                         {d.verified && <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1.5 -mt-0.5" />}
                       </td>
-                      <td className="p-4 text-right text-text-secondary">
-                        {d.p10Wage ? `${d.p10Wage.toLocaleString("sv-SE")} kr` : "—"}
-                      </td>
                       <td className="p-4 text-right font-semibold text-accent">
                         {d.medianWage.toLocaleString("sv-SE")} kr
-                      </td>
-                      <td className="p-4 text-right text-text-secondary">
-                        {d.p90Wage ? `${d.p90Wage.toLocaleString("sv-SE")} kr` : "—"}
                       </td>
                     </tr>
                   ))}
@@ -160,21 +152,9 @@ export default function LonerPage() {
                   </p>
                   <div className="flex gap-4 mt-2">
                     <div>
-                      <p className="text-xs text-text-secondary">P10</p>
-                      <p className="text-sm text-text-primary">
-                        {d.p10Wage ? `${d.p10Wage.toLocaleString("sv-SE")} kr` : "—"}
-                      </p>
-                    </div>
-                    <div>
                       <p className="text-xs text-text-secondary">Median</p>
                       <p className="text-sm font-semibold text-accent">
                         {d.medianWage.toLocaleString("sv-SE")} kr
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-text-secondary">P90</p>
-                      <p className="text-sm text-text-primary">
-                        {d.p90Wage ? `${d.p90Wage.toLocaleString("sv-SE")} kr` : "—"}
                       </p>
                     </div>
                   </div>
@@ -183,7 +163,7 @@ export default function LonerPage() {
             </div>
 
             <p className="text-xs text-text-secondary mt-4">
-              Källa: SCB lönestrukturstatistik 2023. Senast uppdaterad: mars 2026.
+              Källa: SCB lönestrukturstatistik 2023.
             </p>
           </AnimatedSection>
         </div>

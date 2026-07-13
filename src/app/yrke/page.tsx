@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, ChevronRight } from "lucide-react";
-import { occupations } from "@/data/occupations";
+import { publicOccupations as occupations } from "@/lib/public-occupations";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const categories = [
@@ -72,14 +72,14 @@ export default function YrkeOverview() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-14">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-14">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
-              Löner per yrke 2026
+              Löner per yrke — SCB 2025
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              Se minimilön, medianlön och OB-tillägg för {occupations.length} yrken med kollektivavtal
+              Se medianlön och lönespridning för {occupations.length} säkert matchade yrken
             </p>
           </AnimatedSection>
         </div>

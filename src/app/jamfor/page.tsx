@@ -3,21 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, BarChart3, Banknote, CalendarDays, Baby, Clock, PiggyBank, Timer, Briefcase } from "lucide-react";
-import { agreements } from "@/data/agreements";
-import { vsComparisons } from "@/data/comparisons";
+import { ArrowRight, BarChart3 } from "lucide-react";
+import { publicAgreements, publicComparisons } from "@/lib/public-agreements";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
-const topics = [
-  { href: "/jamfor/ob-tillagg", title: "OB-tillägg", desc: "Kväll, natt, helg och storhelg per avtal", icon: BarChart3 },
-  { href: "/jamfor/minimiioner", title: "Minimilöner", desc: "Lägsta löner per bransch och avtal", icon: Banknote },
-  { href: "/jamfor/semester", title: "Semester", desc: "Antal dagar och extra vid ålder", icon: CalendarDays },
-  { href: "/jamfor/foraldralon", title: "Föräldralön", desc: "Löneutfyllnad per avtal", icon: Baby },
-  { href: "/jamfor/uppsagningstid", title: "Uppsägningstid", desc: "Per avtal och anställningstid", icon: Clock },
-  { href: "/jamfor/pension", title: "Pension", desc: "System och avsättning per avtal", icon: PiggyBank },
-  { href: "/jamfor/overtid", title: "Övertid", desc: "Ersättningsnivåer per avtal", icon: Timer },
-  { href: "/jamfor/arbetstid", title: "Arbetstid", desc: "Veckoarbetstid och förkortning", icon: Briefcase },
-];
+const topics: Array<{ href: string; title: string; desc: string; icon: typeof BarChart3 }> = [];
 
 export default function JamforOverview() {
   const router = useRouter();
@@ -33,7 +23,7 @@ export default function JamforOverview() {
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-2xl sm:text-4xl font-extrabold">Jämför kollektivavtal</h1>
@@ -44,11 +34,22 @@ export default function JamforOverview() {
         </div>
       </section>
 
+      <section className="py-8">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="border-l-[3px] border-l-accent bg-[#EFE7DA] p-6">
+            <h2 className="text-xl text-text-primary">Jämförelserna källgranskas</h2>
+            <p className="mt-2 text-text-secondary">
+              Vi öppnar en jämförelse först när samma uppgift har kontrollerats i båda avtalen.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="py-6 sm:py-8">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
-              Sverige har 515 kollektivavtal med olika villkor. Här jämför vi OB-tillägg, minimilöner, semester, pension och mer för alla 25 avtal vi sammanfattat.
+              Svenska kollektivavtal har olika villkor. Här jämför vi OB-tillägg, minimilöner, semester, pension och mer för de avtalsområden där underlaget räcker.
             </p>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function JamforOverview() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 items-stretch">
             {topics.map((t, i) => (
               <AnimatedSection key={t.href} delay={i * 0.05}>
-                <Link href={t.href} className="flex flex-col items-center justify-center rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center h-full min-h-[160px]">
+                <Link href={t.href} className="flex flex-col items-center justify-center rounded-sm border border-border bg-card p-4 hover:border-primary transition-colors text-center h-full min-h-[160px]">
                   <t.icon size={24} className="mx-auto text-primary mb-2" />
                   <p className="font-semibold text-text-primary text-sm">{t.title}</p>
                   <p className="text-xs text-text-secondary mt-1 line-clamp-2 min-h-[32px]">{t.desc}</p>
@@ -84,7 +85,7 @@ export default function JamforOverview() {
                 <label className="text-xs text-text-secondary mb-1 block">Avtal 1</label>
                 <select value={a1} onChange={(e) => setA1(e.target.value)} className="w-full rounded-[8px] border border-border px-3 py-2.5 text-sm outline-none focus:border-accent">
                   <option value="">Välj avtal...</option>
-                  {agreements.map((a) => <option key={a.slug} value={a.slug}>{a.shortName}</option>)}
+                  {publicAgreements.map((a) => <option key={a.slug} value={a.slug}>{a.shortName}</option>)}
                 </select>
               </div>
               <span className="text-text-secondary text-sm font-medium pb-2">vs</span>
@@ -92,7 +93,7 @@ export default function JamforOverview() {
                 <label className="text-xs text-text-secondary mb-1 block">Avtal 2</label>
                 <select value={a2} onChange={(e) => setA2(e.target.value)} className="w-full rounded-[8px] border border-border px-3 py-2.5 text-sm outline-none focus:border-accent">
                   <option value="">Välj avtal...</option>
-                  {agreements.map((a) => <option key={a.slug} value={a.slug}>{a.shortName}</option>)}
+                  {publicAgreements.map((a) => <option key={a.slug} value={a.slug}>{a.shortName}</option>)}
                 </select>
               </div>
               <button onClick={handleCompare} disabled={!a1 || !a2 || a1 === a2} className="rounded-[8px] bg-accent text-white px-6 py-2.5 text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-50 min-h-[44px]">
@@ -110,14 +111,14 @@ export default function JamforOverview() {
             <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Populära jämförelser</h2>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {vsComparisons.map((c, i) => {
-              const a1 = agreements.find((a) => a.slug === c.slug1);
-              const a2 = agreements.find((a) => a.slug === c.slug2);
+            {publicComparisons.map((c, i) => {
+              const a1 = publicAgreements.find((a) => a.slug === c.slug1);
+              const a2 = publicAgreements.find((a) => a.slug === c.slug2);
               if (!a1 || !a2) return null;
               const sorted = [c.slug1, c.slug2].sort();
               return (
                 <AnimatedSection key={`${c.slug1}-${c.slug2}`} delay={i * 0.03}>
-                  <Link href={`/jamfor/${sorted[0]}-vs-${sorted[1]}`} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+                  <Link href={`/jamfor/${sorted[0]}-vs-${sorted[1]}`} className="block rounded-sm border border-border bg-card p-4 hover:border-primary transition-colors">
                     <p className="font-semibold text-text-primary text-sm">
                       {a1.shortName} vs {a2.shortName}
                     </p>

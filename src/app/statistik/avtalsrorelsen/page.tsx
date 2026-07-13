@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Check, Clock, Mail, Search } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements } from "@/lib/public-agreements";
 
 const timeline = [
   {
@@ -33,7 +35,7 @@ const timeline = [
   {
     period: "Våren 2027",
     title: "Stor avtalsrörelse",
-    desc: "Närmare 500 avtal omförhandlas för 3,4 miljoner anställda. Den största avtalsrörelsen på flera år.",
+    desc: "Närmare 500 centrala avtal väntas omförhandlas och berör miljontals anställda.",
     done: false,
   },
 ];
@@ -75,12 +77,45 @@ export default function Avtalsrorelsen() {
   const [showAll, setShowAll] = useState(false);
 
   const filteredTable = useMemo(() => {
-    if (!tableSearch.trim()) return allStatusTable;
+    const sourceBackedRows = allStatusTable.filter((row) => isVerifiedAgreement(row.slug));
+    if (!tableSearch.trim()) return sourceBackedRows;
     const q = tableSearch.toLowerCase();
-    return allStatusTable.filter((r) => r.name.toLowerCase().includes(q));
+    return sourceBackedRows.filter((r) => r.name.toLowerCase().includes(q));
   }, [tableSearch]);
 
   const visibleTable = showAll ? filteredTable : filteredTable.slice(0, 10);
+
+  return (
+    <>
+      <section className="bg-primary text-white py-14 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+          <h1 className="text-4xl sm:text-5xl" style={{ fontFamily: "var(--font-serif)" }}>
+            Avtalsperioder
+          </h1>
+          <p className="mt-3 text-white/80">
+            Här visas endast perioder från de källdokument som finns i tjänsten.
+          </p>
+        </div>
+      </section>
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <div className="space-y-3">
+            {publicAgreements.map((agreement) => (
+              <Link key={agreement.slug} href={`/avtal/${agreement.slug}`} className="block border border-border bg-white p-4 hover:border-primary transition-colors">
+                <p className="font-semibold text-primary">{agreement.shortName}</p>
+                <p className="mt-1 text-sm text-text-secondary">Källans avtalsperiod: {agreement.validPeriod}</p>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-5 text-xs text-text-secondary">
+            Sidan gör inga prognoser om framtida förhandlingar eller löneökningar.
+          </p>
+        </div>
+      </section>
+    </>
+  );
+
+  /* The former forecast view remains local until every claim has a direct source. */
 
   return (
     <>
@@ -252,9 +287,8 @@ export default function Avtalsrorelsen() {
                 Blick framåt — avtalsrörelsen 2027
               </h2>
               <p className="text-text-primary leading-relaxed">
-                Under 2027 ska närmare 500 av arbetsmarknadens 515 avtal omförhandlas för 3,4
-                miljoner anställda. Det blir den största avtalsrörelsen på flera år. Följ
-                utvecklingen här.
+                Under 2027 väntas närmare 500 centrala avtal omförhandlas och beröra
+                miljontals anställda. Följ utvecklingen här.
               </p>
 
               <div className="mt-5">

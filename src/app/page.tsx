@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import {
-  Search,
   FileText,
   Users,
   ShieldCheck,
@@ -19,104 +18,90 @@ import {
   Cpu,
   HardHat,
   ShoppingCart,
-  MessageCircle,
-  Shield,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import SalaryChart from "@/components/SalaryChart";
-import { blogPosts } from "@/data/blog-posts";
-import { courtCases as allCourtCases } from "@/data/court-cases";
-
-const latestCases = allCourtCases.slice(0, 3);
+import { publicOccupations } from "@/lib/public-occupations";
 
 const quickLinks = [
   { label: "Handelsavtalet", slug: "handelsavtalet" },
-  { label: "Teknikavtalet", slug: "teknikavtalet" },
+  { label: "Teknikavtalet IF Metall", slug: "teknikavtalet-ifmetall" },
   { label: "Byggavtalet", slug: "byggavtalet" },
   { label: "HÖK Kommunal", slug: "hok-kommunal" },
-  { label: "IT-avtalet", slug: "it-avtalet" },
-  { label: "Transportavtalet", slug: "transportavtalet" },
+  { label: "VVS-avtalet", slug: "vvs-montorsavtalet" },
+  { label: "Installationsavtalet", slug: "installationsavtalet" },
 ];
 
 const tools = [
-  { title: "Hitta ditt avtal", desc: "Svara på 3 frågor", href: "/hitta-avtal", icon: Search },
-  { title: "Lönekalkylator", desc: "Se vad du ska tjäna", href: "/lonekalkylator", icon: Calculator },
-  { title: "Jämför villkor", desc: "OB, semester, pension", href: "/jamfor", icon: BarChart3 },
-  { title: "Avtalsrörelsen", desc: "Följ 2025–2027", href: "/statistik/avtalsrorelsen", icon: TrendingUp },
+  { title: "SCB-löner", desc: "Officiell lönestatistik", href: "/yrke", icon: Calculator },
+  { title: "Rättsfall", desc: "Domar från Arbetsdomstolen", href: "/rattsfall", icon: BarChart3 },
+  { title: "Avtalsperioder", desc: "Perioder från källorna", href: "/statistik/avtalsrorelsen", icon: TrendingUp },
 ];
 
 const topAgreements = [
-  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", employees: "~1 100 000", icon: Building2, slug: "hok-kommunal", img: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
-  { name: "Teknikavtalet", desc: "Ingenjörer, tekniker och montörer i industrin", employees: "~300 000", icon: Cpu, slug: "teknikavtalet", img: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
-  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", employees: "~250 000", icon: ShoppingCart, slug: "handelsavtalet", img: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
-  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", employees: "~150 000", icon: HardHat, slug: "byggavtalet", img: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
+  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", icon: Building2, slug: "hok-kommunal", img: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  { name: "Teknikavtalet IF Metall", desc: "Industriarbetare inom teknikföretag", icon: Cpu, slug: "teknikavtalet-ifmetall", img: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
+  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", icon: ShoppingCart, slug: "handelsavtalet", img: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", icon: HardHat, slug: "byggavtalet", img: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
 ];
 
-const topOccupations = [
-  { title: "Undersköterska", median: "31 000", slug: "underskoterska" },
-  { title: "Elektriker", median: "35 000", slug: "elektriker" },
-  { title: "Lärare", median: "37 000", slug: "larare-grundskola" },
-  { title: "Systemutvecklare", median: "48 000", slug: "systemutvecklare" },
-];
+const topOccupations = ["sjukskoterska", "elektriker", "larare-grundskola", "systemutvecklare"]
+  .map((slug) => publicOccupations.find((occupation) => occupation.slug === slug))
+  .filter((occupation): occupation is NonNullable<typeof occupation> => Boolean(occupation));
 
 const comparisonRows = [
-  { feature: "Tjänstepension", med: "4,5% av lön", utan: "0 kr (om arbetsgivaren inte erbjuder)" },
-  { feature: "Föräldralön", med: "Upp till 90% löneutfyllnad", utan: "Bara Försäkringskassans ersättning" },
-  { feature: "OB-tillägg", med: "43–172 kr/tim", utan: "Inget OB garanterat" },
-  { feature: "Inkomstförsäkring", med: "Ingår via facket", utan: "Måste tecknas privat" },
-  { feature: "Uppsägningstid", med: "Upp till 6 mån", utan: "1 mån enligt LAS" },
+  { feature: "Tjänstepension", med: "Kan regleras i avtalet", utan: "Beror på arbetsgivarens erbjudande" },
+  { feature: "Föräldralön", med: "Kan ge extra ersättning", utan: "Ingen avtalsreglerad utfyllnad" },
+  { feature: "OB-tillägg", med: "Kan regleras i avtalet", utan: "Beror på anställningsvillkoren" },
+  { feature: "Omställningsstöd", med: "Kan ingå genom avtalet", utan: "Beror på arbetsgivarens lösning" },
+  { feature: "Uppsägningstid", med: "Kan komplettera lagens regler", utan: "Lag och anställningsavtal gäller" },
 ];
 
-const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
+const serif = { fontFamily: "var(--font-serif)" };
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"avtal" | "yrken">("avtal");
 
   return (
-    <>
+    <div className="bg-[#F4F1EA] text-[#17201D]">
       {/* ─── HERO ─── */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white">
+      <section className="bg-[#164B3F] text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-20 md:pt-12 md:pb-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
-              <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent mb-4">
-                Sveriges 515 kollektivavtal — på klarspråk
+              <p className="text-sm font-semibold text-[#D8B37C] mb-4">
+                Svenska kollektivavtal — på klarspråk
               </p>
-              <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-[1.1] text-white" style={serif}>
-                Förstå ditt kollektivavtal
+              <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-[1.08] text-white" style={serif}>
+                Hitta och förstå ditt kollektivavtal
               </h1>
-              <p className="mt-5 text-base sm:text-lg text-white/80 max-w-[480px] leading-relaxed">
-                Sök bland alla 515 avtal. Jämför löner, OB-tillägg och villkor.
-                Chatta med en AI-expert som kan just ditt avtal.
+              <p className="mt-5 text-[17px] sm:text-lg text-white/85 max-w-[520px] leading-[1.65]">
+                Börja med att hitta avtalet som gäller för dig. Därifrån kan du
+                läsa om lön, OB-tillägg och andra villkor med tydliga källor.
               </p>
               <p className="mt-6 text-xs text-white/60">
-                3,4 miljoner anställda · 92% avtalstäckning · Källa: Medlingsinstitutet
+                Över 4 miljoner anställda · 88% avtalstäckning · Källa: Medlingsinstitutet
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.15}>
-              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25),0_8px_20px_rgba(0,0,0,0.15)]">
-                <p className="font-semibold text-text-primary text-lg mb-4">Hitta ditt avtal</p>
+              <div className="bg-[#FBFAF7] rounded-md p-6 sm:p-8 border border-white/20 shadow-[0_12px_32px_rgba(0,0,0,0.16)]">
+                <p className="font-semibold text-text-primary text-lg mb-1">Vilket avtal gäller för dig?</p>
+                <p className="text-sm text-text-secondary mb-4">Sök på avtal eller svara på tre enkla frågor.</p>
                 <div className="mb-4">
                   <SearchAutocomplete variant="hero" />
                 </div>
                 <div className="flex flex-wrap gap-2 mb-5 justify-center">
                   {quickLinks.map((q) => (
-                    <Link key={q.slug} href={`/avtal/${q.slug}`} className="rounded-full border border-border px-4 py-1.5 text-xs text-primary hover:bg-primary hover:text-white transition-all duration-200">
+                    <Link key={q.slug} href={`/avtal/${q.slug}`} className="rounded-sm border border-[#D8D1C5] px-3 py-1.5 text-sm text-[#285E52] hover:bg-[#E8EEE9] transition-colors duration-150">
                       {q.label}
                     </Link>
                   ))}
                 </div>
-                <Link href="/hitta-avtal" className="block w-full h-12 rounded-lg text-white text-sm font-semibold uppercase tracking-widest flex items-center justify-center transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(217,119,6,0.3)]" style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}>
-                  Sök
+                <Link href="/hitta-avtal" className="flex w-full h-12 rounded-sm bg-[#B56A2D] text-white text-[16px] font-semibold items-center justify-center transition-colors duration-150 hover:bg-[#955524]">
+                  Hitta mitt avtal
                 </Link>
-                <button
-                  onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
-                  className="block w-full text-center text-sm font-medium text-[#7C3AED] mt-3 hover:underline"
-                >
-                  💬 Eller fråga AI-experten direkt →
-                </button>
               </div>
             </AnimatedSection>
           </div>
@@ -124,23 +109,19 @@ export default function Home() {
       </section>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="bg-[#F0EEED] py-8 -mt-px">
+      <section className="bg-[#E6E1D8] py-8 -mt-px">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-10 sm:gap-12">
             {[
-              { icon: FileText, num: 515, text: "avtal sammanfattade" },
-              { icon: Users, num: 3.4, text: "miljoner anställda", decimal: true },
-              { icon: ShieldCheck, num: 92, text: "% avtalstäckning", suffix: "%" },
+              { icon: FileText, num: 30, text: "avtal med aktuellt källunderlag" },
+              { icon: Users, num: 4, text: "miljoner+ anställda" },
+              { icon: ShieldCheck, num: 88, text: "% avtalstäckning", suffix: "%" },
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-2.5">
                 <item.icon size={22} strokeWidth={1.5} className="text-primary" />
                 <div>
-                  <span className="text-[24px] text-primary" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
-                    {item.decimal ? (
-                      <>{item.num.toLocaleString("sv-SE")}</>
-                    ) : (
-                      <CountUp end={item.num} duration={1.5} suffix={item.suffix === "%" ? "%" : ""} />
-                    )}
+                  <span className="text-[24px] text-[#285E52]" style={serif}>
+                    <CountUp end={item.num} duration={1.5} suffix={item.suffix === "%" ? "%" : ""} />
                   </span>
                   <span className="text-[15px] font-medium text-[#374151] ml-1.5">
                     {!item.suffix ? item.text : item.text.replace("% ", "")}
@@ -148,56 +129,48 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            <button
-              onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
-              className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity"
-            >
-              <MessageCircle size={22} strokeWidth={1.5} className="text-[#7C3AED]" />
-              <span className="text-[15px] font-medium text-[#7C3AED]">AI-expert på alla avtal</span>
-            </button>
           </div>
         </div>
       </section>
 
       {/* ─── AI-CHATT SEKTION ─── */}
-      <section className="py-16 sm:py-20" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%)" }}>
+      <section className="py-12 sm:py-14 bg-[#EEEAE1] border-y border-[#D8D1C5]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <AnimatedSection>
-              <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-white/70 mb-4">
-                AI-expert på 515 avtal
+              <p className="text-sm font-semibold text-[#285E52] mb-4">
+                AI-vägledning
               </p>
-              <h2 className="text-3xl sm:text-4xl md:text-[44px] text-white leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
-                Chatta med en expert som läst hela ditt avtal
+              <h2 className="text-3xl sm:text-4xl text-[#17201D] leading-tight" style={serif}>
+                Chatta om ditt kollektivavtal
               </h2>
-              <p className="mt-4 text-[17px] text-white/80 max-w-[480px] leading-relaxed">
+              <p className="mt-4 text-[17px] text-[#46514D] max-w-[520px] leading-[1.65]">
                 Ställ frågor om lön, OB-tillägg, semester, uppsägningstid, pension — och få svar direkt.
               </p>
               <div className="mt-6 space-y-3">
-                {["Svar på sekunder — inte timmar", "Tränad på alla 515 avtal och 2 009 domar", "Helt gratis, alltid"].map((text) => (
+                {["Svar på sekunder — inte timmar", "30 avtal med aktuellt källunderlag", "Tydligt när svaret behöver kontrolleras"].map((text) => (
                   <div key={text} className="flex items-center gap-3">
-                    <span className="text-accent text-lg">✓</span>
-                    <span className="text-[16px] font-medium text-white">{text}</span>
+                    <span className="text-[#285E52] text-lg">✓</span>
+                    <span className="text-[15px] font-medium text-text-primary">{text}</span>
                   </div>
                 ))}
               </div>
             </AnimatedSection>
             <AnimatedSection delay={0.15}>
-              <div className="bg-white rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.2),0_8px_20px_rgba(0,0,0,0.12)]">
+              <div className="bg-[#FBFAF7] rounded-md border border-[#D8D1C5] p-6">
                 <div className="space-y-3 mb-4">
                   <div className="flex gap-2">
-                    <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Hej! Jag kan svara på frågor om alla 515 kollektivavtal. Vad vill du veta?</div>
+                    <div className="w-6 h-6 rounded-sm bg-[#285E52] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
+                    <div className="bg-[#E8EEE9] rounded-sm px-4 py-2.5 text-[15px] text-[#17201D]">Hej! Jag hjälper dig förstå svenska kollektivavtal och hitta rätt avtal. Vad vill du veta?</div>
                   </div>
                   <div className="flex gap-2">
-                    <div className="w-6 h-6 rounded-full bg-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#F5F3FF] rounded-xl px-4 py-2.5 text-sm text-text-primary">Fråga om löner, OB-tillägg, semester, pension — jag har läst alla 515 avtal och kan hjälpa dig.</div>
+                    <div className="w-6 h-6 rounded-sm bg-[#285E52] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
+                    <div className="bg-[#E8EEE9] rounded-sm px-4 py-2.5 text-[15px] text-[#17201D]">För exakta avtalsvillkor väljer du ett avtal med källunderlag. Jag säger till när information behöver kontrolleras.</div>
                   </div>
                 </div>
                 <button
                   onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
-                  className="block w-full py-3 rounded-lg text-white text-[16px] font-semibold text-center transition-all duration-200 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(124,58,237,0.3)]"
-                  style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+                  className="block w-full py-3 rounded-sm bg-[#285E52] text-white text-[16px] font-semibold text-center transition-colors duration-150 hover:bg-[#164B3F]"
                 >
                   Testa själv — ställ en fråga
                 </button>
@@ -208,19 +181,19 @@ export default function Home() {
       </section>
 
       {/* ─── VAD VILL DU GÖRA? ─── */}
-      <section className="py-14 sm:py-16" style={{ background: "linear-gradient(180deg, #F0EEED 0%, #F8F7F4 100%)" }}>
+      <section className="py-14 sm:py-16 bg-[#F4F1EA]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-t border-border pt-8 mb-8">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Vad vill du göra?</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Fler verktyg</h2>
             </AnimatedSection>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {tools.map((tool, i) => (
               <AnimatedSection key={tool.href} delay={i * 0.08}>
                 <Link href={tool.href} className="block group">
-                  <div className="rounded-lg border border-border bg-white p-5 min-h-[80px] flex items-start gap-4 border-l-4 border-l-primary hover:border-l-accent hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-                    <div className="shrink-0 w-11 h-11 rounded-full bg-[#F0FDFA] flex items-center justify-center">
+                  <div className="rounded-sm border border-[#D8D1C5] bg-[#FBFAF7] p-5 min-h-[80px] flex items-start gap-4 border-l-[3px] border-l-[#285E52] hover:bg-white transition-colors duration-150">
+                    <div className="shrink-0 w-11 h-11 rounded-sm bg-[#E8EEE9] flex items-center justify-center">
                       <tool.icon size={20} className="text-primary" />
                     </div>
                     <div>
@@ -233,23 +206,6 @@ export default function Home() {
             ))}
           </div>
 
-          <AnimatedSection delay={0.3}>
-            <a
-              href="https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=verktyg&utm_campaign=startsida"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 block rounded-lg border border-[#FDE68A] bg-[#FEF3C7] p-4 flex items-center gap-4 hover:-translate-y-px hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-200"
-            >
-              <div className="shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                <Shield size={20} className="text-accent" />
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold text-text-primary text-[15px]">Jämför försäkringar</p>
-                <p className="text-[13px] text-text-secondary">Hitta rätt skydd — oberoende jämförelser</p>
-              </div>
-              <span className="text-[11px] text-[#9CA3AF] shrink-0">Annons</span>
-            </a>
-          </AnimatedSection>
         </div>
       </section>
 
@@ -277,14 +233,13 @@ export default function Home() {
                 {topAgreements.map((a, i) => (
                   <AnimatedSection key={a.slug} delay={i * 0.08}>
                     <Link href={`/avtal/${a.slug}`} className="block h-full group">
-                      <div className="rounded-lg border border-border bg-white h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden">
+                      <div className="rounded-sm border border-[#D8D1C5] bg-[#FBFAF7] h-full hover:border-[#285E52] transition-colors duration-150 overflow-hidden">
                         <div className="relative h-[140px] sm:h-[140px]">
                           <Image src={a.img} alt={a.alt} fill className="object-cover" sizes="(max-width: 768px) 100vw, 25vw" />
                         </div>
                         <div className="p-5">
                         <h3 className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{a.name}</h3>
                         <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
-                        <p className="text-xs text-text-secondary mt-2">{a.employees} anställda</p>
                         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-3">Läs mer <ArrowRight size={14} /></span>
                         </div>
                       </div>
@@ -294,7 +249,7 @@ export default function Home() {
               </div>
               <AnimatedSection delay={0.35}>
                 <Link href="/avtal" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-                  Se alla 515 avtal <ArrowRight size={14} />
+                  Se avtalsguiden <ArrowRight size={14} />
                 </Link>
               </AnimatedSection>
             </div>
@@ -306,9 +261,9 @@ export default function Home() {
                 {topOccupations.map((occ, i) => (
                   <AnimatedSection key={occ.slug} delay={i * 0.08}>
                     <Link href={`/yrke/${occ.slug}`} className="block group">
-                      <div className="rounded-lg border border-border bg-white p-5 text-center hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <div className="rounded-sm border border-[#D8D1C5] bg-[#FBFAF7] p-5 text-center hover:border-[#285E52] transition-colors duration-150">
                         <p className="text-[22px] text-text-primary group-hover:text-primary transition-colors duration-150" style={serif}>{occ.title}</p>
-                        <p className="text-2xl font-normal text-accent mt-2" style={serif}>{occ.median} kr</p>
+                        <p className="text-2xl font-normal text-accent mt-2" style={serif}>{occ.salary.median.toLocaleString("sv-SE")} kr</p>
                         <p className="text-xs text-text-secondary mt-1">medianlön</p>
                       </div>
                     </Link>
@@ -317,7 +272,7 @@ export default function Home() {
               </div>
               <AnimatedSection delay={0.35}>
                 <Link href="/yrke" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-                  Se alla 50 yrken <ArrowRight size={14} />
+                  Se alla källmatchade yrken <ArrowRight size={14} />
                 </Link>
               </AnimatedSection>
             </div>
@@ -334,7 +289,7 @@ export default function Home() {
             </AnimatedSection>
           </div>
           <AnimatedSection delay={0.1}>
-            <div className="rounded-xl border border-border bg-white p-6 sm:p-8">
+            <div className="rounded-sm border border-[#D8D1C5] bg-[#FBFAF7] p-6 sm:p-8">
               <SalaryChart />
             </div>
             <p className="text-[13px] text-[#6B7280] mt-3">Källa: SCB, egen bearbetning</p>
@@ -346,19 +301,19 @@ export default function Home() {
       </section>
 
       {/* ─── VAD FÖRLORAR DU? ─── */}
-      <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(135deg, rgba(13,94,88,0.88) 0%, rgba(15,118,110,0.85) 50%, rgba(20,184,166,0.88) 100%), url('/Images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+      <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(rgba(22,75,63,0.91), rgba(22,75,63,0.91)), url('/Images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <h2 className="text-3xl sm:text-4xl md:text-[48px] text-white text-center" style={serif}>
-              Vad förlorar du utan kollektivavtal?
+              Vad kan kollektivavtalet reglera?
             </h2>
             <p className="text-white/80 mt-3 text-center max-w-2xl mx-auto">
-              Utan kollektivavtal saknar du tjänstepension, föräldralön, OB-tillägg och mycket mer.
+              Exakta villkor skiljer sig mellan avtal och arbetsplatser.
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.1}>
-            <div className="hidden md:block max-w-[800px] mx-auto mt-10 rounded-xl bg-white p-2 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
+            <div className="hidden md:block max-w-[800px] mx-auto mt-10 rounded-sm bg-[#FBFAF7] p-2">
               <table className="w-full text-[15px]">
                 <thead>
                   <tr className="border-b border-surface-dark">
@@ -427,7 +382,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 px-7 py-3 rounded-lg text-white font-semibold text-[15px] transition-all hover:-translate-y-px"
-                style={{ background: "#D97706" }}
+                style={{ background: "#B56A2D" }}
               >
                 Jämför försäkringar →
               </a>
@@ -437,89 +392,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SENASTE RÄTTSFALL ─── */}
-      <section className="py-14 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border-t border-border pt-8 mb-8">
-            <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Senaste arbetsrättsdomar</h2>
-            </AnimatedSection>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {latestCases.map((c, i) => (
-              <AnimatedSection key={c.id} delay={i * 0.1}>
-                <Link href={`/rattsfall/${c.id}`} className="block h-full group">
-                  <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-                    <p className="text-[13px] text-primary font-medium">{c.date}</p>
-                    <h3 className="text-text-primary mt-1 leading-snug text-[22px]" style={serif}>{c.caseNumber} — {c.title}</h3>
-                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
-                    <span className="inline-block mt-3 text-xs font-medium bg-[#F0FDFA] text-primary px-3 py-1 rounded-full border border-primary/20">
-                      {c.topic}
-                    </span>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-          <Link href="/rattsfall" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-            Se alla rättsfall <ArrowRight size={14} />
+      <section className="py-10 bg-surface-dark">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 sm:gap-8">
+          <Link href="/rattsfall" className="inline-flex items-center justify-center gap-1 text-sm font-medium text-primary min-h-[44px] hover:underline">
+            Utforska arbetsrättsdomar <ArrowRight size={14} />
+          </Link>
+          <Link href="/blogg" className="inline-flex items-center justify-center gap-1 text-sm font-medium text-primary min-h-[44px] hover:underline">
+            Läs guider och nyheter <ArrowRight size={14} />
           </Link>
         </div>
       </section>
-
-      {/* ─── BLOGG ─── */}
-      <section className="py-14 sm:py-16 bg-surface-dark">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border-t border-border pt-8 mb-8">
-            <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Senaste från bloggen</h2>
-            </AnimatedSection>
-          </div>
-
-          {blogPosts.length >= 3 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <AnimatedSection>
-                <Link href={`/blogg/${blogPosts[0].slug}`} className="block h-full group">
-                  <div className="rounded-[10px] p-8 sm:p-10 h-full min-h-[260px] flex flex-col justify-end transition-all duration-200 hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]" style={{ backgroundImage: "linear-gradient(135deg, rgba(15,118,110,0.85) 0%, rgba(10,95,89,0.9) 100%), url('/Images/blog/avtalsrorelsen-2027.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
-                    <span className="rounded-full bg-white/15 text-white text-xs font-medium px-3 py-1 self-start mb-3">
-                      {blogPosts[0].category}
-                    </span>
-                    <p className="text-[13px] text-white/70 mb-1">{blogPosts[0].publishDate}</p>
-                    <h3 className="text-2xl sm:text-[28px] text-white leading-snug" style={serif}>{blogPosts[0].title}</h3>
-                    <p className="text-[15px] text-white/80 mt-2 line-clamp-2">{blogPosts[0].excerpt}</p>
-                    <span className="text-sm font-medium text-accent mt-4 inline-flex items-center gap-1">
-                      Läs mer <ArrowRight size={14} />
-                    </span>
-                  </div>
-                </Link>
-              </AnimatedSection>
-
-              <div className="flex flex-col gap-4">
-                {blogPosts.slice(1, 3).map((post, i) => (
-                  <AnimatedSection key={post.slug} delay={(i + 1) * 0.1}>
-                    <Link href={`/blogg/${post.slug}`} className="block h-full group">
-                      <div className="rounded-[10px] border border-border bg-white p-6 h-full hover:border-primary hover:-translate-y-[3px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="rounded-full bg-[#F0FDFA] text-primary text-xs font-medium px-3 py-0.5 border border-primary/20">{post.category}</span>
-                          <span className="text-xs text-text-secondary">{post.publishDate}</span>
-                        </div>
-                        <h3 className="text-[22px] text-text-primary leading-snug group-hover:text-primary transition-colors duration-150" style={serif}>{post.title}</h3>
-                        <p className="text-sm text-text-secondary mt-2 line-clamp-2">{post.excerpt}</p>
-                      </div>
-                    </Link>
-                  </AnimatedSection>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <AnimatedSection delay={0.3}>
-            <Link href="/blogg" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-6 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-              Alla artiklar <ArrowRight size={14} />
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

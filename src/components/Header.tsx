@@ -67,11 +67,11 @@ export default function Header() {
       className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
-      style={{ background: "linear-gradient(90deg, #0D5E58 0%, #0F766E 100%)" }}
+      style={{ background: "#164B3F" }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" style={{ fontFamily: "'DM Serif Display', serif", fontSize: '22px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+          <Link href="/" style={{ fontFamily: "var(--font-serif)", fontSize: '22px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
             kollektivavtal.ai
           </Link>
 
@@ -106,7 +106,7 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform ${toolsOpen ? "rotate-180" : ""}`} />
               </button>
               {toolsOpen && (
-                <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-lg shadow-lg border border-border py-2 z-50">
+                <div className="absolute top-full left-0 mt-2 w-52 bg-[#FBFAF7] rounded-sm shadow-[0_8px_24px_rgba(0,0,0,0.14)] border border-[#D8D1C5] py-2 z-50">
                   {toolLinks.map((link) => (
                     <Link
                       key={link.href}
@@ -126,15 +126,15 @@ export default function Header() {
                 const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement;
                 btn?.click();
               }}
-              className="px-3.5 py-1.5 text-sm font-semibold text-white rounded-md transition-all duration-200 hover:bg-[rgba(124,58,237,0.35)]"
-              style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.4)" }}
+              className="px-3.5 py-1.5 text-sm font-semibold text-white rounded-sm transition-colors duration-150 hover:bg-white/15"
+              style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.22)" }}
             >
               💬 Fråga AI
             </button>
             <Link
               href="/hitta-avtal"
-              className="ml-1 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:-translate-y-px active:translate-y-0 rounded-md transition-all duration-200 shadow-[0_2px_8px_rgba(217,119,6,0.25)] hover:shadow-[0_4px_16px_rgba(217,119,6,0.35)]"
-              style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}
+              className="ml-1 px-5 py-2 text-sm font-semibold text-white rounded-sm transition-colors duration-150 hover:bg-[#955524]"
+              style={{ background: "#B56A2D" }}
             >
               Hitta ditt avtal
             </Link>
@@ -165,7 +165,7 @@ export default function Header() {
                 href="/"
                 onClick={() => setMobileOpen(false)}
                 className="text-xl text-primary"
-                style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}
+                style={{ fontFamily: "var(--font-serif)" }}
               >
                 kollektivavtal.ai
               </Link>
@@ -197,7 +197,7 @@ export default function Header() {
               <Link
                 href="/hitta-avtal"
                 onClick={() => setMobileOpen(false)}
-                className="block mt-6 text-center px-5 py-3 text-sm font-semibold uppercase tracking-widest text-white bg-accent rounded-lg"
+                className="block mt-6 text-center px-5 py-3 text-[16px] font-semibold text-white bg-[#B56A2D] rounded-sm"
               >
                 Hitta ditt avtal
               </Link>

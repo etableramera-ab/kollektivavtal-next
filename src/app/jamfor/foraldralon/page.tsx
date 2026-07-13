@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { agreements } from "@/data/agreements";
+import { notFound } from "next/navigation";
+import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ const columns = [
   { key: "sector", label: "Sektor" },
 ];
 
-const rows = agreements.map((a) => ({
+const rows = publicAgreements.map((a) => ({
   slug: a.slug,
   name: a.shortName,
   parentalPay: a.keyFacts.parentalPay,
@@ -21,6 +22,7 @@ const rows = agreements.map((a) => ({
 }));
 
 export default function Foraldralon() {
+  notFound();
   return (
     <TopicComparisonPage
       title="Föräldralön per kollektivavtal 2026"

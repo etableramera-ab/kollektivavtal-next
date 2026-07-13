@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
@@ -9,7 +8,6 @@ import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import { getWageData } from "@/lib/scb-wages";
-import { occupations } from "@/data/occupations";
 
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
@@ -22,25 +20,10 @@ const coverageData = [
 ];
 
 const keyStats = [
-  { end: 515, label: "kollektivavtal" },
-  { end: 3.4, label: "miljoner anställda", decimals: true },
-  { end: 92, suffix: "%", label: "avtalstäckning" },
-  { end: 6.4, suffix: "%", label: "löneökningstakt (märket)", decimals: true },
+  { end: 600, suffix: "+", label: "centrala kollektivavtal" },
+  { end: 4, suffix: "+", label: "miljoner anställda omfattades 2025" },
+  { end: 88, suffix: "%", label: "avtalstäckning 2025" },
 ];
-
-const featuredSlugs = ["systemutvecklare", "sjukskoterska", "byggnadsarbetare", "butikschef"];
-const featuredSet = new Set(featuredSlugs);
-const featuredImg: Record<string, string> = {
-  "systemutvecklare": "/Images/sectors/it-tech.jpg",
-  "sjukskoterska": "/Images/sectors/vard-omsorg.jpg",
-  "byggnadsarbetare": "/Images/sectors/bygg-anlaggning.jpg",
-  "butikschef": "/Images/sectors/handel.jpg",
-};
-const top4 = featuredSlugs.map((s) => occupations.find((o) => o.slug === s)!).filter(Boolean);
-const rest8 = [...occupations]
-  .filter((o) => !featuredSet.has(o.slug))
-  .sort((a, b) => b.salary.median - a.salary.median)
-  .slice(0, 8);
 
 export default function StatistikOverview() {
   const wageData = getWageData();
@@ -48,7 +31,7 @@ export default function StatistikOverview() {
   return (
     <>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
@@ -69,70 +52,16 @@ export default function StatistikOverview() {
               <AnimatedSection key={stat.label} delay={i * 0.1}>
                 <div className={`text-center py-3 md:py-0 ${i > 0 ? "md:border-l md:border-border md:pl-16" : ""}`}>
                   <p className="text-3xl sm:text-[48px] text-primary leading-none" style={serif}>
-                    {stat.decimals ? (
-                      <>{stat.end.toLocaleString("sv-SE")}{stat.suffix || ""}</>
-                    ) : (
-                      <CountUp end={stat.end} suffix={stat.suffix || ""} duration={1.5} />
-                    )}
+                    <CountUp end={stat.end} suffix={stat.suffix || ""} duration={1.5} />
                   </p>
                   <p className="text-[15px] text-text-secondary mt-2">{stat.label}</p>
                 </div>
               </AnimatedSection>
             ))}
           </div>
-          <p className="text-[13px] text-[#6B7280] mt-5 text-center">Källa: Medlingsinstitutet, SCB</p>
-        </div>
-      </section>
-
-      {/* 2. Populära yrken */}
-      <section className="py-10 sm:py-12">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="border-t border-border pt-8 mb-6">
-            <AnimatedSection>
-              <h2 className="text-3xl sm:text-[40px] text-text-primary" style={serif}>
-                Populära yrken — vad tjänar de?
-              </h2>
-              <p className="text-[16px] text-text-secondary mt-2">De högst betalda yrkena med kollektivavtal</p>
-            </AnimatedSection>
-          </div>
-
-          {/* Top 4 with images */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {top4.map((o, i) => (
-              <AnimatedSection key={o.slug} delay={i * 0.05}>
-                <Link href={`/yrke/${o.slug}`} className="block h-full group">
-                  <div className="rounded-xl border border-border bg-white overflow-hidden h-full hover:-translate-y-[2px] hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all duration-[250ms]">
-                    <div className="relative h-[100px]">
-                      <Image src={featuredImg[o.slug] || "/Images/misc/meeting-room.jpg"} alt={o.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, 25vw" />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-[16px] text-text-primary group-hover:text-primary transition-colors font-medium">{o.title}</p>
-                      <p className="text-[24px] text-accent mt-1" style={serif}>{o.salary.median.toLocaleString("sv-SE")} kr</p>
-                      <p className="text-[12px] text-text-secondary">medianlön/mån</p>
-                    </div>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          {/* Rest 8 as compact list */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
-            {rest8.map((o, i) => (
-              <AnimatedSection key={o.slug} delay={0.2 + i * 0.02}>
-                <Link href={`/yrke/${o.slug}`} className="block">
-                  <div className="flex items-center justify-between py-3 border-b border-surface-dark hover:bg-background -mx-2 px-2 rounded transition-colors">
-                    <span className="text-[15px] font-medium text-text-primary">{o.title}</span>
-                    <span className="text-[18px] text-accent shrink-0 ml-3" style={serif}>{o.salary.median.toLocaleString("sv-SE")} kr</span>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <Link href="/yrke" className="inline-flex items-center gap-1 text-[15px] font-semibold text-primary mt-5 hover:underline min-h-[44px]">
-            Se alla {occupations.length} yrken <ArrowRight size={14} />
-          </Link>
+          <p className="text-[13px] text-[#6B7280] mt-5 text-center">
+            Källa: <a href="https://www.mi.se/nyheter/2026/kollektivavtal-for-mer-an-4-miljoner-anstallda/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Medlingsinstitutet, statistik för 2025</a>
+          </p>
         </div>
       </section>
 
@@ -198,7 +127,9 @@ export default function StatistikOverview() {
                     <span className="text-sm font-semibold text-text-primary">{d.value}%</span>
                   </div>
                 ))}
-                <p className="text-[13px] text-[#6B7280] pt-2">Källa: Medlingsinstitutet</p>
+                <p className="text-[13px] text-[#6B7280] pt-2">
+                  Källa: <a href="https://www.mi.se/publikationer/kollektivavtalstackning-och-arbetsmarknadens-organisationer-2025/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Medlingsinstitutet 2025</a>
+                </p>
               </div>
             </div>
           </AnimatedSection>
@@ -211,13 +142,13 @@ export default function StatistikOverview() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link href="/statistik/loner" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all block">
               <h3 className="font-semibold text-text-primary group-hover:text-primary transition-colors">Lönestatistik per bransch</h3>
-              <p className="text-sm text-text-secondary mt-1">Detaljerad lönestatistik med percentiler och filter</p>
+              <p className="text-sm text-text-secondary mt-1">Medianlöner per bransch från SCB 2023</p>
               <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Se lönedata <ArrowRight size={14} /></span>
             </Link>
             <Link href="/statistik/avtalsrorelsen" className="group rounded-xl border border-border bg-white p-6 hover:border-primary hover:shadow-[0_12px_32px_rgba(0,0,0,0.14)] transition-all block">
-              <h3 className="font-semibold text-text-primary group-hover:text-primary transition-colors">Avtalsrörelsen 2025–2027</h3>
-              <p className="text-sm text-text-secondary mt-1">Status, resultat och nästa omförhandling</p>
-              <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Följ utvecklingen <ArrowRight size={14} /></span>
+              <h3 className="font-semibold text-text-primary group-hover:text-primary transition-colors">Avtalsperioder</h3>
+              <p className="text-sm text-text-secondary mt-1">Perioder hämtade från avtalskällorna</p>
+              <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary mt-3">Se perioderna <ArrowRight size={14} /></span>
             </Link>
           </div>
         </div>

@@ -12,13 +12,13 @@ interface Message {
 }
 
 const chatTexts: Record<string, { label: string; title: string; subtitle: string; placeholder: string; disclaimer: string; questions: string[] }> = {
-  sv: { label: "Fråga om ditt avtal", title: "AI-expert på kollektivavtal", subtitle: "Svarar på frågor om alla 515 avtal", placeholder: "Ställ en fråga om ditt avtal...", disclaimer: "AI-svar är vägledande och kan innehålla fel", questions: ["Vad tjänar en undersköterska?", "Vad är OB-tillägg?", "Har jag rätt till föräldralön?", "Vilken uppsägningstid gäller?"] },
-  en: { label: "Ask about your agreement", title: "AI expert on collective agreements", subtitle: "Answers questions about all 515 agreements", placeholder: "Ask a question about your agreement...", disclaimer: "AI answers are for guidance and may contain errors", questions: ["What does a nurse earn?", "What are unsocial hours supplements?", "Am I entitled to parental pay?", "What notice period applies?"] },
-  ar: { label: "اسأل عن اتفاقيتك", title: "خبير ذكاء اصطناعي في الاتفاقيات", subtitle: "يجيب على أسئلة حول جميع 515 اتفاقية", placeholder: "...اطرح سؤالاً عن اتفاقيتك", disclaimer: "إجابات الذكاء الاصطناعي إرشادية وقد تحتوي على أخطاء", questions: ["كم يكسب الممرض؟", "ما هو بدل الأوقات غير الاجتماعية؟", "هل لدي حق في إجازة الوالدين؟"] },
-  so: { label: "Ka weydii heshiiskaaga", title: "Khabiirka AI ee heshiisyada", subtitle: "Wuxuu ka jawaabaa su'aalaha 515 heshiis", placeholder: "Su'aal ka weydii heshiiskaaga...", disclaimer: "Jawaabaha AI waa hagid", questions: ["Muxuu qaataa kalkaaliyaha?", "Maxay yihiin lacagaha OB?"] },
-  fa: { label: "درباره قراردادتان بپرسید", title: "کارشناس هوش مصنوعی قراردادها", subtitle: "به سوالات درباره 515 قرارداد پاسخ می‌دهد", placeholder: "سوالی درباره قراردادتان بپرسید...", disclaimer: "پاسخ‌های هوش مصنوعی راهنما هستند", questions: ["حقوق پرستار چقدر است؟", "فوق‌العاده ساعات غیراجتماعی چیست؟"] },
-  es: { label: "Pregunta sobre tu convenio", title: "Experto IA en convenios", subtitle: "Responde preguntas sobre los 515 convenios", placeholder: "Haz una pregunta sobre tu convenio...", disclaimer: "Las respuestas de IA son orientativas", questions: ["¿Cuánto gana una enfermera?", "¿Qué es el complemento por horas no sociales?"] },
-  pl: { label: "Zapytaj o swój układ", title: "Ekspert AI ds. układów zbiorowych", subtitle: "Odpowiada na pytania o 515 układów", placeholder: "Zadaj pytanie o swój układ...", disclaimer: "Odpowiedzi AI mają charakter orientacyjny", questions: ["Ile zarabia pielęgniarka?", "Co to jest dodatek za godziny niespołeczne?"] },
+  sv: { label: "Fråga om ditt avtal", title: "AI-guide till kollektivavtal", subtitle: "Allmän vägledning — välj ett källverifierat avtal för exakta svar", placeholder: "Ställ en fråga om ditt avtal...", disclaimer: "AI-svar är vägledande och kan innehålla fel", questions: ["Hur hittar jag mitt avtal?", "Vad är OB-tillägg?", "Vad innebär föräldralön?", "Hur fungerar uppsägningstid?"] },
+  en: { label: "Ask about your agreement", title: "AI guide to collective agreements", subtitle: "General guidance — choose a source-backed agreement for specific answers", placeholder: "Ask a question about your agreement...", disclaimer: "AI answers are for guidance and may contain errors", questions: ["How do I find my agreement?", "What are unsocial hours supplements?", "What is parental pay?", "How does a notice period work?"] },
+  ar: { label: "اسأل عن اتفاقيتك", title: "دليل الاتفاقيات الجماعية", subtitle: "إرشادات عامة — اختر اتفاقية موثقة للحصول على إجابات محددة", placeholder: "...اطرح سؤالاً عن اتفاقيتك", disclaimer: "إجابات الذكاء الاصطناعي إرشادية وقد تحتوي على أخطاء", questions: ["كيف أجد اتفاقيتي؟", "ما هو بدل الأوقات غير الاجتماعية؟", "ما هو أجر الوالدين؟"] },
+  so: { label: "Ka weydii heshiiskaaga", title: "Hagaha heshiisyada shaqaalaha", subtitle: "Hagid guud — dooro heshiis la xaqiijiyay si aad u hesho jawaabo gaar ah", placeholder: "Su'aal ka weydii heshiiskaaga...", disclaimer: "Jawaabaha AI waa hagid", questions: ["Sideen ku helaa heshiiskayga?", "Maxay yihiin lacagaha OB?"] },
+  fa: { label: "درباره قراردادتان بپرسید", title: "راهنمای قراردادهای جمعی", subtitle: "راهنمای عمومی — برای پاسخ دقیق یک قرارداد دارای منبع را انتخاب کنید", placeholder: "سوالی درباره قراردادتان بپرسید...", disclaimer: "پاسخ‌های هوش مصنوعی راهنما هستند", questions: ["چگونه قرارداد خود را پیدا کنم؟", "فوق‌العاده ساعات غیراجتماعی چیست؟"] },
+  es: { label: "Pregunta sobre tu convenio", title: "Guía de convenios colectivos", subtitle: "Orientación general: elige un convenio verificado para respuestas específicas", placeholder: "Haz una pregunta sobre tu convenio...", disclaimer: "Las respuestas de IA son orientativas", questions: ["¿Cómo encuentro mi convenio?", "¿Qué es el complemento por horas no sociales?"] },
+  pl: { label: "Zapytaj o swój układ", title: "Przewodnik po układach zbiorowych", subtitle: "Informacje ogólne — wybierz układ ze źródłami, aby uzyskać szczegółowe odpowiedzi", placeholder: "Zadaj pytanie o swój układ...", disclaimer: "Odpowiedzi AI mają charakter orientacyjny", questions: ["Jak znaleźć swój układ?", "Co to jest dodatek za godziny niespołeczne?"] },
 };
 
 // Pages where inline chat already exists — hide floating button
@@ -79,22 +79,25 @@ export default function FloatingChat() {
     <>
       {/* Floating button */}
       {!open && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 sm:bottom-6 sm:right-6">
+        <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 sm:bottom-6 sm:right-6">
           {!labelDismissed && (
-            <div className="hidden sm:flex items-center gap-2 bg-white border border-[#DDD6FE] rounded-full px-4 py-2 shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-              <span className="text-[13px] font-semibold text-[#7C3AED]">{t.label}</span>
-              <button onClick={() => setLabelDismissed(true)} className="text-[#7C3AED]/50 hover:text-[#7C3AED]">
+            <div className="hidden sm:flex items-center gap-2 bg-[#FBFAF7] border border-[#D8D1C5] rounded-sm px-4 py-2 shadow-[0_2px_10px_rgba(0,0,0,0.08)]">
+              <span className="text-[14px] font-semibold text-[#285E52]">{t.label}</span>
+              <button
+                onClick={() => setLabelDismissed(true)}
+                aria-label="Dölj chattips"
+                className="text-[#285E52]/50 hover:text-[#164B3F]"
+              >
                 <X size={14} />
               </button>
             </div>
           )}
           <button
             onClick={() => setOpen(true)}
-            className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(124,58,237,0.35)] hover:scale-[1.08] hover:shadow-[0_6px_28px_rgba(124,58,237,0.45)] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-sm flex items-center justify-center bg-[#285E52] shadow-[0_4px_16px_rgba(22,75,63,0.24)] hover:bg-[#164B3F] transition-colors duration-150"
             aria-label="Öppna AI-chatt"
           >
-            <MessageCircle size={28} className="text-white" />
+            <MessageCircle size={24} className="text-white sm:w-7 sm:h-7" />
           </button>
         </div>
       )}
@@ -107,10 +110,10 @@ export default function FloatingChat() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-[51] w-full sm:w-[400px] h-[80vh] sm:h-[500px] sm:rounded-2xl rounded-t-2xl bg-white shadow-[0_-4px_40px_rgba(0,0,0,0.15)] sm:shadow-[0_4px_40px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-[51] w-full sm:w-[400px] h-[75dvh] sm:h-[500px] sm:rounded-sm bg-[#FBFAF7] shadow-[0_-4px_32px_rgba(0,0,0,0.15)] sm:shadow-[0_4px_32px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}>
+            <div className="px-5 py-4 flex items-center justify-between shrink-0 bg-[#164B3F]">
               <div>
                 <p className="text-[16px] font-semibold text-white">{t.title}</p>
                 <p className="text-[13px] text-white/80">{t.subtitle}</p>
@@ -130,7 +133,7 @@ export default function FloatingChat() {
                       <button
                         key={q}
                         onClick={() => sendMessage(q)}
-                        className="rounded-full bg-[#F5F3FF] px-4 py-2 text-[13px] font-medium text-[#7C3AED] border border-[#DDD6FE] hover:bg-[#7C3AED] hover:text-white transition-colors text-left"
+                        className="rounded-sm bg-[#E8EEE9] px-4 py-2 text-[14px] font-medium text-[#285E52] border border-[#C9D5CF] hover:bg-[#285E52] hover:text-white transition-colors text-left"
                       >
                         {q}
                       </button>
@@ -141,10 +144,10 @@ export default function FloatingChat() {
 
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[85%] rounded-xl px-4 py-2.5 text-sm leading-relaxed ${
+                  <div className={`max-w-[85%] rounded-sm px-4 py-2.5 text-[15px] leading-relaxed ${
                     msg.role === "user"
                       ? "bg-[#F0EEED] text-text-primary"
-                      : "bg-[#F5F3FF] text-text-primary border border-[#DDD6FE]"
+                      : "bg-[#E8EEE9] text-text-primary border border-[#C9D5CF]"
                   }`}>
                     <p className="whitespace-pre-wrap">{msg.content}</p>
                   </div>
@@ -153,11 +156,11 @@ export default function FloatingChat() {
 
               {loading && (
                 <div className="flex justify-start">
-                  <div className="bg-[#F5F3FF] border border-[#DDD6FE] rounded-xl px-4 py-3">
+                  <div className="bg-[#E8EEE9] border border-[#C9D5CF] rounded-sm px-4 py-3">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-[#7C3AED]/40 rounded-full animate-bounce" />
-                      <span className="w-2 h-2 bg-[#7C3AED]/40 rounded-full animate-bounce [animation-delay:0.1s]" />
-                      <span className="w-2 h-2 bg-[#7C3AED]/40 rounded-full animate-bounce [animation-delay:0.2s]" />
+                      <span className="w-2 h-2 bg-[#285E52]/40 rounded-full animate-bounce" />
+                      <span className="w-2 h-2 bg-[#285E52]/40 rounded-full animate-bounce [animation-delay:0.1s]" />
+                      <span className="w-2 h-2 bg-[#285E52]/40 rounded-full animate-bounce [animation-delay:0.2s]" />
                     </div>
                   </div>
                 </div>
@@ -174,21 +177,20 @@ export default function FloatingChat() {
             {/* Input */}
             <form
               onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
-              className="flex items-center gap-2 p-3 border-t border-[#DDD6FE] shrink-0"
+              className="flex items-center gap-2 p-3 border-t border-[#D8D1C5] shrink-0"
             >
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={t.placeholder}
-                className="flex-1 h-11 rounded-lg border border-[#DDD6FE] px-4 text-sm outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#7C3AED]/30 focus:border-[#7C3AED]"
+                className="flex-1 h-11 rounded-sm border border-[#D8D1C5] bg-white px-4 text-[15px] outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#285E52]/20 focus:border-[#285E52]"
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="h-11 w-11 rounded-lg flex items-center justify-center text-white disabled:opacity-50 transition-colors shrink-0"
-                style={{ background: "#7C3AED" }}
+                className="h-11 w-11 rounded-sm bg-[#285E52] hover:bg-[#164B3F] flex items-center justify-center text-white disabled:opacity-50 transition-colors shrink-0"
                 aria-label="Skicka"
               >
                 <Send size={18} />

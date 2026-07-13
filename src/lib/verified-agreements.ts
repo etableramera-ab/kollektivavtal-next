@@ -1,4 +1,5 @@
-// Avtal med PDF-verifierad lönedata från officiella avtalstexter
+// Avtal med aktuellt källdokument tillgängligt för kontroll.
+// Detta betyder inte att varje publik löneuppgift är hämtad ur avtalet.
 export const VERIFIED_AGREEMENTS = new Set([
   "hok-kommunal",
   "handelsavtalet",
@@ -30,8 +31,6 @@ export const VERIFIED_AGREEMENTS = new Set([
   "fastighetsavtalet",
   "skogsavtalet",
   "villkorsavtal-ofr",
-  "villkorsavtal-seko",
-  "transportavtalet",
 ]);
 
 export function isVerifiedAgreement(slug: string): boolean {

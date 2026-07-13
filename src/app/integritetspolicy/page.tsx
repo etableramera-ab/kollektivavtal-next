@@ -17,14 +17,14 @@ export default function Integritetspolicy() {
           Integritetspolicy
         </h1>
         <p className="text-sm text-text-secondary mb-8">
-          Senast uppdaterad: mars 2026
+          Senast uppdaterad: juli 2026
         </p>
 
         <div className="space-y-8 text-text-primary leading-relaxed">
           <div>
             <h2 className="text-lg font-bold mb-2">Personuppgiftsansvarig</h2>
             <p>
-              Etablera Mera AB (org.nr 559444-2526) ansvarar for behandlingen av personuppgifter
+              Etablera Mera AB (org.nr 559444-2526) ansvarar för behandlingen av personuppgifter
               på kollektivavtal.ai. Kontakta oss på{" "}
               <a href="mailto:info@kollektivavtal.ai" className="text-accent hover:underline">
                 info@kollektivavtal.ai
@@ -37,26 +37,14 @@ export default function Integritetspolicy() {
             <h2 className="text-lg font-bold mb-2">Vilka uppgifter samlar vi in?</h2>
             <ul className="list-disc pl-5 space-y-2 text-sm">
               <li>
-                <strong>Chattloggar:</strong> Meddelanden du skickar via AI-chatten lagras i
-                Supabase för att förbättra tjänsten. Inga personnummer, namn eller
-                kontaktuppgifter krävs för att använda chatten.
-              </li>
-              <li>
-                <strong>Analysdata:</strong> Vi använder Google Analytics (GA4) för att förstå hur
-                sajten används — sidvisningar, sessionslängd, ungefärlig geografisk position.
-                GA4 använder cookies (se vår{" "}
-                <Link href="/cookiepolicy" className="text-accent hover:underline">
-                  cookiepolicy
-                </Link>
-                ).
+                <strong>AI-chatt:</strong> Meddelandet och en kort del av den aktuella
+                chatthistoriken skickas till Anthropic för att skapa ett svar. Du behöver inte
+                ange namn eller kontaktuppgifter. Skriv inte känsliga personuppgifter i chatten.
               </li>
               <li>
                 <strong>Annonsdata:</strong> Google AdSense kan visa anpassade annonser baserat
-                på dina intressen. Google samlar in data via cookies för detta syfte.
-              </li>
-              <li>
-                <strong>E-postadress:</strong> Om du anger din e-post i ett notifieringsformulär
-                lagras den för att kunna skicka den avisering du begärt.
+                på ditt samtycke. Mer information finns i vår{" "}
+                <Link href="/cookiepolicy" className="text-accent hover:underline">cookiepolicy</Link>.
               </li>
             </ul>
           </div>
@@ -64,10 +52,9 @@ export default function Integritetspolicy() {
           <div>
             <h2 className="text-lg font-bold mb-2">Rättslig grund</h2>
             <p className="text-sm">
-              Vi behandlar personuppgifter med stöd av berättigat intresse (artikel 6.1 f GDPR)
-              för analys och tjänsteförbättring, samt samtycke (artikel 6.1 a GDPR) för
-              annonscookies. Du kan när som helst återkalla ditt samtycke genom att rensa cookies
-              i din webbläsare.
+              AI-meddelanden behandlas för att kunna leverera den funktion du själv använder.
+              Annonscookies och liknande teknik används efter samtycke där samtycke krävs. Du kan
+              ändra dina val via Googles samtyckesruta eller webbläsarens inställningar.
             </p>
           </div>
 
@@ -77,8 +64,7 @@ export default function Integritetspolicy() {
               Vi säljer aldrig dina personuppgifter. Data delas med:
             </p>
             <ul className="list-disc pl-5 space-y-1 text-sm mt-2">
-              <li>Google (Analytics och AdSense) — för analys och annonsering</li>
-              <li>Supabase — för lagring av chattloggar (servrar inom EU/EES)</li>
+              <li>Google AdSense — för annonsering och samtyckeshantering</li>
               <li>Anthropic — för AI-behandling av chattmeddelanden</li>
               <li>Vercel — för hosting av webbplatsen</li>
             </ul>
@@ -87,9 +73,8 @@ export default function Integritetspolicy() {
           <div>
             <h2 className="text-lg font-bold mb-2">Lagringstid</h2>
             <p className="text-sm">
-              Chattloggar lagras i upp till 12 månader. Analysdata i Google Analytics lagras
-              enligt Googles standardinställningar (14 månader). E-postadresser lagras tills du
-              begär radering.
+              Sajten sparar inte chattmeddelanden i en egen databas. Anthropic och Google
+              behandlar uppgifter enligt sina respektive villkor och lagringsrutiner.
             </p>
           </div>
 

@@ -13,7 +13,7 @@ import {
   Cpu,
   HardHat,
   ShoppingCart,
-  Truck,
+  Wrench,
   UtensilsCrossed,
   Landmark,
   ArrowRight,
@@ -29,7 +29,7 @@ import {
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
 import SalaryChart from "@/components/SalaryChart";
-import { blogPosts } from "@/data/blog-posts";
+import { publicBlogPosts as blogPosts } from "@/lib/public-blog-posts";
 import { courtCases as allCourtCases } from "@/data/court-cases";
 import { getDictionary } from "@/lib/dictionaries";
 
@@ -52,10 +52,10 @@ export default function LocaleHomePage() {
   const DirArrow = isRTL ? ArrowLeft : ArrowRight;
 
   const keyStats = [
-    { number: 515, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
-    { number: 3.4, suffix: "", label: dict.hero.stats.employees, icon: Users },
-    { number: 92, suffix: "%", label: dict.hero.stats.coverage, icon: ShieldCheck },
-    { number: 515, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
+    { number: 30, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
+    { number: 4, suffix: "", label: dict.hero.stats.employees, icon: Users },
+    { number: 88, suffix: "%", label: dict.hero.stats.coverage, icon: ShieldCheck },
+    { number: 2009, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
   ];
 
   const t = (sv: string, en: string, ar: string) =>
@@ -70,11 +70,11 @@ export default function LocaleHomePage() {
       slug: "hok-kommunal",
     },
     {
-      name: "Teknikavtalet",
-      desc: t("Industrins största avtal för ingenjörer, tekniker och montörer", "Industry's largest agreement for engineers, technicians and assemblers", "أكبر اتفاقية صناعية للمهندسين والفنيين والمركّبين"),
-      employees: "~300 000",
+      name: "Teknikavtalet IF Metall",
+      desc: t("Avtal för industriarbetare inom teknikföretag", "Agreement for industrial workers in technology companies", "اتفاقية لعمال الصناعة في شركات التقنية"),
+      employees: "~200 000",
       icon: Cpu,
-      slug: "teknikavtalet",
+      slug: "teknikavtalet-ifmetall",
     },
     {
       name: "Handelsavtalet",
@@ -91,18 +91,18 @@ export default function LocaleHomePage() {
       slug: "byggavtalet",
     },
     {
-      name: "IT-avtalet",
-      desc: t("Avtal för anställda inom IT- och telekombranschen", "Agreement for employees in IT and telecom", "اتفاقية للموظفين في قطاع تكنولوجيا المعلومات والاتصالات"),
-      employees: "~100 000",
+      name: "Teknikavtalet IF Metall",
+      desc: t("Avtal för industriarbetare inom teknikföretag", "Agreement for industrial workers in technology companies", "اتفاقية لعمال الصناعة في شركات التقنية"),
+      employees: "~200 000",
       icon: Cpu,
-      slug: "it-avtalet",
+      slug: "teknikavtalet-ifmetall",
     },
     {
-      name: "Transportavtalet",
-      desc: t("Avtal för yrkesförare, lagerarbetare och logistikpersonal", "Agreement for professional drivers, warehouse and logistics staff", "اتفاقية للسائقين المحترفين وعمال المستودعات واللوجستيات"),
-      employees: "~120 000",
-      icon: Truck,
-      slug: "transportavtalet",
+      name: "Installationsavtalet",
+      desc: t("Avtal för elektriker och installationstekniker", "Agreement for electricians and installation technicians", "اتفاقية للكهربائيين وفنيي التركيبات"),
+      employees: "~40 000",
+      icon: Wrench,
+      slug: "installationsavtalet",
     },
     {
       name: "Hotell & Restaurang",
@@ -179,11 +179,7 @@ export default function LocaleHomePage() {
                 <div className="rounded-[12px] border border-border bg-white p-4 sm:p-6 shadow-sm text-center">
                   <stat.icon size={28} className="mx-auto text-accent mb-3" />
                   <p className="text-xl sm:text-2xl font-bold text-text-primary">
-                    {i === 1 ? (
-                      <><CountUp end={3} duration={1.5} />,<CountUp end={4} duration={1.5} /></>
-                    ) : (
-                      <CountUp end={stat.number} suffix={stat.suffix} duration={1.5} />
-                    )}
+                    <CountUp end={stat.number} suffix={stat.suffix} duration={1.5} />
                   </p>
                   <p className="text-xs sm:text-sm text-text-secondary mt-1">{stat.label}</p>
                 </div>

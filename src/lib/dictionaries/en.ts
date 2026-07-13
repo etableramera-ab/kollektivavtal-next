@@ -4,7 +4,7 @@ const en: Dictionary = {
   metadata: {
     siteName: "kollektivavtal.ai",
     siteDescription:
-      "Sweden's most comprehensive guide to collective agreements. 515 agreements, AI chat, salary data and court cases.",
+      "A source-aware guide to Swedish collective agreements, salary data and court cases.",
   },
   nav: {
     home: "Home",
@@ -22,14 +22,14 @@ const en: Dictionary = {
   hero: {
     title: "Swedish Collective Agreements — In Plain Language",
     subtitle:
-      "Sweden's largest AI-powered guide to all 515 collective agreements. Search, compare and chat with an expert on your specific agreement.",
+      "Search and compare Swedish collective agreements with cautious AI guidance and clear source information.",
     cta: "Find Your Agreement",
     ctaSecondary: "Browse All Agreements",
     stats: {
-      agreements: "collective agreements covered",
+      agreements: "agreements with source material",
       employees: "million employees covered",
       coverage: "coverage",
-      aiExpert: "AI expert answers",
+      aiExpert: "Labour Court rulings in the database",
     },
   },
   home: {

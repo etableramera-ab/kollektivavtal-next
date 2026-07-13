@@ -41,10 +41,10 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="text-white" style={{ background: "linear-gradient(180deg, #0D5E58 0%, #0A4F4A 100%)" }}>
+    <footer className="text-white bg-[#164B3F] border-t border-white/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <div className="mb-8">
-          <Link href="/" style={{ fontFamily: "'DM Serif Display', serif", fontSize: '20px', fontWeight: 400, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+          <Link href="/" style={{ fontFamily: "var(--font-serif)", fontSize: '20px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
             kollektivavtal.ai
           </Link>
         </div>
@@ -95,8 +95,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/avtal/teknikavtalet" className="hover:text-white transition-colors inline-block py-2">
-                  Teknikavtalet
+                <Link href="/avtal/teknikavtalet-ifmetall" className="hover:text-white transition-colors inline-block py-2">
+                  Teknikavtalet IF Metall
                 </Link>
               </li>
               <li>

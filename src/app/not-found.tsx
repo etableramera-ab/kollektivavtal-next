@@ -20,7 +20,7 @@ export default function NotFound() {
           <Link
             href="/"
             className="px-6 py-3 rounded-lg text-sm font-semibold uppercase tracking-widest text-white transition-all duration-200 hover:-translate-y-px"
-            style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}
+            style={{ background: "#B56A2D" }}
           >
             Till startsidan
           </Link>

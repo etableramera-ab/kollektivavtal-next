@@ -1,45 +1,45 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter, DM_Serif_Display } from "next/font/google";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Disclaimer from "@/components/Disclaimer";
-import CookieConsent from "@/components/CookieConsent";
 import ScrollToTop from "@/components/ScrollToTop";
 import FloatingChat from "@/components/FloatingChat";
 import "./globals.css";
 
-const inter = Inter({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-source-sans",
   display: "swap",
 });
 
-const dmSerifDisplay = DM_Serif_Display({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-dm-serif",
+  weight: ["500", "600"],
+  variable: "--font-source-serif",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Kollektivavtal.ai — Chatta med en AI-expert på Sveriges 515 kollektivavtal",
+  title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
   description:
-    "Sök bland alla 515 kollektivavtal, jämför löner och villkor, och chatta med en AI-expert som kan just ditt avtal. Helt gratis.",
+    "Sök och jämför svenska kollektivavtal. Få källstyrd vägledning om lön, OB-tillägg, semester och andra villkor.",
   openGraph: {
-    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 515 avtal",
+    title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
     description:
-      "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
+      "Sök och jämför svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
     url: "https://kollektivavtal.ai",
     siteName: "kollektivavtal.ai",
     locale: "sv_SE",
     type: "website",
-    images: [{ url: "https://kollektivavtal.ai/Images/og-image.png", width: 1200, height: 630, alt: "kollektivavtal.ai — Chatta med en AI-expert på alla 515 kollektivavtal" }],
+    images: [{ url: "https://kollektivavtal.ai/Images/og-image.png", width: 1200, height: 630, alt: "kollektivavtal.ai — kollektivavtal på klarspråk" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kollektivavtal.ai — Chatta med en AI-expert på alla 515 avtal",
-    description: "Förstå din lön, OB-tillägg, semester och pension. AI-experten har läst alla kollektivavtal i Sverige.",
+    title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
+    description: "Sök och jämför svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
     images: ["https://kollektivavtal.ai/Images/og-image.png"],
   },
   robots: {
@@ -68,7 +68,7 @@ const jsonLd = {
   url: "https://kollektivavtal.ai",
   logo: "https://kollektivavtal.ai/logo.png",
   description:
-    "Sveriges största AI-drivna plattform för kollektivavtal. Drivs av Etablera Mera AB.",
+    "Oberoende plattform som gör svenska kollektivavtal lättare att hitta och förstå. Drivs av Etablera Mera AB.",
   contactPoint: {
     "@type": "ContactPoint",
     email: "info@kollektivavtal.ai",
@@ -90,7 +90,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <head>
-        <meta name="theme-color" content="#0D5E58" />
+        <meta name="theme-color" content="#164B3F" />
         <meta name="google-site-verification" content="Bm7t4B2dfkjxPTdY8c6p6-m7cY-r_fFtXhKgI5SpUl8" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
@@ -98,7 +98,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
+      <body className={`${sourceSans.className} ${sourceSans.variable} ${sourceSerif.variable} antialiased`}>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9148299323154794"
@@ -107,13 +107,12 @@ export default function RootLayout({
         />
         <ScrollToTop />
         <Header />
-        <div className="bg-[#F8F7F4]">
+        <div className="bg-background">
           <main className="min-h-screen">{children}</main>
           <Disclaimer />
         </div>
         <Footer />
         <FloatingChat />
-        <CookieConsent />
       </body>
     </html>
   );

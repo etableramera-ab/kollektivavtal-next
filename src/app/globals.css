@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0F766E;
-  --color-primary-light: #14B8A6;
-  --color-primary-dark: #0D5E58;
-  --color-accent: #D97706;
-  --color-accent-hover: #B45309;
-  --color-background: #F8F7F4;
-  --color-surface-dark: #F0EEED;
+  --color-primary: #285E52;
+  --color-primary-light: #5F8B7F;
+  --color-primary-dark: #164B3F;
+  --color-accent: #B56A2D;
+  --color-accent-hover: #955524;
+  --color-background: #F4F1EA;
+  --color-surface-dark: #E6E1D8;
   --color-white: #FFFFFF;
-  --color-text-primary: #1A1A1A;
-  --color-text-secondary: #4B5563;
+  --color-text-primary: #17201D;
+  --color-text-secondary: #46514D;
   --color-success: #16A34A;
-  --color-border: #E5E2DD;
-  --color-card: #FFFFFF;
-  --color-chat: #7C3AED;
-  --color-chat-hover: #6D28D9;
-  --color-chat-light: #F5F3FF;
-  --color-chat-border: #DDD6FE;
+  --color-border: #D8D1C5;
+  --color-card: #FBFAF7;
+  --color-chat: #285E52;
+  --color-chat-hover: #164B3F;
+  --color-chat-light: #E8EEE9;
+  --color-chat-border: #C9D5CF;
 
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-sans: var(--font-source-sans), system-ui, sans-serif;
+  --font-serif: var(--font-source-serif), Georgia, serif;
+  --font-dm-serif: var(--font-source-serif);
 
   --radius-card: 12px;
   --radius-button: 8px;
@@ -28,7 +29,7 @@
 
 body {
   color: var(--color-text-primary);
-  background: #0D5E58;
+  background: #164B3F;
   font-family: var(--font-sans);
 }
 

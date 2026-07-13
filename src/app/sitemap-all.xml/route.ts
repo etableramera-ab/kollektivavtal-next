@@ -1,6 +1,5 @@
-import { agreements } from "@/data/agreements";
+import { publicAgreements, publicComparisons } from "@/lib/public-agreements";
 import { courtCases } from "@/data/court-cases";
-import { vsComparisons } from "@/data/comparisons";
 
 const BASE = "https://kollektivavtal.ai";
 
@@ -8,26 +7,15 @@ export function GET() {
   const now = new Date().toISOString();
 
   const topAgreementSlugs = new Set(
-    [...agreements]
+    [...publicAgreements]
       .sort((a, b) => b.employeeCount - a.employeeCount)
       .slice(0, 20)
       .map((a) => a.slug)
   );
 
-  const remainingAgreements = agreements.filter(
+  const remainingAgreements = publicAgreements.filter(
     (a) => !topAgreementSlugs.has(a.slug)
   );
-
-  const jamforTopics = [
-    "ob-tillagg",
-    "minimiioner",
-    "semester",
-    "foraldralon",
-    "uppsagningstid",
-    "pension",
-    "overtid",
-    "arbetstid",
-  ];
 
   const urls: { loc: string; lastmod?: string }[] = [
     { loc: `${BASE}/avtal` },
@@ -35,8 +23,7 @@ export function GET() {
     { loc: `${BASE}/yrke` },
     { loc: `${BASE}/blogg` },
     { loc: `${BASE}/jamfor` },
-    ...jamforTopics.map((t) => ({ loc: `${BASE}/jamfor/${t}` })),
-    ...vsComparisons.map((c) => {
+    ...publicComparisons.map((c) => {
       const sorted = [c.slug1, c.slug2].sort();
       return { loc: `${BASE}/jamfor/${sorted[0]}-vs-${sorted[1]}` };
     }),

@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Search, ChevronRight, ShieldCheck } from "lucide-react";
-import { agreements } from "@/data/agreements";
+import { publicAgreements } from "@/lib/public-agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
@@ -22,17 +22,18 @@ const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 // Handpicked top 8 workplace agreements (largest by employees, excluding structural/pension)
 const featuredSlugs = [
   "hok-kommunal",       // 540 000 — vard-omsorg.jpg
-  "teknikavtalet",      // 300 000 — industri.jpg
+  "teknikavtalet-ifmetall",
   "handelsavtalet",     // 250 000 — handel.jpg
   "byggavtalet",        // 100 000 — bygg-anlaggning.jpg
   "ab-kommunalt",       // 1 100 000 — skola-utbildning.jpg
-  "it-avtalet",         // 100 000 — it-tech.jpg
-  "transportavtalet",   // 80 000 — transport.jpg
+  "installationsavtalet",
+  "vvs-montorsavtalet",
   "hotell-restaurang",  // 120 000 — hotell-restaurang.jpg
 ];
 
 const featuredImages: Record<string, { src: string; alt: string }> = {
   "hok-kommunal":      { src: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  "teknikavtalet-ifmetall": { src: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
   "teknikavtalet":     { src: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
   "handelsavtalet":    { src: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
   "byggavtalet":       { src: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
@@ -40,9 +41,11 @@ const featuredImages: Record<string, { src: string; alt: string }> = {
   "it-avtalet":        { src: "/Images/sectors/it-tech.jpg", alt: "IT-utvecklare vid dator" },
   "transportavtalet":  { src: "/Images/sectors/transport.jpg", alt: "Lastbilschaufför" },
   "hotell-restaurang": { src: "/Images/sectors/hotell-restaurang.jpg", alt: "Kock i restaurangkök" },
+  "installationsavtalet": { src: "/Images/sectors/bygg-anlaggning.jpg", alt: "Elektriker på arbetsplats" },
+  "vvs-montorsavtalet": { src: "/Images/sectors/bygg-anlaggning.jpg", alt: "VVS-montör på arbetsplats" },
 };
 
-const top8 = featuredSlugs.map((slug) => agreements.find((a) => a.slug === slug)!).filter(Boolean);
+const top8 = featuredSlugs.map((slug) => publicAgreements.find((a) => a.slug === slug)!).filter(Boolean);
 const top8Slugs = new Set(featuredSlugs);
 
 const PAGE_SIZE = 30;
@@ -53,7 +56,7 @@ export default function AvtalOverview() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const listAgreements = useMemo(() => {
-    let result = agreements.filter((a) => !top8Slugs.has(a.slug));
+    let result = publicAgreements.filter((a) => !top8Slugs.has(a.slug));
     if (sector !== "alla") result = result.filter((a) => a.sector === sector);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -72,14 +75,14 @@ export default function AvtalOverview() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-12 pb-12 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-12 pb-12 sm:pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={serif}>
               Kollektivavtal i Sverige
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              515 avtal sammanfattade på klarspråk — löner, OB-tillägg, semester och pension.
+              Utforska avtalsområden och villkor på klarspråk — med tydlig märkning av källunderlaget.
             </p>
           </AnimatedSection>
         </div>
@@ -140,7 +143,7 @@ export default function AvtalOverview() {
                 type="text"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
-                placeholder="Sök bland 515 avtal..."
+                placeholder="Sök bland avtal..."
                 className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
               />
             </div>
@@ -235,7 +238,7 @@ export default function AvtalOverview() {
           )}
 
           <p className="text-xs text-[#6B7280] mt-8 text-center">
-            {agreements.length} av 515 avtal sammanfattade. Fler läggs till löpande.
+            Avtalsguiden uppdateras löpande. Kontrollera alltid källstatusen på avtalssidan.
           </p>
         </div>
       </section>

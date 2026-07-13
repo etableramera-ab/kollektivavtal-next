@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { blogPosts } from "@/data/blog-posts";
+import { publicBlogPosts as blogPosts } from "@/lib/public-blog-posts";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const blogImages: Record<string, string> = {
@@ -32,7 +32,7 @@ export default function BloggOverview() {
 
   return (
     <>
-      <section style={{ background: "linear-gradient(135deg, #0F766E 0%, #0A5F59 40%, #0D6B64 100%)" }} className="text-white pt-10 pb-10 sm:pb-16">
+      <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
@@ -42,6 +42,18 @@ export default function BloggOverview() {
               Löner, rättigheter, avtalsrörelsen och praktiska guider
             </p>
           </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="py-10">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+          <div className="border-l-[3px] border-l-accent bg-[#EFE7DA] p-6 text-left">
+            <h2 className="text-xl text-text-primary">Artiklarna källgranskas</h2>
+            <p className="mt-2 text-text-secondary leading-relaxed">
+              Vi publicerar guiderna igen när varje siffra och avtalsuppgift har kontrollerats mot
+              en tydlig källa.
+            </p>
+          </div>
         </div>
       </section>
 

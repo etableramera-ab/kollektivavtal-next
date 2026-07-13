@@ -17,8 +17,9 @@ export function generateStaticParams() {
     .map((locale) => ({ locale }));
 }
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = params.locale as Locale;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = localeParam as Locale;
   return {
     alternates: {
       canonical: buildLocalizedUrl(locale, "/"),
@@ -41,23 +42,24 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  if (!locales.includes(params.locale as (typeof locales)[number])) {
+  const { locale } = await params;
+  if (!locales.includes(locale as (typeof locales)[number])) {
     notFound();
   }
 
-  const isRTL = params.locale === "ar" || params.locale === "fa";
+  const isRTL = locale === "ar" || locale === "fa";
 
   return (
     <div
       dir={isRTL ? "rtl" : "ltr"}
-      lang={params.locale}
+      lang={locale}
       className={isRTL ? notoSansArabic.variable : ""}
       style={isRTL ? { fontFamily: "var(--font-arabic), sans-serif" } : {}}
     >

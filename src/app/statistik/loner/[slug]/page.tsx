@@ -3,11 +3,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ShieldCheck, ArrowRight } from "lucide-react";
 import { fallbackWageData } from "@/lib/scb-wages";
-import { agreements } from "@/data/agreements";
-import { occupations } from "@/data/occupations";
+import { publicAgreements } from "@/lib/public-agreements";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const branchAgreements: Record<string, string[]> = {
@@ -24,44 +23,29 @@ const branchAgreements: Record<string, string[]> = {
   "hotell-restaurang": ["hotell-restaurang"],
 };
 
-const branchOccupations: Record<string, string[]> = {
-  "it-telekom": ["systemutvecklare", "projektledare-it", "it-konsult"],
-  "bank-finans": ["bankradgivare"],
-  "industri": ["maskinoperator", "cnc-opertor", "svetsare"],
-  "bygg-anlaggning": ["byggnadsarbetare", "elektriker", "vvs-montorer"],
-  "transport": ["lastbilschauffor", "bussforare"],
-  "utbildning": ["larare-grundskola", "forskollare"],
-  "vard-omsorg": ["underskoterska", "sjukskoterska", "vardbitrade"],
-  "handel": ["butikssaljare"],
-  "hotell-restaurang": ["kock", "servitor"],
-};
-
 export function generateStaticParams() {
   return fallbackWageData.map((d) => ({ slug: d.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const branch = fallbackWageData.find((d) => d.slug === params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const branch = fallbackWageData.find((d) => d.slug === slug);
   if (!branch) return {};
   return {
-    title: `Lönestatistik ${branch.label} 2026 — Medianlön och percentiler | kollektivavtal.ai`,
-    description: `Se medianlön, P10 och P90 för ${branch.label} i Sverige. ${branch.medianWage.toLocaleString("sv-SE")} kr medianlön. Källa: SCB.`,
-    alternates: { canonical: `https://kollektivavtal.ai/statistik/loner/${params.slug}` },
+    title: `Lönestatistik ${branch.label} — SCB 2023 | kollektivavtal.ai`,
+    description: `Medianlön för ${branch.label} i Sverige enligt SCB:s lönestrukturstatistik 2023.`,
+    alternates: { canonical: `https://kollektivavtal.ai/statistik/loner/${slug}` },
   };
 }
 
-export default function BranchPage({ params }: PageProps) {
-  const branch = fallbackWageData.find((d) => d.slug === params.slug);
+export default async function BranchPage({ params }: PageProps) {
+  const { slug } = await params;
+  const branch = fallbackWageData.find((d) => d.slug === slug);
   if (!branch) notFound();
 
-  const relatedAgreementSlugs = branchAgreements[params.slug] || [];
+  const relatedAgreementSlugs = branchAgreements[slug] || [];
   const relatedAgreements = relatedAgreementSlugs
-    .map((s) => agreements.find((a) => a.slug === s))
-    .filter(Boolean);
-
-  const relatedOccupationSlugs = branchOccupations[params.slug] || [];
-  const relatedOccs = relatedOccupationSlugs
-    .map((s) => occupations.find((o) => o.slug === s))
+    .map((s) => publicAgreements.find((a) => a.slug === s))
     .filter(Boolean);
 
   return (
@@ -83,11 +67,9 @@ export default function BranchPage({ params }: PageProps) {
       <section className="py-10">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           {/* Salary cards */}
-          <div className="grid grid-cols-3 gap-4 mb-10">
+          <div className="max-w-sm mb-10">
             {[
-              { label: "Percentil 10", value: branch.p10Wage },
               { label: "Medianlön", value: branch.medianWage, highlight: true },
-              { label: "Percentil 90", value: branch.p90Wage },
             ].map((s) => (
               <div key={s.label} className={`rounded-xl border ${s.highlight ? "border-accent border-2" : "border-border"} bg-white p-5 text-center`}>
                 <p className="text-xs text-text-secondary">{s.label}</p>
@@ -106,8 +88,6 @@ export default function BranchPage({ params }: PageProps) {
 
           <p className="text-text-primary leading-relaxed mb-10">
             Inom {branch.label.toLowerCase()} är medianlönen {branch.medianWage.toLocaleString("sv-SE")} kr per månad.
-            De lägst betalda (P10) tjänar {branch.p10Wage.toLocaleString("sv-SE")} kr och
-            de högst betalda (P90) tjänar {branch.p90Wage.toLocaleString("sv-SE")} kr.
             {relatedAgreements.length > 0 && ` Inom branschen gäller ${relatedAgreements.length} kollektivavtal som täcker ${relatedAgreements.reduce((s, a) => s + a!.employeeCount, 0).toLocaleString("sv-SE")} anställda.`}
           </p>
 
@@ -126,25 +106,6 @@ export default function BranchPage({ params }: PageProps) {
                         <p className="text-sm text-text-secondary mt-0.5">{a!.employeeCount.toLocaleString("sv-SE")} anställda</p>
                       </div>
                       <ArrowRight size={16} className="text-text-secondary" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Related occupations */}
-          {relatedOccs.length > 0 && (
-            <div className="mb-10">
-              <h2 className="text-2xl sm:text-[32px] text-text-primary mb-4" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
-                Yrken inom {branch.label.toLowerCase()}
-              </h2>
-              <div className="space-y-2">
-                {relatedOccs.map((o) => (
-                  <Link key={o!.slug} href={`/yrke/${o!.slug}`} className="block rounded-xl border border-border bg-white p-4 hover:border-primary hover:shadow-sm transition-all">
-                    <div className="flex items-center justify-between">
-                      <p className="font-semibold text-text-primary">{o!.title}</p>
-                      <span className="text-lg text-accent" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>{o!.salary.median.toLocaleString("sv-SE")} kr</span>
                     </div>
                   </Link>
                 ))}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { agreements } from "@/data/agreements";
+import { notFound } from "next/navigation";
+import { publicAgreements } from "@/lib/public-agreements";
 import { parseObNumber } from "@/data/comparisons";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
@@ -17,7 +18,7 @@ const columns = [
   { key: "sector", label: "Sektor" },
 ];
 
-const rows = agreements
+const rows = publicAgreements
   .filter((a) => parseObNumber(a.keyFacts.obNight) > 0)
   .map((a) => ({
     slug: a.slug,
@@ -32,6 +33,7 @@ const rows = agreements
   .sort((a, b) => b.nightNum - a.nightNum);
 
 export default function OBTillagg() {
+  notFound();
   return (
     <TopicComparisonPage
       title="OB-tillägg 2026 — Alla avtal jämförda"
