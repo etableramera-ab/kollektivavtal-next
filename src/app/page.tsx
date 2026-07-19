@@ -21,15 +21,16 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
-import SalaryChart from "@/components/SalaryChart";
 import { publicOccupations } from "@/lib/public-occupations";
+import { VERIFIED_AGREEMENTS } from "@/lib/verified-agreements";
+import { openAIChat } from "@/lib/chat-client";
 
 const quickLinks = [
-  { label: "Handelsavtalet", slug: "handelsavtalet" },
+  { label: "Detaljhandelsavtalet", slug: "handelsavtalet" },
   { label: "Teknikavtalet IF Metall", slug: "teknikavtalet-ifmetall" },
   { label: "Byggavtalet", slug: "byggavtalet" },
-  { label: "HÖK Kommunal", slug: "hok-kommunal" },
-  { label: "VVS-avtalet", slug: "vvs-montorsavtalet" },
+  { label: "HÖK 25 Kommunal", slug: "hok-kommunal" },
+  { label: "Teknikinstallationsavtalet", slug: "vvs-montorsavtalet" },
   { label: "Installationsavtalet", slug: "installationsavtalet" },
 ];
 
@@ -40,9 +41,9 @@ const tools = [
 ];
 
 const topAgreements = [
-  { name: "HÖK Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", icon: Building2, slug: "hok-kommunal", img: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
+  { name: "HÖK 25 Kommunal", desc: "Kommunalt anställda inom vård, omsorg och skola", icon: Building2, slug: "hok-kommunal", img: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
   { name: "Teknikavtalet IF Metall", desc: "Industriarbetare inom teknikföretag", icon: Cpu, slug: "teknikavtalet-ifmetall", img: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
-  { name: "Handelsavtalet", desc: "Anställda inom detaljhandel och partihandel", icon: ShoppingCart, slug: "handelsavtalet", img: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  { name: "Detaljhandelsavtalet", desc: "Anställda inom detaljhandeln", icon: ShoppingCart, slug: "handelsavtalet", img: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
   { name: "Byggavtalet", desc: "Byggnadsarbetare och anläggningspersonal", icon: HardHat, slug: "byggavtalet", img: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
 ];
 
@@ -78,10 +79,18 @@ export default function Home() {
               </h1>
               <p className="mt-5 text-[17px] sm:text-lg text-white/85 max-w-[520px] leading-[1.65]">
                 Börja med att hitta avtalet som gäller för dig. Därifrån kan du
-                läsa om lön, OB-tillägg och andra villkor med tydliga källor.
+                se avtalsområde, parter, giltighet och tydliga originalkällor.
               </p>
               <p className="mt-6 text-xs text-white/60">
-                Över 4 miljoner anställda · 88% avtalstäckning · Källa: Medlingsinstitutet
+                Över 4 miljoner anställda · 88% avtalstäckning · Källa:{" "}
+                <a
+                  href="https://www.mi.se/nyheter/2026/kollektivavtal-for-mer-an-4-miljoner-anstallda/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-white/30 underline-offset-2 hover:text-white"
+                >
+                  Medlingsinstitutet
+                </a>
               </p>
             </AnimatedSection>
 
@@ -113,7 +122,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-10 sm:gap-12">
             {[
-              { icon: FileText, num: 30, text: "avtal med aktuellt källunderlag" },
+              { icon: FileText, num: VERIFIED_AGREEMENTS.size, text: "avtal med aktuellt källunderlag" },
               { icon: Users, num: 4, text: "miljoner+ anställda" },
               { icon: ShieldCheck, num: 88, text: "% avtalstäckning", suffix: "%" },
             ].map((item) => (
@@ -148,7 +157,7 @@ export default function Home() {
                 Ställ frågor om lön, OB-tillägg, semester, uppsägningstid, pension — och få svar direkt.
               </p>
               <div className="mt-6 space-y-3">
-                {["Svar på sekunder — inte timmar", "30 avtal med aktuellt källunderlag", "Tydligt när svaret behöver kontrolleras"].map((text) => (
+                {["Svar på sekunder — inte timmar", `${VERIFIED_AGREEMENTS.size} avtal med aktuellt källunderlag`, "Tydligt när svaret behöver kontrolleras"].map((text) => (
                   <div key={text} className="flex items-center gap-3">
                     <span className="text-[#285E52] text-lg">✓</span>
                     <span className="text-[15px] font-medium text-text-primary">{text}</span>
@@ -165,11 +174,11 @@ export default function Home() {
                   </div>
                   <div className="flex gap-2">
                     <div className="w-6 h-6 rounded-sm bg-[#285E52] flex items-center justify-center shrink-0 mt-0.5"><span className="text-white text-[10px] font-bold">AI</span></div>
-                    <div className="bg-[#E8EEE9] rounded-sm px-4 py-2.5 text-[15px] text-[#17201D]">För exakta avtalsvillkor väljer du ett avtal med källunderlag. Jag säger till när information behöver kontrolleras.</div>
+                    <div className="bg-[#E8EEE9] rounded-sm px-4 py-2.5 text-[15px] text-[#17201D]">För avtalsspecifika frågor väljer du ett avtal med källunderlag. Jag säger till när information behöver kontrolleras.</div>
                   </div>
                 </div>
                 <button
-                  onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
+                  onClick={openAIChat}
                   className="block w-full py-3 rounded-sm bg-[#285E52] text-white text-[16px] font-semibold text-center transition-colors duration-150 hover:bg-[#164B3F]"
                 >
                   Testa själv — ställ en fråga
@@ -280,26 +289,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── LÖNESTATISTIK ─── */}
-      <section className="py-14 sm:py-16 bg-surface-dark">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="border-t border-border pt-8 mb-8">
-            <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl md:text-[48px] text-text-primary" style={serif}>Lönestatistik per bransch</h2>
-            </AnimatedSection>
-          </div>
-          <AnimatedSection delay={0.1}>
-            <div className="rounded-sm border border-[#D8D1C5] bg-[#FBFAF7] p-6 sm:p-8">
-              <SalaryChart />
-            </div>
-            <p className="text-[13px] text-[#6B7280] mt-3">Källa: SCB, egen bearbetning</p>
-            <Link href="/statistik/loner" className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-2 hover:text-primary-dark hover:underline transition-colors duration-150 min-h-[44px]">
-              Se fullständig lönestatistik <ArrowRight size={14} />
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* ─── VAD FÖRLORAR DU? ─── */}
       <section className="py-16 sm:py-20" style={{ backgroundImage: "linear-gradient(rgba(22,75,63,0.91), rgba(22,75,63,0.91)), url('/Images/misc/signing-contract.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -375,7 +364,7 @@ export default function Home() {
             <div className="max-w-[800px] mx-auto mt-10 rounded-[10px] p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)" }}>
               <div>
                 <p className="text-[18px] font-semibold text-white">Saknar du kollektivavtal?</p>
-                <p className="text-[15px] text-white/80 mt-1">Se vilka försäkringar som kompenserar för tjänstepension, föräldralön och inkomstbortfall.</p>
+                <p className="text-[15px] text-white/80 mt-1">Jämför privata försäkringar och läs noga vad varje försäkring faktiskt omfattar.</p>
               </div>
               <a
                 href="https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=native&utm_campaign=forlorar-sektion"
@@ -396,9 +385,6 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 sm:gap-8">
           <Link href="/rattsfall" className="inline-flex items-center justify-center gap-1 text-sm font-medium text-primary min-h-[44px] hover:underline">
             Utforska arbetsrättsdomar <ArrowRight size={14} />
-          </Link>
-          <Link href="/blogg" className="inline-flex items-center justify-center gap-1 text-sm font-medium text-primary min-h-[44px] hover:underline">
-            Läs guider och nyheter <ArrowRight size={14} />
           </Link>
         </div>
       </section>

@@ -9,6 +9,12 @@
 # testing
 /coverage
 
+# local review files
+/tmp/
+
+# unused source artwork
+/public/Images/Nya bilder/
+
 # next.js
 /.next/
 /out/

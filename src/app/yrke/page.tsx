@@ -8,7 +8,7 @@ import { publicOccupations as occupations } from "@/lib/public-occupations";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 const categories = [
-  "Alla", "Vård & Omsorg", "Handel", "Bygg", "Industri", "IT",
+  "Alla", "Vård & Omsorg", "Skola & Utbildning", "Handel", "Bygg", "Industri", "IT",
   "Transport", "Hotell & Restaurang", "Bank", "Stat", "Övriga",
 ];
 
@@ -90,9 +90,9 @@ export default function YrkeOverview() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-xl border border-primary/30 bg-[#F0FDFA] px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
             {[
-              { label: `Högst: ${highestOcc.title}`, value: `${highestOcc.salary.median.toLocaleString("sv-SE")} kr` },
-              { label: "Median alla yrken", value: `${medianOfMedians.toLocaleString("sv-SE")} kr` },
-              { label: `Lägst: ${lowestOcc.title}`, value: `${lowestOcc.salary.median.toLocaleString("sv-SE")} kr` },
+              { label: `Högst bland visade: ${highestOcc.title}`, value: `${highestOcc.salary.median.toLocaleString("sv-SE")} kr` },
+              { label: "Median bland visade yrken", value: `${medianOfMedians.toLocaleString("sv-SE")} kr` },
+              { label: `Lägst bland visade: ${lowestOcc.title}`, value: `${lowestOcc.salary.median.toLocaleString("sv-SE")} kr` },
             ].map((stat, i) => (
               <div key={stat.label} className={`${i > 0 ? "sm:border-l sm:border-border sm:pl-6" : ""} text-center sm:text-left`}>
                 <p className="text-[13px] text-text-secondary">{stat.label}</p>

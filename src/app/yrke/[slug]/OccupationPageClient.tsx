@@ -77,9 +77,11 @@ export default function OccupationPageClient({
                   {occ.demandOutlook.split(" — ")[0]}
                 </span>
               )}
-              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium">
-                {occ.education.length > 30 ? occ.education.split(".")[0] : occ.education}
-              </span>
+              {occ.education && (
+                <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium">
+                  {occ.education.length > 30 ? occ.education.split(".")[0] : occ.education}
+                </span>
+              )}
             </div>
           </AnimatedSection>
         </div>
@@ -227,14 +229,14 @@ export default function OccupationPageClient({
               {/* CTA block */}
               {agreementSlug && (
               <div className="rounded-xl bg-primary p-6 text-center">
-                <p className="font-semibold text-white text-[16px]">Se ditt kollektivavtal</p>
+                <p className="font-semibold text-white text-[16px]">Avtal som kan vara relevant</p>
                 <p className="text-sm text-white/80 mt-1">{agreementName}</p>
                 <Link
                   href={`/avtal/${agreementSlug}`}
                   className="block mt-4 w-full py-3 rounded-lg text-white text-[15px] font-semibold text-center transition-all duration-200 hover:-translate-y-px"
                   style={{ background: "linear-gradient(135deg, #D97706 0%, #B45309 100%)" }}
                 >
-                  Läs {agreementShortName} →
+                  Läs om {agreementShortName} →
                 </Link>
               </div>
               )}
@@ -250,7 +252,7 @@ export default function OccupationPageClient({
                   <Scale size={18} className="text-accent" />
                   <p className="font-semibold text-text-primary text-[16px]">Skydda din inkomst</p>
                 </div>
-                <p className="text-sm text-[#374151]">Komplettera ditt kollektivavtal med rätt försäkringar.</p>
+                <p className="text-sm text-[#374151]">Jämför alternativ och kontrollera vad som faktiskt ingår.</p>
                 <p className="text-sm font-semibold text-accent mt-2">Jämför på allaforsakringar.com →</p>
                 <p className="text-[11px] text-[#9CA3AF] text-right mt-2">Annons</p>
               </a>

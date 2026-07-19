@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Övertidsersättning per kollektivavtal 2026 — Alla avtal jämförda | kollektivavtal.ai",
-  description: "Jämför övertidsersättning per kollektivavtal 2026. Se ersättningsnivåer för alla branscher.",
+  title: "Övertidsjämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Overtid() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Övertidsersättning per kollektivavtal 2026"
-      subtitle="Jämför ersättning vid övertidsarbete — alla avtal"
-      aeoAnswer="Övertidsersättning varierar: kommunala avtal ger 180% de första 2 timmarna och 200% därefter. Privata avtal ger ofta 150% + 200%. Inom IT kan övertid avtalas bort mot högre fast lön."
+      title="Övertidsersättning i källgranskade kollektivavtal"
+      subtitle="Jämför kontrollerade regler för betalning och kompensationsledighet"
+      aeoAnswer="Övertid kan ersättas med ett tillägg, en formel på månadslönen, en procentsats eller kompensationsledighet. Nivån beror ofta på när arbetet utförs och om tiden räknas som enkel eller kvalificerad övertid."
       columns={columns}
       rows={rows}
     />

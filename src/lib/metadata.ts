@@ -4,7 +4,7 @@ export type Locale = (typeof LOCALES)[number];
 export const OG_LOCALES: Record<Locale, string> = {
   sv: "sv_SE",
   en: "en_US",
-  ar: "ar_AR",
+  ar: "ar_SA",
   fa: "fa_IR",
   so: "so_SO",
   es: "es_ES",
@@ -15,6 +15,9 @@ const BASE_URL = "https://kollektivavtal.ai";
 
 export function buildLocalizedUrl(locale: Locale, path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  if (cleanPath === "/") {
+    return locale === "sv" ? BASE_URL : `${BASE_URL}/${locale}`;
+  }
   if (locale === "sv") return `${BASE_URL}${cleanPath}`;
   return `${BASE_URL}/${locale}${cleanPath}`;
 }

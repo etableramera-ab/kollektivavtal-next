@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Arbetstid per kollektivavtal 2026 — Veckoarbetstid och förkortning | kollektivavtal.ai",
-  description: "Jämför veckoarbetstid per kollektivavtal 2026. Bank och försäkring har 38,75 tim, stat 39,75 tim, de flesta 40 tim.",
+  title: "Arbetstidsjämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Arbetstid() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Arbetstid per kollektivavtal 2026"
-      subtitle="Jämför veckoarbetstid och arbetstidsförkortning"
-      aeoAnswer="De flesta avtal har 40 timmars arbetsvecka. Bank och försäkring sticker ut med 38,75 timmar. Statliga avtal ger 39 timmar 45 minuter. Teknikavtalet har tidbank med 92 minuter per vecka i arbetstidsförkortning."
+      title="Arbetstid i källgranskade kollektivavtal"
+      subtitle="Jämför ordinarie arbetstid och viktiga undantag"
+      aeoAnswer="Ordinarie arbetstid varierar med arbetstidens förläggning. Dagtid, skift, natt och helgarbete kan ha olika heltidsmått, och vissa avtal ger dessutom arbetstidsförkortning eller tidbank. Tabellen visar en kort sammanfattning av de kontrollerade reglerna."
       columns={columns}
       rows={rows}
     />

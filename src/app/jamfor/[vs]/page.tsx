@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getAgreementBySlug } from "@/data/agreements";
-import { publicComparisons } from "@/lib/public-agreements";
-import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements, publicComparisons } from "@/lib/public-agreements";
 import VsPageClient from "./VsPageClient";
 
 interface PageProps {
@@ -17,6 +15,28 @@ function parseVsSlug(vs: string) {
   return { slug1: match[1], slug2: match[2] };
 }
 
+function getPublicComparison(vs: string) {
+  const parsed = parseVsSlug(vs);
+  if (!parsed) return null;
+
+  const isEnabled = publicComparisons.some(
+    (comparison) =>
+      (comparison.slug1 === parsed.slug1 && comparison.slug2 === parsed.slug2) ||
+      (comparison.slug1 === parsed.slug2 && comparison.slug2 === parsed.slug1)
+  );
+  if (!isEnabled) return null;
+
+  const agreement1 = publicAgreements.find(
+    (agreement) => agreement.slug === parsed.slug1
+  );
+  const agreement2 = publicAgreements.find(
+    (agreement) => agreement.slug === parsed.slug2
+  );
+  if (!agreement1 || !agreement2) return null;
+
+  return { agreement1, agreement2 };
+}
+
 export function generateStaticParams() {
   return publicComparisons.map((c) => {
     const sorted = [c.slug1, c.slug2].sort();
@@ -26,11 +46,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { vs } = await params;
-  const parsed = parseVsSlug(vs);
-  if (!parsed) return {};
-  const a1 = getAgreementBySlug(parsed.slug1);
-  const a2 = getAgreementBySlug(parsed.slug2);
-  if (!a1 || !a2 || !isVerifiedAgreement(parsed.slug1) || !isVerifiedAgreement(parsed.slug2)) return {};
+  const comparison = getPublicComparison(vs);
+  if (!comparison) return {};
+  const { agreement1: a1, agreement2: a2 } = comparison;
   return {
     title: `${a1.shortName} vs ${a2.shortName} — Jämför löner, OB och villkor 2026 | kollektivavtal.ai`,
     description: `Jämför ${a1.shortName} och ${a2.shortName}. Se skillnader i lön, OB-tillägg, semester, pension och övertid.`,
@@ -40,11 +58,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function VsPage({ params }: PageProps) {
   const { vs } = await params;
-  const parsed = parseVsSlug(vs);
-  if (!parsed) notFound();
-  const a1 = getAgreementBySlug(parsed.slug1);
-  const a2 = getAgreementBySlug(parsed.slug2);
-  if (!a1 || !a2 || !isVerifiedAgreement(parsed.slug1) || !isVerifiedAgreement(parsed.slug2)) notFound();
+  const comparison = getPublicComparison(vs);
+  if (!comparison) notFound();
+  const { agreement1: a1, agreement2: a2 } = comparison;
 
   const rows = [
     { label: "Sektor", v1: a1.sectorLabel, v2: a2.sectorLabel },

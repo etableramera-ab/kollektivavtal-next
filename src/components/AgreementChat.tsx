@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare, Send, AlertCircle } from "lucide-react";
+import { MessageSquare, Send, AlertCircle, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
+import {
+  ChatRequestError,
+  OPEN_AI_CHAT_EVENT,
+  sendChatRequest,
+  type ChatMessage,
+} from "@/lib/chat-client";
 
 interface AgreementChatProps {
   agreementSlug: string;
@@ -20,12 +21,36 @@ export default function AgreementChat({
   agreementName,
   suggestedQuestions,
 }: AgreementChatProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const chatRootRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const requestInFlightRef = useRef(false);
+  const focusTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const focusChat = () => {
+      chatRootRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (focusTimerRef.current !== null) {
+        window.clearTimeout(focusTimerRef.current);
+      }
+      focusTimerRef.current = window.setTimeout(() => {
+        inputRef.current?.focus({ preventScroll: true });
+      }, 350);
+    };
+
+    window.addEventListener(OPEN_AI_CHAT_EVENT, focusChat);
+    return () => {
+      window.removeEventListener(OPEN_AI_CHAT_EVENT, focusChat);
+      if (focusTimerRef.current !== null) {
+        window.clearTimeout(focusTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // Scroll inside the chat container only — not the page
@@ -36,45 +61,53 @@ export default function AgreementChat({
   }, [messages, loading]);
 
   async function sendMessage(text: string) {
-    if (!text.trim() || loading) return;
+    const question = text.trim();
+    if (!question || requestInFlightRef.current) return;
 
-    const userMessage: Message = { role: "user", content: text.trim() };
+    requestInFlightRef.current = true;
+    const userMessage: ChatMessage = { role: "user", content: question };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: text.trim(),
-          agreementSlug,
-          history: messages.slice(-4),
-        }),
+      const result = await sendChatRequest({
+        message: question,
+        mode: "agreement",
+        agreementSlug,
+        history: messages.slice(-4),
+        locale: "sv",
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Något gick fel. Försök igen.");
-        return;
-      }
 
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.response },
+        {
+          role: "assistant",
+          content: result.response,
+          source: result.source,
+        },
       ]);
-    } catch {
-      setError("Kunde inte nå servern. Kontrollera din anslutning.");
+    } catch (requestError) {
+      setMessages((prev) => prev.filter((message) => message !== userMessage));
+      setInput(question);
+      setError(
+        requestError instanceof ChatRequestError
+          ? requestError.message
+          : "Något gick fel. Försök igen."
+      );
     } finally {
+      requestInFlightRef.current = false;
       setLoading(false);
     }
   }
 
   return (
-    <div className="rounded-xl border border-border bg-white shadow-sm overflow-hidden">
+    <div
+      ref={chatRootRef}
+      data-inline-agreement-chat="true"
+      className="rounded-xl border border-border bg-white shadow-sm overflow-hidden"
+    >
       {/* Header bar */}
       <div className="px-5 py-4 sm:px-6 bg-[#164B3F]">
         <div className="flex items-center gap-2.5">
@@ -127,6 +160,17 @@ export default function AgreementChat({
               }`}
             >
               <p className="whitespace-pre-wrap">{msg.content}</p>
+              {msg.role === "assistant" && msg.source && (
+                <a
+                  href={msg.source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#285E52] underline decoration-[#285E52]/30 underline-offset-2 hover:text-[#164B3F]"
+                >
+                  Källa: {msg.source.label}
+                  <ExternalLink size={12} aria-hidden="true" />
+                </a>
+              )}
             </div>
           </motion.div>
         ))}
@@ -162,9 +206,11 @@ export default function AgreementChat({
         className="flex items-center gap-2 p-3 sm:p-4 border-t border-border"
       >
         <input
+          ref={inputRef}
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          maxLength={1500}
           placeholder="Ställ en fråga om avtalet..."
           className="flex-1 rounded-sm border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#285E52]/20 focus:border-[#285E52]"
           disabled={loading}

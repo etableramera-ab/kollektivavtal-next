@@ -67,7 +67,7 @@ export default function AvtalOverview() {
           a.sectorLabel.toLowerCase().includes(q)
       );
     }
-    return result.sort((a, b) => b.employeeCount - a.employeeCount);
+    return result.sort((a, b) => a.shortName.localeCompare(b.shortName, "sv"));
   }, [sector, search]);
 
   const paginated = listAgreements.slice(0, visibleCount);
@@ -111,7 +111,7 @@ export default function AvtalOverview() {
                           {a.sectorLabel}
                         </span>
                         <span className="text-sm font-medium text-text-secondary">
-                          {a.employeeCount.toLocaleString("sv-SE")} anställda
+                          Källunderlag finns
                         </span>
                       </div>
                       <h2 className="text-[22px] sm:text-[24px] text-text-primary group-hover:text-primary transition-colors" style={serif}>
@@ -179,7 +179,6 @@ export default function AvtalOverview() {
                 <tr className="bg-surface-dark border-b-2 border-border">
                   <th className="text-left px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Avtalsnamn</th>
                   <th className="text-left px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Sektor</th>
-                  <th className="text-right px-5 py-3 text-[13px] font-semibold text-text-secondary uppercase tracking-wide">Anställda</th>
                   <th className="w-10"></th>
                 </tr>
               </thead>
@@ -195,7 +194,6 @@ export default function AvtalOverview() {
                       )}
                     </td>
                     <td className="px-5 py-4 text-sm text-text-secondary">{a.sectorLabel}</td>
-                    <td className="px-5 py-4 text-sm font-medium text-primary text-right">{a.employeeCount.toLocaleString("sv-SE")}</td>
                     <td className="px-3 py-4"><ChevronRight size={16} className="text-text-secondary" /></td>
                   </tr>
                 ))}
@@ -216,7 +214,7 @@ export default function AvtalOverview() {
                       )}
                     </p>
                     <p className="text-[13px] text-text-secondary mt-0.5">
-                      {a.sectorLabel} · {a.employeeCount.toLocaleString("sv-SE")} anställda
+                      {a.sectorLabel}
                     </p>
                   </div>
                   <ChevronRight size={16} className="text-text-secondary shrink-0" />

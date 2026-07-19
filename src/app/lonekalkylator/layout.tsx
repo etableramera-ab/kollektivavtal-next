@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Lönekalkylator — Beräkna din avtalslön | kollektivavtal.ai",
-  description: "Beräkna din lön enligt kollektivavtalet. Se grundlön, OB-tillägg, övertid och pension.",
+  title: "Lönekalkylatorn byggs om | kollektivavtal.ai",
+  description: "Lönekalkylatorn är tillfälligt stängd medan beräkningarna källgranskas.",
+  robots: { index: false, follow: true },
   alternates: { canonical: "https://kollektivavtal.ai/lonekalkylator" },
 };
 export default function Layout({ children }: { children: React.ReactNode }) { return children; }

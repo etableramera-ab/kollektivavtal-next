@@ -12,20 +12,14 @@ import {
   Cell,
 } from "recharts";
 
-const data = [
-  { bransch: "IT & Tech", lon: 48500 },
-  { bransch: "Bank & Finans", lon: 45600 },
-  { bransch: "Industri", lon: 38200 },
-  { bransch: "Bygg & Anläggning", lon: 36800 },
-  { bransch: "Transport", lon: 34100 },
-  { bransch: "Vård & Omsorg", lon: 32400 },
-  { bransch: "Handel", lon: 29500 },
-  { bransch: "Hotell & Restaurang", lon: 27200 },
-];
+export interface SalaryChartDatum {
+  bransch: string;
+  lon: number;
+}
 
 const formatKr = (value: number) => `${(value / 1000).toFixed(1)}k`;
 
-export default function SalaryChart() {
+export default function SalaryChart({ data }: { data: SalaryChartDatum[] }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {

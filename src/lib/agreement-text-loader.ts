@@ -33,6 +33,6 @@ export function getTruncatedAgreementText(
   const lastParagraph = truncated.lastIndexOf("\n\n");
   return (
     truncated.substring(0, lastParagraph > 0 ? lastParagraph : maxChars) +
-    "\n\n[Texten är förkortad. Kontakta Byggnads för fullständig avtalstext.]"
+    "\n\n[Underlaget är förkortat här. Svara endast på sådant som framgår ovan och hänvisa annars till avtalsparterna.]"
   );
 }

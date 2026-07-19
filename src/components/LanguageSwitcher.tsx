@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { locales, defaultLocale, type Locale } from "@/lib/dictionaries";
+import { locales, defaultLocale, getDictionary, type Locale } from "@/lib/dictionaries";
 import { Globe } from "lucide-react";
 
 const languageNames: Record<Locale, { name: string; flag: string }> = {
@@ -26,6 +26,7 @@ export default function LanguageSwitcher() {
   const currentLocale = (locales.find(
     (l) => pathname.startsWith(`/${l}/`) || pathname === `/${l}`
   ) || defaultLocale) as Locale;
+  const dict = getDictionary(currentLocale);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,7 +44,6 @@ export default function LanguageSwitcher() {
   // Only these paths have locale versions
   function hasLocaleVersion(path: string): boolean {
     if (path === "/" || path === "") return true;
-    if (path.startsWith("/avtal/") && path.split("/").length === 3) return true;
     return false;
   }
 
@@ -84,7 +84,7 @@ export default function LanguageSwitcher() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg border border-white/30 hover:border-white/60 transition-all text-sm font-medium text-white"
-        aria-label="Välj språk / Select language"
+        aria-label={dict.languageSwitcher.label}
         aria-expanded={isOpen}
       >
         <Globe className="w-4 h-4 text-white/80" />

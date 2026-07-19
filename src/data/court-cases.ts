@@ -18,7 +18,13 @@ export interface CourtCase {
   type: string;
 }
 
-export const courtCases: CourtCase[] = importedCases as CourtCase[];
+const allImportedCases = importedCases as CourtCase[];
+
+// Entries with an external id come from the traceable official import. The
+// newer hand-written summaries remain local until they have been reviewed.
+export const courtCases: CourtCase[] = allImportedCases.filter(
+  (courtCase) => courtCase.externalId.trim().length > 0
+).map((courtCase) => ({ ...courtCase, relatedAgreement: null }));
 
 export function getCourtCaseById(id: string): CourtCase | undefined {
   return courtCases.find((c) => c.id === id);

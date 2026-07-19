@@ -4,11 +4,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
-  Search,
   FileText,
   Users,
   ShieldCheck,
-  MessageSquare,
   Building2,
   Cpu,
   HardHat,
@@ -18,115 +16,127 @@ import {
   Landmark,
   ArrowRight,
   ArrowLeft,
-  Scale,
-  Shield,
-  Rocket,
   Check,
   X,
-  Calculator,
-  TrendingUp,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CountUp } from "@/components/ui/CountUp";
-import SalaryChart from "@/components/SalaryChart";
-import { publicBlogPosts as blogPosts } from "@/lib/public-blog-posts";
-import { courtCases as allCourtCases } from "@/data/court-cases";
+import SearchAutocomplete from "@/components/SearchAutocomplete";
 import { getDictionary } from "@/lib/dictionaries";
+import {
+  publicOccupations,
+  scbOccupationWageSource,
+} from "@/lib/public-occupations";
+import { VERIFIED_AGREEMENTS } from "@/lib/verified-agreements";
 
-const latestCases = allCourtCases.slice(0, 3);
-
+const publicOccupationBySlug = new Map(
+  publicOccupations.map((occupation) => [occupation.slug, occupation])
+);
 const quickLinks = [
-  "Handelsavtalet",
-  "Teknikavtalet",
-  "Byggavtalet",
-  "HÖK Kommunal",
-  "IT-avtalet",
+  { label: "Detaljhandelsavtalet", slug: "handelsavtalet" },
+  { label: "Teknikavtalet IF Metall", slug: "teknikavtalet-ifmetall" },
+  { label: "Byggavtalet", slug: "byggavtalet" },
+  { label: "HÖK 25 Kommunal", slug: "hok-kommunal" },
+  { label: "Installationsavtalet", slug: "installationsavtalet" },
 ];
 
 export default function LocaleHomePage() {
   const params = useParams();
   const locale = (params.locale as string) || "sv";
   const dict = getDictionary(locale);
-  const prefix = locale === "sv" ? "" : `/${locale}`;
   const isRTL = locale === "ar" || locale === "fa";
   const DirArrow = isRTL ? ArrowLeft : ArrowRight;
 
   const keyStats = [
-    { number: 30, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
-    { number: 4, suffix: "", label: dict.hero.stats.employees, icon: Users },
+    { number: VERIFIED_AGREEMENTS.size, suffix: "", label: dict.hero.stats.agreements, icon: FileText },
+    { number: 4, suffix: "+", label: dict.hero.stats.employees, icon: Users },
     { number: 88, suffix: "%", label: dict.hero.stats.coverage, icon: ShieldCheck },
-    { number: 2009, suffix: "", label: dict.hero.stats.aiExpert, icon: MessageSquare },
   ];
 
-  const t = (sv: string, en: string, ar: string) =>
-    locale === "ar" ? ar : locale === "en" ? en : sv;
+  const localize = (translations: Record<string, string>) =>
+    translations[locale] ?? translations.sv;
 
   const agreements = [
     {
-      name: "HÖK Kommunal",
-      desc: t("Huvudöverenskommelse för kommunalt anställda inom vård, omsorg och skola", "Main agreement for municipal employees in healthcare, care and education", "الاتفاقية الرئيسية للموظفين البلديين في الرعاية الصحية والتعليم"),
-      employees: "~1 100 000",
+      name: "HÖK 25 Kommunal",
       icon: Building2,
       slug: "hok-kommunal",
     },
     {
       name: "Teknikavtalet IF Metall",
-      desc: t("Avtal för industriarbetare inom teknikföretag", "Agreement for industrial workers in technology companies", "اتفاقية لعمال الصناعة في شركات التقنية"),
-      employees: "~200 000",
       icon: Cpu,
       slug: "teknikavtalet-ifmetall",
     },
     {
-      name: "Handelsavtalet",
-      desc: t("Avtal för anställda inom detaljhandel och partihandel", "Agreement for employees in retail and wholesale", "اتفاقية للموظفين في تجارة التجزئة والجملة"),
-      employees: "~250 000",
+      name: "Detaljhandelsavtalet",
       icon: ShoppingCart,
       slug: "handelsavtalet",
     },
     {
       name: "Byggavtalet",
-      desc: t("Avtal för byggnadsarbetare och anläggningspersonal", "Agreement for construction workers and infrastructure staff", "اتفاقية لعمال البناء والبنية التحتية"),
-      employees: "~150 000",
       icon: HardHat,
       slug: "byggavtalet",
     },
     {
-      name: "Teknikavtalet IF Metall",
-      desc: t("Avtal för industriarbetare inom teknikföretag", "Agreement for industrial workers in technology companies", "اتفاقية لعمال الصناعة في شركات التقنية"),
-      employees: "~200 000",
-      icon: Cpu,
-      slug: "teknikavtalet-ifmetall",
+      name: "AB 25",
+      icon: Building2,
+      slug: "ab-kommunalt",
     },
     {
       name: "Installationsavtalet",
-      desc: t("Avtal för elektriker och installationstekniker", "Agreement for electricians and installation technicians", "اتفاقية للكهربائيين وفنيي التركيبات"),
-      employees: "~40 000",
       icon: Wrench,
       slug: "installationsavtalet",
     },
     {
-      name: "Hotell & Restaurang",
-      desc: t("Avtal för anställda inom hotell-, restaurang- och caféverksamhet", "Agreement for employees in hotels, restaurants and cafés", "اتفاقية للموظفين في الفنادق والمطاعم والمقاهي"),
-      employees: "~130 000",
+      name: "Gröna riksavtalet",
       icon: UtensilsCrossed,
       slug: "hotell-restaurang",
     },
     {
-      name: t("Statliga villkorsavtal", "Government Conditions Agreement", "اتفاقية شروط العمل الحكومية"),
-      desc: t("Villkorsavtal för statligt anställda inom myndigheter och verk", "Conditions agreements for government employees in agencies and departments", "اتفاقية شروط للموظفين الحكوميين في الوكالات والإدارات"),
-      employees: "~270 000",
+      name: "Villkorsavtal-T Saco-S",
       icon: Landmark,
-      slug: "statliga-villkorsavtal",
+      slug: "villkorsavtal-saco",
     },
   ];
 
-  const comparisonRowsData = Object.values(dict.comparisonRows);
+  const popularOccupations = [
+    {
+      slug: "sjukskoterska",
+      title: localize({ sv: "Sjuksköterska", en: "Registered nurse", ar: "ممرض/ممرضة", so: "Kalkaaliye", fa: "پرستار", es: "Enfermero/a", pl: "Pielęgniarz/pielęgniarka" }),
+    },
+    {
+      slug: "elektriker",
+      title: localize({ sv: "Elektriker", en: "Electrician", ar: "كهربائي", so: "Koronto-yaqaan", fa: "برق‌کار", es: "Electricista", pl: "Elektryk" }),
+    },
+    { slug: "kock", title: localize({ sv: "Kock", en: "Chef", ar: "طاهي", so: "Cunto-kariye", fa: "آشپز", es: "Cocinero/a", pl: "Kucharz/kucharka" }) },
+    {
+      slug: "larare-grundskola",
+      title: localize({ sv: "Grundskollärare", en: "Primary school teacher", ar: "معلم مدرسة ابتدائية", so: "Macallinka dugsiga hoose", fa: "معلم دبستان", es: "Profesor/a de primaria", pl: "Nauczyciel/ka szkoły podstawowej" }),
+    },
+    {
+      slug: "lastbilschauffor",
+      title: localize({ sv: "Lastbilschaufför", en: "Truck driver", ar: "سائق شاحنة", so: "Darawalka baabuurta xamuulka", fa: "راننده کامیون", es: "Conductor/a de camión", pl: "Kierowca ciężarówki" }),
+    },
+    {
+      slug: "systemutvecklare",
+      title: localize({ sv: "Systemutvecklare", en: "Software developer", ar: "مطور برمجيات", so: "Horumariye software", fa: "توسعه‌دهنده نرم‌افزار", es: "Desarrollador/a de software", pl: "Programista/ka" }),
+    },
+    {
+      slug: "barnskotare",
+      title: localize({ sv: "Barnskötare", en: "Childcare worker", ar: "مساعد رعاية أطفال", so: "Daryeelaha carruurta", fa: "مربی کودک", es: "Cuidador/a infantil", pl: "Opiekun/ka dziecięcy/a" }),
+    },
+    {
+      slug: "snickare",
+      title: localize({ sv: "Snickare", en: "Carpenter", ar: "نجار", so: "Nijaar", fa: "نجار", es: "Carpintero/a", pl: "Cieśla" }),
+    },
+  ].flatMap((item) => {
+    const occupation = publicOccupationBySlug.get(item.slug);
+    return occupation
+      ? [{ ...item, median: occupation.salary.median }]
+      : [];
+  });
 
-  const crossSelling = [
-    { title: dict.home.findLawyer, href: "https://allaadvokater.se", icon: Scale },
-    { title: dict.home.compareInsurances, href: "https://allaforsakringar.com", icon: Shield },
-    { title: dict.home.startBusiness, href: "https://startaenskildfirma.se", icon: Rocket },
-  ];
+  const comparisonRowsData = Object.values(dict.comparisonRows);
 
   return (
     <>
@@ -143,26 +153,33 @@ export default function LocaleHomePage() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="mt-8 sm:mt-10 relative max-w-xl mx-auto group/search">
-              <Search
-                size={20}
-                className={`absolute top-1/2 -translate-y-1/2 text-text-secondary ${isRTL ? "right-4" : "left-4"}`}
-              />
-              <input
-                type="text"
+            <div className="mt-8 sm:mt-10 relative max-w-xl mx-auto text-left">
+              <SearchAutocomplete
+                variant="hero"
                 placeholder={dict.nav.search}
-                className={`w-full rounded-[12px] bg-white text-text-primary py-4 text-base shadow-lg outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-accent transition-transform focus:scale-[1.02] ${isRTL ? "pr-12 pl-4" : "pl-12 pr-4"}`}
+                agreementBasePath="/avtal"
+                isRTL={isRTL}
+                scope="agreements"
+                showDetails={false}
+                labels={{
+                  agreements: dict.nav.agreements,
+                  occupations: dict.nav.occupations,
+                  noResults: dict.common.noResults,
+                }}
               />
             </div>
+            <p className="mt-2 text-xs text-white/70">
+              {dict.home.searchSwedishNames}
+            </p>
 
             <div className="mt-5 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:justify-center sm:overflow-visible sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-              {quickLinks.map((label) => (
+              {quickLinks.map((item) => (
                 <Link
-                  key={label}
-                  href={`${prefix}/avtal/${label.toLowerCase().replace(/\s+/g, "-").replace(/ö/g, "o")}`}
+                  key={item.slug}
+                  href={`/avtal/${item.slug}`}
                   className="shrink-0 rounded-[8px] bg-white/10 px-4 py-2.5 text-sm font-medium text-white hover:bg-white/20 transition-colors min-h-[44px] flex items-center"
                 >
-                  {label}
+                  {item.label}
                 </Link>
               ))}
             </div>
@@ -173,7 +190,7 @@ export default function LocaleHomePage() {
       {/* Key Stats */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
             {keyStats.map((stat, i) => (
               <AnimatedSection key={stat.label} delay={i * 0.1}>
                 <div className="rounded-[12px] border border-border bg-white p-4 sm:p-6 shadow-sm text-center">
@@ -186,55 +203,17 @@ export default function LocaleHomePage() {
               </AnimatedSection>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Tools */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.tools}
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              {
-                title: dict.nav.findAgreement,
-                desc: dict.home.findAgreementDesc,
-                href: `${prefix}/hitta-avtal`,
-                icon: Search,
-              },
-              {
-                title: dict.nav.calculator,
-                desc: dict.home.calculatorDesc,
-                href: `${prefix}/lonekalkylator`,
-                icon: Calculator,
-              },
-              {
-                title: dict.home.bargainingRound,
-                desc: dict.home.bargainingRoundDesc,
-                href: `${prefix}/statistik/avtalsrorelsen`,
-                icon: TrendingUp,
-              },
-            ].map((tool, i) => (
-              <AnimatedSection key={tool.title} delay={i * 0.1}>
-                <Link href={tool.href} className="block">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-6 shadow-sm text-center"
-                  >
-                    <tool.icon size={32} className="mx-auto text-accent mb-3" />
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                      {tool.title}
-                    </h3>
-                    <p className="text-sm text-text-secondary mt-1">{tool.desc}</p>
-                  </motion.div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
+          <p className="mt-4 text-center text-xs text-text-secondary">
+            {dict.agreement.source}: {" "}
+            <a
+              href="https://www.mi.se/nyheter/2026/kollektivavtal-for-mer-an-4-miljoner-anstallda/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent hover:underline"
+            >
+              Medlingsinstitutet
+            </a>
+          </p>
         </div>
       </section>
 
@@ -247,36 +226,45 @@ export default function LocaleHomePage() {
             </h2>
           </AnimatedSection>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { title: t("Undersköterska", "Assistant Nurse", "مساعد تمريض"), median: "31 000", slug: "underskoterska" },
-              { title: t("Elektriker", "Electrician", "كهربائي"), median: "35 000", slug: "elektriker" },
-              { title: t("Kock", "Chef", "طاهي"), median: "28 000", slug: "kock" },
-              { title: t("Lärare", "Teacher", "معلم"), median: "37 000", slug: "larare-grundskola" },
-              { title: t("Lastbilschaufför", "Truck Driver", "سائق شاحنة"), median: "32 000", slug: "lastbilschauffor" },
-              { title: t("Systemutvecklare", "Software Developer", "مطور برمجيات"), median: "48 000", slug: "systemutvecklare" },
-              { title: t("Butikssäljare", "Sales Associate", "بائع"), median: "27 000", slug: "butikssaljare" },
-              { title: t("Byggnadsarbetare", "Construction Worker", "عامل بناء"), median: "33 000", slug: "byggnadsarbetare" },
-            ].map((occ, i) => (
+            {popularOccupations.map((occ, i) => (
               <AnimatedSection key={occ.slug} delay={i * 0.05}>
-                <Link href={`${prefix}/yrke/${occ.slug}`} className="block">
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-4 shadow-sm text-center"
-                  >
-                    <p className="font-semibold text-text-primary text-sm group-hover:text-accent transition-colors">{occ.title}</p>
-                    <p className="text-lg font-bold text-accent mt-1">{occ.median} kr</p>
-                    <p className="text-xs text-text-secondary">{dict.home.medianSalary}</p>
-                  </motion.div>
-                </Link>
+                <div className="rounded-[12px] border border-border bg-white p-4 shadow-sm text-center">
+                  <p className="font-semibold text-text-primary text-sm">{occ.title}</p>
+                  <p className="text-lg font-bold text-accent mt-1">
+                    {occ.median.toLocaleString("sv-SE")} kr
+                  </p>
+                  <p className="text-xs text-text-secondary">{dict.home.medianSalary}</p>
+                </div>
               </AnimatedSection>
             ))}
           </div>
-          <AnimatedSection delay={0.4}>
-            <Link href={`${prefix}/yrke`} className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
-              {dict.home.seeAllOccupations} <DirArrow size={14} />
-            </Link>
-          </AnimatedSection>
+          <p className="mt-4 text-xs leading-relaxed text-text-secondary">
+            <a
+              href={scbOccupationWageSource.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent hover:underline"
+            >
+              {dict.home.salarySource}
+            </a>{" "}
+            · {scbOccupationWageSource.year} · {localize({
+              sv: "median för kvinnor och män, alla sektorer",
+              en: "median for women and men, all sectors",
+              ar: "الوسيط للنساء والرجال في جميع القطاعات",
+              so: "mushaharka dhexe ee haweenka iyo ragga, dhammaan qaybaha",
+              fa: "میانه برای زنان و مردان، همه بخش‌ها",
+              es: "mediana de mujeres y hombres, todos los sectores",
+              pl: "mediana dla kobiet i mężczyzn, wszystkie sektory",
+            })} · {localize({
+              sv: "Inte lägstalön eller individuell prognos",
+              en: "Not a minimum wage or an individual forecast",
+              ar: "ليست حداً أدنى للأجور ولا توقعاً فردياً",
+              so: "Ma aha mushaharka ugu yar ama saadaal qofeed",
+              fa: "حداقل دستمزد یا پیش‌بینی فردی نیست",
+              es: "No es un salario mínimo ni una previsión individual",
+              pl: "To nie jest płaca minimalna ani indywidualna prognoza",
+            })}
+          </p>
         </div>
       </section>
 
@@ -287,11 +275,14 @@ export default function LocaleHomePage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
               {dict.home.popularAgreements}
             </h2>
+            <p className="-mt-6 mb-8 text-sm text-text-secondary">
+              {dict.home.detailsInSwedish}
+            </p>
           </AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {agreements.map((a, i) => (
               <AnimatedSection key={a.slug} delay={i * 0.05}>
-                <Link href={`${prefix}/avtal/${a.slug}`} className="block h-full">
+                <Link href={`/avtal/${a.slug}`} className="block h-full">
                   <motion.div
                     whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                     transition={{ duration: 0.2 }}
@@ -301,39 +292,15 @@ export default function LocaleHomePage() {
                     <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
                       {a.name}
                     </h3>
-                    <p className="text-sm text-text-secondary mt-1 leading-snug">{a.desc}</p>
-                    <p className="text-xs text-text-secondary mt-2">{a.employees} {dict.home.employees}</p>
+                    <p className="text-sm text-text-secondary mt-1 leading-snug">{dict.home.detailsInSwedish}</p>
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-3">
-                      {dict.home.readMore} <DirArrow size={14} />
+                      {dict.home.openSwedishPage} <DirArrow size={14} />
                     </span>
                   </motion.div>
                 </Link>
               </AnimatedSection>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Salary Stats */}
-      <section className="py-16 sm:py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.salaryStats}
-            </h2>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1}>
-            <div className="rounded-[12px] border border-border bg-white p-4 sm:p-6 shadow-sm">
-              <SalaryChart />
-            </div>
-            <p className="text-xs text-text-secondary mt-3">{dict.home.salarySource}</p>
-            <Link
-              href={`${prefix}/statistik/loner`}
-              className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-2 hover:underline min-h-[44px]"
-            >
-              {dict.home.fullSalaryStats} <DirArrow size={14} />
-            </Link>
-          </AnimatedSection>
         </div>
       </section>
 
@@ -406,142 +373,6 @@ export default function LocaleHomePage() {
                     </div>
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <a
-            href="https://allaforsakringar.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
-          >
-            {dict.home.compareInsurance} <DirArrow size={14} />
-          </a>
-        </div>
-      </section>
-
-      {/* Compare Conditions */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.compareConditions}
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            {[
-              { title: dict.compare.obSupplement, href: `${prefix}/jamfor/ob-tillagg` },
-              { title: dict.compare.minimumWages, href: `${prefix}/jamfor/minimiioner` },
-              { title: dict.compare.vacation, href: `${prefix}/jamfor/semester` },
-              { title: dict.compare.pension, href: `${prefix}/jamfor/pension` },
-            ].map((item, i) => (
-              <AnimatedSection key={item.href} delay={i * 0.05}>
-                <Link href={item.href} className="block rounded-[12px] border border-border bg-white p-4 shadow-sm hover:shadow-md transition-shadow text-center">
-                  <p className="font-semibold text-text-primary text-sm">{item.title}</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-medium text-accent mt-1">
-                    {dict.home.compareAll} <DirArrow size={12} />
-                  </span>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Court Cases */}
-      <section className="py-16 sm:py-20 md:py-28 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.latestCases}
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {latestCases.map((c, i) => (
-              <AnimatedSection key={c.id} delay={i * 0.1}>
-                <Link href={`${prefix}/rattsfall/${c.id}`} className="block h-full">
-                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm h-full hover:shadow-md transition-shadow">
-                    <p className="text-xs text-text-secondary">{c.date}</p>
-                    <h3 className="font-semibold text-text-primary mt-1 leading-snug">{c.caseNumber} — {c.title}</h3>
-                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">{c.summary}</p>
-                    <span className="inline-block mt-3 text-xs font-medium bg-background text-text-secondary px-2 py-1 rounded-[6px]">
-                      {c.topic}
-                    </span>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-          <Link
-            href={`${prefix}/rattsfall`}
-            className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]"
-          >
-            {dict.home.seeAllCases} <DirArrow size={14} />
-          </Link>
-        </div>
-      </section>
-
-      {/* Latest Blog */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.latestBlog}
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {blogPosts.slice(0, 3).map((post, i) => (
-              <AnimatedSection key={post.slug} delay={i * 0.1}>
-                <Link href={`${prefix}/blogg/${post.slug}`} className="block h-full">
-                  <div className="rounded-[12px] border border-border bg-white p-5 shadow-sm hover:shadow-md transition-shadow h-full">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="rounded-[4px] bg-accent/10 text-accent text-xs font-medium px-2 py-0.5">{post.category}</span>
-                      <span className="text-xs text-text-secondary">{post.publishDate}</span>
-                    </div>
-                    <h3 className="font-semibold text-text-primary text-sm leading-snug">{post.title}</h3>
-                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">{post.excerpt}</p>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-          <AnimatedSection delay={0.3}>
-            <Link href={`${prefix}/blogg`} className="inline-flex items-center gap-1 text-sm font-medium text-accent mt-6 hover:underline min-h-[44px]">
-              {dict.home.allArticles} <DirArrow size={14} />
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Cross-selling */}
-      <section className="py-16 sm:py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
-            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-8 sm:mb-10">
-              {dict.home.needMoreHelp}
-            </h2>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {crossSelling.map((item, i) => (
-              <AnimatedSection key={item.title} delay={i * 0.1}>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <motion.div
-                    whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
-                    transition={{ duration: 0.2 }}
-                    className="group rounded-[12px] border border-border bg-white p-6 shadow-sm text-center"
-                  >
-                    <item.icon size={32} className="mx-auto text-accent mb-3" />
-                    <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                      {item.title}
-                    </h3>
-                  </motion.div>
-                </a>
               </AnimatedSection>
             ))}
           </div>

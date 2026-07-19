@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Disclaimer from "@/components/Disclaimer";
 import ScrollToTop from "@/components/ScrollToTop";
 import FloatingChat from "@/components/FloatingChat";
+import LocaleDocumentAttributes from "@/components/LocaleDocumentAttributes";
 import "./globals.css";
 
 const sourceSans = Source_Sans_3({
@@ -25,11 +26,11 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
   description:
-    "Sök och jämför svenska kollektivavtal. Få källstyrd vägledning om lön, OB-tillägg, semester och andra villkor.",
+    "Utforska källgranskade svenska kollektivavtal och officiell lönestatistik med tydliga originalkällor.",
   openGraph: {
     title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
     description:
-      "Sök och jämför svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
+      "Utforska svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
     url: "https://kollektivavtal.ai",
     siteName: "kollektivavtal.ai",
     locale: "sv_SE",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Kollektivavtal på klarspråk | kollektivavtal.ai",
-    description: "Sök och jämför svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
+    description: "Utforska svenska kollektivavtal med tydliga källor och försiktig AI-vägledning.",
     images: ["https://kollektivavtal.ai/Images/og-image.png"],
   },
   robots: {
@@ -50,12 +51,6 @@ export const metadata: Metadata = {
     canonical: "https://kollektivavtal.ai",
     languages: {
       "sv": "https://kollektivavtal.ai",
-      "en": "https://kollektivavtal.ai/en",
-      "ar": "https://kollektivavtal.ai/ar",
-      "so": "https://kollektivavtal.ai/so",
-      "fa": "https://kollektivavtal.ai/fa",
-      "es": "https://kollektivavtal.ai/es",
-      "pl": "https://kollektivavtal.ai/pl",
       "x-default": "https://kollektivavtal.ai",
     },
   },
@@ -106,6 +101,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <ScrollToTop />
+        <LocaleDocumentAttributes />
         <Header />
         <div className="bg-background">
           <main className="min-h-screen">{children}</main>

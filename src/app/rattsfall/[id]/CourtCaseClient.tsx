@@ -76,7 +76,7 @@ export default function CourtCaseClient({ courtCase, relatedAgreement }: Props) 
             <AnimatedSection>
               <h2 className="text-2xl sm:text-[32px] text-text-primary mb-2" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>Kort sammanfattning</h2>
               <p className="text-xs text-text-secondary mb-4">
-                kollektivavtal.ai:s sammanfattning – kontrollera alltid den officiella domen.
+                Kort referat från den officiella publiceringen – kontrollera alltid den officiella domen.
               </p>
               <div className="text-text-primary leading-[1.7] text-[16px] sm:text-[17px]">
                 <p>{courtCase.summary}</p>

@@ -1,8 +1,9 @@
-// Avtal med aktuellt källdokument tillgängligt för kontroll.
-// Detta betyder inte att varje publik löneuppgift är hämtad ur avtalet.
+// Avtal med aktuellt officiellt källunderlag tillgängligt för kontroll.
+// Detta betyder inte att varje publik uppgift är hämtad ur en fullständig avtalstext.
 export const VERIFIED_AGREEMENTS = new Set([
   "hok-kommunal",
   "handelsavtalet",
+  "lager-ehandelsavtalet",
   "byggavtalet",
   "ab-kommunalt",
   "hok-vision",

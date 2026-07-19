@@ -13,12 +13,12 @@ export default function WageDisclaimer({ isVerified }: WageDisclaimerProps) {
         <ShieldCheck className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
         <div>
           <p className="text-sm font-semibold text-green-800">
-            Källunderlag finns
+            Kontrollerad lönetabell
           </p>
           <p className="text-sm text-green-700 mt-1">
-            Avtalstexten finns som underlag. Medianlöner är en separat
-            sammanställning och avtalsbelopp kan ändras. Kontrollera alltid
-            den officiella källan eller fråga avtalsparterna före beslut.
+            Lägstanivåerna nedan är matchade mot det angivna officiella källunderlaget.
+            Rätt nivå beror bland annat på yrkeskategori, ålder och tillgodoräknad erfarenhet.
+            Kontrollera med avtalsparterna om du är osäker.
           </p>
         </div>
       </div>

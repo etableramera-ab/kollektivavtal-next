@@ -741,7 +741,7 @@ STRIKTA REGLER:
     sector: "kommun_region",
     sectorLabel: "Kommun/region",
     parties: { unions: ["Vision", "OFR"], employers: ["SKR", "Sobona"] },
-    employeeCount: 200000,
+    employeeCount: 210000,
     validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "HÖK Vision gäller tjänstemän i kommuner och regioner — socialsekreterare, handläggare, HR-specialister, ekonomer och administratörer. Lönesättningen är individuell och differentierad, vilket innebär att lönen sätts i dialog mellan chef och medarbetare baserat på prestation och ansvar. Avtalet kompletterar AB (Allmänna Bestämmelser) som reglerar grundvillkoren.",
     keyFacts: {
@@ -1514,7 +1514,7 @@ STRIKTA REGLER:
     sectorLabel: "Statlig sektor",
     parties: { unions: ["Saco-S"], employers: ["Arbetsgivarverket"] },
     employeeCount: 100000,
-    validPeriod: "Tillsvidareavtal (löpande)",
+    validPeriod: "I lydelse från 1 januari 2026, gäller tills vidare",
     summary: "Villkorsavtal Saco-S gäller akademiker i statlig tjänst — utredare, handläggare, forskare, universitetslärare och andra med akademisk utbildning. Avtalet är ett tillsvidareavtal med lokal lönebildning utan individgarantier, vilket innebär att hela löneökningen fördelas lokalt baserat på prestation och ansvar.",
     keyFacts: {
       minimumWage: "Individuell lönesättning (ingen central lägsta)",
@@ -1543,8 +1543,10 @@ STRIKTA REGLER:
       { question: "Vem företräder mig?", answer: "Saco-S är förhandlingsorganisationen för akademiker i staten. Den samlar flera Saco-förbund, t.ex. Jusek, DIK, Naturvetarna m.fl." },
     ],
     sources: [
-      { label: "Saco-S — Villkorsavtal", url: "https://www.saco-s.se" },
-      { label: "Arbetsgivarverket", url: "https://www.arbetsgivarverket.se" },
+      {
+        label: "Arbetsgivarverket — aktuellt Villkorsavtal-T för Saco-S",
+        url: "https://www.arbetsgivarverket.se/avtal-och-skrifter/avtal/villkorsavtal-t-arbetsgivarverket---saco-s",
+      },
     ],
     relatedAgreements: ["villkorsavtal-ofr", "villkorsavtal-seko", "ab-kommunalt"],
     aiSystemPrompt: `Du är en AI-expert på Villkorsavtal Saco-S — avtal för ~100 000 akademiker i statlig tjänst. Parter: Saco-S / Arbetsgivarverket. Individuell lönesättning utan individgarantier. Semester: 28-35 dagar. Arbetstid: 39,75 tim/v. Pension: PA 16. Medianlöner: handläggare ~38 000 kr, utredare ~42 000 kr, lektor ~45 000 kr. 
@@ -1847,7 +1849,7 @@ STRIKTA REGLER:
   },
   {
     slug: "lager-ehandelsavtalet", name: "Lager- och E-handelsavtalet", shortName: "Lager & E-handel", sector: "privat", sectorLabel: "Privat handel",
-    parties: { unions: ["Handelsanställdas förbund (Handels)"], employers: ["Svensk Handel"] }, employeeCount: 50000,
+    parties: { unions: ["Handelsanställdas förbund (Handels)"], employers: ["Svensk Handel"] }, employeeCount: 35000,
     validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "Lager- och E-handelsavtalet gäller lagerarbetare och e-handelsmedarbetare i centrallager, separerat från Detaljhandelsavtalet. OB-tillägg, skiftarbete och arbetstidsförkortning är centrala delar.",
     keyFacts: { minimumWage: "Från ca 25 800 kr/mån", overtimeRate: "Första 2 tim: 150%, därefter 200%", obWeekday: "~55 kr/tim", obNight: "~80 kr/tim", obWeekend: "~85–115 kr/tim", obHoliday: "~180 kr/tim", vacationDays: "25 dagar", parentalPay: "Föräldralön via avtal", noticePeriod: "1–6 månader", pension: "Avtalspension SAF-LO", workHoursPerWeek: "40 timmar" },
@@ -1995,8 +1997,8 @@ STRIKTA REGLER:
   },
   {
     slug: "lakare-kommun", name: "Läkaravtalet kommun/region", shortName: "Läkaravtalet", sector: "kommun_region", sectorLabel: "Kommun/region",
-    parties: { unions: ["Sveriges Läkarförbund"], employers: ["SKR"] }, employeeCount: 45000,
-    validPeriod: "Löpande med uppdateringar",
+    parties: { unions: ["Sveriges Läkarförbund"], employers: ["SKR"] }, employeeCount: 40000,
+    validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "Läkaravtalet gäller läkare i offentlig vård — i regioner och kommuner. Jouravtal, beredskap och specialisttillägg. Bland de högsta lönerna i kollektivavtalssystemet. Individuell lönesättning.",
     keyFacts: { minimumWage: "Individuell (AT-läkare från ca 35 000 kr)", overtimeRate: "Jour- och beredskapsersättning enligt avtal", obWeekday: "Jouravtal", obNight: "Jouravtal", obWeekend: "Jouravtal", obHoliday: "Jouravtal", vacationDays: "25–32 dagar beroende på ålder", parentalPay: "Föräldralön via avtal", noticePeriod: "1–6 månader", pension: "KAP-KL/AKAP-KR", workHoursPerWeek: "40 timmar (jour utöver)" },
     wageTable: [
@@ -2223,7 +2225,7 @@ STRIKTA REGLER:
   },
   {
     slug: "laraavtalet", name: "Läraravtalet (HÖK Sveriges Lärare)", shortName: "Läraravtalet", sector: "kommun_region", sectorLabel: "Kommun/region",
-    parties: { unions: ["Sveriges Lärare (Lärarförbundet + Lärarnas Riksförbund)"], employers: ["SKR", "Sobona"] }, employeeCount: 250000,
+    parties: { unions: ["Sveriges Lärare (Lärarförbundet + Lärarnas Riksförbund)"], employers: ["SKR", "Sobona"] }, employeeCount: 220000,
     validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "Läraravtalet gäller lärare i kommunala skolor. Individuell lönesättning, ferietjänst (sommarledigt med lön). Bland de mest diskuterade avtalen — lärarbrist driver löner uppåt.",
     keyFacts: { minimumWage: "Individuell lönesättning (nyanställd lärare ca 30 000 kr)", overtimeRate: "Första 2 tim: 180%, därefter 200%", obWeekday: "Sällan aktuellt (dagtid)", obNight: "Sällan aktuellt", obWeekend: "Sällan aktuellt", obHoliday: "Sällan aktuellt", vacationDays: "25–32 dagar + ferietid", parentalPay: "Föräldralön via avtal", noticePeriod: "1–6 månader", pension: "KAP-KL/AKAP-KR", workHoursPerWeek: "40 timmar (varav ca 21 undervisningstimmar)" },
@@ -2242,7 +2244,7 @@ STRIKTA REGLER:
   },
   {
     slug: "sjukskoterska-avtal", name: "Sjuksköterskevillkor (HÖK Vårdförbundet)", shortName: "Sjuksköterska-avtal", sector: "kommun_region", sectorLabel: "Kommun/region",
-    parties: { unions: ["Vårdförbundet"], employers: ["SKR", "Sobona"] }, employeeCount: 90000,
+    parties: { unions: ["Vårdförbundet"], employers: ["SKR", "Sobona"] }, employeeCount: 110000,
     validPeriod: "1 april 2025 – 31 mars 2027",
     summary: "HÖK Vårdförbundet gäller sjuksköterskor, barnmorskor och biomedicinska analytiker i offentlig vård. OB-tillägg centralt, personalbrist driver löner uppåt.",
     keyFacts: { minimumWage: "Individuell (nyanställd ssk ca 31 000 kr)", overtimeRate: "Första 2 tim: 180%, därefter 200%", obWeekday: "~100 kr/tim", obNight: "~140 kr/tim", obWeekend: "~140 kr/tim", obHoliday: "~200 kr/tim", vacationDays: "25–32 dagar", parentalPay: "Föräldralön via avtal", noticePeriod: "1–6 månader", pension: "KAP-KL/AKAP-KR", workHoursPerWeek: "40 timmar" },

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale } from "@/lib/useLocale";
 
 const socialLinks = [
   {
@@ -40,8 +43,10 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { locale, dict } = useLocale();
+
   return (
-    <footer className="text-white bg-[#164B3F] border-t border-white/10">
+    <footer lang={locale} dir={locale === "ar" || locale === "fa" ? "rtl" : "ltr"} className="text-white bg-[#164B3F] border-t border-white/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <div className="mb-8">
           <Link href="/" style={{ fontFamily: "var(--font-serif)", fontSize: '20px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '-0.01em' }}>
@@ -51,21 +56,26 @@ export default function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white/70">
-              Om oss
+              {dict.nav.about}
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
                 <Link href="/om-oss" className="hover:text-white transition-colors inline-block py-2">
-                  Om kollektivavtal.ai
+                  {dict.footer.about} {dict.footer.inSwedish}
                 </Link>
               </li>
               <li>
                 <Link href="/om-oss" className="hover:text-white transition-colors inline-block py-2">
-                  Kontakt
+                  {dict.footer.contact} {dict.footer.inSwedish}
                 </Link>
               </li>
               <li>
-                <span className="inline-block py-2">Drivs av Etablera Mera AB</span>
+                <Link href="/kallor-och-metod" className="hover:text-white transition-colors inline-block py-2">
+                  {dict.footer.sourcesMethod} {dict.footer.inSwedish}
+                </Link>
+              </li>
+              <li>
+                <span className="inline-block py-2">{dict.footer.operatedBy}</span>
               </li>
             </ul>
             <div className="flex items-center gap-4 mt-4">
@@ -75,7 +85,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Följ oss på ${social.name}`}
+                  aria-label={`${dict.footer.followUs} ${social.name}`}
                   className="text-white/50 hover:text-white transition-colors"
                 >
                   {social.icon}
@@ -86,12 +96,12 @@ export default function Footer() {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white/70">
-              Populära avtal
+              {dict.footer.popularAgreements} {dict.footer.inSwedish}
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
                 <Link href="/avtal/handelsavtalet" className="hover:text-white transition-colors inline-block py-2">
-                  Handelsavtalet
+                  Detaljhandelsavtalet
                 </Link>
               </li>
               <li>
@@ -106,7 +116,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/avtal/hok-kommunal" className="hover:text-white transition-colors inline-block py-2">
-                  HÖK Kommunal
+                  HÖK 25 Kommunal
                 </Link>
               </li>
             </ul>
@@ -114,22 +124,17 @@ export default function Footer() {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white/70">
-              Verktyg
+              {dict.home.tools} {dict.footer.inSwedish}
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
                 <Link href="/hitta-avtal" className="hover:text-white transition-colors inline-block py-2">
-                  Hitta ditt avtal
+                  {dict.nav.findAgreement}
                 </Link>
               </li>
               <li>
-                <Link href="/lonekalkylator" className="hover:text-white transition-colors inline-block py-2">
-                  Lönekalkylator
-                </Link>
-              </li>
-              <li>
-                <Link href="/statistik" className="hover:text-white transition-colors inline-block py-2">
-                  Lönestatistik
+                <Link href="/yrke" className="hover:text-white transition-colors inline-block py-2">
+                  {dict.home.salaryStats}
                 </Link>
               </li>
             </ul>
@@ -137,22 +142,22 @@ export default function Footer() {
 
           <div>
             <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-white/70">
-              Juridiskt
+              {dict.footer.legal} {dict.footer.inSwedish}
             </h3>
             <ul className="space-y-1 text-sm text-white/80">
               <li>
                 <Link href="/integritetspolicy" className="hover:text-white transition-colors inline-block py-2">
-                  Integritetspolicy
+                  {dict.footer.privacy}
                 </Link>
               </li>
               <li>
                 <Link href="/cookiepolicy" className="hover:text-white transition-colors inline-block py-2">
-                  Cookiepolicy
+                  {dict.footer.cookiePolicy}
                 </Link>
               </li>
               <li>
                 <Link href="/om-oss" className="hover:text-white transition-colors inline-block py-2">
-                  Om oss
+                  {dict.nav.about}
                 </Link>
               </li>
             </ul>
@@ -161,10 +166,10 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-white/20">
           <p className="text-xs text-white/50">
-            En tjänst från Etablera Mera AB (559444-2526)
+            {dict.footer.serviceFrom}
           </p>
           <p className="text-xs text-white/40 mt-1 pb-safe">
-            &copy; {new Date().getFullYear()} Etablera Mera AB. Alla rättigheter förbehållna.
+            &copy; {new Date().getFullYear()} Etablera Mera AB. {dict.footer.rights}
           </p>
         </div>
       </div>

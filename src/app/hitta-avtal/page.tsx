@@ -13,9 +13,9 @@ import {
   Check,
 } from "lucide-react";
 import { finderData } from "@/data/agreement-finder";
-import { getAgreementBySlug } from "@/data/agreements";
-import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements } from "@/lib/public-agreements";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { openAIChat } from "@/lib/chat-client";
 
 const sectorIcons = {
   privat: Building2,
@@ -53,8 +53,8 @@ export default function HittaAvtal() {
   const occupation =
     branch && occupationIdx !== null ? branch.occupations[occupationIdx] : null;
   const agreement =
-    occupation?.agreementSlug && isVerifiedAgreement(occupation.agreementSlug)
-      ? getAgreementBySlug(occupation.agreementSlug)
+    occupation?.agreementSlug
+      ? publicAgreements.find((item) => item.slug === occupation.agreementSlug) ?? null
       : null;
 
   function goTo(s: number) {
@@ -86,7 +86,7 @@ export default function HittaAvtal() {
               Hitta ditt kollektivavtal
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              Svara på tre frågor så hittar vi rätt avtal för dig
+              Svara på tre frågor så visar vi vilket avtal som kan vara relevant
             </p>
           </AnimatedSection>
         </div>
@@ -97,8 +97,9 @@ export default function HittaAvtal() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
-              Du hittar ditt kollektivavtal genom att välja bransch och yrke nedan. På den svenska
-              arbetsmarknaden finns drygt 600 centrala kollektivavtal och 88% av alla anställda omfattas.
+              Du kan få hjälp att hitta ett möjligt kollektivavtal genom att välja bransch och yrke
+              nedan. Rätt avtal beror också på arbetsgivaren och arbetsplatsen, så kontrollera alltid
+              resultatet med arbetsgivaren eller facket.
             </p>
           </div>
         </div>
@@ -259,7 +260,7 @@ export default function HittaAvtal() {
                     <div className="rounded-sm border-2 border-accent bg-card p-6">
                       <div className="flex items-center gap-2 mb-3">
                         <Check size={20} className="text-success" />
-                        <p className="text-sm font-medium text-success">Avtal hittat</p>
+                        <p className="text-sm font-medium text-success">Möjligt avtalsområde</p>
                       </div>
                       <h2 className="text-xl sm:text-2xl font-bold text-text-primary">
                         {agreement.name}
@@ -267,27 +268,15 @@ export default function HittaAvtal() {
                       <p className="text-sm text-text-secondary mt-2 leading-relaxed">
                         {agreement.summary}
                       </p>
+                      <p className="text-xs text-text-secondary mt-3 leading-relaxed">
+                        Kontrollera med arbetsgivaren eller facket att avtalet gäller på din arbetsplats.
+                      </p>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                      <div className="rounded-sm border border-border bg-card p-4">
-                        <p className="text-xs text-text-secondary">Lägsta lön</p>
-                        <p className="text-sm font-semibold text-text-primary mt-0.5">
-                          {agreement.keyFacts.minimumWage}
-                        </p>
-                      </div>
-                      <div className="rounded-sm border border-border bg-card p-4">
-                        <p className="text-xs text-text-secondary">OB natt</p>
-                        <p className="text-sm font-semibold text-text-primary mt-0.5">
-                          {agreement.keyFacts.obNight}
-                        </p>
-                      </div>
-                      <div className="rounded-sm border border-border bg-card p-4">
-                        <p className="text-xs text-text-secondary">Semester</p>
-                        <p className="text-sm font-semibold text-text-primary mt-0.5">
-                          {agreement.keyFacts.vacationDays}
-                        </p>
-                      </div>
+                    <div className="rounded-r-lg border-l-[3px] border-l-accent bg-[#EFE7DA] p-4">
+                      <p className="text-sm font-semibold text-text-primary">
+                        Detaljerade villkor granskas mot originalavtalet
+                      </p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3">
@@ -295,10 +284,10 @@ export default function HittaAvtal() {
                         href={`/avtal/${agreement.slug}`}
                         className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-accent text-white px-6 py-3 text-sm font-medium hover:bg-accent/90 transition-colors min-h-[44px]"
                       >
-                        Läs hela sammanfattningen <ArrowRight size={16} />
+                        Läs avtalsöversikten <ArrowRight size={16} />
                       </Link>
                       <button
-                        onClick={() => { const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement; btn?.click(); }}
+                        onClick={openAIChat}
                         className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white min-h-[44px] transition-all hover:-translate-y-px"
                         style={{ background: "#285E52" }}
                       >
@@ -311,12 +300,12 @@ export default function HittaAvtal() {
                   <div className="space-y-6">
                     <div className="rounded-sm border border-border bg-card p-6">
                       <h2 className="text-xl font-bold text-text-primary mb-2">
-                        Vi arbetar med att lägga till detta avtal
+                        Vi kan inte avgöra rätt avtal säkert här
                       </h2>
                       <p className="text-sm text-text-secondary leading-relaxed">
-                        Avtalet för {occupation.label} inom {branch?.label} finns ännu inte i vår
-                        databas. Vi arbetar med att verifiera och förbättra avtalsguiden och lägger
-                        till fler avtal med tydligt källunderlag löpande.
+                        För {occupation.label} inom {branch?.label} kan rätt kollektivavtal bero på
+                        arbetsgivare och arbetsplats. Vi visar därför inget avtal förrän kopplingen
+                        kan göras säkert.
                       </p>
                     </div>
 

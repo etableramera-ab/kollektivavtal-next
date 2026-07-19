@@ -5,8 +5,9 @@ import { parseObNumber } from "@/data/comparisons";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "OB-tillägg 2026 — Jämför alla branscher och kollektivavtal | kollektivavtal.ai",
-  description: "Se OB-tillägg per timme för alla kollektivavtal i Sverige. Jämför kväll, natt, helg och storhelg — från Handels till Byggnads.",
+  title: "OB-jämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -36,9 +37,9 @@ export default function OBTillagg() {
   notFound();
   return (
     <TopicComparisonPage
-      title="OB-tillägg 2026 — Alla avtal jämförda"
-      subtitle="Se hur mycket extra du får per timme vid kväll, natt, helg och storhelg"
-      aeoAnswer="OB-tillägg varierar kraftigt mellan branscher. Kommun och region har bland de högsta med ca 140 kr/tim natt, medan hotell och restaurang ger ca 50 kr/tim. Byggbranschen ger upp till 180 kr/tim på storhelg. Utan kollektivavtal finns ingen rätt till OB."
+      title="OB-tillägg i källgranskade kollektivavtal"
+      subtitle="Jämför kontrollerade regler för kväll, natt, helg och storhelg"
+      aeoAnswer="OB kan vara ett fast belopp, en procentsats eller en formel och tiderna skiljer sig mellan avtalen. Tabellen sammanfattar de aktuella regler som har kunnat kontrolleras; öppna alltid avtalet för detaljer om exakt dag och klockslag."
       columns={columns}
       rows={rows}
       ctaText="Beräkna din OB-lön i lönekalkylatorn"

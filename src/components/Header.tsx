@@ -7,11 +7,13 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLocale } from "@/lib/useLocale";
+import { openAIChat } from "@/lib/chat-client";
 
-const toolPaths = ["/hitta-avtal", "/lonekalkylator", "/jamfor"];
+const toolPaths = ["/hitta-avtal"];
 
 export default function Header() {
-  const { dict } = useLocale();
+  const { locale, dict } = useLocale();
+  const isSwedish = locale === "sv";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -23,13 +25,10 @@ export default function Header() {
     { href: "/yrke", label: dict.nav.occupations, match: "/yrke" },
     { href: "/statistik", label: dict.nav.statistics, match: "/statistik" },
     { href: "/rattsfall", label: dict.nav.courtCases, match: "/rattsfall" },
-    { href: "/blogg", label: dict.nav.blog, match: "/blogg" },
   ];
 
   const toolLinks = [
     { href: "/hitta-avtal", label: dict.nav.findAgreement },
-    { href: "/lonekalkylator", label: dict.nav.calculator },
-    { href: "/jamfor", label: dict.compare.compare },
     { href: "/statistik/avtalsrorelsen", label: dict.home.bargainingRound },
   ];
 
@@ -37,11 +36,8 @@ export default function Header() {
     { href: "/avtal", label: dict.nav.agreements },
     { href: "/yrke", label: dict.nav.occupations },
     { href: "/hitta-avtal", label: dict.nav.findAgreement },
-    { href: "/lonekalkylator", label: dict.nav.calculator },
-    { href: "/jamfor", label: dict.compare.compare },
     { href: "/statistik", label: dict.nav.statistics },
     { href: "/rattsfall", label: dict.nav.courtCases },
-    { href: "/blogg", label: dict.nav.blog },
   ];
 
   const isToolActive = toolPaths.some((p) => pathname.startsWith(p));
@@ -64,6 +60,8 @@ export default function Header() {
 
   return (
     <header
+      lang={locale}
+      dir={locale === "ar" || locale === "fa" ? "rtl" : "ltr"}
       className={`sticky top-0 z-50 transition-all duration-200 ${
         scrolled ? "shadow-md" : ""
       }`}
@@ -76,7 +74,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-5">
-            {mainLinks.map((link) => {
+            {isSwedish && mainLinks.map((link) => {
               const active = pathname.startsWith(link.match);
               return (
                 <Link
@@ -93,7 +91,7 @@ export default function Header() {
               );
             })}
 
-            <div className="relative" ref={dropdownRef}>
+            {isSwedish && <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setToolsOpen(!toolsOpen)}
                 className={`flex items-center gap-1 text-sm font-medium transition-colors pb-1 ${
@@ -119,40 +117,41 @@ export default function Header() {
                   ))}
                 </div>
               )}
-            </div>
+            </div>}
 
             <button
-              onClick={() => {
-                const btn = document.querySelector("[aria-label='Öppna AI-chatt']") as HTMLButtonElement;
-                btn?.click();
-              }}
+              onClick={openAIChat}
               className="px-3.5 py-1.5 text-sm font-semibold text-white rounded-sm transition-colors duration-150 hover:bg-white/15"
               style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.22)" }}
             >
-              💬 Fråga AI
+              💬 {dict.nav.askAI}
             </button>
-            <Link
+            {isSwedish && <Link
               href="/hitta-avtal"
               className="ml-1 px-5 py-2 text-sm font-semibold text-white rounded-sm transition-colors duration-150 hover:bg-[#955524]"
               style={{ background: "#B56A2D" }}
             >
-              Hitta ditt avtal
-            </Link>
+              {dict.nav.findAgreement}
+            </Link>}
             <LanguageSwitcher />
           </nav>
 
-          <button
+          {isSwedish ? <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden p-3 -mr-3 text-white/80 hover:text-white min-w-[44px] min-h-[44px] flex items-center justify-center"
-            aria-label="Meny"
+            aria-label={dict.nav.openMenu}
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </button> : (
+            <div className="lg:hidden">
+              <LanguageSwitcher />
+            </div>
+          )}
         </div>
       </div>
 
       <AnimatePresence>
-        {mobileOpen && (
+        {isSwedish && mobileOpen && (
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -172,7 +171,7 @@ export default function Header() {
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-3 -mr-3 text-text-secondary hover:text-primary min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Stäng meny"
+                aria-label={dict.nav.closeMenu}
               >
                 <X size={24} />
               </button>
@@ -199,7 +198,7 @@ export default function Header() {
                 onClick={() => setMobileOpen(false)}
                 className="block mt-6 text-center px-5 py-3 text-[16px] font-semibold text-white bg-[#B56A2D] rounded-sm"
               >
-                Hitta ditt avtal
+                {dict.nav.findAgreement}
               </Link>
             </nav>
           </motion.div>

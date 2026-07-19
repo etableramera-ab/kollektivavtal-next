@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Föräldralön per kollektivavtal 2026 — Löneutfyllnad alla avtal | kollektivavtal.ai",
-  description: "Jämför föräldralön per kollektivavtal. Se vilka avtal som ger bäst löneutfyllnad utöver Försäkringskassans ersättning.",
+  title: "Föräldraersättningen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Foraldralon() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Föräldralön per kollektivavtal 2026"
-      subtitle="Så mycket löneutfyllnad ger ditt avtal utöver Försäkringskassan"
-      aeoAnswer="Föräldralön fyller ut mellanskillnaden mellan Försäkringskassans ca 80% och din fulla lön. HÖK Kommunal ger 10% utfyllnad, statliga avtal är mer generösa. Utan kollektivavtal får du bara Försäkringskassans ersättning."
+      title="Föräldraersättning i källgranskade kollektivavtal"
+      subtitle="Jämför kontrollerade regler om föräldralön och föräldrapenningtillägg"
+      aeoAnswer="Extra ersättning vid föräldraledighet kan ligga i själva avtalet eller i en separat kollektivavtalad försäkring. Kvalifikationstid, ersättningsnivå och antal dagar varierar, så tabellen ska läsas tillsammans med villkoren för det aktuella avtalet."
       columns={columns}
       rows={rows}
     />

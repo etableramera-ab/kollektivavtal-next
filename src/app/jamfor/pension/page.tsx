@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Tjänstepension per kollektivavtal 2026 — Avsättning alla avtal | kollektivavtal.ai",
-  description: "Jämför pensionssystem och avsättning per kollektivavtal. ITP, KAP-KL, PA16, SAF-LO — vad gäller för dig?",
+  title: "Pensionsjämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Pension() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Tjänstepension per kollektivavtal 2026"
-      subtitle="ITP, KAP-KL, PA16, SAF-LO — jämför pensionssystem och avsättning"
-      aeoAnswer="Tjänstepension via kollektivavtal innebär ca 4-6% av lönen i pensionsavsättning. Privat: ITP (tjänstemän) eller SAF-LO (arbetare). Kommun: KAP-KL/AKAP-KR. Stat: PA 16. Utan avtal finns ingen garanti om tjänstepension."
+      title="Tjänstepension i källgranskade kollektivavtal"
+      subtitle="Jämför vilket pensionsavtal som hör till respektive avtalsområde"
+      aeoAnswer="Pensionssystem och premier skiljer sig mellan avtalsområden och kan även bero på ålder, lön och övergångsregler. Tabellen visar vilket pensionsavtal som källorna anger, men en personlig beräkning behöver göras hos pensionsvalcentralen eller arbetsgivaren."
       columns={columns}
       rows={rows}
     />

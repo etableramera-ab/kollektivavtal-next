@@ -41,6 +41,11 @@ export function middleware(request: NextRequest) {
   const locale = getLocale(request);
   if (locale === defaultLocale) return;
 
+  // Only redirect routes that actually have localized pages. Other pages stay
+  // on their working Swedish URL until a translated version exists.
+  const hasLocalizedPage = pathname === "/";
+  if (!hasLocalizedPage) return;
+
   // Redirect to /{locale}/path
   request.nextUrl.pathname = `/${locale}${pathname}`;
   return NextResponse.redirect(request.nextUrl);

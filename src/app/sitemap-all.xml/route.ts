@@ -21,8 +21,6 @@ export function GET() {
     { loc: `${BASE}/avtal` },
     ...remainingAgreements.map((a) => ({ loc: `${BASE}/avtal/${a.slug}` })),
     { loc: `${BASE}/yrke` },
-    { loc: `${BASE}/blogg` },
-    { loc: `${BASE}/jamfor` },
     ...publicComparisons.map((c) => {
       const sorted = [c.slug1, c.slug2].sort();
       return { loc: `${BASE}/jamfor/${sorted[0]}-vs-${sorted[1]}` };
@@ -34,6 +32,7 @@ export function GET() {
     })),
     { loc: `${BASE}/integritetspolicy` },
     { loc: `${BASE}/cookiepolicy` },
+    { loc: `${BASE}/kallor-och-metod` },
   ];
 
   const body = urls

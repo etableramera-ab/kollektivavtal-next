@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { publicOccupations, getPublicOccupationBySlug } from "@/lib/public-occupations";
-import { getAgreementBySlug } from "@/data/agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import { publicAgreements } from "@/lib/public-agreements";
 import OccupationPageClient from "./OccupationPageClient";
 
 interface PageProps {
@@ -37,7 +37,7 @@ export default async function OccupationPage({ params }: PageProps) {
   if (!occ) notFound();
 
   const agreement = isVerifiedAgreement(occ.agreement)
-    ? getAgreementBySlug(occ.agreement)
+    ? publicAgreements.find((item) => item.slug === occ.agreement)
     : null;
   const relatedOccs = occ.relatedOccupations
     .map((s) => publicOccupations.find((o) => o.slug === s))

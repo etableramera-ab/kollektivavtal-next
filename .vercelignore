@@ -1,0 +1,21 @@
+# Local review files
+tmp/
+
+# Unused source artwork
+public/Images/Nya bilder/
+
+# Local-only settings
+.env*.local
+.vercel/
+
+# Private certificates
+*.pem
+*.p12
+*.pfx
+
+# Copyright-protected agreement material (local AI review only)
+src/data/agreement-texts/
+
+# Local tool output
+.claude/
+*.tsbuildinfo

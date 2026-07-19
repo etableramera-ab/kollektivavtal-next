@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Semester per kollektivavtal 2026 — Antal dagar och semestertillägg | kollektivavtal.ai",
-  description: "Jämför semestervillkor per kollektivavtal 2026. Se antal dagar, extra vid ålder och semestertillägg.",
+  title: "Semesterjämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Semester() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Semester per kollektivavtal 2026"
-      subtitle="Jämför semesterdagar och extra vid ålder"
-      aeoAnswer="De flesta avtal ger 25 semesterdagar — lagens minimum. Statligt anställda har upp till 35 dagar från 40 år. Kommunanställda får 31 dagar från 40 och 32 från 50. Privata avtal ger oftast bara 25 dagar."
+      title="Semester i källgranskade kollektivavtal"
+      subtitle="Jämför semesterregler som har kontrollerats mot aktuella avtal"
+      aeoAnswer="Semesterreglerna skiljer sig mellan avtalsområden och kan påverkas av bland annat ålder, anställningsform och hur semestern tjänas in. Tabellen visar endast uppgifter som har kontrollerats mot aktuella avtalskällor."
       columns={columns}
       rows={rows}
     />

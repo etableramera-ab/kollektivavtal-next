@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/download-agreements.js",
-    "build": "npm run prebuild && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "download:agreements": "node scripts/download-agreements.js",
     "update:scb-wages": "node scripts/fetch-scb-occupation-wages.mjs"
   },
   "dependencies": {

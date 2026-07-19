@@ -32,7 +32,7 @@ const agreements = [
   // Handelsavtalet (Detaljhandel)
   { slug: 'handelsavtalet', url: 'https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/detaljhandelsavtalet-2025-2027-in.pdf' },
   // Arbetsgivarverket — Villkorsavtal Saco
-  { slug: 'villkorsavtal-saco', url: 'https://www.av.se/globalassets/filer/arbetsmiljoarbete-och-inspektioner/avtal-utstationering/kollektivavtal-villkorsavtal-t-mellan-arbetsgivarverket-saco-s.pdf' },
+  { slug: 'villkorsavtal-saco', url: 'https://www.arbetsgivarverket.se/globalassets/arbetsgivarverket/avtal-och-skrifter/avtal/villkorsavtal-t-arbetsgivarverket---saco-s/villkorsavtal-t-saco-s-6.0-20260114.pdf' },
   // Seko — Väg och ban
   { slug: 'vag-banavtalet-seko', url: 'https://www.seko.se/4a5cef/siteassets/kollektivavtal/branschavtal/vag-och-ban/vag-och-banavtalet-2025-2027-utgava-1.pdf' },
   // IF Metall — nya

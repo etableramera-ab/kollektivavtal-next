@@ -1,6 +1,5 @@
 import { publicAgreements } from "@/lib/public-agreements";
 import { publicOccupations } from "@/lib/public-occupations";
-import { fallbackWageData } from "@/lib/scb-wages";
 
 const BASE = "https://kollektivavtal.ai";
 
@@ -16,12 +15,10 @@ export function GET() {
     ...topAgreements.map((a) => `${BASE}/avtal/${a.slug}`),
     ...publicOccupations.map((o) => `${BASE}/yrke/${o.slug}`),
     `${BASE}/statistik`,
-    `${BASE}/statistik/loner`,
-    ...fallbackWageData.map((d) => `${BASE}/statistik/loner/${d.slug}`),
     `${BASE}/statistik/avtalsrorelsen`,
     `${BASE}/hitta-avtal`,
-    `${BASE}/lonekalkylator`,
     `${BASE}/om-oss`,
+    `${BASE}/kallor-och-metod`,
   ];
 
   const body = urls

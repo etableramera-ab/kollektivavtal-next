@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Arabic } from "next/font/google";
-import { locales, defaultLocale } from "@/lib/dictionaries";
+import { locales, defaultLocale, getDictionary } from "@/lib/dictionaries";
 import { notFound } from "next/navigation";
-import { buildLocalizedUrl, getOgLocale, getOgAlternateLocales, type Locale } from "@/lib/metadata";
+import { buildLocalizedUrl, getOgLocale, type Locale } from "@/lib/metadata";
 
 const notoSansArabic = Noto_Sans_Arabic({
   subsets: ["arabic"],
@@ -17,27 +17,37 @@ export function generateStaticParams() {
     .map((locale) => ({ locale }));
 }
 
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale = localeParam as Locale;
+  const dict = getDictionary(locale);
+  const title = `${dict.hero.title} | kollektivavtal.ai`;
   return {
+    title,
+    description: dict.metadata.siteDescription,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
-      canonical: buildLocalizedUrl(locale, "/"),
-      languages: {
-        "sv": "https://kollektivavtal.ai",
-        "en": "https://kollektivavtal.ai/en",
-        "ar": "https://kollektivavtal.ai/ar",
-        "so": "https://kollektivavtal.ai/so",
-        "fa": "https://kollektivavtal.ai/fa",
-        "es": "https://kollektivavtal.ai/es",
-        "pl": "https://kollektivavtal.ai/pl",
-        "x-default": "https://kollektivavtal.ai",
-      },
+      canonical: "https://kollektivavtal.ai",
     },
     openGraph: {
+      title,
+      description: dict.metadata.siteDescription,
       url: buildLocalizedUrl(locale, "/"),
+      siteName: "kollektivavtal.ai",
       locale: getOgLocale(locale),
-      alternateLocale: getOgAlternateLocales(locale),
+      type: "website",
+      images: [{ url: "https://kollektivavtal.ai/Images/og-image.png", width: 1200, height: 630, alt: "kollektivavtal.ai" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: dict.metadata.siteDescription,
+      images: ["https://kollektivavtal.ai/Images/og-image.png"],
     },
   };
 }

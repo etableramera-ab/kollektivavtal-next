@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   Mail,
+  Phone,
   Building2,
   FileText,
   ShieldCheck,
@@ -11,6 +12,8 @@ import {
   BarChart3,
   Users,
 } from "lucide-react";
+import { VERIFIED_AGREEMENTS } from "@/lib/verified-agreements";
+import { courtCases } from "@/data/court-cases";
 
 export const metadata: Metadata = {
   title: "Om kollektivavtal.ai — Mission, datakvalitet och företagsinfo",
@@ -22,8 +25,8 @@ export const metadata: Metadata = {
 const features = [
   {
     icon: FileText,
-    title: "30 avtal med aktuellt källunderlag",
-    desc: "Utvalda avtal har aktuella avtalstexter som underlag och fler granskas löpande",
+    title: `${VERIFIED_AGREEMENTS.size} avtal med aktuellt källunderlag`,
+    desc: "Utvalda avtal har aktuella officiella källor som underlag och fler granskas löpande",
   },
   {
     icon: MessageSquare,
@@ -37,7 +40,7 @@ const features = [
   },
   {
     icon: Scale,
-    title: "2 009 rättsfall",
+    title: `${courtCases.length.toLocaleString("sv-SE")} rättsfall`,
     desc: "Sökbara domar med länkar till Arbetsdomstolens officiella källor",
   },
   {
@@ -124,7 +127,7 @@ export default function OmOss() {
             <p>
               Vi bygger en källmedveten guide till svenska kollektivavtal på
               klarspråk. Med hjälp av AI-teknik kan du ställa frågor om ditt
-              avtal, jämföra villkor mellan branscher och se när informationen
+              avtal, läsa källgranskade sammanfattningar och se när informationen
               behöver kontrolleras med avtalsparterna.
             </p>
             <p>
@@ -210,6 +213,18 @@ export default function OmOss() {
                   </a>
                 </div>
               </div>
+              <div className="flex items-start gap-3">
+                <Phone size={18} className="text-accent mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-text-primary">Telefon</p>
+                  <a
+                    href="tel:+468188000"
+                    className="text-accent hover:underline"
+                  >
+                    08-18 80 00
+                  </a>
+                </div>
+              </div>
               <div className="flex items-start gap-3 sm:col-span-2">
                 <Globe size={18} className="text-accent mt-0.5 shrink-0" />
                 <div>
@@ -241,7 +256,7 @@ export default function OmOss() {
                   Aktuellt källunderlag
                 </p>
                 <p className="text-sm text-green-700 mt-1">
-                  30 avtal har ett aktuellt källdokument. Lönetabeller visas
+                  {VERIFIED_AGREEMENTS.size} avtal har ett aktuellt officiellt källunderlag. Lönetabeller visas
                   bara där beloppen kan matchas mot underlaget. Övriga
                   uppgifter döljs eller hänvisar till den officiella källan.
                 </p>
@@ -268,7 +283,7 @@ export default function OmOss() {
                   Rättsfall och statistik
                 </p>
                 <p className="text-sm text-blue-700 mt-1">
-                  2 009 domar med länkar till Arbetsdomstolens officiella sidor.
+                  {courtCases.length.toLocaleString("sv-SE")} domar med länkar till Arbetsdomstolens officiella sidor.
                   Lönestatistik hämtas från SCB:s öppna officiella data.
                 </p>
               </div>
@@ -332,10 +347,10 @@ export default function OmOss() {
                 Företagskontakt
               </p>
               <a
-                href="mailto:kim@etableramera.se"
+                href="mailto:info@kollektivavtal.ai"
                 className="text-sm text-accent hover:underline"
               >
-                kim@etableramera.se
+                info@kollektivavtal.ai
               </a>
             </div>
           </div>

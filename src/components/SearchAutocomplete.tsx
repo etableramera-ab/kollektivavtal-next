@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useId } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { publicAgreements } from "@/lib/public-agreements";
@@ -13,7 +13,7 @@ interface SearchResult {
   extra?: string;
 }
 
-function search(query: string): SearchResult[] {
+function search(query: string, scope: "all" | "agreements"): SearchResult[] {
   const q = query.toLowerCase().trim();
   if (q.length < 2) return [];
 
@@ -37,16 +37,18 @@ function search(query: string): SearchResult[] {
     });
   }
 
-  const matchedOccupations = publicOccupations.filter((o) =>
-    o.title.toLowerCase().includes(q)
-  );
-  for (const o of matchedOccupations.slice(0, 5)) {
-    results.push({
-      type: "yrke",
-      name: o.title,
-      slug: o.slug,
-      extra: `${o.salary.median.toLocaleString("sv-SE")} kr · SCB 2025`,
-    });
+  if (scope === "all") {
+    const matchedOccupations = publicOccupations.filter((o) =>
+      o.title.toLowerCase().includes(q)
+    );
+    for (const o of matchedOccupations.slice(0, 5)) {
+      results.push({
+        type: "yrke",
+        name: o.title,
+        slug: o.slug,
+        extra: `${o.salary.median.toLocaleString("sv-SE")} kr · SCB 2025`,
+      });
+    }
   }
 
   return results.slice(0, 10);
@@ -68,11 +70,27 @@ function highlightMatch(text: string, query: string) {
 interface Props {
   variant?: "hero" | "default";
   placeholder?: string;
+  agreementBasePath?: string;
+  occupationBasePath?: string;
+  isRTL?: boolean;
+  scope?: "all" | "agreements";
+  showDetails?: boolean;
+  labels?: {
+    agreements?: string;
+    occupations?: string;
+    noResults?: string;
+  };
 }
 
 export default function SearchAutocomplete({
   variant = "default",
   placeholder = "Sök på yrke, bransch eller företag...",
+  agreementBasePath = "/avtal",
+  occupationBasePath = "/yrke",
+  isRTL = false,
+  scope = "all",
+  showDetails = true,
+  labels = {},
 }: Props) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -80,6 +98,7 @@ export default function SearchAutocomplete({
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listboxId = useId();
   const router = useRouter();
 
   // Debounced search
@@ -90,13 +109,13 @@ export default function SearchAutocomplete({
       return;
     }
     const timer = setTimeout(() => {
-      const r = search(query);
+      const r = search(query, scope);
       setResults(r);
       setOpen(r.length > 0 || query.length >= 2);
       setActiveIndex(-1);
     }, 200);
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [query, scope]);
 
   // Click outside
   useEffect(() => {
@@ -115,11 +134,11 @@ export default function SearchAutocomplete({
       setQuery("");
       router.push(
         result.type === "avtal"
-          ? `/avtal/${result.slug}`
-          : `/yrke/${result.slug}`
+          ? `${agreementBasePath}/${result.slug}`
+          : `${occupationBasePath}/${result.slug}`
       );
     },
-    [router]
+    [agreementBasePath, occupationBasePath, router]
   );
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -130,9 +149,9 @@ export default function SearchAutocomplete({
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setActiveIndex((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Enter" && activeIndex >= 0) {
+    } else if (e.key === "Enter" && results.length > 0) {
       e.preventDefault();
-      navigate(results[activeIndex]);
+      navigate(results[activeIndex >= 0 ? activeIndex : 0]);
     } else if (e.key === "Escape") {
       setOpen(false);
     }
@@ -149,9 +168,7 @@ export default function SearchAutocomplete({
     <div className="relative" ref={containerRef}>
       <Search
         size={18}
-        className={`absolute top-1/2 -translate-y-1/2 ${
-          isHero ? "left-3 text-text-secondary" : "left-3 text-text-secondary"
-        }`}
+        className={`absolute top-1/2 -translate-y-1/2 text-text-secondary ${isRTL ? "right-3" : "left-3"}`}
       />
       <input
         ref={inputRef}
@@ -161,38 +178,44 @@ export default function SearchAutocomplete({
         onFocus={() => results.length > 0 && setOpen(true)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className={`w-full outline-none placeholder:text-text-secondary ${
+        role="combobox"
+        aria-expanded={open}
+        aria-autocomplete="list"
+        aria-controls={listboxId}
+        className={`w-full outline-none placeholder:text-text-secondary ${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left"} ${
           isHero
-            ? "h-12 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary"
-            : "h-12 rounded-lg border border-border pl-10 pr-4 text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
+            ? "h-12 rounded-lg border border-border text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary"
+            : "h-12 rounded-lg border border-border text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
         }`}
       />
 
       {open && (
-        <div className="absolute left-0 right-0 top-full mt-0 bg-white border border-border border-t-0 rounded-b-lg shadow-[0_8px_24px_rgba(0,0,0,0.12)] max-h-[400px] overflow-y-auto z-50">
+        <div id={listboxId} role="listbox" className={`absolute left-0 right-0 top-full mt-0 bg-white border border-border border-t-0 rounded-b-lg shadow-[0_8px_24px_rgba(0,0,0,0.12)] max-h-[400px] overflow-y-auto z-50 ${isRTL ? "text-right" : "text-left"}`}>
           {results.length === 0 && query.length >= 2 ? (
             <p className="px-4 py-4 text-sm text-text-secondary">
-              Inga resultat för &quot;{query}&quot;
+              {labels.noResults ?? "Inga resultat"}: &quot;{query}&quot;
             </p>
           ) : (
             <>
               {avtalResults.length > 0 && (
                 <>
                   <div className="px-4 py-2 bg-background text-[11px] font-semibold uppercase tracking-[0.06em] text-text-secondary">
-                    Avtal
+                    {labels.agreements ?? "Avtal"}
                   </div>
                   {avtalResults.map((r) => {
                     const idx = globalIndex++;
                     return (
                       <button
                         key={`avtal-${r.slug}`}
+                        role="option"
+                        aria-selected={idx === activeIndex}
                         onClick={() => navigate(r)}
-                        className={`w-full text-left px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
+                        className={`w-full ${isRTL ? "text-right" : "text-left"} px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
                           idx === activeIndex ? "bg-[#F0FDFA]" : "hover:bg-[#F0FDFA]"
                         }`}
                       >
                         <span>{highlightMatch(r.name, query)}</span>
-                        {r.extra && (
+                        {showDetails && r.extra && (
                           <span className="text-xs text-text-secondary ml-2 shrink-0">
                             {r.extra}
                           </span>
@@ -205,20 +228,22 @@ export default function SearchAutocomplete({
               {yrkeResults.length > 0 && (
                 <>
                   <div className="px-4 py-2 bg-background text-[11px] font-semibold uppercase tracking-[0.06em] text-text-secondary">
-                    Yrken
+                    {labels.occupations ?? "Yrken"}
                   </div>
                   {yrkeResults.map((r) => {
                     const idx = globalIndex++;
                     return (
                       <button
                         key={`yrke-${r.slug}`}
+                        role="option"
+                        aria-selected={idx === activeIndex}
                         onClick={() => navigate(r)}
-                        className={`w-full text-left px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
+                        className={`w-full ${isRTL ? "text-right" : "text-left"} px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
                           idx === activeIndex ? "bg-[#F0FDFA]" : "hover:bg-[#F0FDFA]"
                         }`}
                       >
                         <span>{highlightMatch(r.name, query)}</span>
-                        {r.extra && (
+                        {showDetails && r.extra && (
                           <span className="text-sm font-medium text-accent ml-2 shrink-0">
                             {r.extra}
                           </span>

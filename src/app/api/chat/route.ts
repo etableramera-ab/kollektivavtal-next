@@ -1,176 +1,500 @@
-import Anthropic from "@anthropic-ai/sdk";
+import Anthropic, {
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIError,
+} from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-import { getAgreementBySlug } from "@/data/agreements";
-import { getTruncatedAgreementText } from "@/lib/agreement-text-loader";
+import {
+  getPublicAgreementFactContext,
+  getPublicFactSourceNote,
+} from "@/lib/agreement-fact-status";
+import { publicAgreements } from "@/lib/public-agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
-import { createPublicAgreementView } from "@/lib/agreement-fact-status";
 
-// Kommun/region agreements that should also include AB text
-const KOMMUN_AGREEMENTS_NEEDING_AB = [
-  "hok-kommunal", "hok-vision", "sjukskoterska-avtal", "laraavtalet",
-  "lakare-kommun", "hok-akademiker", "raddningstjanst-avtal",
-  "socialtjanst-avtal", "biblioteksavtalet", "kulturarbetaravtalet",
-  "parkavtalet", "renhallningsavtalet", "vattenavtalet",
-];
+export const maxDuration = 60;
 
-// Extra texts to append for specific agreements
-const EXTRA_TEXTS: Record<string, string[]> = {
-  "laraavtalet": ["bilaga-m-larare"],
-  "raddningstjanst-avtal": ["bilaga-r-raddningstjanst"],
+const MAX_MESSAGE_CHARS = 1500;
+const MAX_HISTORY_MESSAGES = 4;
+const MAX_HISTORY_CHARS = 1500;
+const ANTHROPIC_TIMEOUT_MS = 25_000;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 20;
+
+type RateLimitEntry = { count: number; resetAt: number };
+const globalChatState = globalThis as typeof globalThis & {
+  kollektivavtalChatRateLimits?: Map<string, RateLimitEntry>;
+};
+const chatRateLimits =
+  globalChatState.kollektivavtalChatRateLimits ?? new Map<string, RateLimitEntry>();
+globalChatState.kollektivavtalChatRateLimits = chatRateLimits;
+
+const SUPPORTED_LOCALES = ["sv", "en", "ar", "so", "fa", "es", "pl"] as const;
+type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
+const LOCALE_TEXT: Record<
+  SupportedLocale,
+  {
+    languageInstruction: string;
+    globalClosing: string;
+    agreementClosing: string;
+  }
+> = {
+  sv: {
+    languageInstruction: "Svara alltid på svenska.",
+    globalClosing: "Kontakta ditt fackförbund för bindande besked.",
+    agreementClosing: "Kontakta avtalsparterna för bindande besked.",
+  },
+  en: {
+    languageInstruction: "Always respond in English.",
+    globalClosing: "Contact your trade union for binding information.",
+    agreementClosing: "Contact the parties to the agreement for binding information.",
+  },
+  ar: {
+    languageInstruction: "أجب دائماً باللغة العربية.",
+    globalClosing: "تواصل مع نقابتك للحصول على معلومات ملزمة.",
+    agreementClosing: "تواصل مع أطراف الاتفاقية للحصول على معلومات ملزمة.",
+  },
+  so: {
+    languageInstruction: "Had iyo jeer ku jawaab af-Soomaali.",
+    globalClosing: "La xiriir ururkaaga shaqaalaha si aad u hesho xog rasmi ah.",
+    agreementClosing: "La xiriir dhinacyada heshiiska si aad u hesho xog rasmi ah.",
+  },
+  fa: {
+    languageInstruction: "همیشه به فارسی پاسخ دهید.",
+    globalClosing: "برای دریافت اطلاعات قطعی با اتحادیه خود تماس بگیرید.",
+    agreementClosing: "برای دریافت اطلاعات قطعی با طرف‌های قرارداد تماس بگیرید.",
+  },
+  es: {
+    languageInstruction: "Responde siempre en español.",
+    globalClosing: "Contacta con tu sindicato para obtener información vinculante.",
+    agreementClosing: "Contacta con las partes del convenio para obtener información vinculante.",
+  },
+  pl: {
+    languageInstruction: "Zawsze odpowiadaj po polsku.",
+    globalClosing: "Skontaktuj się ze swoim związkiem zawodowym, aby uzyskać wiążące informacje.",
+    agreementClosing: "Skontaktuj się ze stronami układu, aby uzyskać wiążące informacje.",
+  },
 };
 
-export async function POST(req: NextRequest) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "AI-chatten kräver en API-nyckel. Kontakta administratören." },
-      { status: 503 }
+interface ValidatedChatRequest {
+  message: string;
+  agreementSlug: string | null;
+  mode: "agreement" | "global";
+  history: Anthropic.MessageParam[];
+  locale: SupportedLocale;
+}
+
+type ValidationResult =
+  | { ok: true; value: ValidatedChatRequest }
+  | { ok: false; error: string };
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isSupportedLocale(value: unknown): value is SupportedLocale {
+  return (
+    typeof value === "string" &&
+    (SUPPORTED_LOCALES as readonly string[]).includes(value)
+  );
+}
+
+function validateRequestBody(body: unknown): ValidationResult {
+  if (!isRecord(body)) {
+    return { ok: false, error: "Förfrågan har fel format." };
+  }
+
+  if (typeof body.message !== "string") {
+    return { ok: false, error: "Meddelande saknas." };
+  }
+
+  const message = body.message.trim();
+  if (message.length < 1 || message.length > MAX_MESSAGE_CHARS) {
+    return {
+      ok: false,
+      error: `Meddelandet måste vara mellan 1 och ${MAX_MESSAGE_CHARS} tecken.`,
+    };
+  }
+
+  if (
+    body.mode !== undefined &&
+    body.mode !== "agreement" &&
+    body.mode !== "global"
+  ) {
+    return { ok: false, error: "Ogiltigt chattläge." };
+  }
+  const mode = body.mode === "global" ? "global" : "agreement";
+
+  let locale: SupportedLocale = "sv";
+  if (body.locale !== undefined && body.locale !== null && body.locale !== "") {
+    if (!isSupportedLocale(body.locale)) {
+      return { ok: false, error: "Språket stöds inte." };
+    }
+    locale = body.locale;
+  }
+
+  let agreementSlug: string | null = null;
+  if (mode === "agreement") {
+    if (
+      typeof body.agreementSlug !== "string" ||
+      !/^[a-z0-9-]{1,100}$/.test(body.agreementSlug)
+    ) {
+      return { ok: false, error: "Ett giltigt avtal måste väljas." };
+    }
+    agreementSlug = body.agreementSlug;
+  }
+
+  const rawHistory = body.history ?? [];
+  if (!Array.isArray(rawHistory) || rawHistory.length > MAX_HISTORY_MESSAGES) {
+    return {
+      ok: false,
+      error: `Chatthistoriken får innehålla högst ${MAX_HISTORY_MESSAGES} meddelanden.`,
+    };
+  }
+
+  const history: Anthropic.MessageParam[] = [];
+  for (const item of rawHistory) {
+    if (
+      !isRecord(item) ||
+      (item.role !== "user" && item.role !== "assistant") ||
+      typeof item.content !== "string"
+    ) {
+      return { ok: false, error: "Chatthistoriken har fel format." };
+    }
+
+    const content = item.content.trim();
+    if (content.length < 1 || content.length > MAX_HISTORY_CHARS) {
+      return {
+        ok: false,
+        error: `Varje historikmeddelande måste vara mellan 1 och ${MAX_HISTORY_CHARS} tecken.`,
+      };
+    }
+    history.push({ role: item.role, content });
+  }
+
+  return {
+    ok: true,
+    value: { message, agreementSlug, mode, history, locale },
+  };
+}
+
+function plainTextOnly(value: string): string {
+  return value
+    .replace(/```(?:[a-z0-9_-]+)?\s*([\s\S]*?)```/gi, "$1")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s*>\s?/gm, "")
+    .replace(/^\s*(?:[-+*]|\d+[.)])\s+/gm, "")
+    .replace(/(\*\*|__)(.*?)\1/g, "$2")
+    .replace(/[*_`~]/g, "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function ensureClosing(value: string, closing: string): string {
+  const text = plainTextOnly(value);
+  if (!text || text.endsWith(closing)) return text;
+  return `${text}\n\n${closing}`;
+}
+
+function normalizedNumbers(value: string): Set<string> {
+  const tokens = new Set<string>();
+  const normalizedSeparators = value.replace(/(?<=\d):(?=\d)/g, ".");
+  const matches = normalizedSeparators.match(
+    /\d+(?:[\s\u00a0]\d{3})*(?:[,.]\d+)?/g
+  );
+
+  for (const match of matches ?? []) {
+    let token = match.replace(/[\s\u00a0]/g, "");
+    const separatorMatch = token.match(/^\d{1,3}([,.])(\d{3})$/);
+    if (separatorMatch) {
+      token = token.replace(separatorMatch[1], "");
+    } else {
+      token = token.replace(",", ".");
+    }
+
+    const numericValue = Number(token);
+    if (Number.isFinite(numericValue)) tokens.add(String(numericValue));
+  }
+
+  return tokens;
+}
+
+function hasUnsupportedNumbers(answer: string, evidence: string): boolean {
+  const allowedNumbers = normalizedNumbers(evidence);
+  return Array.from(normalizedNumbers(answer)).some(
+    (number) => !allowedNumbers.has(number)
+  );
+}
+
+function jsonError(message: string, status: number, retryAfter?: string) {
+  const response = NextResponse.json({ error: message }, { status });
+  if (retryAfter) response.headers.set("Retry-After", retryAfter);
+  return response;
+}
+
+function getClientAddress(req: NextRequest): string {
+  const forwarded =
+    req.headers.get("x-vercel-forwarded-for") ??
+    req.headers.get("x-forwarded-for") ??
+    req.headers.get("x-real-ip");
+  return forwarded?.split(",")[0]?.trim() || "unknown";
+}
+
+function rateLimitResponse(req: NextRequest): NextResponse | null {
+  const now = Date.now();
+  const address = getClientAddress(req);
+  const existing = chatRateLimits.get(address);
+
+  if (!existing || existing.resetAt <= now) {
+    chatRateLimits.set(address, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return null;
+  }
+
+  if (existing.count >= RATE_LIMIT_MAX_REQUESTS) {
+    const retryAfterSeconds = Math.max(
+      1,
+      Math.ceil((existing.resetAt - now) / 1000)
+    );
+    return jsonError(
+      "Du har ställt många frågor på kort tid. Vänta en stund och försök igen.",
+      429,
+      String(retryAfterSeconds)
     );
   }
 
-  const { message, agreementSlug, mode, history, locale } = await req.json();
+  existing.count += 1;
+  return null;
+}
 
-  if (!message || typeof message !== "string") {
-    return NextResponse.json({ error: "Meddelande saknas" }, { status: 400 });
-  }
+function providerErrorResponse(
+  error: unknown,
+  context: Pick<ValidatedChatRequest, "mode" | "agreementSlug">
+) {
+  const apiError = error instanceof APIError ? error : null;
+  const status = apiError?.status;
+  const type = apiError?.type;
+  const requestId = apiError?.requestID ?? undefined;
 
-  const isGlobal = mode === "global";
-  const agreement = isGlobal ? null : getAgreementBySlug(agreementSlug);
-  if (!isGlobal && !agreement) {
-    return NextResponse.json({ error: "Avtal hittades inte" }, { status: 404 });
-  }
-  const publicAgreement = agreement ? createPublicAgreementView(agreement) : null;
-
-  const client = new Anthropic({ apiKey });
-
-  const messages: Anthropic.MessageParam[] = [];
-
-  if (Array.isArray(history)) {
-    const recentHistory = history.slice(-4);
-    for (const msg of recentHistory) {
-      if (msg.role === "user" || msg.role === "assistant") {
-        messages.push({ role: msg.role, content: msg.content });
-      }
-    }
-  }
-
-  messages.push({ role: "user", content: message });
-
-  // Build system prompt
-  let systemPrompt: string;
-
-  if (isGlobal) {
-    // Global chat — cautious guide without agreement-specific source text
-    systemPrompt = `Du är en försiktig guide till svenska kollektivavtal. I det här globala läget har du inte tillgång till fullständig och verifierad avtalstext för varje avtal. Din huvuduppgift är att hjälpa användaren förstå allmänna begrepp och hitta vilket avtalsområde som kan vara relevant.
-
-STRIKTA REGLER:
-- Påstå ALDRIG att du kan eller har läst alla svenska kollektivavtal.
-- Ge inte exakta löner, OB-belopp, uppsägningstider eller andra avtalsvillkor utan avtalsspecifikt källunderlag.
-- Om frågan gäller ett specifikt villkor, be användaren välja ett avtal med källunderlag eller hänvisa till avtalsparterna.
-- Var tydlig med skillnaden mellan allmän information och ett verifierat avtalsvillkor.
-- Svara på det språk användaren frågar på.
-- Håll svaren under 200 ord.
-- Gissa ALDRIG.
-- Avsluta ALLTID med: "Kontakta ditt fackförbund för bindande besked."`;
-  } else {
-    // Agreement-specific chat
-    const verified = isVerifiedAgreement(agreementSlug);
-    const fullText = getTruncatedAgreementText(agreementSlug, 60000);
-
-    let abText: string | null = null;
-    if (KOMMUN_AGREEMENTS_NEEDING_AB.includes(agreementSlug)) {
-      abText = getTruncatedAgreementText("ab-kommunalt", 30000);
-    }
-
-    const extras = EXTRA_TEXTS[agreementSlug] || [];
-    const extraTexts = extras
-      .map((slug) => getTruncatedAgreementText(slug, 15000))
-      .filter(Boolean);
-
-    if (verified && (fullText || abText)) {
-      const unions = agreement!.parties.unions.join(" eller ");
-      const textSections: string[] = [];
-
-      if (abText) {
-        textSections.push(`AB (ALLMÄNNA BESTÄMMELSER) — reglerar arbetstid, semester, sjuklön, uppsägning:\n${abText}`);
-      }
-      if (fullText) {
-        textSections.push(`${agreement!.name.toUpperCase()} — reglerar löner och specifika villkor:\n${fullText}`);
-      }
-      for (const extra of extraTexts) {
-        textSections.push(`BILAGA/TILLÄGG:\n${extra}`);
-      }
-
-      systemPrompt = `Du är en AI-expert på ${agreement!.name}. Du har tillgång till avtalstexter nedan.
-${abText ? "\nOBS: Kommun/region har en dubbel struktur — AB (Allmänna Bestämmelser) reglerar grundvillkor (arbetstid, semester, sjuklön, uppsägning) och HÖK/löneavtalet reglerar löner. Använd BÅDA för att svara." : ""}
-
-STRIKTA REGLER:
-- Svara ENBART baserat på avtalstexterna och informationen nedan.
-- CITERA ALDRIG avtalstexten ordagrant — sammanfatta ALLTID i egna ord.
-- Om frågan inte kan besvaras utifrån texten, säg: "Jag hittar inte den informationen i avtalet. Kontakta ${unions} för exakt besked."
-- Svara på svenska, kort och tydligt. Håll under 200 ord.
-- Ange relevant paragraf om du kan (t.ex. "Enligt § 4 i AB...").
-- Avsluta ALLTID med: "Kontakta ${unions} för bindande besked."
-- Gissa ALDRIG — om du är osäker, säg det.
-
-AVTALSINFORMATION:
-Avtal: ${agreement!.name}
-Parter: ${agreement!.parties.unions.join(", ")} och ${agreement!.parties.employers.join(", ")}
-Giltighetsperiod: ${agreement!.validPeriod}
-Antal anställda: ${agreement!.employeeCount.toLocaleString("sv-SE")}
-
-SAMMANFATTNING AV NYCKELVILLKOR:
-${Object.entries(publicAgreement!.keyFacts).map(([k, v]) => `- ${k}: ${v}`).join("\n")}
-
-LÖNETABELL:
-${publicAgreement!.wageTable.length > 0 ? publicAgreement!.wageTable.map((w) => `- ${w.role}: ${w.minimum} (lägst), ${w.median} (median) — ${w.comment}`).join("\n") : "Ingen publicerbar lönetabell finns ännu. Ange inga belopp."}
-
-AVTALSTEXTER:
-${textSections.join("\n\n---\n\n")}`;
-    } else {
-      const unions = agreement!.parties.unions.join(" eller ");
-      systemPrompt = `Du är en försiktig guide till ${agreement!.name}. Det finns inte ett tillräckligt verifierat källunderlag tillgängligt i den här chatten.
-
-STRIKTA REGLER:
-- Ge inga exakta löner, OB-belopp, uppsägningstider eller andra avtalsvillkor.
-- Använd inte uppskattningar eller äldre sammanfattningar som fakta.
-- Säg tydligt att underlaget inte räcker för ett säkert svar.
-- Hjälp endast med allmänna begrepp och hänvisa till avtalsparterna.
-- Gissa ALDRIG.
-- Svara kort och tydligt.
-- Avsluta ALLTID med: "Kontakta ${unions} för bindande besked."`;
-    }
-
-    // Add data quality context for specific agreements
-    if (!verified) {
-      systemPrompt += `\n\nVIKTIGT: Presentera inga avtalsuppgifter eller belopp som fakta utan verifierat källunderlag.`;
-    }
-  }
-
-  // Respond in user's language
-  const langMap: Record<string, string> = {
-    en: "Always respond in English.",
-    ar: "أجب دائماً باللغة العربية.",
-    so: "Had iyo jeer ku jawaab af-Soomaali.",
-    fa: "همیشه به فارسی پاسخ دهید.",
-    es: "Responde siempre en español.",
-    pl: "Zawsze odpowiadaj po polsku.",
-  };
-  if (locale && langMap[locale]) {
-    systemPrompt += `\n\n${langMap[locale]}`;
-  }
-
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1000,
-    system: systemPrompt,
-    messages,
+  console.error("AI chat provider error", {
+    status,
+    type,
+    requestId,
+    mode: context.mode,
+    agreementSlug: context.agreementSlug,
+    errorName: error instanceof Error ? error.name : "UnknownError",
   });
 
-  const text = response.content
-    .filter((block): block is Anthropic.TextBlock => block.type === "text")
-    .map((block) => block.text)
-    .join("");
+  if (
+    error instanceof APIConnectionTimeoutError ||
+    status === 504 ||
+    type === "timeout_error"
+  ) {
+    return jsonError(
+      "AI-guiden tog för lång tid på sig. Försök igen om en liten stund.",
+      504
+    );
+  }
 
-  return NextResponse.json({ response: text });
+  if (status === 429 || type === "rate_limit_error") {
+    const retryAfter = apiError?.headers?.get("retry-after") ?? "10";
+    return jsonError(
+      "AI-guiden har många frågor just nu. Vänta en liten stund och försök igen.",
+      429,
+      retryAfter
+    );
+  }
+
+  if (
+    status === 529 ||
+    type === "overloaded_error" ||
+    status === 409 ||
+    (typeof status === "number" && status >= 500)
+  ) {
+    return jsonError(
+      "AI-tjänsten är tillfälligt upptagen. Försök igen om en liten stund.",
+      503,
+      "10"
+    );
+  }
+
+  if (
+    status === 400 ||
+    status === 401 ||
+    status === 402 ||
+    status === 403 ||
+    status === 404 ||
+    status === 422
+  ) {
+    return jsonError(
+      "AI-guiden är tillfälligt otillgänglig. Kontakta administratören om felet kvarstår.",
+      503
+    );
+  }
+
+  if (error instanceof APIConnectionError) {
+    return jsonError(
+      "AI-tjänsten kunde inte nås. Försök igen om en liten stund.",
+      503
+    );
+  }
+
+  return jsonError(
+    "Något gick fel i AI-guiden. Försök igen om en liten stund.",
+    500
+  );
+}
+
+export async function POST(req: NextRequest) {
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return jsonError("Förfrågan kunde inte läsas.", 400);
+  }
+
+  const validation = validateRequestBody(body);
+  if (!validation.ok) {
+    return jsonError(validation.error, 400);
+  }
+  const input = validation.value;
+
+  const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
+  if (!apiKey) {
+    return jsonError(
+      "AI-guiden är tillfälligt otillgänglig. Kontakta administratören.",
+      503
+    );
+  }
+
+  const limited = rateLimitResponse(req);
+  if (limited) return limited;
+
+  try {
+    const localeText = LOCALE_TEXT[input.locale];
+    const messages: Anthropic.MessageParam[] = [
+      ...input.history,
+      { role: "user", content: input.message },
+    ];
+
+    let systemPrompt: string;
+    let source: ReturnType<typeof getPublicFactSourceNote> = null;
+    let numericEvidence = input.message;
+
+    if (input.mode === "global") {
+      systemPrompt = `Du är en försiktig guide till svenska kollektivavtal. I det här globala läget saknar du avtalsspecifikt källunderlag. Hjälp användaren att förstå allmänna begrepp och att hitta vilket avtalsområde som kan vara relevant.
+
+Regler:
+Påstå aldrig att du har läst alla svenska kollektivavtal.
+Ge inga exakta löner, OB-belopp, uppsägningstider eller andra avtalsvillkor.
+Be användaren välja ett källgranskat avtal när frågan gäller ett specifikt villkor.
+Gissa aldrig.
+Håll svaret under 200 ord.
+Skriv endast vanlig text utan rubriker, punktlistor, länkar eller annan Markdown.
+${localeText.languageInstruction}
+Avsluta exakt med: ${localeText.globalClosing}`;
+    } else {
+      const agreementSlug = input.agreementSlug!;
+      const agreement = publicAgreements.find(
+        (item) => item.slug === agreementSlug
+      );
+      const verified = isVerifiedAgreement(agreementSlug);
+      const factContext = getPublicAgreementFactContext(agreementSlug);
+      source = getPublicFactSourceNote(agreementSlug);
+
+      if (!agreement || !verified) {
+        return jsonError("Det valda avtalet är inte tillgängligt i AI-guiden.", 404);
+      }
+
+      if (verified && factContext) {
+        numericEvidence = `${input.message}\n${factContext}`;
+        systemPrompt = `Du är en försiktig guide till ${agreement.name}.
+
+Regler:
+Svara endast med stöd i de källgranskade fakta nedan.
+När en faktarad säger UNDERLAG SAKNAS får du inte fylla luckan med en uppskattning, äldre kunskap eller ett belopp från någon annan källa.
+Om underlaget inte räcker ska du säga det tydligt och kort.
+Besvara bara det användaren frågar om. Lägg inte till närliggande villkor, undantag, beräkningsregler eller tidsperioder som inte uttryckligen behövs för svaret.
+Gör inga egna beräkningar om användaren inte uttryckligen ber om en beräkning.
+Skriv all numerisk information med siffror, inte med utskrivna räkneord.
+Sammanfatta alltid med egna ord.
+Gissa aldrig ett paragrafnummer eller avsnitt. Nämn bara en hänvisning om den uttryckligen står i det källgranskade underlaget och tydligt gäller svaret.
+Håll svaret under 200 ord.
+Skriv endast vanlig text utan rubriker, punktlistor, länkar eller annan Markdown.
+${localeText.languageInstruction}
+Avsluta exakt med: ${localeText.agreementClosing}
+
+Källgranskade fakta:
+${factContext}`;
+      } else {
+        systemPrompt = `Du är en försiktig guide till ${agreement.name}. Det finns inte ett tillräckligt källgranskat underlag i den här chatten.
+
+Ge inga exakta avtalsvillkor eller belopp.
+Gissa aldrig.
+Förklara kort att underlaget inte räcker.
+Skriv endast vanlig text utan Markdown.
+${localeText.languageInstruction}
+Avsluta exakt med: ${localeText.agreementClosing}`;
+      }
+    }
+
+    const client = new Anthropic({
+      apiKey,
+      timeout: ANTHROPIC_TIMEOUT_MS,
+      maxRetries: 1,
+    });
+    const response = await client.messages.create({
+      model: process.env.ANTHROPIC_MODEL?.trim() || "claude-sonnet-4-6",
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages,
+    });
+
+    if (response.stop_reason === "max_tokens") {
+      return jsonError(
+        "AI-svaret blev ofullständigt. Försök gärna med en kortare fråga.",
+        502
+      );
+    }
+
+    const rawText = response.content
+      .filter((block): block is Anthropic.TextBlock => block.type === "text")
+      .map((block) => block.text)
+      .join("\n")
+      .trim();
+    const closing =
+      input.mode === "global"
+        ? LOCALE_TEXT[input.locale].globalClosing
+        : LOCALE_TEXT[input.locale].agreementClosing;
+    const text = ensureClosing(rawText, closing);
+
+    if (!text) {
+      return jsonError(
+        "AI-guiden kunde inte skapa ett svar. Försök formulera frågan på ett annat sätt.",
+        502
+      );
+    }
+
+    if (
+      input.mode === "agreement" &&
+      hasUnsupportedNumbers(text, numericEvidence)
+    ) {
+      return jsonError(
+        "AI-svaret kunde inte verifieras mot underlaget. Försök gärna formulera frågan mer specifikt.",
+        502
+      );
+    }
+
+    return NextResponse.json({
+      response: text,
+      ...(source ? { source } : {}),
+    });
+  } catch (error) {
+    return providerErrorResponse(error, input);
+  }
 }

@@ -4,8 +4,9 @@ import { publicAgreements } from "@/lib/public-agreements";
 import TopicComparisonPage from "@/components/TopicComparisonPage";
 
 export const metadata: Metadata = {
-  title: "Minimilöner per kollektivavtal 2026 — Lägsta löner alla branscher | kollektivavtal.ai",
-  description: "Lägsta löner i Sverige sätts av kollektivavtal. Se minimilön per avtal och bransch 2026.",
+  title: "Lönejämförelsen källgranskas | kollektivavtal.ai",
+  description: "Den här jämförelsen är inte publicerad ännu.",
+  robots: { index: false, follow: true },
 };
 
 const columns = [
@@ -25,9 +26,9 @@ export default function Minimiioner() {
   notFound();
   return (
     <TopicComparisonPage
-      title="Minimilöner per kollektivavtal 2026"
-      subtitle="Lägsta löner i Sverige sätts av kollektivavtalen — inte lagen"
-      aeoAnswer="Sverige har ingen lagstadgad minimilön. Lägsta löner sätts i kollektivavtal — från ca 24 400 kr/mån i hotell och restaurang till ca 33 000 kr med yrkesbevis i bygg. IT-avtalet och Bankavtalet har individuell lönesättning utan fast golv."
+      title="Lägsta löner i källgranskade kollektivavtal"
+      subtitle="Jämför aktuella avtalsgolv och avtal med individuell lönesättning"
+      aeoAnswer="Vissa kollektivavtal anger en eller flera lägsta löner, medan andra bygger på individuell och lokal lönesättning utan ett centralt lönegolv. Beloppen kan bero på yrke, ålder, utbildning, erfarenhet och vilket datum lönen gäller från."
       columns={columns}
       rows={rows}
     />
