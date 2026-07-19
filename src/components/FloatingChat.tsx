@@ -41,6 +41,9 @@ export default function FloatingChat() {
   const [labelDismissed, setLabelDismissed] = useState(false);
   const [hasInlineChat, setHasInlineChat] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
+  const latestAssistantRef = useRef<HTMLDivElement>(null);
+  const positionedAssistantRef = useRef<ChatMessage | null>(null);
+  const wasOpenRef = useRef(open);
   const requestInFlightRef = useRef(false);
   const pathname = usePathname();
   const { locale } = useLocale();
@@ -75,10 +78,48 @@ export default function FloatingChat() {
   }, [hideButton]);
 
   useEffect(() => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }
-  }, [messages, loading]);
+    const hasReopened = open && !wasOpenRef.current;
+    wasOpenRef.current = open;
+
+    const container = chatRef.current;
+    if (!container) return;
+
+    const latestMessage = messages[messages.length - 1];
+    const hasNewAnswer =
+      !loading &&
+      latestMessage?.role === "assistant" &&
+      positionedAssistantRef.current !== latestMessage;
+    const shouldShowAnswerStart =
+      !loading &&
+      !error &&
+      latestMessage?.role === "assistant" &&
+      (hasNewAnswer || hasReopened);
+
+    const frame = window.requestAnimationFrame(() => {
+      const answer = latestAssistantRef.current;
+      const useMobileAnswerPosition = window.matchMedia(
+        "(max-width: 639px)"
+      ).matches;
+
+      if (shouldShowAnswerStart && useMobileAnswerPosition && answer) {
+        const containerTop = container.getBoundingClientRect().top;
+        const answerTop = answer.getBoundingClientRect().top;
+        container.scrollTo({
+          top: Math.max(
+            0,
+            container.scrollTop + answerTop - containerTop - 12
+          ),
+          behavior: "smooth",
+        });
+      } else {
+        container.scrollTop = container.scrollHeight;
+      }
+
+      if (hasNewAnswer) positionedAssistantRef.current = latestMessage;
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [messages, loading, open, error]);
 
   async function sendMessage(text: string) {
     const question = text.trim();
@@ -193,7 +234,15 @@ export default function FloatingChat() {
               )}
 
               {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  key={i}
+                  ref={
+                    msg.role === "assistant" && i === messages.length - 1
+                      ? latestAssistantRef
+                      : undefined
+                  }
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
                   <div className={`max-w-[85%] rounded-sm px-4 py-2.5 text-[15px] leading-relaxed ${
                     msg.role === "user"
                       ? "bg-[#F0EEED] text-text-primary"

@@ -214,31 +214,272 @@ function ensureClosing(value: string, closing: string): string {
   return `${text}\n\n${closing}`;
 }
 
-function normalizedNumbers(value: string): Set<string> {
-  const tokens = new Set<string>();
-  const normalizedSeparators = value.replace(/(?<=\d):(?=\d)/g, ".");
-  const matches = normalizedSeparators.match(
-    /\d+(?:[\s\u00a0]\d{3})*(?:[,.]\d+)?/g
+const NUMBER_TOKEN_PATTERN = /\d+(?:[\s\u00a0]\d{3})*(?:[,.]\d+)?/g;
+
+interface ParsedNumberToken {
+  key: string;
+  value: number;
+  raw: string;
+  index: number;
+  end: number;
+}
+
+function normalizeLocalizedNumberCharacters(value: string): string {
+  return value
+    .replace(/[\u0660-\u0669]/g, (digit) =>
+      String(digit.charCodeAt(0) - 0x0660)
+    )
+    .replace(/[\u06f0-\u06f9]/g, (digit) =>
+      String(digit.charCodeAt(0) - 0x06f0)
+    )
+    .replace(/\u066b/g, ".")
+    .replace(/\u066c/g, "\u00a0")
+    .replace(/\u066a/g, "%");
+}
+
+function parseNumberToken(raw: string, index = 0): ParsedNumberToken | null {
+  let normalized = raw.replace(/[\s\u00a0]/g, "");
+  const separatorMatch = normalized.match(/^\d{1,3}([,.])(\d{3})$/);
+  if (separatorMatch) {
+    normalized = normalized.replace(separatorMatch[1], "");
+  } else {
+    normalized = normalized.replace(",", ".");
+  }
+
+  const value = Number(normalized);
+  if (!Number.isFinite(value)) return null;
+
+  return {
+    key: String(value),
+    value,
+    raw,
+    index,
+    end: index + raw.length,
+  };
+}
+
+function parsedNumberTokens(value: string): ParsedNumberToken[] {
+  const normalized = normalizeLocalizedNumberCharacters(value).replace(
+    /(?<=\d):(?=\d)/g,
+    "."
   );
+  const matches = normalized.matchAll(
+    new RegExp(NUMBER_TOKEN_PATTERN.source, "g")
+  );
+  const tokens: ParsedNumberToken[] = [];
 
-  for (const match of matches ?? []) {
-    let token = match.replace(/[\s\u00a0]/g, "");
-    const separatorMatch = token.match(/^\d{1,3}([,.])(\d{3})$/);
-    if (separatorMatch) {
-      token = token.replace(separatorMatch[1], "");
-    } else {
-      token = token.replace(",", ".");
-    }
-
-    const numericValue = Number(token);
-    if (Number.isFinite(numericValue)) tokens.add(String(numericValue));
+  for (const match of matches) {
+    const parsed = parseNumberToken(match[0], match.index ?? 0);
+    if (parsed) tokens.push(parsed);
   }
 
   return tokens;
 }
 
-function hasUnsupportedNumbers(answer: string, evidence: string): boolean {
+function normalizedNumbers(value: string): Set<string> {
+  return new Set(parsedNumberTokens(value).map((token) => token.key));
+}
+
+const FACT_HOURLY_RATE_AFTER_NUMBER =
+  /^\s*(?:kr|kron(?:a|or))\s*(?:(?:\/|per|i)\s*)?(?:tim(?:me|men|mar)?|h)\b/u;
+
+const QUESTION_HOURLY_RATE_AFTER_NUMBER: Record<SupportedLocale, RegExp> = {
+  sv: FACT_HOURLY_RATE_AFTER_NUMBER,
+  en: /^\s*(?:sek|kr|kron(?:a|or)|crowns?)\s*(?:(?:\/|per|an)\s*)?(?:hours?|h)\b/u,
+  ar: /^\s*(?:كرون(?:ة|ات)?|كر)\s*(?:(?:\/|في|لكل)\s*)?(?:الساعة|ساعة|ساعات)/u,
+  so: /^\s*(?:kr|karoon)\s*(?:(?:\/|halkii)\s*)?(?:saacad|saacado)\b/u,
+  fa: /^\s*(?:کرون)\s*(?:(?:\/|در|برای\s+هر)\s*)?(?:ساعت)/u,
+  es: /^\s*(?:sek|kr|coronas?)\s*(?:(?:\/|por)\s*)?(?:horas?|h)\b/u,
+  pl: /^\s*(?:sek|kr|koron(?:a|y)?)\s*(?:(?:\/|za|na)\s*)?(?:godzin(?:a|y)?|h)\b/u,
+};
+
+const QUESTION_HOUR_AMOUNT_AFTER_NUMBER: Record<SupportedLocale, RegExp> = {
+  sv: /^\s*(?:tim(?:me|men|mar)?|h)\b/u,
+  en: /^\s*(?:hours?|h)\b/u,
+  ar: /^\s*(?:الساعة|ساعة|ساعات)/u,
+  so: /^\s*(?:saacad|saacado)\b/u,
+  fa: /^\s*(?:ساعت)/u,
+  es: /^\s*(?:horas?|h)\b/u,
+  pl: /^\s*(?:godzin(?:a|y)?|h)\b/u,
+};
+
+function numbersFollowedByUnit(value: string, unitPattern: RegExp): Set<string> {
+  const normalized = normalizeLocalizedNumberCharacters(value).toLowerCase();
+  const matches = new Set<string>();
+
+  for (const token of parsedNumberTokens(normalized)) {
+    if (unitPattern.test(normalized.slice(token.end, token.end + 50))) {
+      matches.add(token.key);
+    }
+  }
+
+  return matches;
+}
+
+function explicitlyRequestsHourlyMultiplication(
+  message: string,
+  locale: SupportedLocale
+): boolean {
+  const normalized = normalizeLocalizedNumberCharacters(message).toLowerCase();
+  const calculationPatterns: Record<SupportedLocale, RegExp> = {
+    sv: /\b(?:räkna(?:\s+ut)?|beräkna|uträkning|totalt|sammanlagt|multiplicera|gånger|vad\s+blir|hur\s+mycket\s+blir|vad\s+tjänar|hur\s+mycket\s+(?:får|tjänar))\b/u,
+    en: /\b(?:calculate|work\s+out|total|altogether|multiply|times|what\s+(?:is|will|would)|how\s+much\s+(?:is|will|would|do|does))\b/u,
+    ar: /(?:احسب|حساب|المجموع|اضرب|كم\s+يساوي|كم\s+يكون|كم\s+يبلغ)/u,
+    so: /\b(?:xisaabi|xisaab|wadarta|ku\s+dhufo|waa\s+imisa|intee\s+ayuu\s+noqonayaa|immisa\s+ayaan\s+helayaa)\b/u,
+    fa: /(?:محاسبه|حساب\s+کن|مجموع|ضرب|چقدر\s+می\s*شود|چه\s+قدر\s+می\s*شود)/u,
+    es: /\b(?:calcula|calcular|total|multiplica|cuánto\s+(?:es|sería|gano|recibiría))\b/u,
+    pl: /\b(?:oblicz|policz|wynik|łącznie|pomnóż|ile\s+(?:wynosi|będzie|zarobię|otrzymam))\b/u,
+  };
+  const containsMultiplication = /\d\s*(?:×|\*)\s*\d|\d\s+x\s+\d/u.test(
+    normalized
+  );
+
+  return calculationPatterns[locale].test(normalized) || containsMultiplication;
+}
+
+function displayedDecimalPlaces(raw: string): number {
+  const compact = raw.replace(/[\s\u00a0]/g, "");
+  if (/^\d{1,3}[,.]\d{3}$/u.test(compact)) return 0;
+  return compact.match(/[,.](\d+)$/u)?.[1].length ?? 0;
+}
+
+function matchesDisplayedResult(calculated: number, result: ParsedNumberToken) {
+  if (
+    !Number.isFinite(calculated) ||
+    calculated < 0 ||
+    calculated > 1_000_000_000
+  ) {
+    return false;
+  }
+
+  const decimals = Math.min(displayedDecimalPlaces(result.raw), 6);
+  if (
+    decimals === 0 &&
+    Math.abs(calculated - Math.round(calculated)) >
+      Number.EPSILON * Math.max(1, Math.abs(calculated)) * 4
+  ) {
+    return false;
+  }
+  const rounded = Number(calculated.toFixed(decimals));
+  const tolerance = Math.max(Number.EPSILON * Math.abs(rounded) * 4, 1e-9);
+  return Math.abs(result.value - rounded) <= tolerance;
+}
+
+interface DisplayedCalculationValidation {
+  derived: Set<string>;
+  hasInvalidEquation: boolean;
+}
+
+function validateDisplayedCalculations(
+  answer: string,
+  factContext: string,
+  message: string,
+  locale: SupportedLocale
+): DisplayedCalculationValidation {
+  const derived = new Set<string>();
+  let hasInvalidEquation = false;
+  const calculationRequested = explicitlyRequestsHourlyMultiplication(
+    message,
+    locale
+  );
+  const factHourlyRates = numbersFollowedByUnit(
+    factContext,
+    FACT_HOURLY_RATE_AFTER_NUMBER
+  );
+  const questionHourlyRates = numbersFollowedByUnit(
+    message,
+    QUESTION_HOURLY_RATE_AFTER_NUMBER[locale]
+  );
+  const questionHourAmounts = numbersFollowedByUnit(
+    message,
+    QUESTION_HOUR_AMOUNT_AFTER_NUMBER[locale]
+  );
+  const normalizedAnswer = normalizeLocalizedNumberCharacters(answer);
+
+  for (const line of normalizedAnswer.split(/\r?\n/u)) {
+    const equalsIndex = line.indexOf("=");
+    if (equalsIndex < 0) continue;
+
+    let left = line.slice(0, equalsIndex);
+    const looksLikeArithmetic =
+      /[+*×÷−%]|\d\s*[-/]\s*\d|\s[xX]\s/u.test(left);
+    if (!looksLikeArithmetic) continue;
+
+    if (line.indexOf("=", equalsIndex + 1) >= 0) {
+      hasInvalidEquation = true;
+      continue;
+    }
+
+    const lastLabelSeparator = Math.max(
+      left.lastIndexOf(":"),
+      left.lastIndexOf(";")
+    );
+    if (lastLabelSeparator >= 0) left = left.slice(lastLabelSeparator + 1);
+
+    const right = line.slice(equalsIndex + 1);
+    const operands = parsedNumberTokens(left);
+    const results = parsedNumberTokens(right);
+    if (operands.length !== 2 || results.length !== 1) {
+      hasInvalidEquation = true;
+      continue;
+    }
+
+    const [first, second] = operands;
+    const [result] = results;
+    const betweenOperands = left.slice(first.end, second.index);
+    const hasMultiplication =
+      betweenOperands.includes("×") || /\s[xX]\s/u.test(betweenOperands);
+    const hasDisallowedOperator =
+      /[+÷−%]|\d\s*[-/]\s*\d/u.test(left);
+    if (!hasMultiplication || hasDisallowedOperator) {
+      hasInvalidEquation = true;
+      continue;
+    }
+
+    const orientations = [
+      { rate: first, hours: second },
+      { rate: second, hours: first },
+    ];
+    const grounded = orientations.find(
+      ({ rate, hours }) =>
+        factHourlyRates.has(rate.key) &&
+        questionHourlyRates.has(rate.key) &&
+        questionHourAmounts.has(hours.key)
+    );
+    if (
+      !calculationRequested ||
+      !grounded ||
+      !matchesDisplayedResult(grounded.rate.value * grounded.hours.value, result)
+    ) {
+      hasInvalidEquation = true;
+      continue;
+    }
+
+    derived.add(result.key);
+  }
+
+  return { derived, hasInvalidEquation };
+}
+
+function hasUnsupportedNumbers(
+  answer: string,
+  evidence: string,
+  factContext: string,
+  message: string,
+  locale: SupportedLocale
+): boolean {
   const allowedNumbers = normalizedNumbers(evidence);
+  const calculations = validateDisplayedCalculations(
+    answer,
+    factContext,
+    message,
+    locale
+  );
+  if (calculations.hasInvalidEquation) return true;
+
+  for (const derived of calculations.derived) {
+    allowedNumbers.add(derived);
+  }
   return Array.from(normalizedNumbers(answer)).some(
     (number) => !allowedNumbers.has(number)
   );
@@ -476,6 +717,7 @@ export async function POST(req: NextRequest) {
     let systemPrompt: string;
     let source: ReturnType<typeof getPublicFactSourceNote> = null;
     let numericEvidence = input.message;
+    let numericFactContext = "";
 
     if (input.mode === "global") {
       systemPrompt = `Du är en försiktig guide till svenska kollektivavtal. I det här globala läget saknar du avtalsspecifikt källunderlag. Hjälp användaren att förstå allmänna begrepp och att hitta vilket avtalsområde som kan vara relevant.
@@ -504,6 +746,7 @@ Avsluta exakt med: ${localeText.globalClosing}`;
 
       if (verified && factContext) {
         numericEvidence = `${input.message}\n${factContext}`;
+        numericFactContext = factContext;
         systemPrompt = `Du är en försiktig guide till ${agreement.name}.
 
 Regler:
@@ -511,7 +754,7 @@ Svara endast med stöd i de källgranskade fakta nedan.
 När en faktarad säger UNDERLAG SAKNAS får du inte fylla luckan med en uppskattning, äldre kunskap eller ett belopp från någon annan källa.
 Om underlaget inte räcker ska du säga det tydligt och kort.
 Besvara bara det användaren frågar om. Lägg inte till närliggande villkor, undantag, beräkningsregler eller tidsperioder som inte uttryckligen behövs för svaret.
-Gör inga egna beräkningar om användaren inte uttryckligen ber om en beräkning.
+Gör normalt inga egna beräkningar. Det enda tillåtna undantaget är när användaren själv anger både en timnivå i kronor per timme som exakt finns i de källgranskade fakta och ett tydligt antal timmar. Då får du endast multiplicera timnivån med antalet timmar. Visa uträkningen på en egen rad i formatet "timnivå × timmar = resultat" med tecknet ×. Om timnivån saknas i frågan, inte matchar fakta eller om användaren ber om addition, subtraktion, division eller procenträkning ska du avstå från uträkningen och säga att underlaget inte räcker.
 Skriv all numerisk information med siffror, inte med utskrivna räkneord.
 Sammanfatta alltid med egna ord.
 Gissa aldrig ett paragrafnummer eller avsnitt. Nämn bara en hänvisning om den uttryckligen står i det källgranskade underlaget och tydligt gäller svaret.
@@ -573,7 +816,13 @@ Avsluta exakt med: ${localeText.agreementClosing}`;
 
     if (
       input.mode === "agreement" &&
-      hasUnsupportedNumbers(text, numericEvidence)
+      hasUnsupportedNumbers(
+        rawText,
+        numericEvidence,
+        numericFactContext,
+        input.message,
+        input.locale
+      )
     ) {
       return jsonError(
         "AI-svaret kunde inte verifieras mot underlaget. Försök gärna formulera frågan mer specifikt.",

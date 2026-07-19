@@ -27,7 +27,8 @@ export default function AgreementChat({
   const [error, setError] = useState<string | null>(null);
   const chatRootRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const latestAssistantRef = useRef<HTMLDivElement>(null);
+  const positionedAssistantRef = useRef<ChatMessage | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const requestInFlightRef = useRef(false);
   const focusTimerRef = useRef<number | null>(null);
@@ -53,11 +54,41 @@ export default function AgreementChat({
   }, []);
 
   useEffect(() => {
-    // Scroll inside the chat container only — not the page
     const container = chatContainerRef.current;
-    if (container) {
-      container.scrollTop = container.scrollHeight;
-    }
+    if (!container) return;
+
+    const latestMessage = messages[messages.length - 1];
+    const hasNewAnswer =
+      !loading &&
+      latestMessage?.role === "assistant" &&
+      positionedAssistantRef.current !== latestMessage;
+
+    const frame = window.requestAnimationFrame(() => {
+      const answer = latestAssistantRef.current;
+      const useMobileAnswerPosition = window.matchMedia(
+        "(max-width: 639px)"
+      ).matches;
+
+      if (hasNewAnswer && useMobileAnswerPosition && answer) {
+        const containerTop = container.getBoundingClientRect().top;
+        const answerTop = answer.getBoundingClientRect().top;
+        container.scrollTo({
+          top: Math.max(
+            0,
+            container.scrollTop + answerTop - containerTop - 12
+          ),
+          behavior: "smooth",
+        });
+      } else {
+        // Keep the current, natural follow-to-bottom behaviour while waiting
+        // and on larger screens. Only the chat viewport moves, never the page.
+        container.scrollTop = container.scrollHeight;
+      }
+
+      if (hasNewAnswer) positionedAssistantRef.current = latestMessage;
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [messages, loading]);
 
   async function sendMessage(text: string) {
@@ -147,6 +178,11 @@ export default function AgreementChat({
         {messages.map((msg, i) => (
           <motion.div
             key={i}
+            ref={
+              msg.role === "assistant" && i === messages.length - 1
+                ? latestAssistantRef
+                : undefined
+            }
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
@@ -193,8 +229,6 @@ export default function AgreementChat({
             <p>{error}</p>
           </div>
         )}
-
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input */}
