@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { MessageCircle, X, Send, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AiAnswerFeedback from "@/components/AiAnswerFeedback";
 import { useLocale } from "@/lib/useLocale";
 import {
   ChatRequestError,
@@ -38,6 +39,9 @@ export default function FloatingChat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [feedbackByMessage, setFeedbackByMessage] = useState<
+    Record<number, boolean>
+  >({});
   const [labelDismissed, setLabelDismissed] = useState(false);
   const [hasInlineChat, setHasInlineChat] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -249,6 +253,19 @@ export default function FloatingChat() {
                       : "bg-[#E8EEE9] text-text-primary border border-[#C9D5CF]"
                   }`}>
                     <p className="whitespace-pre-wrap">{msg.content}</p>
+                    {msg.role === "assistant" && (
+                      <AiAnswerFeedback
+                        mode="global"
+                        locale={locale}
+                        submitted={feedbackByMessage[i] !== undefined}
+                        onSubmitted={(helpful) =>
+                          setFeedbackByMessage((current) => ({
+                            ...current,
+                            [i]: helpful,
+                          }))
+                        }
+                      />
+                    )}
                   </div>
                 </div>
               ))}

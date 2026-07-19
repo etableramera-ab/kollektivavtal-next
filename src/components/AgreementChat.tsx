@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageSquare, Send, AlertCircle, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
+import AiAnswerFeedback from "@/components/AiAnswerFeedback";
 import {
   ChatRequestError,
   OPEN_AI_CHAT_EVENT,
@@ -25,6 +26,9 @@ export default function AgreementChat({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [feedbackByMessage, setFeedbackByMessage] = useState<
+    Record<number, boolean>
+  >({});
   const chatRootRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const latestAssistantRef = useRef<HTMLDivElement>(null);
@@ -206,6 +210,20 @@ export default function AgreementChat({
                   Källa: {msg.source.label}
                   <ExternalLink size={12} aria-hidden="true" />
                 </a>
+              )}
+              {msg.role === "assistant" && (
+                <AiAnswerFeedback
+                  mode="agreement"
+                  locale="sv"
+                  agreementSlug={agreementSlug}
+                  submitted={feedbackByMessage[i] !== undefined}
+                  onSubmitted={(helpful) =>
+                    setFeedbackByMessage((current) => ({
+                      ...current,
+                      [i]: helpful,
+                    }))
+                  }
+                />
               )}
             </div>
           </motion.div>

@@ -42,6 +42,11 @@ export default function Integritetspolicy() {
                 ange namn eller kontaktuppgifter. Skriv inte känsliga personuppgifter i chatten.
               </li>
               <li>
+                <strong>Feedback på AI-svar:</strong> Om du väljer Ja eller Nej registreras i
+                själva feedbacken bara valet, språk, chattläge och vilket avtal sidan gäller.
+                Din fråga, AI-svaret och chatthistoriken skickas inte med i feedbacken.
+              </li>
+              <li>
                 <strong>Annonsdata:</strong> Google AdSense kan visa anpassade annonser baserat
                 på ditt samtycke. Mer information finns i vår{" "}
                 <Link href="/cookiepolicy" className="text-accent hover:underline">cookiepolicy</Link>.
@@ -53,6 +58,7 @@ export default function Integritetspolicy() {
             <h2 className="text-lg font-bold mb-2">Rättslig grund</h2>
             <p className="text-sm">
               AI-meddelanden behandlas för att kunna leverera den funktion du själv använder.
+              Ja/Nej-feedback används för att förbättra AI-guiden utan att spara chattens innehåll.
               Annonscookies och liknande teknik används efter samtycke där samtycke krävs. Du kan
               ändra dina val via Googles samtyckesruta eller webbläsarens inställningar.
             </p>
@@ -66,7 +72,9 @@ export default function Integritetspolicy() {
             <ul className="list-disc pl-5 space-y-1 text-sm mt-2">
               <li>Google AdSense — för annonsering och samtyckeshantering</li>
               <li>Anthropic — för AI-behandling av chattmeddelanden</li>
-              <li>Vercel — för hosting av webbplatsen</li>
+              <li>
+                Vercel — för hosting och anonym sammanställning av Ja/Nej-feedback
+              </li>
             </ul>
           </div>
 
@@ -75,6 +83,7 @@ export default function Integritetspolicy() {
             <p className="text-sm">
               Sajten sparar inte chattmeddelanden i en egen databas. Anthropic och Google
               behandlar uppgifter enligt sina respektive villkor och lagringsrutiner.
+              Vår rapporteringsperiod för anonym Ja/Nej-feedback är 12 månader.
             </p>
           </div>
 

@@ -27,6 +27,13 @@
   --radius-button: 8px;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   color: var(--color-text-primary);
   background: #164B3F;
