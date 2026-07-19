@@ -16,17 +16,23 @@ export const maxDuration = 60;
 const MAX_MESSAGE_CHARS = 1500;
 const MAX_HISTORY_MESSAGES = 4;
 const MAX_HISTORY_CHARS = 1500;
+const MAX_TOTAL_HISTORY_CHARS = 3000;
+const MAX_REQUEST_BODY_BYTES = 32_000;
 const ANTHROPIC_TIMEOUT_MS = 25_000;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 20;
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const MAX_CONCURRENT_REQUESTS = 4;
+const MAX_OUTPUT_TOKENS = 600;
 
 type RateLimitEntry = { count: number; resetAt: number };
 const globalChatState = globalThis as typeof globalThis & {
   kollektivavtalChatRateLimits?: Map<string, RateLimitEntry>;
+  kollektivavtalChatActiveRequests?: number;
 };
 const chatRateLimits =
   globalChatState.kollektivavtalChatRateLimits ?? new Map<string, RateLimitEntry>();
 globalChatState.kollektivavtalChatRateLimits = chatRateLimits;
+globalChatState.kollektivavtalChatActiveRequests ??= 0;
 
 const SUPPORTED_LOCALES = ["sv", "en", "ar", "so", "fa", "es", "pl"] as const;
 type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
@@ -153,6 +159,7 @@ function validateRequestBody(body: unknown): ValidationResult {
   }
 
   const history: Anthropic.MessageParam[] = [];
+  let totalHistoryChars = 0;
   for (const item of rawHistory) {
     if (
       !isRecord(item) ||
@@ -169,7 +176,15 @@ function validateRequestBody(body: unknown): ValidationResult {
         error: `Varje historikmeddelande måste vara mellan 1 och ${MAX_HISTORY_CHARS} tecken.`,
       };
     }
+    totalHistoryChars += content.length;
     history.push({ role: item.role, content });
+  }
+
+  if (totalHistoryChars > MAX_TOTAL_HISTORY_CHARS) {
+    return {
+      ok: false,
+      error: `Chatthistoriken får innehålla högst ${MAX_TOTAL_HISTORY_CHARS} tecken totalt.`,
+    };
   }
 
   return {
@@ -231,6 +246,7 @@ function hasUnsupportedNumbers(answer: string, evidence: string): boolean {
 
 function jsonError(message: string, status: number, retryAfter?: string) {
   const response = NextResponse.json({ error: message }, { status });
+  response.headers.set("Cache-Control", "no-store");
   if (retryAfter) response.headers.set("Retry-After", retryAfter);
   return response;
 }
@@ -243,9 +259,53 @@ function getClientAddress(req: NextRequest): string {
   return forwarded?.split(",")[0]?.trim() || "unknown";
 }
 
+function requestSafetyResponse(req: NextRequest): NextResponse | null {
+  if (process.env.AI_CHAT_ENABLED?.trim().toLowerCase() === "false") {
+    return jsonError(
+      "AI-guiden är tillfälligt pausad. Försök igen senare.",
+      503
+    );
+  }
+
+  const contentType = req.headers
+    .get("content-type")
+    ?.split(";", 1)[0]
+    ?.trim()
+    .toLowerCase();
+  if (contentType !== "application/json") {
+    return jsonError("Förfrågan måste skickas som JSON.", 415);
+  }
+
+  const contentLength = Number(req.headers.get("content-length"));
+  if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BODY_BYTES) {
+    return jsonError("Förfrågan är för stor.", 413);
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    const origin = req.headers.get("origin");
+    if (!origin || origin !== req.nextUrl.origin) {
+      return jsonError("Förfrågan kommer från en otillåten webbplats.", 403);
+    }
+
+    const fetchSite = req.headers.get("sec-fetch-site");
+    if (fetchSite && fetchSite !== "same-origin") {
+      return jsonError("Förfrågan kommer från en otillåten webbplats.", 403);
+    }
+  }
+
+  return null;
+}
+
 function rateLimitResponse(req: NextRequest): NextResponse | null {
   const now = Date.now();
   const address = getClientAddress(req);
+
+  if (chatRateLimits.size > 5_000) {
+    for (const [key, entry] of chatRateLimits) {
+      if (entry.resetAt <= now) chatRateLimits.delete(key);
+    }
+  }
+
   const existing = chatRateLimits.get(address);
 
   if (!existing || existing.resetAt <= now) {
@@ -270,6 +330,27 @@ function rateLimitResponse(req: NextRequest): NextResponse | null {
 
   existing.count += 1;
   return null;
+}
+
+function startProviderRequest(): NextResponse | null {
+  const activeRequests = globalChatState.kollektivavtalChatActiveRequests ?? 0;
+  if (activeRequests >= MAX_CONCURRENT_REQUESTS) {
+    return jsonError(
+      "AI-guiden har många frågor just nu. Vänta en liten stund och försök igen.",
+      429,
+      "5"
+    );
+  }
+
+  globalChatState.kollektivavtalChatActiveRequests = activeRequests + 1;
+  return null;
+}
+
+function finishProviderRequest() {
+  globalChatState.kollektivavtalChatActiveRequests = Math.max(
+    0,
+    (globalChatState.kollektivavtalChatActiveRequests ?? 1) - 1
+  );
 }
 
 function providerErrorResponse(
@@ -351,9 +432,16 @@ function providerErrorResponse(
 }
 
 export async function POST(req: NextRequest) {
+  const unsafe = requestSafetyResponse(req);
+  if (unsafe) return unsafe;
+
   let body: unknown;
   try {
-    body = await req.json();
+    const rawBody = await req.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_REQUEST_BODY_BYTES) {
+      return jsonError("Förfrågan är för stor.", 413);
+    }
+    body = JSON.parse(rawBody);
   } catch {
     return jsonError("Förfrågan kunde inte läsas.", 400);
   }
@@ -374,6 +462,9 @@ export async function POST(req: NextRequest) {
 
   const limited = rateLimitResponse(req);
   if (limited) return limited;
+
+  const busy = startProviderRequest();
+  if (busy) return busy;
 
   try {
     const localeText = LOCALE_TEXT[input.locale];
@@ -446,11 +537,11 @@ Avsluta exakt med: ${localeText.agreementClosing}`;
     const client = new Anthropic({
       apiKey,
       timeout: ANTHROPIC_TIMEOUT_MS,
-      maxRetries: 1,
+      maxRetries: 0,
     });
     const response = await client.messages.create({
       model: process.env.ANTHROPIC_MODEL?.trim() || "claude-sonnet-4-6",
-      max_tokens: 1000,
+      max_tokens: MAX_OUTPUT_TOKENS,
       system: systemPrompt,
       messages,
     });
@@ -490,11 +581,15 @@ Avsluta exakt med: ${localeText.agreementClosing}`;
       );
     }
 
-    return NextResponse.json({
+    const result = NextResponse.json({
       response: text,
       ...(source ? { source } : {}),
     });
+    result.headers.set("Cache-Control", "no-store");
+    return result;
   } catch (error) {
     return providerErrorResponse(error, input);
+  } finally {
+    finishProviderRequest();
   }
 }

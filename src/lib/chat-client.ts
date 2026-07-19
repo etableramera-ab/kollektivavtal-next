@@ -26,6 +26,8 @@ type ChatPayload = {
   locale: string;
 };
 
+const MAX_HISTORY_CHARS = 3000;
+
 export type ChatRequestErrorKind =
   | "timeout"
   | "network"
@@ -80,6 +82,22 @@ function readSource(value: unknown): ChatSource | undefined {
   };
 }
 
+function compactChatHistory(history: ChatMessage[]) {
+  const recent = history.slice(-4).map(({ role, content }) => ({ role, content }));
+  const compact: Array<Pick<ChatMessage, "role" | "content">> = [];
+  let totalChars = 0;
+
+  for (let index = recent.length - 1; index >= 0; index -= 1) {
+    const message = recent[index];
+    if (totalChars + message.content.length > MAX_HISTORY_CHARS) break;
+    compact.unshift(message);
+    totalChars += message.content.length;
+  }
+
+  while (compact[0]?.role === "assistant") compact.shift();
+  return compact;
+}
+
 export async function sendChatRequest(payload: ChatPayload): Promise<ChatResult> {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 55_000);
@@ -88,7 +106,10 @@ export async function sendChatRequest(payload: ChatPayload): Promise<ChatResult>
     const result = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        ...payload,
+        history: compactChatHistory(payload.history),
+      }),
       signal: controller.signal,
     });
 
