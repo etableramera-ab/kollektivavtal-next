@@ -8,14 +8,10 @@ import {
   Baby,
   PiggyBank,
 } from "lucide-react";
-import { getAgreementBySlug } from "@/data/agreements";
 import { getCourtCasesByAgreement } from "@/data/court-cases";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
 import { publicAgreements } from "@/lib/public-agreements";
-import {
-  createPublicAgreementView,
-  isPublicKeyFactAvailable,
-} from "@/lib/agreement-fact-status";
+import { isPublicKeyFactAvailable } from "@/lib/agreement-fact-status";
 import AgreementPageClient from "./AgreementPageClient";
 
 interface PageProps {
@@ -30,9 +26,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const sourceAgreement = getAgreementBySlug(slug);
-  if (!sourceAgreement || !isVerifiedAgreement(slug)) return {};
-  const agreement = createPublicAgreementView(sourceAgreement);
+  const agreement = publicAgreements.find((item) => item.slug === slug);
+  if (!agreement || !isVerifiedAgreement(slug)) return {};
 
   return {
     title: `${agreement.name} 2026 — Källor och avtalsstatus | kollektivavtal.ai`,
@@ -55,9 +50,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AgreementPage({ params }: PageProps) {
   const { slug } = await params;
-  const sourceAgreement = getAgreementBySlug(slug);
-  if (!sourceAgreement || !isVerifiedAgreement(slug)) notFound();
-  const agreement = createPublicAgreementView(sourceAgreement);
+  const agreement = publicAgreements.find((item) => item.slug === slug);
+  if (!agreement) notFound();
+  if (!isVerifiedAgreement(slug)) notFound();
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",

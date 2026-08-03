@@ -43,42 +43,57 @@ const LOCALE_TEXT: Record<
     languageInstruction: string;
     globalClosing: string;
     agreementClosing: string;
+    insufficientEvidence: string;
   }
 > = {
   sv: {
     languageInstruction: "Svara alltid på svenska.",
     globalClosing: "Kontakta ditt fackförbund för bindande besked.",
     agreementClosing: "Kontakta avtalsparterna för bindande besked.",
+    insufficientEvidence:
+      "Det källgranskade underlaget räcker inte för att besvara frågan säkert.",
   },
   en: {
     languageInstruction: "Always respond in English.",
     globalClosing: "Contact your trade union for binding information.",
     agreementClosing: "Contact the parties to the agreement for binding information.",
+    insufficientEvidence:
+      "The source-reviewed material is not sufficient to answer this question safely.",
   },
   ar: {
     languageInstruction: "أجب دائماً باللغة العربية.",
     globalClosing: "تواصل مع نقابتك للحصول على معلومات ملزمة.",
     agreementClosing: "تواصل مع أطراف الاتفاقية للحصول على معلومات ملزمة.",
+    insufficientEvidence:
+      "المعلومات التي تمت مراجعتها مقابل المصادر لا تكفي للإجابة عن هذا السؤال بأمان.",
   },
   so: {
     languageInstruction: "Had iyo jeer ku jawaab af-Soomaali.",
     globalClosing: "La xiriir ururkaaga shaqaalaha si aad u hesho xog rasmi ah.",
     agreementClosing: "La xiriir dhinacyada heshiiska si aad u hesho xog rasmi ah.",
+    insufficientEvidence:
+      "Xogta ilaha laga hubiyey kuma filna in su'aashan si ammaan ah looga jawaabo.",
   },
   fa: {
     languageInstruction: "همیشه به فارسی پاسخ دهید.",
     globalClosing: "برای دریافت اطلاعات قطعی با اتحادیه خود تماس بگیرید.",
     agreementClosing: "برای دریافت اطلاعات قطعی با طرف‌های قرارداد تماس بگیرید.",
+    insufficientEvidence:
+      "اطلاعات بررسی‌شده بر اساس منابع برای پاسخ مطمئن به این پرسش کافی نیست.",
   },
   es: {
     languageInstruction: "Responde siempre en español.",
     globalClosing: "Contacta con tu sindicato para obtener información vinculante.",
     agreementClosing: "Contacta con las partes del convenio para obtener información vinculante.",
+    insufficientEvidence:
+      "La información revisada con las fuentes no es suficiente para responder esta pregunta con seguridad.",
   },
   pl: {
     languageInstruction: "Zawsze odpowiadaj po polsku.",
     globalClosing: "Skontaktuj się ze swoim związkiem zawodowym, aby uzyskać wiążące informacje.",
     agreementClosing: "Skontaktuj się ze stronami układu, aby uzyskać wiążące informacje.",
+    insufficientEvidence:
+      "Materiały sprawdzone w źródłach nie wystarczają, aby bezpiecznie odpowiedzieć na to pytanie.",
   },
 };
 
@@ -824,10 +839,15 @@ Avsluta exakt med: ${localeText.agreementClosing}`;
         input.locale
       )
     ) {
-      return jsonError(
-        "AI-svaret kunde inte verifieras mot underlaget. Försök gärna formulera frågan mer specifikt.",
-        502
-      );
+      const safeResult = NextResponse.json({
+        response: ensureClosing(
+          localeText.insufficientEvidence,
+          localeText.agreementClosing
+        ),
+        ...(source ? { source } : {}),
+      });
+      safeResult.headers.set("Cache-Control", "no-store");
+      return safeResult;
     }
 
     const result = NextResponse.json({

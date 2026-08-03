@@ -6,6 +6,10 @@ import Image from "next/image";
 import { Search, ChevronRight, ShieldCheck } from "lucide-react";
 import { publicAgreements } from "@/lib/public-agreements";
 import { isVerifiedAgreement } from "@/lib/verified-agreements";
+import {
+  getSearchMatchScore,
+  matchesSearchText,
+} from "@/lib/search-normalization";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 type SectorFilter = "alla" | "privat" | "kommun_region" | "stat";
@@ -19,23 +23,25 @@ const filters: { value: SectorFilter; label: string }[] = [
 
 const serif = { fontFamily: "var(--font-dm-serif, var(--font-serif))" };
 
-// Handpicked top 8 workplace agreements (largest by employees, excluding structural/pension)
+// Handpicked major workplace agreements with current official source material.
 const featuredSlugs = [
-  "hok-kommunal",       // 540 000 — vard-omsorg.jpg
+  "hok-kommunal",
   "teknikavtalet-ifmetall",
-  "handelsavtalet",     // 250 000 — handel.jpg
-  "byggavtalet",        // 100 000 — bygg-anlaggning.jpg
-  "ab-kommunalt",       // 1 100 000 — skola-utbildning.jpg
-  "installationsavtalet",
-  "vvs-montorsavtalet",
-  "hotell-restaurang",  // 120 000 — hotell-restaurang.jpg
+  "handelsavtalet",
+  "byggavtalet",
+  "ab-kommunalt",
+  "teknikavtalet-tjansteman",
+  "handelns-tjanstemannaavtal",
+  "hotell-restaurang",
 ];
 
 const featuredImages: Record<string, { src: string; alt: string }> = {
   "hok-kommunal":      { src: "/Images/sectors/vard-omsorg.jpg", alt: "Vårdpersonal i arbetsmiljö" },
   "teknikavtalet-ifmetall": { src: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
+  "teknikavtalet-tjansteman": { src: "/Images/sectors/industri.jpg", alt: "Tjänstemän inom teknikindustrin" },
   "teknikavtalet":     { src: "/Images/sectors/industri.jpg", alt: "Industriarbetare vid maskin" },
   "handelsavtalet":    { src: "/Images/sectors/handel.jpg", alt: "Butiksanställd i handelsmiljö" },
+  "handelns-tjanstemannaavtal": { src: "/Images/sectors/handel.jpg", alt: "Tjänstemän inom handeln" },
   "byggavtalet":       { src: "/Images/sectors/bygg-anlaggning.jpg", alt: "Byggnadsarbetare på arbetsplats" },
   "ab-kommunalt":      { src: "/Images/sectors/skola-utbildning.jpg", alt: "Lärare i skolmiljö" },
   "it-avtalet":        { src: "/Images/sectors/it-tech.jpg", alt: "IT-utvecklare vid dator" },
@@ -50,25 +56,53 @@ const top8Slugs = new Set(featuredSlugs);
 
 const PAGE_SIZE = 30;
 
+function agreementSearchScore(agreement: (typeof publicAgreements)[number], query: string) {
+  const nameScore = Math.max(
+    getSearchMatchScore(agreement.name, query),
+    getSearchMatchScore(agreement.shortName, query)
+  );
+  const metadataScore = Math.max(
+    getSearchMatchScore(agreement.sectorLabel, query),
+    ...agreement.parties.unions.map((value) => getSearchMatchScore(value, query)),
+    ...agreement.parties.employers.map((value) => getSearchMatchScore(value, query))
+  );
+  const summaryScore = getSearchMatchScore(agreement.summary, query);
+  return nameScore * 100 + metadataScore * 10 + summaryScore;
+}
+
 export default function AvtalOverview() {
   const [sector, setSector] = useState<SectorFilter>("alla");
   const [search, setSearch] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const isFiltering = sector !== "alla" || search.trim().length > 0;
 
   const listAgreements = useMemo(() => {
-    let result = publicAgreements.filter((a) => !top8Slugs.has(a.slug));
+    let result = isFiltering
+      ? [...publicAgreements]
+      : publicAgreements.filter((a) => !top8Slugs.has(a.slug));
     if (sector !== "alla") result = result.filter((a) => a.sector === sector);
     if (search.trim()) {
-      const q = search.toLowerCase();
+      const q = search.trim();
       result = result.filter(
-        (a) =>
-          a.name.toLowerCase().includes(q) ||
-          a.shortName.toLowerCase().includes(q) ||
-          a.sectorLabel.toLowerCase().includes(q)
+        (a) => [
+          a.name,
+          a.shortName,
+          a.sectorLabel,
+          a.summary,
+          ...a.parties.unions,
+          ...a.parties.employers,
+        ].some((value) => matchesSearchText(value, q))
       );
     }
-    return result.sort((a, b) => a.shortName.localeCompare(b.shortName, "sv"));
-  }, [sector, search]);
+    return result.sort((a, b) => {
+      if (search.trim()) {
+        const scoreDifference =
+          agreementSearchScore(b, search) - agreementSearchScore(a, search);
+        if (scoreDifference !== 0) return scoreDifference;
+      }
+      return a.shortName.localeCompare(b.shortName, "sv");
+    });
+  }, [isFiltering, sector, search]);
 
   const paginated = listAgreements.slice(0, visibleCount);
 
@@ -88,9 +122,49 @@ export default function AvtalOverview() {
         </div>
       </section>
 
-      {/* ─── ZON 1: Featured top 8 ─── */}
+      {/* ─── Sökning och filter ─── */}
+      <div className="sticky top-[64px] z-40 border-y border-border border-t-primary bg-[#F0EEED]">
+        <div className="mx-auto max-w-5xl px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
+          <div className="space-y-3">
+            <div className="relative">
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
+                placeholder="Sök avtal, fack eller arbetsgivare..."
+                aria-label="Sök bland kollektivavtal"
+                className="h-11 w-full rounded-lg border border-border bg-white pl-10 pr-4 text-base text-text-primary outline-none placeholder:text-text-secondary focus:border-primary focus:ring-2 focus:ring-primary/30 sm:text-sm"
+              />
+            </div>
+            <div className="scrollbar-hide flex flex-nowrap gap-2 overflow-x-auto overscroll-x-contain pr-4">
+              {filters.map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  aria-pressed={sector === f.value}
+                  onClick={() => { setSector(f.value); setVisibleCount(PAGE_SIZE); }}
+                  className={`min-h-[40px] shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                    sector === f.value
+                      ? "bg-primary text-white"
+                      : "border border-border bg-white text-[#374151] hover:border-primary hover:bg-[#F0FDFA]"
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Stora avtalsområden ─── */}
+      {!isFiltering && (
       <section className="py-10 sm:py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <h2 className="mb-5 text-2xl text-text-primary sm:text-[32px]" style={serif}>
+            Stora avtalsområden
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {top8.map((a, i) => (
               <AnimatedSection key={a.slug} delay={i * 0.04}>
@@ -106,7 +180,7 @@ export default function AvtalOverview() {
                       />
                     </div>
                     <div className="p-5">
-                      <div className="flex items-center justify-between gap-2 mb-2">
+                      <div className="mb-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                         <span className="rounded-full bg-primary text-white text-[12px] font-semibold px-3 py-0.5">
                           {a.sectorLabel}
                         </span>
@@ -132,47 +206,22 @@ export default function AvtalOverview() {
           </div>
         </div>
       </section>
+      )}
 
-      {/* ─── ZON 2: Sticky search + filter ─── */}
-      <div className="sticky top-[64px] z-40 bg-[#F0EEED] border-t-2 border-t-primary border-b border-border">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-5">
-          <div className="space-y-3">
-            <div className="relative">
-              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
-                placeholder="Sök bland avtal..."
-                className="w-full h-11 rounded-lg border border-border bg-white pl-10 pr-4 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-primary/30 focus:border-primary"
-              />
-            </div>
-            <div className="flex gap-2 flex-nowrap overflow-x-auto scrollbar-hide pr-4">
-              {filters.map((f) => (
-                <button
-                  key={f.value}
-                  onClick={() => { setSector(f.value); setVisibleCount(PAGE_SIZE); }}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors min-h-[40px] ${
-                    sector === f.value
-                      ? "bg-primary text-white"
-                      : "bg-white border border-border text-[#374151] hover:border-primary hover:bg-[#F0FDFA]"
-                  }`}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ─── ZON 3: All agreements table ─── */}
-      <section className="py-8 sm:py-10 pb-16 sm:pb-20">
+      {/* ─── Avtalslista ─── */}
+      <section className="py-8 pb-24 sm:py-10 sm:pb-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-[32px] text-text-primary mb-1" style={serif}>Alla avtal</h2>
-          <p className="text-[15px] text-text-secondary mb-6">{listAgreements.length} avtal</p>
+          <h2 className="mb-1 text-2xl text-text-primary sm:text-[32px]" style={serif}>
+            {isFiltering ? "Sökresultat" : "Fler avtal"}
+          </h2>
+          <p className="mb-6 text-[15px] text-text-secondary" aria-live="polite">
+            {isFiltering
+              ? `${listAgreements.length} avtal matchar`
+              : `${listAgreements.length} fler avtal · ${publicAgreements.length} totalt`}
+          </p>
 
           {/* Desktop table */}
+          {paginated.length > 0 && (
           <div className="hidden md:block rounded-xl border border-border bg-white overflow-hidden">
             <table className="w-full">
               <thead>
@@ -200,14 +249,16 @@ export default function AvtalOverview() {
               </tbody>
             </table>
           </div>
+          )}
 
           {/* Mobile list */}
+          {paginated.length > 0 && (
           <div className="md:hidden rounded-xl border border-border bg-white overflow-hidden">
             {paginated.map((a, i) => (
               <Link key={a.slug} href={`/avtal/${a.slug}`} className="block">
-                <div className={`flex items-center justify-between px-4 py-4 hover:bg-background transition-colors ${i < paginated.length - 1 ? "border-b border-surface-dark" : ""}`}>
-                  <div>
-                    <p className="font-semibold text-[16px] text-text-primary">
+                <div className={`flex items-center justify-between gap-3 px-4 py-4 hover:bg-background transition-colors ${i < paginated.length - 1 ? "border-b border-surface-dark" : ""}`}>
+                  <div className="min-w-0">
+                    <p className="break-words font-semibold text-[16px] text-text-primary">
                       {a.shortName}
                       {isVerifiedAgreement(a.slug) && (
                         <ShieldCheck className="inline w-3.5 h-3.5 text-primary ml-1 -mt-0.5" />
@@ -222,6 +273,21 @@ export default function AvtalOverview() {
               </Link>
             ))}
           </div>
+          )}
+
+          {paginated.length === 0 && (
+            <div className="rounded-xl border border-border bg-white p-6 text-center">
+              <p className="font-semibold text-text-primary">Inga avtal matchar din sökning</p>
+              <p className="mt-1 text-sm text-text-secondary">Prova ett annat ord eller visa alla avtal igen.</p>
+              <button
+                type="button"
+                onClick={() => { setSearch(""); setSector("alla"); setVisibleCount(PAGE_SIZE); }}
+                className="mt-4 min-h-[44px] rounded-lg border border-primary px-5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+              >
+                Rensa sökningen
+              </button>
+            </div>
+          )}
 
           {/* Load more */}
           {visibleCount < listAgreements.length && (

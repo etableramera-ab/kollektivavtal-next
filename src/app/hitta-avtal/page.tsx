@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -47,15 +47,38 @@ export default function HittaAvtal() {
   const [sectorIdx, setSectorIdx] = useState<number | null>(null);
   const [branchIdx, setBranchIdx] = useState<number | null>(null);
   const [occupationIdx, setOccupationIdx] = useState<number | null>(null);
+  const [followUpIdx, setFollowUpIdx] = useState<number | null>(null);
+  const flowStartRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const sector = sectorIdx !== null ? finderData[sectorIdx] : null;
   const branch = sector && branchIdx !== null ? sector.branches[branchIdx] : null;
   const occupation =
     branch && occupationIdx !== null ? branch.occupations[occupationIdx] : null;
+  const followUp = occupation?.followUp ?? null;
+  const followUpOption =
+    followUp && followUpIdx !== null ? followUp.options[followUpIdx] : null;
+  const agreementSlug = followUp
+    ? followUpOption?.agreementSlug ?? null
+    : occupation?.agreementSlug ?? null;
   const agreement =
-    occupation?.agreementSlug
-      ? publicAgreements.find((item) => item.slug === occupation.agreementSlug) ?? null
+    agreementSlug
+      ? publicAgreements.find((item) => item.slug === agreementSlug) ?? null
       : null;
+  const totalQuestions = followUp ? 4 : 3;
+  const resultStep = followUp ? 5 : 4;
+  const isResultStep = Boolean(occupation) && step === resultStep;
+
+  useEffect(() => {
+    if (!hasInteracted) return;
+
+    const timer = window.setTimeout(() => {
+      flowStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      stepHeadingRef.current?.focus({ preventScroll: true });
+    }, 300);
+
+    return () => window.clearTimeout(timer);
+  }, [hasInteracted, step]);
 
   function goTo(s: number) {
     setHasInteracted(true);
@@ -71,8 +94,12 @@ export default function HittaAvtal() {
       setBranchIdx(null);
       goTo(2);
     } else if (step === 4) {
+      setFollowUpIdx(null);
       setOccupationIdx(null);
       goTo(3);
+    } else if (step === 5) {
+      setFollowUpIdx(null);
+      goTo(4);
     }
   }
 
@@ -82,11 +109,11 @@ export default function HittaAvtal() {
       <section className="bg-primary-dark text-white pt-10 pb-10 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
-            <h1 className="text-4xl sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+            <h1 className="text-[34px] leading-[1.08] sm:text-5xl md:text-[56px]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               Hitta ditt kollektivavtal
             </h1>
             <p className="mt-3 text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
-              Svara på tre frågor så visar vi vilket avtal som kan vara relevant
+              Svara på några enkla frågor så visar vi vilket avtal som kan vara relevant
             </p>
           </AnimatedSection>
         </div>
@@ -97,37 +124,45 @@ export default function HittaAvtal() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-r-lg border-l-[3px] border-l-primary bg-[#F0FDFA] p-4 sm:p-5">
             <p className="text-sm text-text-primary leading-relaxed">
-              Du kan få hjälp att hitta ett möjligt kollektivavtal genom att välja bransch och yrke
-              nedan. Rätt avtal beror också på arbetsgivaren och arbetsplatsen, så kontrollera alltid
-              resultatet med arbetsgivaren eller facket.
+              Du kan få hjälp att hitta ett möjligt kollektivavtal genom att välja bransch och yrke.
+              När yrket inte räcker ställer vi en extra fråga. Kontrollera alltid resultatet med
+              arbetsgivaren eller facket.
             </p>
           </div>
         </div>
       </section>
 
       {/* Progress bar */}
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="flex items-center gap-2">
-          {[1, 2, 3, 4].map((s) => (
+      <div ref={flowStartRef} className="mx-auto mb-8 max-w-3xl scroll-mt-20 px-4 sm:px-6 lg:px-8">
+        <div
+          className="flex items-center gap-2"
+          role="progressbar"
+          aria-label="Frågor för att hitta kollektivavtal"
+          aria-valuemin={1}
+          aria-valuemax={totalQuestions}
+          aria-valuenow={Math.min(step, totalQuestions)}
+        >
+          {Array.from({ length: totalQuestions }, (_, index) => index + 1).map((s) => (
             <div key={s} className="flex-1">
               <div
                 className={`h-1.5 rounded-full transition-colors ${
-                  s <= step ? "bg-accent" : "bg-border"
+                  s <= Math.min(step, totalQuestions) ? "bg-accent" : "bg-border"
                 }`}
               />
             </div>
           ))}
         </div>
         <p className="text-xs text-text-secondary mt-2">
-          Steg {step} av 4
+          {isResultStep ? "Resultat" : `Fråga ${step} av ${totalQuestions}`}
         </p>
       </div>
 
       {/* Wizard */}
-      <section className="pb-16 sm:pb-20">
+      <section className="overflow-x-hidden pb-24 sm:pb-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           {step > 1 && (
             <button
+              type="button"
               onClick={goBack}
               className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-primary mb-6 min-h-[44px] transition-colors"
             >
@@ -148,7 +183,7 @@ export default function HittaAvtal() {
                 exit="exit"
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
-                <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">
+                <h2 ref={stepHeadingRef} tabIndex={-1} className="mb-6 text-lg font-bold text-text-primary outline-none sm:text-xl">
                   Inom vilken sektor arbetar du?
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
@@ -157,13 +192,17 @@ export default function HittaAvtal() {
                     return (
                       <motion.button
                         key={s.value}
+                        type="button"
                         whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                         transition={{ duration: 0.2 }}
                         onClick={() => {
                           setSectorIdx(i);
+                          setBranchIdx(null);
+                          setOccupationIdx(null);
+                          setFollowUpIdx(null);
                           goTo(2);
                         }}
-                        className="rounded-sm border border-border bg-card p-6 text-left hover:border-primary transition-colors"
+                        className="rounded-sm border border-border bg-card p-5 text-left hover:border-primary transition-colors sm:p-6"
                       >
                         <Icon size={28} className="text-accent mb-3" />
                         <p className="font-semibold text-text-primary">{s.label}</p>
@@ -186,24 +225,27 @@ export default function HittaAvtal() {
                 exit="exit"
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
-                <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">
+                <h2 ref={stepHeadingRef} tabIndex={-1} className="mb-6 text-lg font-bold text-text-primary outline-none sm:text-xl">
                   Vilken bransch jobbar du inom?
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {sector.branches.map((b, i) => (
                     <motion.button
                       key={b.label}
+                      type="button"
                       whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                       transition={{ duration: 0.2 }}
                       onClick={() => {
                         setBranchIdx(i);
+                        setOccupationIdx(null);
+                        setFollowUpIdx(null);
                         goTo(3);
                       }}
                       className="rounded-sm border border-border bg-card p-4 sm:p-5 text-left hover:border-primary transition-colors"
                     >
                       <p className="font-semibold text-text-primary text-sm">{b.label}</p>
                       <p className="text-xs text-text-secondary mt-1">
-                        {b.occupations.length} yrkesgrupper
+                        {b.occupations.length} val
                       </p>
                     </motion.button>
                   ))}
@@ -222,17 +264,19 @@ export default function HittaAvtal() {
                 exit="exit"
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
-                <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-6">
-                  Vilken yrkesgrupp tillhör du?
+                <h2 ref={stepHeadingRef} tabIndex={-1} className="mb-6 text-lg font-bold text-text-primary outline-none sm:text-xl">
+                  {branch.question ?? "Vilken yrkesgrupp tillhör du?"}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {branch.occupations.map((o, i) => (
                     <motion.button
                       key={o.label}
+                      type="button"
                       whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
                       transition={{ duration: 0.2 }}
                       onClick={() => {
                         setOccupationIdx(i);
+                        setFollowUpIdx(null);
                         goTo(4);
                       }}
                       className="rounded-sm border border-border bg-card p-4 sm:p-5 text-left hover:border-primary transition-colors"
@@ -244,10 +288,49 @@ export default function HittaAvtal() {
               </motion.div>
             )}
 
-            {/* Step 4: Result */}
-            {step === 4 && occupation && (
+            {/* Optional step 4: employer or agreement area */}
+            {step === 4 && occupation && followUp && (
               <motion.div
-                key="step4"
+                key="follow-up"
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+              >
+                <h2 ref={stepHeadingRef} tabIndex={-1} className="text-lg font-bold text-text-primary outline-none sm:text-xl">
+                  {followUp.question}
+                </h2>
+                <p className="mb-6 mt-2 text-sm leading-relaxed text-text-secondary">
+                  {followUp.description}
+                </p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {followUp.options.map((option, i) => (
+                    <motion.button
+                      key={option.label}
+                      type="button"
+                      whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.08)" }}
+                      transition={{ duration: 0.2 }}
+                      onClick={() => {
+                        setFollowUpIdx(i);
+                        goTo(5);
+                      }}
+                      className="rounded-sm border border-border bg-card p-4 text-left transition-colors hover:border-primary sm:p-5"
+                    >
+                      <p className="break-words text-sm font-semibold text-text-primary">
+                        {option.label}
+                      </p>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Result: step 4 normally, step 5 after an extra question */}
+            {isResultStep && occupation && (
+              <motion.div
+                key="result"
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -257,12 +340,12 @@ export default function HittaAvtal() {
               >
                 {agreement ? (
                   <div className="space-y-6">
-                    <div className="rounded-sm border-2 border-accent bg-card p-6">
+                    <div className="rounded-sm border-2 border-accent bg-card p-5 sm:p-6">
                       <div className="flex items-center gap-2 mb-3">
                         <Check size={20} className="text-success" />
                         <p className="text-sm font-medium text-success">Möjligt avtalsområde</p>
                       </div>
-                      <h2 className="text-xl sm:text-2xl font-bold text-text-primary">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className="break-words text-xl font-bold text-text-primary outline-none sm:text-2xl">
                         {agreement.name}
                       </h2>
                       <p className="text-sm text-text-secondary mt-2 leading-relaxed">
@@ -287,6 +370,7 @@ export default function HittaAvtal() {
                         Läs avtalsöversikten <ArrowRight size={16} />
                       </Link>
                       <button
+                        type="button"
                         onClick={openAIChat}
                         className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white min-h-[44px] transition-all hover:-translate-y-px"
                         style={{ background: "#285E52" }}
@@ -299,7 +383,7 @@ export default function HittaAvtal() {
                 ) : (
                   <div className="space-y-6">
                     <div className="rounded-sm border border-border bg-card p-6">
-                      <h2 className="text-xl font-bold text-text-primary mb-2">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className="mb-2 text-xl font-bold text-text-primary outline-none">
                         Vi kan inte avgöra rätt avtal säkert här
                       </h2>
                       <p className="text-sm text-text-secondary leading-relaxed">
@@ -311,10 +395,8 @@ export default function HittaAvtal() {
 
                     <div className="rounded-sm border border-border bg-card p-5">
                       <p className="text-sm text-text-secondary">
-                        Tipsa gärna om en officiell källa via{" "}
-                        <a href="mailto:info@kollektivavtal.ai" className="text-accent hover:underline">
-                          info@kollektivavtal.ai
-                        </a>.
+                        Fråga arbetsgivaren eller facket: ”Vilket kollektivavtal och avtalsområde
+                        gäller på min arbetsplats?”
                       </p>
                     </div>
 

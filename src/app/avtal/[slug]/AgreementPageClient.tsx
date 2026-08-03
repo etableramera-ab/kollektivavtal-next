@@ -90,9 +90,6 @@ export default function AgreementPageClient({
     { key: "obWeekend" as const, tid: "Helg", tillagg: agreement.keyFacts.obWeekend },
     { key: "obHoliday" as const, tid: "Helgdag/storhelg", tillagg: agreement.keyFacts.obHoliday },
   ].filter((row) => hasFact(row.key));
-  const hasCoreFacts = ["minimumWage", "workHoursPerWeek", "pension"].some(
-    (key) => hasFact(key as keyof Agreement["keyFacts"])
-  );
   const hasVacationFact = hasFact("vacationDays");
   const hasParentalFact = hasFact("parentalPay");
   const hasLeaveFacts = hasVacationFact || hasParentalFact;
@@ -109,13 +106,13 @@ export default function AgreementPageClient({
       <section style={{ backgroundImage: `linear-gradient(rgba(22,75,63,0.9), rgba(22,75,63,0.9)), url('${getAgreementHeroImage(agreement.slug, agreement.sectorLabel)}')`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-white pt-10 pb-10 sm:pb-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <nav className="flex items-center gap-1.5 text-[13px] text-white/60 mb-6">
-              <Link href="/avtal" className="hover:text-white transition-colors">Kollektivavtal</Link>
-              <span className="text-white/40">/</span>
-              <span className="text-white/90">{agreement.shortName}</span>
+            <nav className="flex min-w-0 items-center gap-1.5 text-[13px] text-white/60 mb-6">
+              <Link href="/avtal" className="shrink-0 hover:text-white transition-colors">Kollektivavtal</Link>
+              <span className="shrink-0 text-white/40">/</span>
+              <span className="min-w-0 truncate text-white/90">{agreement.shortName}</span>
             </nav>
 
-            <h1 className="text-4xl sm:text-5xl md:text-[56px] leading-tight" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
+            <h1 className="break-words text-[34px] leading-[1.08] sm:text-5xl md:text-[56px] md:leading-tight [hyphens:auto]" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>
               {agreement.name}
             </h1>
             <p className="mt-2 text-base text-white/75">
@@ -146,7 +143,7 @@ export default function AgreementPageClient({
       {keyFactCards.length > 0 ? (
       <section className="pb-12 sm:pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
             {keyFactCards.map((card, i) => {
               const Icon = iconMap[card.label] || Banknote;
               return (
@@ -154,7 +151,7 @@ export default function AgreementPageClient({
                   <div className="rounded-sm border border-border bg-card p-4 sm:p-5 h-full flex flex-col">
                     <Icon size={20} className="text-accent mb-2 shrink-0" />
                     <p className="text-xs text-text-secondary">{card.label}</p>
-                    <p className="text-sm font-semibold text-text-primary mt-0.5">{card.value}</p>
+                    <p className="mt-0.5 break-words text-sm font-semibold leading-relaxed text-text-primary">{card.value}</p>
                   </div>
                 </AnimatedSection>
               );
@@ -176,11 +173,36 @@ export default function AgreementPageClient({
         </section>
       )}
 
+      {factSourceNote && (
+        <section className="pb-4 sm:pb-6">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-start gap-3 rounded-sm border border-[#C9D5CF] bg-[#E8EEE9] p-4">
+              <Shield size={20} className="mt-0.5 shrink-0 text-primary" />
+              <div className="min-w-0">
+                <p className="font-semibold text-text-primary">Kontrollerad mot angivna källor</p>
+                <p className="mt-0.5 text-sm leading-relaxed text-text-secondary">
+                  Granskad {factSourceNote.reviewedAt} mot {factSourceNote.sections}.
+                </p>
+                <a
+                  href={factSourceNote.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex min-h-[44px] max-w-full items-center gap-1 break-words text-sm font-medium text-primary underline decoration-primary/30 underline-offset-2 hover:text-primary-dark"
+                >
+                  {factSourceNote.label}
+                  <ExternalLink size={14} className="shrink-0" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* AI-chatt */}
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
-            <div className="bg-[#E8EEE9] border border-[#C9D5CF] rounded-sm p-6 sm:p-8">
+            <div className="bg-[#E8EEE9] border border-[#C9D5CF] rounded-sm p-4 sm:p-8">
               <h2 className="text-[20px] font-semibold text-text-primary mb-1">Fråga AI-guiden om {agreement.shortName}</h2>
               <p className="text-[15px] text-text-secondary mb-5">Guiden svarar bara när källunderlaget räcker</p>
               <AgreementChat
@@ -205,19 +227,6 @@ export default function AgreementPageClient({
                 Vi har ett aktuellt avtalsunderlag för {agreement.shortName}. Informationen
                 sammanfattas i egna ord och publiceras stegvis när den har kontrollerats.
               </p>
-              {hasCoreFacts && (
-                <div className="space-y-2">
-                  {hasFact("minimumWage") && (
-                    <p>Lägsta lön: {agreement.keyFacts.minimumWage}.</p>
-                  )}
-                  {hasFact("workHoursPerWeek") && (
-                    <p>Arbetstid: {agreement.keyFacts.workHoursPerWeek}.</p>
-                  )}
-                  {hasFact("pension") && (
-                    <p>Pension: {agreement.keyFacts.pension}.</p>
-                  )}
-                </div>
-              )}
             </div>
             <dl className="mt-6 grid gap-4 rounded-sm border border-border bg-background p-5 text-sm sm:grid-cols-2">
               <div>
@@ -246,26 +255,13 @@ export default function AgreementPageClient({
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm text-accent hover:underline min-h-[44px]"
+                  className="inline-flex min-h-[44px] min-w-0 max-w-full items-center gap-1 break-words text-sm font-medium text-primary underline decoration-primary/30 underline-offset-2 hover:text-primary-dark"
                 >
-                  <ExternalLink size={14} />
+                  <ExternalLink size={14} className="shrink-0" />
                   {s.label}
                 </a>
               ))}
             </div>
-            {factSourceNote && (
-              <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-                Faktagranskad {factSourceNote.reviewedAt} mot {factSourceNote.sections}.{" "}
-                <a
-                  href={factSourceNote.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-accent hover:underline"
-                >
-                  {factSourceNote.label}
-                </a>
-              </p>
-            )}
           </AnimatedSection>
         </div>
       </section>
@@ -277,17 +273,17 @@ export default function AgreementPageClient({
             href={`https://allaforsakringar.com?utm_source=kollektivavtal&utm_medium=mid-article&utm_campaign=avtal-${agreement.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="block rounded-r-[10px] border-l-[3px] border-l-accent bg-background p-5 flex items-center gap-4 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all"
+            className="relative flex items-center gap-4 rounded-r-[10px] border-l-[3px] border-l-accent bg-background p-5 pr-14 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all"
           >
             <div className="shrink-0 w-10 h-10 rounded-full bg-[#FEF3C7] flex items-center justify-center">
               <Shield size={20} className="text-accent" />
             </div>
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               <p className="font-semibold text-text-primary text-[17px]">Har du rätt försäkringsskydd?</p>
               <p className="text-[15px] text-text-secondary mt-0.5">Skyddet kan komma från flera håll. Jämför villkor och kontrollera vad som gäller för dig.</p>
               <p className="text-[15px] font-semibold text-accent mt-1">Jämför försäkringar gratis →</p>
             </div>
-            <span className="text-[11px] text-[#9CA3AF] shrink-0 self-start">Annons</span>
+            <span className="absolute right-4 top-4 text-[11px] text-[#9CA3AF]">Annons</span>
           </a>
         </div>
       </section>
@@ -326,22 +322,17 @@ export default function AgreementPageClient({
             </div>
           </AnimatedSection>
 
-          <div className="md:hidden space-y-3">
-            {agreement.wageTable.map((row, i) => (
-              <AnimatedSection key={row.role} delay={i * 0.05}>
-                <div className="rounded-sm border border-border bg-card p-4">
+          <AnimatedSection delay={0.1}>
+            <div className="divide-y divide-border overflow-hidden rounded-sm border border-border bg-card md:hidden">
+              {agreement.wageTable.map((row) => (
+                <div key={row.role} className="p-4">
                   <p className="font-semibold text-text-primary text-sm">{row.role}</p>
-                  <p className="text-xs text-text-secondary mt-0.5">{row.comment}</p>
-                  <div className="flex gap-4 mt-3">
-                    <div>
-                      <p className="text-xs text-text-secondary">Lägsta</p>
-                      <p className="text-sm font-medium text-text-primary">{row.minimum}</p>
-                    </div>
-                  </div>
+                  <p className="mt-1 text-sm font-medium text-text-primary">{row.minimum}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-text-secondary">{row.comment}</p>
                 </div>
-              </AnimatedSection>
-            ))}
-          </div>
+              ))}
+            </div>
+          </AnimatedSection>
 
           <p className="text-xs text-text-secondary mt-3">
             Lägstanivåerna bygger på det angivna avtalsunderlaget. Kontrollera alltid aktuellt
@@ -382,12 +373,12 @@ export default function AgreementPageClient({
             <h2 className="text-2xl sm:text-[32px] text-text-primary mb-6" style={{ fontFamily: "var(--font-dm-serif, var(--font-serif))" }}>OB-tillägg</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
-            <div className="rounded-sm border border-border bg-card overflow-hidden">
+            <div className="hidden rounded-sm border border-border bg-card overflow-hidden md:block">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-background">
                     <th className="text-left p-4 font-semibold text-text-primary">Tid</th>
-                    <th className="text-left p-4 font-semibold text-text-primary">Tillägg per timme</th>
+                    <th className="text-left p-4 font-semibold text-text-primary">Tillägg och villkor</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -400,6 +391,18 @@ export default function AgreementPageClient({
                 </tbody>
               </table>
             </div>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <dl className="divide-y divide-border overflow-hidden rounded-sm border border-border bg-card md:hidden">
+              {obRows.map((row) => (
+                <div key={row.tid} className="p-4">
+                  <dt className="text-sm font-semibold text-text-primary">{row.tid}</dt>
+                  <dd className="mt-1 break-words text-sm leading-relaxed text-text-primary">
+                    {row.tillagg}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </AnimatedSection>
         </div>
       </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,6 +15,7 @@ interface FaqAccordionProps {
 
 export default function FaqAccordion({ items }: FaqAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const accordionId = useId();
 
   return (
     <div className="space-y-2">
@@ -24,10 +25,14 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
           className="rounded-[12px] border border-border bg-white shadow-sm overflow-hidden"
         >
           <button
+            type="button"
+            id={`${accordionId}-question-${i}`}
+            aria-expanded={openIndex === i}
+            aria-controls={`${accordionId}-answer-${i}`}
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
             className="w-full flex items-center justify-between p-4 sm:p-5 text-left min-h-[44px]"
           >
-            <span className="font-medium text-sm sm:text-base text-text-primary pr-4">
+            <span className="pr-4 text-base font-medium text-text-primary">
               {item.question}
             </span>
             <motion.span
@@ -42,13 +47,16 @@ export default function FaqAccordion({ items }: FaqAccordionProps) {
           <AnimatePresence initial={false}>
             {openIndex === i && (
               <motion.div
+                id={`${accordionId}-answer-${i}`}
+                role="region"
+                aria-labelledby={`${accordionId}-question-${i}`}
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
                 <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-                  <p className="text-sm text-text-secondary leading-relaxed">
+                  <p className="text-base leading-relaxed text-text-secondary">
                     {item.answer}
                   </p>
                 </div>

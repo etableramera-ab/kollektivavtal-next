@@ -39,20 +39,92 @@ const agreements = [
   { slug: 'teknikavtalet-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/teknikavtalet-2025-2027.pdf' },
   { slug: 'svemek-avtalet', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/svemek-2025-2027.pdf' },
   { slug: 'kemiskt-avtal-ifmetall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/kemiska-fabriker-2025-2027.pdf' },
+  // TechSverige — Telekom
+  { slug: 'telekomavtalet', url: 'https://www.akavia.se/siteassets/03-rad-och-stod/kollektivavtal-privat-sektor/tech-och-it/kollektivavtal-allmanna-anstallningsvillkor---avtal-2025---techsverige-telekom.pdf' },
   // Elektrikerna — Installationsavtalet
   { slug: 'installationsavtalet', url: 'https://www.in.se/globalassets/dokument/arbetsgivarguiden/publik/kollektivavtal/installationsavtalet-2025-2027.pdf' },
   // LO-förbunden — Bemanningsavtalet
   { slug: 'bemanningsavtalet', url: 'https://www.livs.se/globalassets/livs.se/arbetsplats--och-avtalsfragor/avtal-2020-2025/material-avtal-2020-2025/bemanningsavtalet-2025-05-01---2027-04-30.pdf' },
+  // Kompetensföretagen — tjänstemän
+  { slug: 'kompetensforetagen-tjansteman', url: 'https://www.kompetensforetagen.se/app/uploads/sites/5/2025/11/Kollektivavtal-Kompetensforetagen-tjansteman-2025-2027-artnr-6512-2506.pdf' },
   // Almega Fastighetsarbetsgivarna — Fastighetsavtalet (tjänsteman)
   { slug: 'fastighetsavtalet', url: 'https://www.akavia.se/siteassets/03-rad-och-stod/kollektivavtal-privat-sektor/almega/kollektivavtal---avtal-2025---fastighetsarbetsgivarna---20250601.pdf' },
   // Skogsstyrelsen — VISST (Villkorsavtal för skogligt arbete)
   { slug: 'skogsavtalet', url: 'https://www.skogsstyrelsen.se/globalassets/om-oss/kollektivavtal/visst-2026-2027.pdf' },
+  // Pappers — Massa- och pappersindustrin, arbetare
+  { slug: 'massa-pappersindustrin-pappers', url: 'https://www.pappers.se/sites/default/files/2026-01/kollektivavtal-25-27.pdf' },
+  // Massa- och pappersindustrin — tjänstemän
+  { slug: 'massa-pappersindustrin-tjansteman', url: 'https://www.unionen.se/sites/default/files/files/Allm%C3%A4nna%20villkor%2C%20Partsgemensamma%20kommentarer%20MoP%202025-2027.pdf' },
+  // Sågverksindustrin — tjänstemän inom basindustrin
+  { slug: 'sagverksindustrin-tjansteman', url: 'https://www.unionen.se/sites/default/files/files/2025-%202027%20Tjm%20Basindustrin_250820.pdf' },
+  // Träindustrin — tjänstemän hos TMF-anslutna företag
+  { slug: 'traindustrin-tjansteman-tmf', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/tmf_tra_och_mobelforetagen/?block=22169&mode=Index&resourcename=1.+Tj%C3%A4nstemannaavtal+Tr%C3%A4industri+2025+-+2027.pdf' },
+  // Ytterligare tjänstemannaavtal inom industri och bygg
+  { slug: 'ikem-tjanstemannaavtal', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/innovations-kemiindustrierna/?block=22150&mode=Index&resourcename=1.+IKEM-avtalet+1+april+2025+-+31+mars+2027.pdf' },
+  { slug: 'livsmedelsindustrin-tjanstemannaavtal', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/livsmedelsforetagen/?block=22168&mode=Index&resourcename=1.+Tj%C3%A4nstemaannaavtalet-i-livsmedelsindustrin-2025-2027.pdf' },
+  { slug: 'byggforetagen-tjanstemannaavtal', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/byggforetagen/?block=22154&mode=Index&resourcename=1.+Tj%C3%A4nstemannaavtalet+-+Byggf%C3%B6retagen+2025+-+2027.pdf' },
+  {
+    slug: 'stal-metallindustrin-tjansteman',
+    urls: [
+      'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/stal-och-metallforbundet/?block=22152&mode=Index&resourcename=1.+Basindustrin+-+Allm%C3%A4nna+anst%C3%A4llningsvillkor+2025+-+2027+%282%29.pdf',
+      'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/stal-och-metallforbundet/?block=22152&mode=Index&resourcename=2.+S%C3%A4rtryck+-+avtal+och+bilagor+till+allm%C3%A4nna+anst%C3%A4llningsvillkor+-+St%C3%A5l+och+Metall+2025-04-01+-+2027-03-31.pdf',
+    ],
+  },
+  {
+    slug: 'gruvindustrin-tjansteman',
+    urls: [
+      'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/gruvornas_arbetsgivareforbund/?block=22148&mode=Index&resourcename=1.+Basindustrin+-+Allm%C3%A4nna+anst%C3%A4llningsvillkor+2025+-+2027.pdf',
+      'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/gruvornas_arbetsgivareforbund/?block=22148&mode=Index&resourcename=2.+S%C3%A4rtryck+-+avtal+och+bilagor+till+allm%C3%A4nna+anst%C3%A4llningsvillkor+Gruvindustrin+2025-04-01+-+2027-03-31.pdf',
+    ],
+  },
+  { slug: 'gruvindustrin-if-metall', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/gruvindustrin-2025-2027.pdf' },
+  { slug: 'spartrafikavtalet', url: 'https://www.seko.se/48db46/siteassets/kollektivavtal/branschavtal/spartrafik/spartrafikavtalet_2025-2027-2.pdf' },
+  { slug: 'branschavtal-kommunikation', url: 'https://www.seko.se/4ada49/siteassets/kollektivavtal/branschavtal/kommunikation/kollektivavtal-bransch-kommunikation-2025-2027.pdf' },
+  { slug: 'branschavtal-energi-efa', url: 'https://www.seko.se/490235/siteassets/kollektivavtal/branschavtal/energi/kollektivavtal_efa_2025-2027.pdf' },
+  // Besöksnäringens tjänstemannaavtal — Visita/Unionen
+  { slug: 'besoksnaringens-tjanstemannaavtal', url: 'https://visita.se/app/uploads/2025/07/Visita-Unionen-2025-2027.pdf' },
+  // Arbetaravtalen för privat skog, sågverk och träindustri ligger bakom
+  // parternas inloggning. Använd inte äldre avtalsböcker som AI-underlag.
   // Arbetsgivarverket — Villkorsavtal OFR/S,P,O
   { slug: 'villkorsavtal-ofr', url: 'https://reservofficerarna.se/app/uploads/2026/01/villkorsavtalet-2026.pdf' },
   // Arbetsgivarverket — Villkorsavtal Seko
-  { slug: 'villkorsavtal-seko', url: 'https://www.seko.se/48dfcd/siteassets/kollektivavtal/branschavtal/avtal-staten/villkorsavtal-staten/villkorsavtal-mellan-arbetsgivarverket-och-seko-20240701.pdf' },
-  // Transport — Transportavtalet
-  { slug: 'transportavtalet', url: 'https://usercontent.one/wp/husbyarbetarblad.se/wp-content/uploads/2024/01/transportavtalet-2023-04-01-2025-03-31-1.pdf' },
+  { slug: 'villkorsavtal-seko', url: 'https://www.arbetsgivarverket.se/globalassets/arbetsgivarverket/avtal-och-skrifter/avtal/villkorsavtal-arbetsgivarverket---seko/villkorsavtal-seko-6.0-20260114.pdf' },
+  // Transportföretagen och motorbranschen
+  { slug: 'tjanstemannaavtalet-transportforetagen', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/transportforetagen/?block=22176&mode=Index&resourcename=6.+Kollektivavtal+-+Avtal+2025+-+Transportf%C3%B6retagen+-+20250501.pdf' },
+  { slug: 'tjanstemannaavtalet-motorbranschen', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/transportforetagen/?block=22176&mode=Index&resourcename=5.+Kollektivavtal+-+Avtal+2025+-+Motorbranschen+-+20250501.pdf' },
+  { slug: 'motorbranschavtalet', url: 'https://www.ifmetall.se/globalassets/avdelningar/forbundskontoret/resurser/dokument/kollektivavtal/kollektivavtal-2025-/motorbranschavtalet-20252027.pdf' },
+  // Bank och finans
+  { slug: 'bankavtalet-finansforbundet', url: 'https://www.finansforbundet.se/globalassets/material---bestall-hem/produkter/allmanna-villkor-finansforbundet-2026-01-01-002.pdf' },
+  { slug: 'bankavtalet-saco', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/finansarbetsgivarna/?block=22144&mode=Index&resourcename=1.+Kollektivavtal+-+Avtal+2026+-+Finansarbetsgivarna+-+20260101.pdf' },
+  // Teknikkonsult, tjänsteföretag och försäkring
+  { slug: 'innovationsavtalet', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/innovationsforetagen/?block=22162&mode=Index&resourcename=3.+Kollektivavtal+Allm%C3%A4nna+anst%C3%A4llningsvillkor++-+Avtal+2025+-+Innovationsf%C3%B6retagen+-+20250401.pdf' },
+  { slug: 'grona-avtalet', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/tjansteforetagen_och_medieforetagen/?block=22171&mode=Index&resourcename=1.+Kollektivavtal+-+Avtal+2025+-+Medief%C3%B6retagen+Tj%C3%A4nstef%C3%B6retagen+gr%C3%B6na+avtalet+-+20250501.pdf' },
+  { slug: 'forsakringsavtalet-forena', url: 'https://www.forena.se/media/sfjdzp4p/kollektivavtalfaoforena2025-2027.pdf' },
+  { slug: 'forsakringsavtalet-saco', url: 'https://www.sverigesingenjorer.se/kollektivavtal/avtalsomrade/forsakringsbranschen/?block=22191&mode=Index&resourcename=3.+Kollektivavtal+-+Avtal+2025+-+F%C3%B6rs%C3%A4kringsbranschens+arbetsgivareorganisation+FAO+-+20250401+-+20270331.pdf' },
+  // Privata apoteksföretag
+  { slug: 'apoteksavtalet-svensk-handel', url: 'https://www.sverigesfarmaceuter.se/globalassets/2-dokument/2-rad-och-stod/anstallning/kollektivavtal/apotek/svensk-handel/apoteksavtalet-2025-2027.pdf' },
+  { slug: 'apoteksforetagen-almega', url: 'https://www.sverigesfarmaceuter.se/globalassets/2-dokument/2-rad-och-stod/anstallning/kollektivavtal/apotek/almega/kollektivavtal-apotek-tjansteman-2025-2027-sveriges-ingenjorer-sveriges-farmaceuter-unionen-artnr-6072-2505.pdf' },
+  // Medieföretagen — Journalistförbundet
+  { slug: 'journalistavtalet-dagspress', url: 'https://www.sjf.se/system/files/2025-06/Dagspress%20kollektivavtal%202025-2027.pdf' },
+  { slug: 'journalistavtalet-public-service', url: 'https://www.sjf.se/system/files/2025-05/Public%20service%20kollektivavtal%202025-2027.pdf' },
+  { slug: 'journalistavtalet-tidskrift', url: 'https://www.sjf.se/system/files/2025-07/Tidskrifter%20kollektivavtal%202025-2027.pdf' },
+  { slug: 'journalistavtalet-etermedier', url: 'https://www.sjf.se/system/files/2025-07/Etermedier%20kollektivavtal%202025-2027.pdf' },
+  { slug: 'journalistavtalet-bemanning', url: 'https://www.sjf.se/system/files/2025-09/Bemanning%20kollektivavtal%202025-2027.pdf' },
+  // Fastighetsarbete
+  { slug: 'fastigheter-arbetare-almega', url: 'https://www.fastighets.se/49a08c/contentassets/3e30983e855d4780adef9611b4d62256/kollektivavtal-almega-fastigheter-2025-2027-fastighetsanstalldas-forbund-artnr-6554-2504.pdf' },
+  { slug: 'f-avtalet-fastigo', url: 'https://www.fastighets.se/49b36f/contentassets/63ff67138286461ebbe8e9921b86aaf5/f-avtal-2025.pdf' },
+  // Sobona — fem separata branschöverenskommelser
+  { slug: 'sobona-bok-besoksnaring-kulturarv', url: 'https://sobona.se/download/18.1eca47cd19c1c71f06dce0be/1772530261589/Avtal%20Bes%C3%B6ksn%C3%A4ring%20och%20kulturarv%202025.pdf' },
+  { slug: 'sobona-bok-energi', url: 'https://sobona.se/download/18.1eca47cd19c1c71f06dd16a5/1770224541432/Avtal%20Energi%202025.pdf' },
+  { slug: 'sobona-bok-fastigheter', url: 'https://sobona.se/download/18.1eca47cd19c1c71f06dd1afa/1770225129562/Avtal%20Fastigheter%202025.pdf' },
+  { slug: 'sobona-bok-flygplatser', url: 'https://sobona.se/download/18.1eca47cd19c1c71f06dd1cfd/1770225395675/Avtal%20Flygplatser%202025.pdf' },
+  { slug: 'sobona-bok-vatten-miljo', url: 'https://sobona.se/download/18.1eca47cd19c1c71f06dd35e9/1770226688715/Avtal%20Vatten%20och%20milj%C3%B6%202025.pdf' },
+  // Friskolor och Svenska kyrkan
+  { slug: 'friskoleavtalet-larare', url: 'https://www.sverigeslarare.se/siteassets/1.-rad-och-stod/kollektivavtal/almega/friskoleavtalet-2025-2027/almega_friskoleavtalet_kollektivavtal_2025_2027.pdf' },
+  { slug: 'svenska-kyrkan-tjansteman', url: 'https://www.skao.se/media/iddkx44a/svenska-kyrkans-ab-25_tjaenstemaen_giltig_from_1maj2026.pdf' },
+  { slug: 'svenska-kyrkan-kommunal', url: 'https://www.skao.se/media/3mojjuhu/svenska-kyrkans-ab-25_kommunalsavtalsomraade_giltig_from_1maj2026.pdf' },
+  // Transportavtalet 2025–2027 finns bakom parternas inloggning. Ladda inte
+  // längre ned den utgångna tredjepartskopian från avtalsperioden 2023–2025.
 ];
 
 const TEXT_DIR = path.join(__dirname, '..', 'src', 'data', 'agreement-texts');
@@ -101,15 +173,24 @@ async function processAgreement(agreement) {
     }
   }
 
-  console.log(`[DOWNLOAD] ${agreement.slug}...`);
-  const buffer = await download(agreement.url);
-  console.log(`[EXTRACT] ${agreement.slug} — ${buffer.length} bytes PDF`);
+  const urls = agreement.urls || [agreement.url];
+  const textParts = [];
+  let totalPages = 0;
 
-  const data = await pdf(buffer);
-  const cleaned = cleanText(data.text);
+  for (const [index, url] of urls.entries()) {
+    console.log(`[DOWNLOAD] ${agreement.slug} (${index + 1}/${urls.length})...`);
+    const buffer = await download(url);
+    console.log(`[EXTRACT] ${agreement.slug} — ${buffer.length} bytes PDF`);
+
+    const data = await pdf(buffer);
+    totalPages += data.numpages;
+    textParts.push(cleanText(data.text));
+  }
+
+  const cleaned = textParts.join('\n\n--- NÄSTA OFFICIELLA AVTALSDOKUMENT ---\n\n');
 
   fs.writeFileSync(outputPath, cleaned, 'utf-8');
-  console.log(`[DONE] ${agreement.slug} — ${data.numpages} pages, ${cleaned.length} chars → ${outputPath}`);
+  console.log(`[DONE] ${agreement.slug} — ${totalPages} pages, ${cleaned.length} chars → ${outputPath}`);
 }
 
 async function main() {

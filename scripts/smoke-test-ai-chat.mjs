@@ -1,4 +1,5 @@
 const baseUrl = process.argv[2] || "http://localhost:3000";
+const origin = new URL(baseUrl).origin;
 
 const liveCases = [
   {
@@ -138,7 +139,10 @@ async function postJson(payload) {
   try {
     const response = await fetch(`${baseUrl}/api/chat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Origin: origin,
+      },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });

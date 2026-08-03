@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { publicAgreements } from "@/lib/public-agreements";
 import { publicOccupations } from "@/lib/public-occupations";
+import {
+  getSearchMatchScore,
+  matchesSearchText,
+} from "@/lib/search-normalization";
 
 interface SearchResult {
   type: "avtal" | "yrke";
@@ -13,21 +17,39 @@ interface SearchResult {
   extra?: string;
 }
 
+function agreementSearchScore(agreement: (typeof publicAgreements)[number], query: string) {
+  const nameScore = Math.max(
+    getSearchMatchScore(agreement.name, query),
+    getSearchMatchScore(agreement.shortName, query)
+  );
+  const metadataScore = Math.max(
+    getSearchMatchScore(agreement.sectorLabel, query),
+    ...agreement.parties.unions.map((value) => getSearchMatchScore(value, query)),
+    ...agreement.parties.employers.map((value) => getSearchMatchScore(value, query))
+  );
+  return nameScore * 100 + metadataScore * 10;
+}
+
 function search(query: string, scope: "all" | "agreements"): SearchResult[] {
-  const q = query.toLowerCase().trim();
+  const q = query.trim();
   if (q.length < 2) return [];
 
   const results: SearchResult[] = [];
 
   // Search agreements
-  const matchedAgreements = publicAgreements.filter(
-    (a) =>
-      a.name.toLowerCase().includes(q) ||
-      a.shortName.toLowerCase().includes(q) ||
-      a.sectorLabel.toLowerCase().includes(q) ||
-      a.parties.unions.some((u) => u.toLowerCase().includes(q)) ||
-      a.parties.employers.some((e) => e.toLowerCase().includes(q))
-  );
+  const matchedAgreements = publicAgreements
+    .filter(
+      (a) =>
+        matchesSearchText(a.name, q) ||
+        matchesSearchText(a.shortName, q) ||
+        matchesSearchText(a.sectorLabel, q) ||
+        a.parties.unions.some((u) => matchesSearchText(u, q)) ||
+        a.parties.employers.some((e) => matchesSearchText(e, q))
+    )
+    .sort((a, b) => {
+      const scoreDifference = agreementSearchScore(b, q) - agreementSearchScore(a, q);
+      return scoreDifference || a.shortName.localeCompare(b.shortName, "sv");
+    });
   for (const a of matchedAgreements.slice(0, 5)) {
     results.push({
       type: "avtal",
@@ -39,7 +61,7 @@ function search(query: string, scope: "all" | "agreements"): SearchResult[] {
 
   if (scope === "all") {
     const matchedOccupations = publicOccupations.filter((o) =>
-      o.title.toLowerCase().includes(q)
+      matchesSearchText(o.title, q)
     );
     for (const o of matchedOccupations.slice(0, 5)) {
       results.push({
@@ -168,11 +190,14 @@ export default function SearchAutocomplete({
     <div className="relative" ref={containerRef}>
       <Search
         size={18}
-        className={`absolute top-1/2 -translate-y-1/2 text-text-secondary ${isRTL ? "right-3" : "left-3"}`}
+        className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-text-secondary ${isRTL ? "right-3" : "left-3"}`}
       />
       <input
         ref={inputRef}
-        type="text"
+        type="search"
+        inputMode="search"
+        enterKeyHint="search"
+        autoComplete="off"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => results.length > 0 && setOpen(true)}
@@ -184,13 +209,13 @@ export default function SearchAutocomplete({
         aria-controls={listboxId}
         className={`w-full outline-none placeholder:text-text-secondary ${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4 text-left"} ${
           isHero
-            ? "h-12 rounded-lg border border-border text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary"
-            : "h-12 rounded-lg border border-border text-sm text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
+            ? "h-12 rounded-lg border border-border text-base text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary sm:text-sm"
+            : "h-12 rounded-lg border border-border text-base text-text-primary focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white sm:text-sm"
         }`}
       />
 
       {open && (
-        <div id={listboxId} role="listbox" className={`absolute left-0 right-0 top-full mt-0 bg-white border border-border border-t-0 rounded-b-lg shadow-[0_8px_24px_rgba(0,0,0,0.12)] max-h-[400px] overflow-y-auto z-50 ${isRTL ? "text-right" : "text-left"}`}>
+        <div id={listboxId} role="listbox" className={`absolute left-0 right-0 top-full z-50 mt-0 max-h-[55dvh] overflow-y-auto rounded-b-lg border border-t-0 border-border bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] sm:max-h-[400px] ${isRTL ? "text-right" : "text-left"}`}>
           {results.length === 0 && query.length >= 2 ? (
             <p className="px-4 py-4 text-sm text-text-secondary">
               {labels.noResults ?? "Inga resultat"}: &quot;{query}&quot;
@@ -207,16 +232,17 @@ export default function SearchAutocomplete({
                     return (
                       <button
                         key={`avtal-${r.slug}`}
+                        type="button"
                         role="option"
                         aria-selected={idx === activeIndex}
                         onClick={() => navigate(r)}
-                        className={`w-full ${isRTL ? "text-right" : "text-left"} px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
+                        className={`flex w-full flex-col items-start gap-1 border-b border-surface-dark px-4 py-3 text-[15px] text-text-primary transition-colors sm:flex-row sm:items-center sm:justify-between sm:gap-3 ${isRTL ? "text-right" : "text-left"} ${
                           idx === activeIndex ? "bg-[#F0FDFA]" : "hover:bg-[#F0FDFA]"
                         }`}
                       >
-                        <span>{highlightMatch(r.name, query)}</span>
+                        <span className="min-w-0 break-words">{highlightMatch(r.name, query)}</span>
                         {showDetails && r.extra && (
-                          <span className="text-xs text-text-secondary ml-2 shrink-0">
+                          <span className="break-words text-xs text-text-secondary sm:ml-2 sm:text-right">
                             {r.extra}
                           </span>
                         )}
@@ -235,16 +261,17 @@ export default function SearchAutocomplete({
                     return (
                       <button
                         key={`yrke-${r.slug}`}
+                        type="button"
                         role="option"
                         aria-selected={idx === activeIndex}
                         onClick={() => navigate(r)}
-                        className={`w-full ${isRTL ? "text-right" : "text-left"} px-4 py-3 text-[15px] text-text-primary border-b border-surface-dark flex items-center justify-between transition-colors ${
+                        className={`flex w-full flex-col items-start gap-1 border-b border-surface-dark px-4 py-3 text-[15px] text-text-primary transition-colors sm:flex-row sm:items-center sm:justify-between sm:gap-3 ${isRTL ? "text-right" : "text-left"} ${
                           idx === activeIndex ? "bg-[#F0FDFA]" : "hover:bg-[#F0FDFA]"
                         }`}
                       >
-                        <span>{highlightMatch(r.name, query)}</span>
+                        <span className="min-w-0 break-words">{highlightMatch(r.name, query)}</span>
                         {showDetails && r.extra && (
-                          <span className="text-sm font-medium text-accent ml-2 shrink-0">
+                          <span className="break-words text-sm font-medium text-accent sm:ml-2 sm:text-right">
                             {r.extra}
                           </span>
                         )}

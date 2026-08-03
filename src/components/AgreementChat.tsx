@@ -146,8 +146,8 @@ export default function AgreementChat({
       {/* Header bar */}
       <div className="px-5 py-4 sm:px-6 bg-[#164B3F]">
         <div className="flex items-center gap-2.5">
-          <MessageSquare size={22} className="text-[#285E52] shrink-0" />
-          <div>
+          <MessageSquare size={22} className="shrink-0 text-white/80" />
+          <div className="min-w-0">
             <h3 className="text-base font-bold text-white">
               AI-guide till {agreementName}
             </h3>
@@ -170,7 +170,7 @@ export default function AgreementChat({
                 <button
                   key={q}
                   onClick={() => sendMessage(q)}
-                  className="rounded-sm bg-[#285E52] px-4 py-2 text-sm font-medium text-white hover:bg-[#164B3F] transition-colors text-left"
+                  className="w-full rounded-sm bg-[#285E52] px-4 py-2 text-left text-sm font-medium text-white transition-colors hover:bg-[#164B3F] sm:w-auto"
                 >
                   {q}
                 </button>
@@ -193,7 +193,7 @@ export default function AgreementChat({
             className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-[85%] rounded-[10px] px-4 py-2.5 text-sm leading-relaxed ${
+              className={`max-w-full rounded-[10px] px-4 py-2.5 text-sm leading-relaxed sm:max-w-[85%] ${
                 msg.role === "user"
                   ? "bg-[#F1F5F9] text-text-primary"
                   : "bg-white border-l-[3px] border-l-[#285E52] text-text-primary shadow-sm"
@@ -264,7 +264,7 @@ export default function AgreementChat({
           onChange={(e) => setInput(e.target.value)}
           maxLength={1500}
           placeholder="Ställ en fråga om avtalet..."
-          className="flex-1 rounded-sm border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#285E52]/20 focus:border-[#285E52]"
+          className="min-w-0 flex-1 rounded-sm border border-border bg-white px-4 py-3 text-sm text-text-primary outline-none placeholder:text-text-secondary focus:ring-2 focus:ring-[#285E52]/20 focus:border-[#285E52]"
           disabled={loading}
         />
         <button
